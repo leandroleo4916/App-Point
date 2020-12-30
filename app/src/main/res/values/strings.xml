@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">App-Point</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Pontos</string>
+    <string name="title_dashboard">Cadastro</string>
+    <string name="title_notifications">Perfil</string>
+    <string name="login">login</string>
+    <string name="senha">senha</string>
+    <string name="text_sem_cadastro">Ainda não tem cadastro?</string>
+    <string name="cadastre_se_aqui">Cadastre-se aqui</string>
+    <string name="salvar">SALVAR</string>
+    <string name="preencha_dados">Preencha todos os dados!</string>
+    <string name="erro_usuario">Erro de usuário e/ou senha!</string>
 </resources>

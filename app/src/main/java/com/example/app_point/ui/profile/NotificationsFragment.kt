@@ -1,4 +1,4 @@
-package com.example.app_point.ui.notifications
+package com.example.app_point.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

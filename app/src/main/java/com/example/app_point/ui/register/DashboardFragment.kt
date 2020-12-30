@@ -1,4 +1,4 @@
-package com.example.app_point.ui.dashboard
+package com.example.app_point.ui.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
