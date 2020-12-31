@@ -10,4 +10,6 @@
     <string name="salvar">SALVAR</string>
     <string name="preencha_dados">Preencha todos os dados!</string>
     <string name="erro_usuario">Erro de usuário e/ou senha!</string>
+    <string name="cadastro_feito">Cadastrado com sucesso!</string>
+    <string name="erro_inesperado">Algo deu errado, tente novamente!</string>
 </resources>

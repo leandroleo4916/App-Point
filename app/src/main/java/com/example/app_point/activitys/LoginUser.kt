@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_register_user.*
 
 class LoginUser : AppCompatActivity(), View.OnClickListener {
 
-    private val mBusinessUser: BusinessUser = BusinessUser()
+    private val mBusinessUser: BusinessUser = BusinessUser(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class LoginUser : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when(view){
             text_register_user -> startActivity(Intent(this, RegisterUser::class.java))
-            buttom_save -> loginUser()
+            buttom_login -> loginUser()
         }
     }
 
@@ -41,7 +41,7 @@ class LoginUser : AppCompatActivity(), View.OnClickListener {
             userLogin == "" || userPassword == "" -> {
                 Toast.makeText(this, getString(R.string.preencha_dados), Toast.LENGTH_SHORT).show()
             }
-            mBusinessUser.getUser(userLogin, userPassword) -> {
+            mBusinessUser.storeUser(userLogin, userPassword) -> {
                 startActivity(Intent(this, MainActivity::class.java))
             }
             else -> {
