@@ -12,4 +12,6 @@
     <string name="erro_usuario">Erro de usuário e/ou senha!</string>
     <string name="cadastro_feito">Cadastrado com sucesso!</string>
     <string name="erro_inesperado">Algo deu errado, tente novamente!</string>
+    <string name="email">email</string>
+    <string name="nome">nome</string>
 </resources>
