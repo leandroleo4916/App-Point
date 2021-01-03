@@ -14,4 +14,11 @@
     <string name="erro_inesperado">Algo deu errado, tente novamente!</string>
     <string name="email">email</string>
     <string name="nome">nome</string>
+    <string name="pular_login">pular login</string>
+    <string name="employee">Funcionario</string>
+    <string name="cargo">Cargo</string>
+    <string name="nome_completo">Nome Completo</string>
+    <string name="telefone">Telefone</string>
+    <string name="admissao">Admissão</string>
+    <string name="nome_completo_">nome completo</string>
 </resources>

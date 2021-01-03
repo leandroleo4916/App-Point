@@ -24,12 +24,14 @@ class LoginUser : AppCompatActivity(), View.OnClickListener {
     private fun listener(){
         text_register_user.setOnClickListener(this)
         buttom_login.setOnClickListener(this)
+        buttom_jump.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         when(view){
             text_register_user -> startActivity(Intent(this, RegisterUser::class.java))
             buttom_login -> loginUser()
+            buttom_jump -> startActivity(Intent(this, MainActivity::class.java))
         }
     }
 

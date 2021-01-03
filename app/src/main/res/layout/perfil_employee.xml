@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recycler_employee"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cycle_perfil_employee"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_photo_employee"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/img_time_line"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/ic_graffic"
+            android:backgroundTint="@android:color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/editar_employee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/ic_settings"
+            android:backgroundTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/txt_nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/employee"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_email"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="email@email.com"
+            android:textColor="@android:color/white"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_cargo"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/txt_telefone"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:inputType="phone"
+            android:text="11 99393-9089"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_email"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/txt_admissao"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:inputType="date"
+            android:text="12/12/2020"
+            android:textColor="@android:color/white"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_telefone"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/campo_horario1"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:inputType="datetime"
+            android:text="8"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/txt_admissao"
+            app:layout_constraintTop_toBottomOf="@+id/txt_admissao"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/campo_horario2"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="12"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/campo_horario1"
+            app:layout_constraintTop_toBottomOf="@+id/txt_admissao"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/campo_horario3"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="14"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/campo_horario2"
+            app:layout_constraintTop_toBottomOf="@+id/txt_admissao"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/campo_horario4"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="18"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/campo_horario3"
+            app:layout_constraintTop_toBottomOf="@+id/txt_admissao"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/txt_cargo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cargo"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/txt_nome"
+            app:layout_constraintStart_toStartOf="@+id/txt_nome"
+            app:layout_constraintTop_toBottomOf="@+id/txt_nome"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/text_cycle_cor"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/image_view_cycle"
+        android:paddingTop="8dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_employee"
+        app:layout_constraintStart_toStartOf="@+id/recycler_employee"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/image_photo_employee"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_alignStart="@+id/text_cycle_cor"
+        android:layout_alignTop="@+id/text_cycle_cor"
+        android:layout_alignEnd="@+id/text_cycle_cor"
+        android:layout_alignBottom="@+id/text_cycle_cor"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_cycle_cor"
+        app:layout_constraintEnd_toEndOf="@+id/text_cycle_cor"
+        app:layout_constraintStart_toStartOf="@+id/text_cycle_cor"
+        app:layout_constraintTop_toTopOf="@+id/text_cycle_cor" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
