@@ -34,11 +34,9 @@ class RegisterEmployeeFragment : Fragment() {
 
         mAdapterEmployee = EmployeeAdapter()
 
-        // 1 - Captura a recycler
+        // Cria a recycler
         val recycler = root.findViewById<RecyclerView>(R.id.recyclerEmployee)
-        // 2 - Adiciona o Layout
         recycler.layoutManager = LinearLayoutManager(context)
-        // 3 - Implementa o modelo layout
         recycler.adapter = mAdapterEmployee
 
         mBusinessEmployee = BusinessEmployee(requireContext())
