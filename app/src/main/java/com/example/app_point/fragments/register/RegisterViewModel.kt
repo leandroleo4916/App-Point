@@ -8,7 +8,7 @@ import com.example.app_point.repository.ReposiitoryEmployee
 
 class RegisterViewModel(application: Application):  AndroidViewModel(application) {
 
-    private val mReposiitoryEmployee: ReposiitoryEmployee = ReposiitoryEmployee(application)
+    private val mRepositoryEmployee: ReposiitoryEmployee = ReposiitoryEmployee(application)
 
     private val mEmployeeList = MutableLiveData<List<String>>()
     val textEmployee: LiveData<List<String>> = mEmployeeList
@@ -17,9 +17,9 @@ class RegisterViewModel(application: Application):  AndroidViewModel(application
     val textOffice: LiveData<List<String>> = mOfficeList
 
     fun getEmployeeList(){
-        mEmployeeList.value = mReposiitoryEmployee.getEmployeeList()
+        mEmployeeList.value = mRepositoryEmployee.getEmployeeList()
     }
     fun getOfficeList(){
-        mOfficeList.value = mReposiitoryEmployee.getOfficeList()
+        mOfficeList.value = mRepositoryEmployee.getOfficeList()
     }
 }

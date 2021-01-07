@@ -4,23 +4,20 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DataBaseUser(context: Context) : SQLiteOpenHelper(context, DATA_NAME, null, DATA_VERSION) {
+class DataBasePoint(context: Context): SQLiteOpenHelper(context, DATA_NAME, null, DATA_VERSION) {
 
     companion object {
-        private const val DATA_NAME: String = "user.db"
+        private const val DATA_NAME: String = "point.db"
         private const val DATA_VERSION: Int = 1
     }
 
     private val createTable = """ CREATE TABLE 
-            ${ConstantsUser.USER.TABLE_NAME} (
-            ${ConstantsUser.USER.COLUNAS.ID} integer primary key autoincrement ,
-            ${ConstantsUser.USER.COLUNAS.NAME} text ,
-            ${ConstantsUser.USER.COLUNAS.EMAIL} text ,
-            ${ConstantsUser.USER.COLUNAS.PASSWORD} text 
-
+            ${ConstantsPoint.POINT.TABLE_NAME} (
+            ${ConstantsPoint.POINT.COLUMNS.HOUR} text ,
+            ${ConstantsPoint.POINT.COLUMNS.DATE} text
     );"""
 
-    private val removeTable = "drop table if exists ${ConstantsUser.USER.TABLE_NAME}"
+    private val removeTable = "drop table if exists ${ConstantsPoint.POINT.TABLE_NAME}"
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(createTable)
@@ -30,4 +27,5 @@ class DataBaseUser(context: Context) : SQLiteOpenHelper(context, DATA_NAME, null
         db.execSQL(removeTable)
         db.execSQL(createTable)
     }
+
 }
