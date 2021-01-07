@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DataBaseEmployee(context: Context) : SQLiteOpenHelper(context, DATA_NAME, null, DATA_VERSION) {
+class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME, null, DATA_VERSION) {
 
     companion object {
         private const val DATA_NAME: String = "employee.db"

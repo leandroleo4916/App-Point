@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -39,17 +37,10 @@ class RegisterEmployeeFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = mAdapterEmployee
 
-        mBusinessEmployee = BusinessEmployee(requireContext())
+        mBusinessEmployee = BusinessEmployee(context)
 
         registerViewModel.getEmployeeList()
         registerViewModel.getOfficeList()
-        registerViewModel.getEmailList()
-        registerViewModel.getPhoneList()
-        registerViewModel.getAdmissionList()
-        registerViewModel.getHour1List()
-        registerViewModel.getHour2List()
-        registerViewModel.getHour3List()
-        registerViewModel.getHour4List()
 
         observer()
         return root
@@ -61,27 +52,6 @@ class RegisterEmployeeFragment : Fragment() {
         })
         registerViewModel.textOffice.observe(viewLifecycleOwner, Observer {
             mAdapterEmployee.updateOffice(it)
-        })
-        registerViewModel.textEmail.observe(viewLifecycleOwner, Observer {
-            mAdapterEmployee.updateEmail(it)
-        })
-        registerViewModel.textPhone.observe(viewLifecycleOwner, Observer {
-            mAdapterEmployee.updatePhone(it)
-        })
-        registerViewModel.textAdmission.observe(viewLifecycleOwner, Observer {
-            mAdapterEmployee.updateAdmission(it)
-        })
-        registerViewModel.textHour1.observe(viewLifecycleOwner, Observer {
-            mAdapterEmployee.updateHour1(it)
-        })
-        registerViewModel.textHour2.observe(viewLifecycleOwner, Observer {
-            mAdapterEmployee.updateHour2(it)
-        })
-        registerViewModel.textHour3.observe(viewLifecycleOwner, Observer {
-            mAdapterEmployee.updateHour3(it)
-        })
-        registerViewModel.textHour4.observe(viewLifecycleOwner, Observer {
-            mAdapterEmployee.updateHour4(it)
         })
     }
 

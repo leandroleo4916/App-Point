@@ -3,7 +3,7 @@ package com.example.app_point.business
 import android.content.Context
 import com.example.app_point.repository.ReposiitoryEmployee
 
-class BusinessEmployee(context: Context) {
+class BusinessEmployee(context: Context?) {
 
     private val mRepositoryEmployee: ReposiitoryEmployee = ReposiitoryEmployee(context)
 
