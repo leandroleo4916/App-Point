@@ -21,4 +21,6 @@
     <string name="telefone">Telefone</string>
     <string name="admissao">Admissão</string>
     <string name="nome_completo_">nome completo</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="cancelado">Cancelado!</string>
 </resources>

@@ -38,7 +38,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsPoint.POINT.COLUMNS.ID} integer primary key autoincrement ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR} text ,
             ${ConstantsPoint.POINT.COLUMNS.DATE} text ,
-            FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.HOUR}) 
+            FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.HOUR}, ${ConstantsPoint.POINT.COLUMNS.DATE}) 
             REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME})
     );"""
 
@@ -56,6 +56,4 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
         db.execSQL(createTableEmployee)
         db.execSQL(createTablePoint)
     }
-
-
 }
