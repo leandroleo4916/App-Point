@@ -7,6 +7,7 @@ class ConstantsEmployee {
         object COLUMNS {
             const val ID = "id"
             const val NAME = "name"
+            const val OFFICE = "office"
             const val EMAIL = "email"
             const val PHONE = "telefone"
             const val ADMISSION = "admission"
@@ -14,7 +15,6 @@ class ConstantsEmployee {
             const val HOUROUTONE = "hourOutOne"
             const val HOURINTWO = "hourInTwo"
             const val HOUROUTTWO = "hourOutTwo"
-            const val OFFICE = "office"
         }
     }
 }
