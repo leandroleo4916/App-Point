@@ -34,16 +34,6 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    fun storeEmployee(email: String): Boolean{
-        return try {
-            val db = mDataBaseEmployee.readableDatabase
-
-            true
-        }catch (e: Exception) {
-            false
-        }
-    }
-
     fun getEmployeeList(): ArrayList<String> {
         val list: ArrayList<String> = ArrayList()
 

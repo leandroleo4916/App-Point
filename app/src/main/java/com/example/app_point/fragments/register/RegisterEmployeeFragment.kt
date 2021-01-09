@@ -21,7 +21,7 @@ class RegisterEmployeeFragment : Fragment() {
 
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var mBusinessEmployee: BusinessEmployee
-    private lateinit var mAdapterEmployee: EmployeeAdapter
+    private val mAdapterEmployee: EmployeeAdapter = EmployeeAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         registerViewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
@@ -30,15 +30,12 @@ class RegisterEmployeeFragment : Fragment() {
         val float = root.findViewById(R.id.float_button_employee) as FloatingActionButton
         float.setOnClickListener { showDialog() }
 
-        mAdapterEmployee = EmployeeAdapter()
-
         // Cria a recycler
         val recycler = root.findViewById<RecyclerView>(R.id.recyclerEmployee)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = mAdapterEmployee
 
         mBusinessEmployee = BusinessEmployee(context)
-
         registerViewModel.getEmployeeList()
         registerViewModel.getOfficeList()
 

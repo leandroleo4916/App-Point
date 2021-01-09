@@ -6,7 +6,7 @@ import android.database.Cursor
 import com.example.app_point.database.ConstantsPoint
 import com.example.app_point.database.DataBaseEmployee
 
-class RepositoryPoint(context: Context) {
+class RepositoryPoint(context: Context?) {
 
     private val mDataBasePoint: DataBaseEmployee = DataBaseEmployee(context)
 
@@ -29,7 +29,6 @@ class RepositoryPoint(context: Context) {
     fun storePointHour (): List<String> {
 
         val list: ArrayList<String> = ArrayList()
-
         try {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase
@@ -63,7 +62,6 @@ class RepositoryPoint(context: Context) {
     fun storePointDate (): List<String> {
 
         val list: ArrayList<String> = ArrayList()
-
         try {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase

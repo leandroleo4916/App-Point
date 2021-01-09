@@ -14,6 +14,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessPoint
 import com.example.app_point.model.PointsAdapter
 import com.example.app_point.repository.RepositoryEmployee
+import com.example.app_point.repository.RepositoryPoint
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,9 +22,9 @@ import java.util.*
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var mPoints: PointsAdapter
+    private var mPoints: PointsAdapter = PointsAdapter()
     private lateinit var mRepositoryEmployee: RepositoryEmployee
-    private lateinit var mBusinessPoint: BusinessPoint
+    private lateinit var mRepositoryPoint: RepositoryPoint
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,18 +34,18 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val float = root.findViewById(R.id.float_button_point) as FloatingActionButton
         float.setOnClickListener { loadDialogPoint() }
 
-        mPoints = PointsAdapter()
-        mRepositoryEmployee = RepositoryEmployee(context)
-        mBusinessPoint = BusinessPoint(requireContext())
-
-        val recycler = root.findViewById<RecyclerView>(R.id.recyclerEmployee)
+        val recycler = root.findViewById<RecyclerView>(R.id.recycler_points)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = mPoints
+
+        mRepositoryEmployee = RepositoryEmployee(context)
+        mRepositoryPoint = RepositoryPoint(context)
 
         homeViewModel.getHourList()
         homeViewModel.getDateList()
 
         observe()
+
         return root
     }
     private fun observe(){
@@ -99,7 +100,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
     private fun registerPoints(date: String, hour: String, employee: String) {
         when {
-            mBusinessPoint.getPoint(hour, date, employee) -> {
+            mRepositoryPoint.getPoint(hour, date, employee) -> {
                 Toast.makeText(context, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
                 homeViewModel.getHourList()
                 homeViewModel.getDateList()
