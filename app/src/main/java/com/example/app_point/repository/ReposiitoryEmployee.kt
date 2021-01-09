@@ -6,7 +6,7 @@ import android.database.Cursor
 import com.example.app_point.database.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
 
-class ReposiitoryEmployee(context: Context?) {
+class RepositoryEmployee(context: Context?) {
 
     private val mDataBaseEmployee: DataBaseEmployee = DataBaseEmployee(context)
 

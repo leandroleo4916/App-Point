@@ -33,12 +33,14 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOUROUTONE} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOUROUTTWO} text
     );"""
+
     private val createTablePoint = """ CREATE TABLE 
             ${ConstantsPoint.POINT.TABLE_NAME} (
             ${ConstantsPoint.POINT.COLUMNS.ID} integer primary key autoincrement ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR} text ,
             ${ConstantsPoint.POINT.COLUMNS.DATE} text ,
-            FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.HOUR}, ${ConstantsPoint.POINT.COLUMNS.DATE}) 
+            ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text ,
+            FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.EMPLOYEE}) 
             REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME})
     );"""
 

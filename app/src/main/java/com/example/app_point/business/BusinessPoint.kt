@@ -10,5 +10,11 @@ class BusinessPoint(context: Context) {
     fun getPoint(hour: String, date: String, employee: String): Boolean{
         return mRepositoryPoint.getPoint(hour, date, employee)
     }
+    fun storePointHour(): List<String>{
+        return mRepositoryPoint.storePointHour()
+    }
+    fun storePointDate(): List<String>{
+        return mRepositoryPoint.storePointDate()
+    }
 
 }

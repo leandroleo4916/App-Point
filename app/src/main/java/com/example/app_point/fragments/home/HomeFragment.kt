@@ -11,10 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoint
 import com.example.app_point.model.PointsAdapter
-import com.example.app_point.repository.ReposiitoryEmployee
+import com.example.app_point.repository.RepositoryEmployee
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,7 +22,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mPoints: PointsAdapter
-    private lateinit var mRepositoryEmployee: ReposiitoryEmployee
+    private lateinit var mRepositoryEmployee: RepositoryEmployee
     private lateinit var mBusinessPoint: BusinessPoint
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -35,19 +34,26 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         float.setOnClickListener { loadDialogPoint() }
 
         mPoints = PointsAdapter()
-        mRepositoryEmployee = ReposiitoryEmployee(context)
+        mRepositoryEmployee = RepositoryEmployee(context)
         mBusinessPoint = BusinessPoint(requireContext())
 
         val recycler = root.findViewById<RecyclerView>(R.id.recyclerEmployee)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = mPoints
 
-        observe()
+        homeViewModel.getHourList()
+        homeViewModel.getDateList()
 
+        observe()
         return root
     }
     private fun observe(){
-
+        homeViewModel.listHours.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            mPoints.updateHours(it)
+        })
+        homeViewModel.listDate.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            mPoints.updateDate(it)
+        })
     }
 
     private fun loadDialogPoint() {
@@ -95,6 +101,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         when {
             mBusinessPoint.getPoint(hour, date, employee) -> {
                 Toast.makeText(context, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+                homeViewModel.getHourList()
+                homeViewModel.getDateList()
             }
         }
     }

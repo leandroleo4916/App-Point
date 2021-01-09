@@ -34,7 +34,7 @@ class PointsAdapter: RecyclerView.Adapter<PointsViewHolder>() {
         mListNameEmployee = list.asReversed()
         notifyDataSetChanged()
     }
-    fun updateHrs(list: List<String>){
+    fun updateHours(list: List<String>){
         mListHrs = list.asReversed()
         notifyDataSetChanged()
     }

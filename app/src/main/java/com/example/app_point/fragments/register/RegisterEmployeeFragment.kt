@@ -97,6 +97,8 @@ class RegisterEmployeeFragment : Fragment() {
                 mBusinessEmployee.getEmployee(
                     mEmployee, mOffice, mEmail, mPhone, mAdmission, mHour1, mHour2, mHour3, mHour4) -> {
                     Toast.makeText(context, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                    registerViewModel.getEmployeeList()
+                    registerViewModel.getOfficeList()
                 }
                 else -> {
                     Toast.makeText(context, "Algo deu errado, tente novamente!", Toast.LENGTH_SHORT).show()
