@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.model.EmployeeAdapter
+import com.example.app_point.repository.RepositoryEmployee
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class RegisterEmployeeFragment : Fragment() {
 
     private lateinit var registerViewModel: RegisterViewModel
-    private lateinit var mBusinessEmployee: BusinessEmployee
+    private lateinit var mReposistoryEmployee: RepositoryEmployee
     private val mAdapterEmployee: EmployeeAdapter = EmployeeAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +36,7 @@ class RegisterEmployeeFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = mAdapterEmployee
 
-        mBusinessEmployee = BusinessEmployee(context)
+        mReposistoryEmployee = RepositoryEmployee(context)
         registerViewModel.getEmployeeList()
         registerViewModel.getOfficeList()
 
@@ -91,7 +92,7 @@ class RegisterEmployeeFragment : Fragment() {
                         || mHour1 == "" || mHour2 == "" || mHour3 == "" || mHour4 == "" -> {
                         Toast.makeText(context, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
                 }
-                mBusinessEmployee.getEmployee(
+                mReposistoryEmployee.getEmployee(
                     mEmployee, mOffice, mEmail, mPhone, mAdmission, mHour1, mHour2, mHour3, mHour4) -> {
                     Toast.makeText(context, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
                     registerViewModel.getEmployeeList()

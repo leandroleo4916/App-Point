@@ -39,7 +39,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         recycler.adapter = mPoints
 
         mRepositoryEmployee = RepositoryEmployee(context)
-        mRepositoryPoint = RepositoryPoint(context)
 
         homeViewModel.getHourList()
         homeViewModel.getDateList()
@@ -72,7 +71,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val textData = inflateView.findViewById(R.id.datePoint) as TextView
         textData.text = dateTime.format(date)
 
-        //Captures list of employees and adds to the spinner
+        // Captures list of employees and adds to the spinner
         val list = mRepositoryEmployee.getEmployeeList()
         val listSpinner= inflateView.findViewById(R.id.spinnerGetEmployee) as Spinner
         val adapter = context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, list) }

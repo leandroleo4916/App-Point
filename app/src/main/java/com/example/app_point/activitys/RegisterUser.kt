@@ -7,12 +7,13 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
+import com.example.app_point.repository.ReposiitoryUser
 import kotlinx.android.synthetic.main.activity_login_user.*
 import kotlinx.android.synthetic.main.activity_register_user.*
 
 class RegisterUser : AppCompatActivity(), View.OnClickListener {
 
-    private val mBusinessUser: BusinessUser = BusinessUser(this)
+    private val mRepositoryUser: ReposiitoryUser = ReposiitoryUser(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,7 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
             name == "" || email == "" || password == "" -> {
                 Toast.makeText(this, getString(R.string.preencha_dados), Toast.LENGTH_SHORT).show()
             }
-            mBusinessUser.getUser(name, email, password) -> {
+            mRepositoryUser.getUser(name, email, password) -> {
                 Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
             }
