@@ -35,13 +35,8 @@ class RepositoryPoint(context: Context?) {
             val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.HOUR)
 
             cursor = db.query(
-                ConstantsPoint.POINT.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
+                ConstantsPoint.POINT.TABLE_NAME, projection, null, null,
+                null, null, null
             )
 
             if (cursor != null && cursor.count > 0) {
