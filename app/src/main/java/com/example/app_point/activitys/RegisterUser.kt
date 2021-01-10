@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
-import com.example.app_point.business.BusinessUser
 import com.example.app_point.repository.ReposiitoryUser
-import kotlinx.android.synthetic.main.activity_login_user.*
 import kotlinx.android.synthetic.main.activity_register_user.*
 
 class RegisterUser : AppCompatActivity(), View.OnClickListener {

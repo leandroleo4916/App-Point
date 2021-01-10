@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.app_point.business.BusinessPoint
 import com.example.app_point.repository.RepositoryPoint
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {

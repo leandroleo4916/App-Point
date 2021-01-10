@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.repository.ReposiitoryUser
 import kotlinx.android.synthetic.main.activity_login_user.*
-import kotlinx.android.synthetic.main.activity_register_user.*
 
 class LoginUser : AppCompatActivity(), View.OnClickListener {
 
