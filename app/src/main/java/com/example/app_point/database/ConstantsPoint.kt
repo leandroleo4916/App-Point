@@ -6,7 +6,7 @@ class ConstantsPoint {
         const val TABLE_NAME = "point"
         object COLUMNS {
             const val ID = "id"
-            const val EMPLOYEE = "funcionario"
+            const val EMPLOYEE = "name"
             const val HOUR = "hora"
             const val DATE = "data"
         }

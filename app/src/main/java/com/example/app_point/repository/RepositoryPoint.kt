@@ -3,6 +3,7 @@ package com.example.app_point.repository
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import com.example.app_point.database.ConstantsEmployee
 import com.example.app_point.database.ConstantsPoint
 import com.example.app_point.database.DataBaseEmployee
 
@@ -33,6 +34,7 @@ class RepositoryPoint(context: Context?) {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase
             val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.HOUR)
+            //val orderBy = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME
 
             cursor = db.query(
                 ConstantsPoint.POINT.TABLE_NAME, projection, null, null,
@@ -61,15 +63,11 @@ class RepositoryPoint(context: Context?) {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase
             val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.DATE)
+            val orderBy = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME
 
             cursor = db.query(
-                ConstantsPoint.POINT.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
+                ConstantsPoint.POINT.TABLE_NAME, projection, null, null,
+                null, null, orderBy
             )
 
             if (cursor != null && cursor.count > 0) {

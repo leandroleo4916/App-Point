@@ -15,7 +15,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
         super.onOpen(db)
         when {
             !db.isReadOnly -> {
-                db.execSQL("PRAGMA foreign_keys=ON")
+                db.execSQL("PRAGMA foreign_keys=ON;")
             }
         }
     }

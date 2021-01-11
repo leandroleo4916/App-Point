@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.business.BusinessPoint
 import com.example.app_point.model.PointsAdapter
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
@@ -39,6 +38,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         recycler.adapter = mPoints
 
         mRepositoryEmployee = RepositoryEmployee(context)
+        mRepositoryPoint = RepositoryPoint(context)
 
         homeViewModel.getHourList()
         homeViewModel.getDateList()
@@ -88,7 +88,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             //Capture Spinner item
             val itemSpinner = listSpinner.selectedItem.toString()
-            registerPoints(itemSpinner, dateAtual, hourAtual)
+            registerPoints(hourAtual, dateAtual, itemSpinner)
 
         }
         alertDialog.setNegativeButton(getString(R.string.cancelar)) {
@@ -97,7 +97,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val dialog = alertDialog.create()
         dialog.show()
     }
-    private fun registerPoints(date: String, hour: String, employee: String) {
+    private fun registerPoints(hour: String, date: String, employee: String) {
         when {
             mRepositoryPoint.getPoint(hour, date, employee) -> {
                 Toast.makeText(context, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
