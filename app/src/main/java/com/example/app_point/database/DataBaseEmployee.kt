@@ -39,10 +39,11 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsPoint.POINT.COLUMNS.ID} integer primary key autoincrement ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR} text ,
             ${ConstantsPoint.POINT.COLUMNS.DATE} text ,
-            ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text ,
-            FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.EMPLOYEE}) 
-            REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME})
+            ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text 
     );"""
+
+    // FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.EMPLOYEE})
+    // REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME})
 
     private val removeTableEmployee = "drop table if exists ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}"
     private val removeTablePoint = "drop table if exists ${ConstantsPoint.POINT.TABLE_NAME}"

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 
+
 class PointsAdapter: RecyclerView.Adapter<PointsViewHolder>() {
 
     private var mListNameEmployee: List<String> = arrayListOf()
