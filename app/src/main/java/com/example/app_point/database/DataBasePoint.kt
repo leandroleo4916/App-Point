@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 class DataBasePoint(context: Context?) : SQLiteOpenHelper(context, DATA_NAME, null, DATA_VERSION) {
 
     companion object {
-        private const val DATA_NAME: String = "employee.db"
+        private const val DATA_NAME: String = "point.db"
         private const val DATA_VERSION: Int = 1
     }
 
