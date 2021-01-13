@@ -40,6 +40,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         mRepositoryEmployee = RepositoryEmployee(context)
         mRepositoryPoint = RepositoryPoint(context)
 
+        homeViewModel.getEmployeeList()
         homeViewModel.getHourList()
         homeViewModel.getDateList()
 
@@ -48,6 +49,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return root
     }
     private fun observe(){
+        homeViewModel.listEmployee.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            mPoints.updateEmployee(it)
+        })
         homeViewModel.listHours.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             mPoints.updateHours(it)
         })
@@ -101,6 +105,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         when {
             mRepositoryPoint.getPoint(hour, date, employee) -> {
                 Toast.makeText(context, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+                homeViewModel.getEmployeeList()
                 homeViewModel.getHourList()
                 homeViewModel.getDateList()
             }

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 
-
 class PointsAdapter: RecyclerView.Adapter<PointsViewHolder>() {
 
     private var mListNameEmployee: List<String> = arrayListOf()
@@ -31,7 +30,7 @@ class PointsAdapter: RecyclerView.Adapter<PointsViewHolder>() {
         return mListDate.count()
     }
 
-    fun updateNmeEmployee(list: List<String>){
+    fun updateEmployee(list: List<String>){
         mListNameEmployee = list.asReversed()
         notifyDataSetChanged()
     }

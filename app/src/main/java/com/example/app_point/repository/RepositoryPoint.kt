@@ -26,6 +26,34 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
+    fun storePointEmployee (): List<String> {
+
+        val list: ArrayList<String> = ArrayList()
+        try {
+            val cursor: Cursor
+            val db = mDataBasePoint.readableDatabase
+            val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.EMPLOYEE)
+
+            cursor = db.query(
+                ConstantsPoint.POINT.TABLE_NAME, projection, null, null,
+                null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val employee =
+                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.EMPLOYEE))
+                    list.add(employee)
+                }
+            }
+            cursor?.close()
+            return list
+
+        } catch (e: Exception) {
+            return list
+        }
+    }
+
     fun storePointHour (): List<String> {
 
         val list: ArrayList<String> = ArrayList()
