@@ -26,6 +26,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         mListHours.value = mRepositoryPoint.storePointHour()
     }
     fun getDateList(){
-        mListHours.value = mRepositoryPoint.storePointDate()
+        mListDate.value = mRepositoryPoint.storePointDate()
     }
 }

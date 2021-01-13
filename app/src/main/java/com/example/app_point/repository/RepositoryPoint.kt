@@ -33,10 +33,11 @@ class RepositoryPoint(context: Context?) {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase
             val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.EMPLOYEE)
+            val orderBy = ConstantsPoint.POINT.COLUMNS.ID
 
             cursor = db.query(
                 ConstantsPoint.POINT.TABLE_NAME, projection, null, null,
-                null, null, null
+                null, null, orderBy
             )
 
             if (cursor != null && cursor.count > 0) {

@@ -21,9 +21,9 @@ import java.util.*
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var homeViewModel: HomeViewModel
-    private var mPoints: PointsAdapter = PointsAdapter()
     private lateinit var mRepositoryEmployee: RepositoryEmployee
     private lateinit var mRepositoryPoint: RepositoryPoint
+    private var mPoints: PointsAdapter = PointsAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
