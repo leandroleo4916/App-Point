@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:showIn="@layout/fragment_dashboard"
     android:paddingTop="2dp"
     android:paddingLeft="25dp"
     android:paddingRight="25dp">
@@ -28,8 +29,8 @@
             android:layout_marginTop="4dp"
             android:text="Hrs"
             android:textColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:layout_editor_absoluteX="68dp" />
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <ImageView
             android:id="@+id/img_time_line"
@@ -60,14 +61,14 @@
             android:id="@+id/txt_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
             android:text="@string/employee"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/text_cycle_cor"
-            app:layout_constraintTop_toTopOf="@+id/text_cycle_cor" />
+            app:layout_constraintStart_toEndOf="@+id/image_photo_employee"
+            app:layout_constraintTop_toTopOf="@+id/image_photo_employee" />
 
         <TextView
             android:id="@+id/txt_cargo"
@@ -83,19 +84,6 @@
             tools:ignore="MissingConstraints" />
 
         <ImageView
-            android:id="@+id/text_cycle_cor"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/image_view_cycle"
-            android:paddingTop="6dp"
-            android:textAlignment="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <ImageView
             android:id="@+id/image_photo_employee"
             android:layout_width="62dp"
             android:layout_height="62dp"
@@ -103,15 +91,15 @@
             android:layout_alignTop="@+id/text_cycle_cor"
             android:layout_alignEnd="@+id/text_cycle_cor"
             android:layout_alignBottom="@+id/text_cycle_cor"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/image_cycle_photo"
             android:gravity="center"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_cycle_cor"
-            app:layout_constraintEnd_toEndOf="@+id/text_cycle_cor"
-            app:layout_constraintStart_toStartOf="@+id/text_cycle_cor"
-            app:layout_constraintTop_toTopOf="@+id/text_cycle_cor" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView4"
@@ -119,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
             android:layout_marginBottom="50dp"
-            android:text="Feitas"
+            android:text=" Feitas  "
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -131,6 +119,7 @@
             android:layout_marginTop="4dp"
             android:text="Hrs"
             android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
             app:layout_constraintStart_toEndOf="@+id/textViewHrsTotal"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -142,6 +131,7 @@
             android:text="Hrs"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@+id/textViewHrsMissing"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/textViewHrsMissing"
             app:layout_constraintTop_toTopOf="@+id/textViewHrsMissing"
             app:layout_constraintVertical_bias="0.0" />
@@ -151,10 +141,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Hrs"
+            android:text="Hrs   "
             android:textColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:layout_editor_absoluteX="155dp" />
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/textView8"
@@ -163,6 +153,7 @@
             android:layout_marginTop="4dp"
             android:text="Hrs"
             android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="@+id/textView3"
             app:layout_constraintStart_toEndOf="@+id/textViewHrsExtras"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -173,8 +164,8 @@
             android:layout_marginTop="4dp"
             android:text="Hrs"
             android:textColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:layout_editor_absoluteX="250dp" />
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <TextView
             android:id="@+id/textView"
@@ -193,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="72dp"
             android:layout_marginBottom="50dp"
-            android:text="Extras"
+            android:text=" Extras  "
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

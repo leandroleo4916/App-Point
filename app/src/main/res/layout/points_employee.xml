@@ -7,6 +7,7 @@
     android:layout_marginRight="4dp"
     android:layout_marginLeft="4dp"
     android:layout_marginTop="4dp"
+    tools:showIn="@layout/fragment_home"
     android:elevation="@dimen/cardview_default_radius"
     android:background="@drawable/border"
     android:layout_height="85dp">
