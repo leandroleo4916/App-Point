@@ -10,8 +10,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEmployee"
         android:layout_width="match_parent"
-        tools:listitem="@layout/perfil_employee"
-        android:layout_height="640dp"/>
+        android:layout_height="640dp"
+        tools:listitem="@layout/perfil_employee" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/float_button_employee"
