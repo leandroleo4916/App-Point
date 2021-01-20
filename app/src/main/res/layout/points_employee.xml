@@ -13,18 +13,6 @@
     android:layout_height="85dp">
 
     <ImageView
-        android:id="@+id/text_cycle_cor"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/image_view_cycle"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
         android:id="@+id/icon_image"
         android:layout_width="53dp"
         android:layout_height="53dp"
@@ -32,28 +20,29 @@
         android:layout_alignTop="@+id/text_cycle_cor"
         android:layout_alignEnd="@+id/text_cycle_cor"
         android:layout_alignBottom="@+id/text_cycle_cor"
+        android:layout_marginStart="16dp"
         android:background="@drawable/image_cycle_photo"
         android:gravity="center"
         android:text="F"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_cycle_cor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/text_cycle_cor"
-        app:layout_constraintStart_toStartOf="@+id/text_cycle_cor"
-        app:layout_constraintTop_toTopOf="@+id/text_cycle_cor" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_name_employee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/icon_image"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/icon_image"
         android:text="Funcionario"
-        android:textSize="16sp"
         android:textColor="@android:color/white"
-        app:layout_constraintStart_toEndOf="@+id/text_cycle_cor"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/icon_image"
         app:layout_constraintTop_toTopOf="@+id/icon_image" />
 
     <TextView
