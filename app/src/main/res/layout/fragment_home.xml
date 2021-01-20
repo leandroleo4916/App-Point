@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_points"
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="640dp"
         android:background="@android:color/white"
         tools:listitem="@layout/points_employee"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,6 +27,7 @@
         android:layout_marginBottom="72dp"
         android:src="@drawable/ic_add"
         app:backgroundTint="@android:color/white"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="HardcodedText,MissingConstraints"
+        android:contentDescription="float" />
 
 </RelativeLayout>
