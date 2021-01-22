@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/back"
+    tools:context=".activitys.RegisterUser">
+
+    <ImageView
+        android:id="@+id/image_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_inicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/ready_account"
+        android:text="entre aqui!"
+        android:textColor="@color/fundo"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ready_account"
+        app:layout_constraintStart_toEndOf="@+id/ready_account"
+        app:layout_constraintTop_toTopOf="@+id/ready_account"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/ready_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="4dp"
+        android:text="Se você já tiver conta, "
+        android:textColor="@color/letras"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttom_register_user"
+        android:layout_width="235dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/back_buttom"
+        android:text="criar conta"
+        android:textColor="@color/back"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_name"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_make_login"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_email"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_name"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_senha"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_email"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_confirme_senha"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_senha"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/edittext_username"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="nome"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_name"
+        app:layout_constraintStart_toEndOf="@+id/image_view_username"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_name"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/edittext_email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="email"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
+        app:layout_constraintStart_toEndOf="@+id/image_view_email"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_email"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/edittext_senha"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="senha"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_senha"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_senha"
+        app:layout_constraintStart_toEndOf="@+id/image_view_senha"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_senha"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/edittext_confirme_senha"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="confirmar senha"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintStart_toEndOf="@+id/image_view_confirme_senha"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/image_view_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_email_write"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_email"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_email"
+        app:layout_constraintVertical_bias="0.54"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/image_view_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_person_pin_24"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_name"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_name"
+        app:layout_constraintVertical_bias="0.527"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/image_view_senha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_lock_write"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_senha"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_senha"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_senha"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/image_view_confirme_senha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_lock_write"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="70dp"
+        android:text="Crie sua conta"
+        android:textColor="@android:color/white"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_make_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
+        android:text="Preencha os dados abaixo"
+        android:textColor="@color/letras"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_login"
+        tools:ignore="MissingConstraints" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

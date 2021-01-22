@@ -1,4 +1,4 @@
-package com.example.app_point.fragments.home
+package com.example.app_point.fragments.pontos
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

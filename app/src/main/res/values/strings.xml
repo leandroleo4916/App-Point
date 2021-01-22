@@ -1,26 +1,11 @@
 <resources>
-    <string name="app_name">App-Point</string>
-    <string name="title_home">Pontos</string>
-    <string name="title_dashboard">Cadastro</string>
-    <string name="title_notifications">Perfil</string>
-    <string name="login">login</string>
-    <string name="senha">senha</string>
-    <string name="text_sem_cadastro">Ainda não tem cadastro?</string>
-    <string name="cadastre_se_aqui">Cadastre-se aqui</string>
-    <string name="salvar">SALVAR</string>
-    <string name="preencha_dados">Preencha todos os dados!</string>
-    <string name="erro_usuario">Erro de usuário e/ou senha!</string>
-    <string name="cadastro_feito">Cadastrado com sucesso!</string>
-    <string name="erro_inesperado">Algo deu errado, tente novamente!</string>
-    <string name="email">email</string>
-    <string name="nome">nome</string>
-    <string name="pular_login">pular login</string>
-    <string name="employee">Funcionario</string>
-    <string name="cargo">Cargo</string>
-    <string name="nome_completo">Nome Completo</string>
-    <string name="telefone">Telefone</string>
-    <string name="admissao">Admissão</string>
-    <string name="nome_completo_">nome completo</string>
-    <string name="cancelar">Cancelar</string>
-    <string name="cancelado">Cancelado!</string>
+    <string name="app_name">Ponto</string>
+    <string name="title_activity_principal">MainActivity</string>
+    <string name="title_pontos">Pontos</string>
+    <string name="title_perfil">Perfil</string>
+    <string name="title_cadastro">Cadastro</string>
+    <string name="preencha_campos">Preencha todos os campos!</string>
+    <string name="erro_usuario">Erro de usuario e/ou senha!</string>
+    <string name="cadastro_feito">Cadastro efetuado com sucesso!</string>
+    <string name="erro_inesperado">Erro inesperado aconteceu!</string>
 </resources>

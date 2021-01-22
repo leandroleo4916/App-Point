@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0E0D0E</color>
-    <color name="colorPrimaryDark">#1F1E20</color>
-    <color name="colorAccent">#5C6362</color>
+    <color name="colorPrimary">#2c2b3f</color>
+    <color name="colorPrimaryDark">#2c2b3f</color>
+    <color name="colorAccent">#606060</color>
+    <color name="back">#2c2b3f</color>
+    <color name="fundo">#35b5ad</color>
+    <color name="letras">#e6e1e4</color>
+    <color name="letrashint">#9A9297</color>
+    <color name="corToolBar">#645c64</color>
+    <color name="textButtom">#7a69b0</color>
+
+
 </resources>

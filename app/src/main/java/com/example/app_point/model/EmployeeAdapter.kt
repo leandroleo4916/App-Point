@@ -12,7 +12,7 @@ class EmployeeAdapter: RecyclerView.Adapter<EmployeeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
-            R.layout.perfil_employee, parent, false)
+            R.layout.perfil_funcionario, parent, false)
         return EmployeeViewHolder(item)
     }
 
