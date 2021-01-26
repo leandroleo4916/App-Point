@@ -28,4 +28,7 @@
     <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
     <string name="n_o_tem_conta">Não tem conta?</string>
     <string name="cadastre_se">Cadastre-se</string>
+    <string name="senhas_diferentes">Senhas estão diferentes!</string>
+    <string name="login_feito">Login feito com sucesso!</string>
+    <string name="bem_vindo">Seja bem-vindo</string>
 </resources>

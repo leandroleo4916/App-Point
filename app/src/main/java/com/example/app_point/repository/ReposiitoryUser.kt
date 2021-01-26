@@ -30,6 +30,8 @@ class ReposiitoryUser(context: Context) {
         return try {
             val db = mDataBaseUser.readableDatabase
 
+            
+
             true
         }catch (e: Exception) {
             false

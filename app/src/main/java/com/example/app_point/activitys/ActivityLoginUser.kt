@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.repository.ReposiitoryUser
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.perfil_funcionario.*
 
 class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 
@@ -35,12 +37,18 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
     private fun loginUser(){
         val userLogin = edittext_user.text.toString()
         val userPassword = edittext_senha.text.toString()
+        val editTextUser = edittext_user
+        val editTextPassword = edittext_senha
 
         when {
-            userLogin == "" || userPassword == "" -> {
-                Toast.makeText(this, getString(R.string.preencha_campos), Toast.LENGTH_SHORT).show()
+            userLogin == "" -> {
+                editTextUser.error = "Digite Login"
+            }
+            userPassword == "" -> {
+                editTextPassword.error = "Digite Senha"
             }
             mRepositoryUser.storeUser(userLogin, userPassword) -> {
+                Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivityPrincipal::class.java))
             }
             else -> {

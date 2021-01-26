@@ -83,6 +83,7 @@
         app:layout_constraintEnd_toEndOf="@+id/toolbar_senha"
         app:layout_constraintStart_toEndOf="@+id/image_view_senha"
         app:layout_constraintTop_toTopOf="@+id/toolbar_senha"
+        app:passwordToggleEnabled="true"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
