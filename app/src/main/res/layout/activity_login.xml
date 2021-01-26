@@ -21,7 +21,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/logo_digital" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_login"
@@ -49,10 +50,10 @@
             android:id="@+id/edittext_user"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Login"
+            android:hint="@string/login"
             android:textColor="@color/letras"
             android:textColorHint="@color/letras"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_login"
             app:layout_constraintEnd_toEndOf="@+id/toolbar_login"
@@ -88,10 +89,10 @@
             android:id="@+id/edittext_senha"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Senha"
+            android:hint="@string/senha"
             android:textColor="@color/letras"
             android:textColorHint="@color/letras"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_senha"
@@ -113,7 +114,8 @@
         app:layout_constraintStart_toStartOf="@+id/toolbar_login"
         app:layout_constraintTop_toTopOf="@+id/toolbar_login"
         app:layout_constraintVertical_bias="0.527"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/image_name" />
 
     <ImageView
         android:id="@+id/image_view_senha"
@@ -125,7 +127,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_senha"
         app:layout_constraintStart_toStartOf="@+id/toolbar_senha"
         app:layout_constraintTop_toTopOf="@+id/toolbar_senha"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/image_senha" />
 
 
     <TextView
@@ -133,9 +136,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@android:color/white"
-        android:textSize="32dp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/text_make_login"
         app:layout_constraintTop_toBottomOf="@+id/logo_digital"
@@ -147,9 +150,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
-        android:text="Faça login para continuar"
+        android:text="@string/fa_a_login_para_continuar"
         android:textColor="@color/letras"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/toolbar_login"
         app:layout_constraintTop_toBottomOf="@+id/text_login"
         tools:ignore="MissingConstraints" />
@@ -160,9 +163,9 @@
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/back_buttom"
-        android:text="entrar"
+        android:text="@string/entrar"
         android:textColor="@color/back"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_senha"
@@ -175,9 +178,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/text_new_account"
-        android:text="Esqueceu sua senha?"
+        android:text="@string/esqueceu_sua_senha"
         android:textColor="@color/fundo"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/text_new_account"
@@ -192,9 +195,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="88dp"
         android:layout_marginBottom="4dp"
-        android:text="Não tem conta?"
+        android:text="@string/n_o_tem_conta"
         android:textColor="@color/letras"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -207,9 +210,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="4dp"
         android:layout_toEndOf="@id/text_new_account"
-        android:text="Cadastre-se"
+        android:text="@string/cadastre_se"
         android:textColor="@color/fundo"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/text_new_account"
         app:layout_constraintStart_toEndOf="@+id/text_new_account"

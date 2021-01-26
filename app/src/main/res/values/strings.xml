@@ -21,4 +21,11 @@
     <string name="image_senha">Image Senha</string>
     <string name="crie_sua_conta">Crie sua conta</string>
     <string name="preencha_os_dados_abaixo">Preencha os dados abaixo</string>
+    <string name="logo_digital">Logo Digital</string>
+    <string name="login">Login</string>
+    <string name="fa_a_login_para_continuar">Faça login para continuar</string>
+    <string name="entrar">entrar</string>
+    <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
+    <string name="n_o_tem_conta">Não tem conta?</string>
+    <string name="cadastre_se">Cadastre-se</string>
 </resources>
