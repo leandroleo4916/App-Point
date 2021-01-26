@@ -48,7 +48,7 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this, "As senhas estão diferentes!", Toast.LENGTH_SHORT).show()
             }
             mReposiitoryUser.getUser(name, email, senha)->{
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, MainActivityPrincipal::class.java))
             }
         }
     }

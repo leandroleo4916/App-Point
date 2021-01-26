@@ -41,7 +41,7 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this, getString(R.string.preencha_campos), Toast.LENGTH_SHORT).show()
             }
             mRepositoryUser.storeUser(userLogin, userPassword) -> {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, MainActivityPrincipal::class.java))
             }
             else -> {
                 Toast.makeText(this, getString(R.string.erro_usuario), Toast.LENGTH_SHORT).show()

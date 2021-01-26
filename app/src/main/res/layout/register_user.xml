@@ -16,17 +16,19 @@
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/buttom_back" />
 
     <TextView
         android:id="@+id/text_inicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="3dp"
         android:layout_toEndOf="@id/ready_account"
-        android:text="entre aqui!"
+        android:text="@string/entre_aqui"
         android:textColor="@color/fundo"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ready_account"
         app:layout_constraintStart_toEndOf="@+id/ready_account"
@@ -40,9 +42,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="70dp"
         android:layout_marginBottom="4dp"
-        android:text="Se você já tiver conta, "
+        android:text="@string/se_voc_j_tiver_conta"
         android:textColor="@color/letras"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,9 +56,9 @@
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/back_buttom"
-        android:text="criar conta"
+        android:text="@string/criar_conta"
         android:textColor="@color/back"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha"
@@ -110,65 +112,114 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_senha"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/edittext_username"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="nome"
-        android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
-        android:textSize="20dp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_name"
         app:layout_constraintStart_toEndOf="@+id/image_view_username"
         app:layout_constraintTop_toTopOf="@+id/toolbar_name"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
 
-    <EditText
-        android:id="@+id/edittext_email"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_username"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/nome"
+            android:textColor="@color/letras"
+            android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_name"
+            app:layout_constraintStart_toEndOf="@+id/image_view_username"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_name"
+            tools:ignore="MissingConstraints" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="email"
-        android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
-        android:textSize="20dp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
         app:layout_constraintStart_toEndOf="@+id/image_view_email"
         app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
 
-    <EditText
-        android:id="@+id/edittext_senha"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:textColor="@color/letras"
+            android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
+            app:layout_constraintStart_toEndOf="@+id/image_view_email"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_email"
+            tools:ignore="MissingConstraints" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="senha"
-        android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_senha"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_senha"
         app:layout_constraintStart_toEndOf="@+id/image_view_senha"
         app:layout_constraintTop_toTopOf="@+id/toolbar_senha"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
 
-    <EditText
-        android:id="@+id/edittext_confirme_senha"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_senha"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/senha"
+            android:textColor="@color/letras"
+            android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_senha"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_senha"
+            app:layout_constraintStart_toEndOf="@+id/image_view_senha"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_senha"
+            tools:ignore="MissingConstraints" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="confirmar senha"
-        android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
-        android:textSize="20dp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha"
         app:layout_constraintStart_toEndOf="@+id/image_view_confirme_senha"
         app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_confirme_senha"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirmar_senha"
+            android:textColor="@color/letras"
+            android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha"
+            app:layout_constraintStart_toEndOf="@+id/image_view_confirme_senha"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
+            tools:ignore="MissingConstraints" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/image_view_email"
@@ -181,7 +232,8 @@
         app:layout_constraintStart_toStartOf="@+id/toolbar_email"
         app:layout_constraintTop_toTopOf="@+id/toolbar_email"
         app:layout_constraintVertical_bias="0.54"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/image_email" />
 
     <ImageView
         android:id="@+id/image_view_username"
@@ -194,7 +246,8 @@
         app:layout_constraintStart_toStartOf="@+id/toolbar_name"
         app:layout_constraintTop_toTopOf="@+id/toolbar_name"
         app:layout_constraintVertical_bias="0.527"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/image_name" />
 
     <ImageView
         android:id="@+id/image_view_senha"
@@ -206,7 +259,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_senha"
         app:layout_constraintStart_toStartOf="@+id/toolbar_senha"
         app:layout_constraintTop_toTopOf="@+id/toolbar_senha"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/image_senha" />
 
     <ImageView
         android:id="@+id/image_view_confirme_senha"
@@ -218,7 +272,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
         app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha"
         app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/image_senha" />
 
     <TextView
         android:id="@+id/text_login"
@@ -226,9 +281,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="70dp"
-        android:text="Crie sua conta"
+        android:text="@string/crie_sua_conta"
         android:textColor="@android:color/white"
-        android:textSize="32dp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -240,13 +295,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        android:text="Preencha os dados abaixo"
+        android:text="@string/preencha_os_dados_abaixo"
         android:textColor="@color/letras"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_login"
         tools:ignore="MissingConstraints" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

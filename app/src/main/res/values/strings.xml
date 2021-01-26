@@ -8,4 +8,17 @@
     <string name="erro_usuario">Erro de usuario e/ou senha!</string>
     <string name="cadastro_feito">Cadastro efetuado com sucesso!</string>
     <string name="erro_inesperado">Erro inesperado aconteceu!</string>
+    <string name="buttom_back">Buttom Back</string>
+    <string name="entre_aqui"> entre aqui!</string>
+    <string name="se_voc_j_tiver_conta">Se você já tiver conta,</string>
+    <string name="criar_conta">criar conta</string>
+    <string name="nome">Nome</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="confirmar_senha">Confirmar Senha</string>
+    <string name="image_email">Image Email</string>
+    <string name="image_name">Image Name</string>
+    <string name="image_senha">Image Senha</string>
+    <string name="crie_sua_conta">Crie sua conta</string>
+    <string name="preencha_os_dados_abaixo">Preencha os dados abaixo</string>
 </resources>
