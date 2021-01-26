@@ -2,8 +2,10 @@ package com.example.app_point.repository
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import com.example.app_point.database.ConstantsUser
 import com.example.app_point.database.DataBaseUser
+import com.example.app_point.utils.UserEntity
 
 class ReposiitoryUser(context: Context) {
 
@@ -26,16 +28,48 @@ class ReposiitoryUser(context: Context) {
         }
     }
 
-    fun storeUser(email: String, password: String): Boolean{
-        return try {
+    fun storeUser(email: String, senha: String): UserEntity? {
+
+        var user: UserEntity? = null
+
+        try {
+            val cursor: Cursor
             val db = mDataBaseUser.readableDatabase
 
-            
+            val projection = arrayOf(
+                ConstantsUser.USER.COLUNAS.ID,
+                ConstantsUser.USER.COLUNAS.EMAIL,
+                ConstantsUser.USER.COLUNAS.PASSWORD
+            )
 
-            true
+            val selection = "${ConstantsUser.USER.COLUNAS.EMAIL} = ? AND " +
+                    "${ConstantsUser.USER.COLUNAS.PASSWORD} = ?"
+
+            val selectionArgs = arrayOf(email, senha)
+
+            cursor = db.query(
+                ConstantsUser.USER.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+            )
+
+            if (cursor.count > 0) {
+                cursor.moveToFirst()
+
+                val idUser = cursor.getInt(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.ID))
+                val emailUser= cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.EMAIL))
+                val nameUser = cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.PASSWORD))
+
+                user = UserEntity(idUser, emailUser, nameUser)
+            }
+            cursor?.close()
         }catch (e: Exception) {
-            false
+            return user
         }
+        return user
     }
-
 }
