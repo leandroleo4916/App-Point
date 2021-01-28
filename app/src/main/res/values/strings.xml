@@ -12,7 +12,6 @@
     <string name="entre_aqui"> entre aqui!</string>
     <string name="se_voc_j_tiver_conta">Se você já tiver conta,</string>
     <string name="criar_conta">criar conta</string>
-    <string name="nome">Nome</string>
     <string name="email">Email</string>
     <string name="senha">Senha</string>
     <string name="confirmar_senha">Confirmar Senha</string>
@@ -32,4 +31,6 @@
     <string name="login_feito">Login feito com sucesso!</string>
     <string name="bem_vindo">Seja bem-vindo</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="nome">Nome</string>
+    <string name="cargo">Cargo</string>
 </resources>

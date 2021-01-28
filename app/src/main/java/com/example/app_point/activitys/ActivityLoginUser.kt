@@ -7,10 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
-import com.example.app_point.repository.ReposiitoryUser
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.perfil_funcionario.*
 
 class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 

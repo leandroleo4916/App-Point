@@ -4,20 +4,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/perfil_employee"
-    android:layout_width="160dp"
+    android:layout_width="match_parent"
     android:layout_height="170dp"
     android:background="@drawable/back_toolbar">
+
+    <ImageView
+        android:id="@+id/image_employee"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/back_employee"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,MissingConstraints" />
 
     <TextView
         android:id="@+id/txt_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
         android:text="Funcionario"
         android:textColor="@android:color/white"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/image_employee"
+        app:layout_constraintTop_toTopOf="@+id/image_employee" />
+
+    <TextView
+        android:id="@+id/txt_cargo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:text="Cargo"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/image_employee"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nome" />
 </androidx.constraintlayout.widget.ConstraintLayout>
