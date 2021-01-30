@@ -8,4 +8,16 @@
     android:background="@color/back"
     tools:context=".activitys.PerfilActivity">
 
+    <ImageView
+        android:id="@+id/image_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
+        android:contentDescription="@string/buttom_back"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

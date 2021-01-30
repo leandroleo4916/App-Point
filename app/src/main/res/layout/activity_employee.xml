@@ -168,7 +168,7 @@
             tools:layout_editor_absoluteY="162dp" />
 
         <ImageView
-            android:id="image_in_opcoes"
+            android:id="@+id/image_opcoes_in"
             android:layout_width="59dp"
             android:layout_height="64dp"
             android:layout_alignStart="@+id/image_opcoes"
