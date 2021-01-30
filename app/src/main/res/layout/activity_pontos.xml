@@ -9,7 +9,7 @@
     tools:context=".activitys.PontosActivity">
 
     <ImageView
-        android:id="@+id/image_back"
+        android:id="@+id/image_back_pontos"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="18dp"

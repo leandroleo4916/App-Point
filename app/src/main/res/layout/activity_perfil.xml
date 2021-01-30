@@ -9,7 +9,7 @@
     tools:context=".activitys.PerfilActivity">
 
     <ImageView
-        android:id="@+id/image_back"
+        android:id="@+id/image_back_perfil"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="18dp"

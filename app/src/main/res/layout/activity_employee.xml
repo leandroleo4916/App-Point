@@ -138,7 +138,7 @@
             tools:layout_editor_absoluteY="162dp" />
 
         <ImageView
-            android:id="@+id/image_clock_pontos"
+            android:id="@+id/image_in_clock"
             android:layout_width="59dp"
             android:layout_height="64dp"
             android:layout_alignStart="@+id/image_historicos_pontos"
@@ -168,7 +168,7 @@
             tools:layout_editor_absoluteY="162dp" />
 
         <ImageView
-            android:id="@+id/image_opcoes_in"
+            android:id="@+id/image_in_opcoes"
             android:layout_width="59dp"
             android:layout_height="64dp"
             android:layout_alignStart="@+id/image_opcoes"
