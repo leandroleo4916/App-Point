@@ -46,8 +46,8 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
                 editTextPassword.error = "Digite Senha"
             }
             mBusinessUser.storeUser(userLogin, userPassword) -> {
+                startActivity(Intent(this, EmployeeActivity::class.java))
                 Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivityPrincipal::class.java))
                 finish()
             }
             else -> {
