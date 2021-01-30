@@ -82,6 +82,21 @@
             tools:layout_editor_absoluteY="162dp" />
 
         <ImageView
+            android:id="@+id/image_in_register"
+            android:layout_width="59dp"
+            android:layout_height="64dp"
+            android:layout_alignStart="@+id/image_register_employee"
+            android:layout_alignEnd="@+id/image_register_employee"
+            android:layout_alignBottom="@+id/image_register_employee"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="14dp"
+            android:src="@drawable/team"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
             android:id="@+id/image_perfil_employee"
             android:layout_width="90dp"
             android:layout_height="90dp"
@@ -93,6 +108,21 @@
             app:layout_constraintStart_toEndOf="@+id/image_register_employee"
             tools:ignore="ContentDescription,MissingConstraints"
             tools:layout_editor_absoluteY="162dp" />
+
+        <ImageView
+            android:id="@+id/image_in_perfil"
+            android:layout_width="59dp"
+            android:layout_height="64dp"
+            android:layout_alignStart="@+id/image_perfil_employee"
+            android:layout_alignEnd="@+id/image_perfil_employee"
+            android:layout_alignBottom="@+id/image_perfil_employee"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="14dp"
+            android:src="@drawable/man"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/image_historicos_pontos"
@@ -108,6 +138,21 @@
             tools:layout_editor_absoluteY="162dp" />
 
         <ImageView
+            android:id="@+id/image_clock_pontos"
+            android:layout_width="59dp"
+            android:layout_height="64dp"
+            android:layout_alignStart="@+id/image_historicos_pontos"
+            android:layout_alignEnd="@+id/image_historicos_pontos"
+            android:layout_alignBottom="@+id/image_historicos_pontos"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="13dp"
+            android:src="@drawable/clock"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
             android:id="@+id/image_opcoes"
             android:layout_width="90dp"
             android:layout_height="90dp"
@@ -121,6 +166,21 @@
             app:layout_constraintStart_toEndOf="@+id/image_historicos_pontos"
             tools:ignore="ContentDescription,MissingConstraints"
             tools:layout_editor_absoluteY="162dp" />
+
+        <ImageView
+            android:id="image_in_opcoes"
+            android:layout_width="59dp"
+            android:layout_height="64dp"
+            android:layout_alignStart="@+id/image_opcoes"
+            android:layout_alignEnd="@+id/image_opcoes"
+            android:layout_alignBottom="@+id/image_opcoes"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="13dp"
+            android:src="@drawable/gears"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/text_register_employee"
@@ -261,6 +321,7 @@
             app:layout_constraintTop_toTopOf="@+id/toolbar_login" />
 
         <ImageView
+            android:id="@+id/image_add_ponto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"

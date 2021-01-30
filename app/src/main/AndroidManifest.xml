@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".activitys.EmployeeActivity"></activity>
+        <activity android:name=".activitys.PerfilActivity"></activity>
+        <activity android:name=".activitys.RegisterEmployeeActivity" />
+        <activity android:name=".activitys.EmployeeActivity" />
         <activity android:name=".activitys.MainActivityPrincipal" />
         <activity android:name=".activitys.RegisterUser" />
         <activity android:name=".activitys.ActivityLoginUser">
