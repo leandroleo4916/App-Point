@@ -35,4 +35,14 @@
     <string name="nome">Nome</string>
     <string name="cargo">Cargo</string>
     <string name="cadastro">Cadastro</string>
+    <string name="funcionario">Funcionário</string>
+    <string name="_10_fev">10 Fev</string>
+    <string name="_00_00">00:00</string>
+    <string name="ola">Olá,</string>
+    <string name="fulano">Fulano</string>
+    <string name="exclamacao">!</string>
+    <string name="sair">Sair</string>
+    <string name="registrar">Registrar</string>
+    <string name="opcoes">Opções</string>
+    <string name="pontos_recentes">Pontos Recentes</string>
 </resources>

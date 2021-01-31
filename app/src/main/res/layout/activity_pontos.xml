@@ -8,12 +8,25 @@
     android:background="@color/back"
     tools:context=".activitys.PontosActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Pontos Registrados"
+        android:textColor="@color/letrashint"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:id="@+id/image_back_pontos"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/buttom_back"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
