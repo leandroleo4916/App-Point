@@ -15,7 +15,7 @@
         <activity android:name=".activitys.PontosActivity" />
         <activity android:name=".activitys.PerfilActivity" />
         <activity android:name=".activitys.RegisterEmployeeActivity" />
-        <activity android:name=".activitys.EmployeeActivity" />
+        <activity android:name=".activitys.MainActivity" />
         <activity android:name=".activitys.MainActivityPrincipal" />
         <activity android:name=".activitys.RegisterUser" />
         <activity android:name=".activitys.ActivityLoginUser">

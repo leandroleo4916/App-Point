@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.app_point.R
-import kotlinx.android.synthetic.main.activity_employee.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-class EmployeeActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_employee)
+        setContentView(R.layout.activity_main)
 
         listener()
 
