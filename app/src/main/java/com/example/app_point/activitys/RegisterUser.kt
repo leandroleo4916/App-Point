@@ -65,7 +65,7 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
             }
             mReposiitoryUser.getUser(name, email, senha)->{
                 Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivityPrincipal::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
         }
