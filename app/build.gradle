@@ -51,5 +51,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:22.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.ramijemli.percentagechartview:percentagechartview:0.3.0'
 
 }

@@ -46,4 +46,5 @@
     <string name="opcoes">Opções</string>
     <string name="pontos_recentes">Pontos Recentes</string>
     <string name="perfil_funcionario">Perfil Funcionário</string>
+    <string name="nome_do_funcionario">Nome do Funcionário</string>
 </resources>
