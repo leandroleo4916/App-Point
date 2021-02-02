@@ -196,7 +196,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="86dp"
+        android:layout_marginStart="82dp"
         android:layout_marginBottom="4dp"
         android:text="@string/n_o_tem_conta"
         android:textColor="@color/letras"
