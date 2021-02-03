@@ -10,21 +10,22 @@ class RepositoryEmployee(context: Context?) {
 
     private val mDataBaseEmployee: DataBaseEmployee = DataBaseEmployee(context)
 
-    fun getEmployee(name: String, office: String, email: String, phone: String, admission: String,
-                hour1: String, hour2: String, hour3: String, hour4: String): Boolean {
+    fun getEmployee(name: String, cargo: String, email: String, phone: String, admissao: String,
+                    aniversario: String, hour1: String, hour2: String, hour3: String, hour4: String): Boolean {
 
         return try{
             val db = mDataBaseEmployee.writableDatabase
             val insertValues = ContentValues()
             insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, name)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.OFFICE, office)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, cargo)
             insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, email)
             insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, phone)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, admission)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURINONE, hour1)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURINTWO, hour2)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOUROUTONE, hour3)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOUROUTTWO, hour4)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, admissao)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, aniversario)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, hour1)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, hour2)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, hour3)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, hour4)
 
             db.insert(ConstantsEmployee.EMPLOYEE.TABLE_NAME, null, insertValues)
             true
@@ -75,7 +76,7 @@ class RepositoryEmployee(context: Context?) {
         try {
             val cursor: Cursor
             val db = mDataBaseEmployee.readableDatabase
-            val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.OFFICE)
+            val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO)
             val orderBy = ConstantsEmployee.EMPLOYEE.COLUMNS.ID
 
             cursor = db.query(
@@ -91,7 +92,7 @@ class RepositoryEmployee(context: Context?) {
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
                     val officeEmployee =
-                        cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.OFFICE))
+                        cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
 
                     list.add(officeEmployee)
                 }

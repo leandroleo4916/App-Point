@@ -6,21 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/back">
 
-    <ImageView
-        android:id="@+id/photo_employee_register"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/buttom_back"
-        android:src="@drawable/back_fundo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHome"
-        tools:ignore="MissingConstraints" />
-
     <Button
-        android:id="@+id/buttom_register_user"
+        android:id="@+id/buttom_register_employee"
         android:layout_width="235dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
@@ -108,9 +95,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photo_employee_register"
+        app:layout_constraintTop_toBottomOf="@+id/image_back_employee"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -171,6 +157,7 @@
         android:layout_marginStart="12dp"
         android:inputType="time"
         android:singleLine="true"
+        android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
         android:textSize="20sp"
@@ -188,6 +175,7 @@
         android:layout_marginStart="12dp"
         android:inputType="time"
         android:singleLine="true"
+        android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
         android:textSize="20sp"
@@ -205,6 +193,7 @@
         android:layout_marginStart="24dp"
         android:inputType="time"
         android:singleLine="true"
+        android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
         android:textSize="20sp"
@@ -222,6 +211,7 @@
         android:layout_marginStart="12dp"
         android:inputType="time"
         android:singleLine="true"
+        android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
         android:textSize="20sp"
@@ -303,7 +293,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edittext_confirme_senha2"
+            android:id="@+id/edittext_cargo"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -502,7 +492,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/image_back_employee"
+        android:id="@+id/image_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="18dp"
@@ -511,6 +501,19 @@
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/image_back_employee"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/buttom_back"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHome"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -523,7 +526,7 @@
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/image_back_employee"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 

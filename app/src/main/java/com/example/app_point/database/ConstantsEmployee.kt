@@ -7,14 +7,15 @@ class ConstantsEmployee {
         object COLUMNS {
             const val ID = "id"
             const val NAME = "name"
-            const val OFFICE = "office"
+            const val CARGO = "cargo"
             const val EMAIL = "email"
             const val PHONE = "telefone"
             const val ADMISSION = "admission"
-            const val HOURINONE = "hourInOne"
-            const val HOUROUTONE = "hourOutOne"
-            const val HOURINTWO = "hourInTwo"
-            const val HOUROUTTWO = "hourOutTwo"
+            const val ANIVERSARIO = "aniversario"
+            const val HOURARIO1 = "hourario1"
+            const val HOURARIO2 = "hourario2"
+            const val HOURARIO3 = "hourario3"
+            const val HOURARIO4 = "hourario4"
         }
     }
 }
