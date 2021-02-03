@@ -1,520 +1,530 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back"
-    android:orientation="vertical">
+    android:background="@color/back">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/back">
+    <ImageView
+        android:id="@+id/photo_employee_register"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/buttom_back"
+        android:src="@drawable/back_fundo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHome"
+        tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/textViewHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Cadastrar Funcionário"
-            android:textColor="@color/letrashint"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/buttom_register_user"
+        android:layout_width="235dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/back_buttom"
+        android:text="Cadastrar"
+        android:textColor="@color/back"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha5"
+        tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/image_back_employee"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="@string/buttom_back"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_name"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha7"
+        tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/photo_employee_register"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/buttom_back"
-            android:src="@drawable/back_fundo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewHome"
-            tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_email"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_name"
+        tools:ignore="MissingConstraints" />
 
-        <Button
-            android:id="@+id/buttom_register_user"
-            android:layout_width="235dp"
-            android:layout_height="60dp"
-            android:background="@drawable/back_buttom"
-            android:text="Cadastrar"
-            android:textColor="@color/back"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha6"
-            tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_confirme_senha"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_email"
+        tools:ignore="MissingConstraints" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_name"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha7"
-            tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_confirme_senha3"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha"
+        tools:ignore="MissingConstraints" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_email"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_name"
-            tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_confirme_senha4"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha3"
+        tools:ignore="MissingConstraints" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_confirme_senha"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_email"
-            tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_confirme_senha5"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha4"
+        tools:ignore="MissingConstraints" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_confirme_senha2"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha"
-            tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_confirme_senha7"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/back_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo_employee_register"
+        tools:ignore="MissingConstraints" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_confirme_senha3"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha2"
-            tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/textViewHorario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Horário de Trabalho"
+        android:textColor="@color/letrashint"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/icon_username2"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha7" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_confirme_senha4"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha3"
-            tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/text_espace1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - "
+        android:textSize="20sp"
+        android:textColor="@color/letrashint"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/horario1"
+        app:layout_constraintEnd_toStartOf="@+id/horario2"
+        app:layout_constraintStart_toEndOf="@+id/horario1"
+        app:layout_constraintTop_toTopOf="@+id/horario1" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_confirme_senha5"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha4"
-            tools:ignore="MissingConstraints" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_confirme_senha6"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha5"
-            tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/text_espace2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" / "
+        android:textSize="20sp"
+        android:textColor="@color/letrashint"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/horario2"
+        app:layout_constraintEnd_toStartOf="@+id/horario3"
+        app:layout_constraintStart_toEndOf="@+id/horario2"
+        app:layout_constraintTop_toTopOf="@+id/horario2" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_confirme_senha7"
-            android:layout_width="360dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/back_toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photo_employee_register"
-            tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/text_espace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - "
+        android:textSize="20sp"
+        android:textColor="@color/letrashint"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/horario3"
+        app:layout_constraintEnd_toStartOf="@+id/horario4"
+        app:layout_constraintStart_toEndOf="@+id/horario3"
+        app:layout_constraintTop_toTopOf="@+id/horario3" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout4"
+    <EditText
+        android:id="@+id/horario1"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:inputType="time"
+        android:singleLine="true"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
+        app:layout_constraintStart_toEndOf="@+id/icon_username2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/horario2"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:inputType="time"
+        android:singleLine="true"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
+        app:layout_constraintStart_toEndOf="@+id/horario1"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/horario3"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:inputType="time"
+        android:singleLine="true"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
+        app:layout_constraintStart_toEndOf="@+id/horario2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/horario4"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:inputType="time"
+        android:singleLine="true"
+        android:textColor="@color/letras"
+        android:textColorHint="@color/letrashint"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
+        app:layout_constraintStart_toEndOf="@+id/horario3"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_name"
+        app:layout_constraintStart_toEndOf="@+id/icon_username"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_name"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_username"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:hint="@string/nome"
+            android:singleLine="true"
+            android:textColor="@color/letras"
             android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
             app:layout_constraintEnd_toEndOf="@+id/toolbar_name"
-            app:layout_constraintStart_toEndOf="@+id/icon_username"
+            app:layout_constraintStart_toEndOf="@+id/image_view_username"
             app:layout_constraintTop_toTopOf="@+id/toolbar_name"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_username"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/nome"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_name"
-                app:layout_constraintStart_toEndOf="@+id/image_view_username"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_name"
-                tools:ignore="MissingConstraints" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout5"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
+        app:layout_constraintStart_toEndOf="@+id/icon_email"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_email"
+        tools:ignore="MissingConstraints">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout5"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:singleLine="true"
+            android:textColor="@color/letras"
             android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha2"
-            app:layout_constraintStart_toEndOf="@+id/icon_email"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
+            app:layout_constraintStart_toEndOf="@+id/image_view_email"
             app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_email"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/email"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-                app:layout_constraintStart_toEndOf="@+id/image_view_email"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-                tools:ignore="MissingConstraints" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintStart_toEndOf="@+id/icon_cargo"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
+        tools:ignore="MissingConstraints">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_confirme_senha2"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/cargo"
+            android:singleLine="true"
+            android:textColor="@color/letras"
             android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
             app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha"
-            app:layout_constraintStart_toEndOf="@+id/icon_cargo"
+            app:layout_constraintStart_toEndOf="@+id/image_view_confirme_senha"
             app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_confirme_senha2"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/cargo"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha"
-                app:layout_constraintStart_toEndOf="@+id/image_view_confirme_senha"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
-                tools:ignore="MissingConstraints" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout6"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha3"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha3"
+        app:layout_constraintStart_toEndOf="@+id/icon_phone"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha3"
+        tools:ignore="MissingConstraints">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout9"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_phone"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:hint="Telefone"
+            android:singleLine="true"
+            android:textColor="@color/letras"
             android:textColorHint="@color/letrashint"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha2"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha2"
-            app:layout_constraintStart_toEndOf="@+id/icon_endereco"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha2"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_address"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="Endereço"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-                app:layout_constraintStart_toEndOf="@+id/image_view_email"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-                tools:ignore="MissingConstraints" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout6"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/letrashint"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha3"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha3"
-            app:layout_constraintStart_toEndOf="@+id/icon_phone"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha3"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_phone"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="Telefone"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-                app:layout_constraintStart_toEndOf="@+id/image_view_email"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-                tools:ignore="MissingConstraints" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/letrashint"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha4"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha4"
-            app:layout_constraintStart_toEndOf="@+id/icon_admissao"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha4"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_admissao"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="Admissão"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-                app:layout_constraintStart_toEndOf="@+id/image_view_email"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-                tools:ignore="MissingConstraints" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout7"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/letrashint"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha5"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha5"
-            app:layout_constraintStart_toEndOf="@+id/icon_aniversario"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha5"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_aniversário"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="Aniversário"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-                app:layout_constraintStart_toEndOf="@+id/image_view_email"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-                tools:ignore="MissingConstraints" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout8"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/letrashint"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha6"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha6"
-            app:layout_constraintStart_toEndOf="@+id/icon_contrato"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha6"
-            tools:ignore="MissingConstraints">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittext_contrato"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="Contrato"
-                android:singleLine="true"
-                android:textColor="@color/letras"
-                android:textColorHint="@color/letrashint"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-                app:layout_constraintStart_toEndOf="@+id/image_view_email"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-                tools:ignore="MissingConstraints" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/icon_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_email"
-            android:scaleType="center"
-            android:src="@drawable/ic_email_write"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:inputType="phone"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_email"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
+            app:layout_constraintStart_toEndOf="@+id/image_view_email"
             app:layout_constraintTop_toTopOf="@+id/toolbar_email"
             tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/icon_cargo"
-            android:layout_width="wrap_content"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha4"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha4"
+        app:layout_constraintStart_toEndOf="@+id/icon_admissao"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha4"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_admissao"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_senha"
-            android:scaleType="center"
-            android:src="@drawable/ic_work"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
+            android:hint="Admissão"
+            android:singleLine="true"
+            android:textColor="@color/letras"
+            android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:inputType="datetime"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
+            app:layout_constraintStart_toEndOf="@+id/image_view_email"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_email"
             tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/icon_username"
-            android:layout_width="wrap_content"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout7"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha5"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha5"
+        app:layout_constraintStart_toEndOf="@+id/icon_aniversario"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha5"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_aniversário"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_name"
-            android:scaleType="center"
-            android:src="@drawable/ic_baseline_person_pin_24"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_name"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_name"
+            android:hint="Aniversário"
+            android:singleLine="true"
+            android:textColor="@color/letras"
+            android:textColorHint="@color/letrashint"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:inputType="datetime"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
+            app:layout_constraintStart_toEndOf="@+id/image_view_email"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_email"
             tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/icon_username2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_name"
-            android:scaleType="center"
-            android:src="@drawable/ic_time"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha7"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha7"
-            tools:ignore="MissingConstraints" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/icon_endereco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_senha"
-            android:scaleType="center"
-            android:src="@drawable/ic_localization"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha2"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha2"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha"
-            tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/icon_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image_email"
+        android:scaleType="center"
+        android:src="@drawable/ic_email_write"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_email"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_email"
+        tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/icon_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_senha"
-            android:scaleType="center"
-            android:src="@drawable/ic_phone"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout6"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha3"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha2"
-            tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/icon_cargo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image_senha"
+        android:scaleType="center"
+        android:src="@drawable/ic_work"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha"
+        tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/icon_admissao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_senha"
-            android:scaleType="center"
-            android:src="@drawable/ic_admissao"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha4"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha4"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha4"
-            tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/icon_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image_name"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_person_pin_24"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_name"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_name"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_name"
+        tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/icon_aniversario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_senha"
-            android:scaleType="center"
-            android:src="@drawable/ic_niver"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha5"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha5"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha4"
-            tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/icon_username2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image_name"
+        android:scaleType="center"
+        android:src="@drawable/ic_time"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha7"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha7"
+        tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/icon_contrato"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/image_senha"
-            android:scaleType="center"
-            android:src="@drawable/ic_contrato"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha6"
-            app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha6"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha6"
-            tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/icon_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image_senha"
+        android:scaleType="center"
+        android:src="@drawable/ic_phone"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout6"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha3"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha"
+        tools:ignore="MissingConstraints" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/icon_admissao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image_senha"
+        android:scaleType="center"
+        android:src="@drawable/ic_admissao"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha4"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha4"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha4"
+        tools:ignore="MissingConstraints" />
 
-</ScrollView>
+    <ImageView
+        android:id="@+id/icon_aniversario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image_senha"
+        android:scaleType="center"
+        android:src="@drawable/ic_niver"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha5"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_confirme_senha5"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha4"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/image_back_employee"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/buttom_back"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textViewHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Cadastrar Funcionário"
+        android:textColor="@color/letrashint"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/image_back_employee"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
