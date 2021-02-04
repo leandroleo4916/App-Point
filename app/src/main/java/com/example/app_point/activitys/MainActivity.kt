@@ -1,15 +1,17 @@
 package com.example.app_point.activitys
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
+import com.example.app_point.model.ViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,13 +20,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
+    private val mPontosAdapter: PontosAdapter = PontosAdapter()
+    private val mViewModel: ViewModel = ViewModel(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        listener()
+        // 1 - Captura a recycler
+        val recycler = findViewById<RecyclerView>(R.id.recycler_points)
+        // 2 - Adiciona o Layout
+        recycler.layoutManager = LinearLayoutManager(this)
+        // 3 - Implementa o modelo layout
+        recycler.adapter = mPontosAdapter
 
+        mViewModel.getEmployee()
+        mViewModel.getData()
+        mViewModel.getHora()
+
+        listener()
+        observe()
+    }
+
+    private fun observe(){
+        mViewModel.employeeList.observe(this, androidx.lifecycle.Observer {
+            mPontosAdapter.updateFuncionario(it)
+        })
+        mViewModel.dataList.observe(this, androidx.lifecycle.Observer {
+            mPontosAdapter.updateData(it)
+        })
+        mViewModel.horaList.observe(this, androidx.lifecycle.Observer {
+            mPontosAdapter.updateHora(it)
+        })
     }
 
     private fun listener(){
@@ -92,11 +119,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         when{
             itemSpinner == "" -> {
                 Toast.makeText(this, "Você precisa adicionar funcionários!", Toast.LENGTH_SHORT).show()
-
             }
             mBusinessPoints.getPoints(itemSpinner, dateAtual, horaAtual) ->
                 Toast.makeText(this, "Adicionado com sucesso!", Toast.LENGTH_SHORT).show()
-
             else -> {
                 Toast.makeText(this, "Não foi possível adicionar ponto!", Toast.LENGTH_SHORT).show()
             }
@@ -113,5 +138,4 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("Not yet implemented")
     }
-
 }
