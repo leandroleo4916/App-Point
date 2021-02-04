@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.app_point">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +20,6 @@
         <activity android:name=".activitys.PerfilActivity" />
         <activity android:name=".activitys.RegisterEmployeeActivity" />
         <activity android:name=".activitys.MainActivity" />
-        <activity android:name=".activitys.MainActivityPrincipal" />
         <activity android:name=".activitys.RegisterUser" />
         <activity android:name=".activitys.ActivityLoginUser">
             <intent-filter>

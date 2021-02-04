@@ -1,19 +1,40 @@
 package com.example.app_point.activitys
 
+import android.Manifest
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
 import kotlinx.android.synthetic.main.activity_register_employee.image_back
+import java.io.ByteArrayOutputStream
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
+    private val PERMISSION_CODE = 1000
+    private val IMAGE_CAPTURE_CODE = 1001
+    var image_uri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,17 +45,109 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun listener(){
         image_back.setOnClickListener(this)
+        photo_employee.setOnClickListener(this)
         buttom_register_employee.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         when(view){
             image_back -> finish()
+            photo_employee -> openPopUp()
             buttom_register_employee -> registerEmployee()
         }
     }
 
+    private fun openPopUp() {
+        val popMenu = PopupMenu(this, photo_employee)
+        popMenu.menuInflater.inflate(R.menu.popup, popMenu.menu)
+        popMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
+            override fun onMenuItemClick(item: MenuItem?): Boolean {
+                when (item!!.itemId) {
+                    R.id.abrir_camera -> permissionCamera()
+                    R.id.abrir_galeria -> openGaleria()
+
+                }
+                return true
+            }
+        })
+        popMenu.show()
+    }
+
+    private fun permissionCamera(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
+            PackageManager.PERMISSION_DENIED ||
+            ContextCompat.checkSelfPermission(
+                this, Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) ==
+            PackageManager.PERMISSION_DENIED) {
+
+            val permission = arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            requestPermissions(permission, PERMISSION_CODE)
+
+        }else{
+            openCamera()
+        }
+
+        return true
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera()
+                } else {
+                    Toast.makeText(this, "Permissão negada!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun openCamera(){
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "Nova Foto")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Foto Camera")
+
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+
+            val extras: Bundle = data!!.getExtras()!!
+            val imageBitmap = extras["data"] as Bitmap
+            val bitmapReduzido: Bitmap = Bitmap.createScaledBitmap(imageBitmap, 150, 150, true)
+            val bitMapRound = RoundedBitmapDrawableFactory.create(resources, bitmapReduzido)
+            bitMapRound.cornerRadius = 1000f
+            photo_employee.setImageBitmap(imageBitmap)
+
+        }
+    }
+
+    private fun openGaleria(): Boolean {
+        return true
+    }
+
+    // Tranforma a imagem em ByteArray
+    private fun imageViewToByteArray(image: ImageView): ByteArray? {
+        val bitmap = (image.drawable as BitmapDrawable).bitmap
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        return stream.toByteArray()
+    }
+
     private fun registerEmployee(){
+        val photoEmployee = imageViewToByteArray(photo_employee)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()

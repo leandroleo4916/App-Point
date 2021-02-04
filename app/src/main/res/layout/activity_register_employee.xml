@@ -96,7 +96,7 @@
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_back_employee"
+        app:layout_constraintTop_toBottomOf="@+id/photo_employee"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -504,7 +504,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/image_back_employee"
+        android:id="@+id/photo_employee"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
