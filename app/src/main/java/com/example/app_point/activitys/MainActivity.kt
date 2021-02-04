@@ -122,6 +122,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             }
             mBusinessPoints.getPoints(itemSpinner, dateAtual, horaAtual) ->
                 Toast.makeText(this, "Adicionado com sucesso!", Toast.LENGTH_SHORT).show()
+
             else -> {
                 Toast.makeText(this, "Não foi possível adicionar ponto!", Toast.LENGTH_SHORT).show()
             }
