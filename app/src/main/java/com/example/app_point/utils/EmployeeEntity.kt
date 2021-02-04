@@ -1,7 +1,6 @@
 package com.example.app_point.utils
 
 data class EmployeeEntity(
-
     val horario1: String,
     val horario2: String,
     val horario3: String,

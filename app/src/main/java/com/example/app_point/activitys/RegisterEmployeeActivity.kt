@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_register_employee.image_back
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val mbusinessEmployee: BusinessEmployee = BusinessEmployee(this)
+    private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,16 +58,16 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val edit_aniversario = edittext_aniversário
 
         when{
-            hora1 == ""  -> {
+            hora1 == "" -> {
                 edit_horario1.error = "Horário Obrigatório"
             }
-            hora2 == ""  -> {
+            hora2 == "" -> {
                 edit_horario2.error = "Horário Obrigatório"
             }
-            hora3 == ""  -> {
+            hora3 == "" -> {
                 edit_horario3.error = "Horário Obrigatório"
             }
-            hora3 == ""  -> {
+            hora4 == ""  -> {
                 edit_horario4.error = "Horário Obrigatório"
             }
             name == ""  -> {
@@ -88,10 +88,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             aniversario == ""  -> {
                 edit_aniversario.error = "Digite Aniversário"
             }
-            hora1 < hora2 || hora2 < hora3 || hora3 < hora4 ->
-                Toast.makeText(this, "Sequencia de horário está errada!", Toast.LENGTH_SHORT).show()
-
-            mbusinessEmployee.registerEmplyee(name, cargo, email, phone, admissao, aniversario,
+            mBusinessEmployee.registerEmplyee(name, cargo, email, phone, admissao, aniversario,
                 hora1, hora2, hora3, hora4) ->
                 Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
             }

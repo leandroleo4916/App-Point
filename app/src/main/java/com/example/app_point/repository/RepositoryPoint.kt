@@ -10,14 +10,14 @@ class RepositoryPoint(context: Context?) {
 
     private val mDataBasePoint: DataBasePoint = DataBasePoint(context)
 
-    fun getPoint(hour: String, date: String, employee: String): Boolean {
+    fun getPoint(employee: String, hour: String, date: String): Boolean {
 
         return try {
             val db = mDataBasePoint.writableDatabase
             val insertValues = ContentValues()
+            insertValues.put(ConstantsPoint.POINT.COLUMNS.EMPLOYEE, employee)
             insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUR, hour)
             insertValues.put(ConstantsPoint.POINT.COLUMNS.DATE, date)
-            insertValues.put(ConstantsPoint.POINT.COLUMNS.EMPLOYEE, employee)
             db.insert(ConstantsPoint.POINT.TABLE_NAME, null, insertValues)
             true
 

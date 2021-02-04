@@ -35,7 +35,7 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    fun getEmployeeList(): ArrayList<String> {
+    fun employeeList(): ArrayList<String> {
         val list: ArrayList<String> = ArrayList()
 
         try {

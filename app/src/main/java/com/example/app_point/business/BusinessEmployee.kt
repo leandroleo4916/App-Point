@@ -16,4 +16,8 @@ class BusinessEmployee(context: Context) {
 
     }
 
+    fun consultEmployee(): List<String>{
+        return mRespositoryEmployee.employeeList()
+    }
+
 }

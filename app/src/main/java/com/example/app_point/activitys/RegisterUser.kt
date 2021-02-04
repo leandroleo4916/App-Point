@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
+import com.example.app_point.business.BusinessUser
 import com.example.app_point.repository.ReposiitoryUser
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.perfil_funcionario.*
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.register_user.*
 
 class RegisterUser : AppCompatActivity(), View.OnClickListener {
 
-    private val mReposiitoryUser: ReposiitoryUser = ReposiitoryUser(this)
+    private val mBusinessUser: BusinessUser = BusinessUser(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +64,7 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
             senha != confirmeSenha -> {
                 Toast.makeText(this, getString(R.string.senhas_diferentes), Toast.LENGTH_SHORT).show()
             }
-            mReposiitoryUser.getUser(name, email, senha)->{
+            mBusinessUser.getUser(name, email, senha)->{
                 Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
