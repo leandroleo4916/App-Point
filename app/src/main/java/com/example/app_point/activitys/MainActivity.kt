@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -21,11 +22,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
     private val mPontosAdapter: PontosAdapter = PontosAdapter()
-    private val mViewModel: ViewModel = ViewModel(application)
+    private lateinit var mViewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
+
 
         // 1 - Captura a recycler
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)

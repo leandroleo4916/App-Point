@@ -7,7 +7,7 @@ class BusinessPoints(context: Context) {
 
     private val mRepositoryPoint: RepositoryPoint = RepositoryPoint(context)
 
-    fun getPoints(name: String, hour: String, date: String): Boolean{
-        return mRepositoryPoint.getPoint(name, hour, date)
+    fun getPoints(name: String, date: String, hour: String): Boolean{
+        return mRepositoryPoint.getPoint(name, date, hour)
     }
 }

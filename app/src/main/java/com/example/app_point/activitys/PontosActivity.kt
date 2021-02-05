@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -15,11 +16,13 @@ import kotlinx.android.synthetic.main.activity_tools.*
 class PontosActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mPontosAdapter: PontosAdapter = PontosAdapter()
-    private val mViewModel: ViewModel = ViewModel(application)
+    private lateinit var mViewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pontos)
+
+        mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
         val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
         recycler.layoutManager = LinearLayoutManager(this)
