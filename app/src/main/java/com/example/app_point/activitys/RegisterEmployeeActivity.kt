@@ -8,30 +8,27 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import com.edmodo.cropper.CropImageView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import kotlinx.android.synthetic.main.activity_perfil.*
+import kotlinx.android.synthetic.main.activity_photo_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
-import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
-import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
-import kotlinx.android.synthetic.main.activity_register_employee.image_back
 import java.io.ByteArrayOutputStream
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
+    private lateinit var mPhotoActivity: PhotoPerfilActivity
+    private lateinit var mPhoto: CropImageView
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
     var image_uri: Uri? = null
@@ -39,6 +36,14 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_employee)
+
+        mPhoto = CropImageView(this)
+        mPhotoActivity = PhotoPerfilActivity()
+
+        if (intent != null) {
+            val dados = intent.getParcelableExtra("photo_employee") as Bitmap?
+            photo_employee.setImageBitmap(dados)
+        }
 
         listener()
     }
@@ -53,23 +58,21 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         when(view){
             image_back -> finish()
             photo_employee -> openPopUp()
-            buttom_register_employee -> registerEmployee()
+            buttom_register_employee -> saveEmployee()
         }
     }
 
     private fun openPopUp() {
         val popMenu = PopupMenu(this, photo_employee)
         popMenu.menuInflater.inflate(R.menu.popup, popMenu.menu)
-        popMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
-            override fun onMenuItemClick(item: MenuItem?): Boolean {
-                when (item!!.itemId) {
-                    R.id.abrir_camera -> permissionCamera()
-                    R.id.abrir_galeria -> openGaleria()
+        popMenu.setOnMenuItemClickListener { item ->
+            when (item!!.itemId) {
+                R.id.abrir_camera -> permissionCamera()
+                R.id.abrir_galeria -> openGaleria()
 
-                }
-                return true
             }
-        })
+            true
+        }
         popMenu.show()
     }
 
@@ -83,7 +86,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
             val permission = arrayOf(
                 Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
             requestPermissions(permission, PERMISSION_CODE)
 
         }else{
@@ -101,7 +105,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera()
                 } else {
                     Toast.makeText(this, "Permissão negada!", Toast.LENGTH_SHORT).show()
@@ -124,13 +128,11 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
 
-            val extras: Bundle = data!!.getExtras()!!
-            val imageBitmap = extras["data"] as Bitmap
-            val bitmapReduzido: Bitmap = Bitmap.createScaledBitmap(imageBitmap, 150, 150, true)
-            val bitMapRound = RoundedBitmapDrawableFactory.create(resources, bitmapReduzido)
-            bitMapRound.cornerRadius = 1000f
-            photo_employee.setImageBitmap(imageBitmap)
-
+            val extras = data!!.extras!!["data"] as Bitmap
+            val intent = Intent(this, PhotoPerfilActivity::class.java)
+            intent.putExtra("photo_employee", extras)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -139,15 +141,14 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // Tranforma a imagem em ByteArray
-    private fun imageViewToByteArray(image: ImageView): ByteArray? {
+    /*private fun imageViewToByteArray(image: ImageView): ByteArray? {
         val bitmap = (image.drawable as BitmapDrawable).bitmap
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         return stream.toByteArray()
-    }
+    }*/
 
-    private fun registerEmployee(){
-        val photoEmployee = imageViewToByteArray(photo_employee)
+    private fun saveEmployee(){
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()
@@ -201,8 +202,10 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             aniversario == ""  -> {
                 edit_aniversario.error = "Digite Aniversário"
             }
-            mBusinessEmployee.registerEmplyee(name, cargo, email, phone, admissao, aniversario,
-                hora1, hora2, hora3, hora4) ->
+            mBusinessEmployee.registerEmplyee(
+                hora1, hora2, hora3, hora4, name, cargo, email, phone,
+                admissao, aniversario
+            ) ->
                 Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
             }
         }

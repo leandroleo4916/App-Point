@@ -505,13 +505,11 @@
 
     <ImageView
         android:id="@+id/photo_employee"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/buttom_back"
-        android:src="@drawable/ic_camera"
+        android:background="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewHome"
         tools:ignore="MissingConstraints" />

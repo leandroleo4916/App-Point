@@ -7,12 +7,12 @@ class BusinessEmployee(context: Context) {
 
     private val mRespositoryEmployee: RepositoryEmployee = RepositoryEmployee(context)
 
-    fun registerEmplyee(name: String, cargo: String, email: String, phone: String, admissao: String,
-                        aniversario: String, hour1: String, hour2: String, hour3: String,
-                        hour4: String): Boolean{
+    fun registerEmplyee(hour1: String, hour2: String, hour3: String, hour4: String, name: String,
+                        cargo: String, email: String, phone: String, admissao: String,
+                        aniversario: String): Boolean{
 
-        return mRespositoryEmployee.getEmployee(name,  cargo, email, phone, admissao,
-                                                aniversario, hour1, hour2, hour3, hour4)
+        return mRespositoryEmployee.getEmployee(
+            hour1, hour2, hour3, hour4, name, cargo, email, phone, admissao, aniversario)
 
     }
 

@@ -14,16 +14,16 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
     private val createTableEmployee = """ CREATE TABLE 
             ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.ID} integer primary key autoincrement ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1} text ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2} text ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3} text ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4} text
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO} text 
     );"""
 
     private val removeTableEmployee = "drop table if exists ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}"
