@@ -14,6 +14,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
     private val createTableEmployee = """ CREATE TABLE 
             ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.ID} integer primary key autoincrement ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO} blob ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3} text ,

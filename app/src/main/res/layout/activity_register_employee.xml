@@ -503,12 +503,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photo_employee"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/profile"
+        android:background="@drawable/ic_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewHome"

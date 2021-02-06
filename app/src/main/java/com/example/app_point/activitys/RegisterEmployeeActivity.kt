@@ -16,18 +16,15 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.edmodo.cropper.CropImageView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import kotlinx.android.synthetic.main.activity_photo_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import java.io.ByteArrayOutputStream
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
-    private lateinit var mPhotoActivity: PhotoPerfilActivity
     private lateinit var mPhoto: CropImageView
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
@@ -38,7 +35,6 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_register_employee)
 
         mPhoto = CropImageView(this)
-        mPhotoActivity = PhotoPerfilActivity()
 
         if (intent != null) {
             val dados = intent.getParcelableExtra("photo_employee") as Bitmap?
@@ -129,10 +125,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         if (resultCode == Activity.RESULT_OK){
 
             val extras = data!!.extras!!["data"] as Bitmap
-            val intent = Intent(this, PhotoPerfilActivity::class.java)
-            intent.putExtra("photo_employee", extras)
-            startActivity(intent)
-            finish()
+            photo_employee.setImageBitmap(extras)
+
         }
     }
 
@@ -141,14 +135,15 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // Tranforma a imagem em ByteArray
-    /*private fun imageViewToByteArray(image: ImageView): ByteArray? {
+    private fun imageViewToByteArray(image: ImageView): ByteArray? {
         val bitmap = (image.drawable as BitmapDrawable).bitmap
         val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         return stream.toByteArray()
-    }*/
+    }
 
     private fun saveEmployee(){
+        val photo = imageViewToByteArray(photo_employee)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()
@@ -202,10 +197,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             aniversario == ""  -> {
                 edit_aniversario.error = "Digite Aniversário"
             }
-            mBusinessEmployee.registerEmplyee(
-                hora1, hora2, hora3, hora4, name, cargo, email, phone,
-                admissao, aniversario
-            ) ->
+            mBusinessEmployee.registerEmployee(photo!!, hora1, hora2, hora3, hora4, name, cargo,
+                email, phone, admissao, aniversario) ->
                 Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
             }
         }

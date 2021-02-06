@@ -6,6 +6,7 @@ class ConstantsEmployee {
         const val TABLE_NAME = "employee"
         object COLUMNS {
             const val ID = "id"
+            const val PHOTO = "photo"
             const val NAME = "name"
             const val CARGO = "cargo"
             const val EMAIL = "email"
