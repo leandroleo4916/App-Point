@@ -38,12 +38,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         // 3 - Implementa o modelo layout
         recycler.adapter = mPontosAdapter
 
+        buscarPoints()
+        listener()
+        observe()
+    }
+
+    private fun buscarPoints(){
         mViewModel.getEmployee()
         mViewModel.getData()
         mViewModel.getHora()
-
-        listener()
-        observe()
     }
 
     private fun observe(){
@@ -64,6 +67,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         image_in_clock.setOnClickListener(this)
         image_in_opcoes.setOnClickListener(this)
         image_add_ponto.setOnClickListener(this)
+        text_logout.setOnClickListener(this)
+        float_bottom.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -73,7 +78,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             image_in_clock -> {startActivity(Intent(this, PontosActivity::class.java))}
             image_in_opcoes -> {startActivity(Intent(this, ToolsActivity::class.java))}
             image_add_ponto -> dialogPoint()
+            text_logout -> dialogLogout()
+            float_bottom -> dialogPoint()
         }
+    }
+
+    private fun dialogLogout(){
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Deseja sair do App?")
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("Sim") {
+                dialog, which -> finish()
+        }
+        alertDialog.setNegativeButton("Não") {
+                dialog, which -> Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
+        }
+        val dialog = alertDialog.create()
+        dialog.show()
     }
 
     private fun dialogPoint(){
@@ -124,9 +145,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             itemSpinner == "" -> {
                 Toast.makeText(this, "Você precisa adicionar funcionários!", Toast.LENGTH_SHORT).show()
             }
-            mBusinessPoints.getPoints(itemSpinner, dateAtual, horaAtual) ->
+            mBusinessPoints.getPoints(itemSpinner, dateAtual, horaAtual) -> {
                 Toast.makeText(this, "Adicionado com sucesso!", Toast.LENGTH_SHORT).show()
-
+                buscarPoints()
+            }
             else -> {
                 Toast.makeText(this, "Não foi possível adicionar ponto!", Toast.LENGTH_SHORT).show()
             }

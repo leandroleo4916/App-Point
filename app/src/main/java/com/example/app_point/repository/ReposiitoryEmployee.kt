@@ -18,7 +18,7 @@ class RepositoryEmployee(context: Context?) {
         return try{
             val db = mDataBaseEmployee.writableDatabase
             val insertValues = ContentValues()
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, photo)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, photo)
             insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, hour1)
             insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, hour2)
             insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, hour3)

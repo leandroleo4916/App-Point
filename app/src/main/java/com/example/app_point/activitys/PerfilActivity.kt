@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*
 import java.io.ByteArrayInputStream
@@ -16,6 +17,7 @@ import java.io.ByteArrayInputStream
 class PerfilActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
+    private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +34,11 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun buscarEmployee(nomeEmploye: List<String>){
-
         val position = nomeEmploye[0]
         val dadosEmployee: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(position)!!
+        val image = mConverterPhoto.converterToBitmap(dadosEmployee.photo!!)
 
-        val image= ByteArrayInputStream(dadosEmployee.photo)
-        val imageBitmap = BitmapFactory.decodeStream(image)
-        image_photo_employee.setImageBitmap(imageBitmap)
-
+        image_photo_employee.setImageBitmap(image)
         text_name_employee.setText(dadosEmployee.nameEmployee)
         text_cargo_employee.setText(dadosEmployee.cargoEmployee)
         text_toolbar_email.setText(dadosEmployee.emailEmployee)

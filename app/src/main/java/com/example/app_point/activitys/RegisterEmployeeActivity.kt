@@ -19,12 +19,14 @@ import androidx.core.content.ContextCompat
 import com.edmodo.cropper.CropImageView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import java.io.ByteArrayOutputStream
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
+    private val mToByteArray: ConverterPhoto = ConverterPhoto()
     private lateinit var mPhoto: CropImageView
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
@@ -44,14 +46,14 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         listener()
     }
 
-    private fun listener(){
+    private fun listener() {
         image_back.setOnClickListener(this)
         photo_employee.setOnClickListener(this)
         buttom_register_employee.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
-        when(view){
+        when (view) {
             image_back -> finish()
             photo_employee -> openPopUp()
             buttom_register_employee -> saveEmployee()
@@ -65,7 +67,6 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             when (item!!.itemId) {
                 R.id.abrir_camera -> permissionCamera()
                 R.id.abrir_galeria -> openGaleria()
-
             }
             true
         }
@@ -78,7 +79,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             ContextCompat.checkSelfPermission(
                 this, Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) ==
-            PackageManager.PERMISSION_DENIED) {
+            PackageManager.PERMISSION_DENIED
+        ) {
 
             val permission = arrayOf(
                 Manifest.permission.CAMERA,
@@ -86,10 +88,9 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             )
             requestPermissions(permission, PERMISSION_CODE)
 
-        }else{
+        } else {
             openCamera()
         }
-
         return true
     }
 
@@ -110,7 +111,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun openCamera(){
+    private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "Nova Foto")
         values.put(MediaStore.Images.Media.DESCRIPTION, "Foto Camera")
@@ -122,11 +123,10 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
 
             val extras = data!!.extras!!["data"] as Bitmap
             photo_employee.setImageBitmap(extras)
-
         }
     }
 
@@ -134,16 +134,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
-    // Tranforma a imagem em ByteArray
-    private fun imageViewToByteArray(image: ImageView): ByteArray? {
-        val bitmap = (image.drawable as BitmapDrawable).bitmap
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        return stream.toByteArray()
-    }
-
-    private fun saveEmployee(){
-        val photo = imageViewToByteArray(photo_employee)
+    private fun saveEmployee() {
+        val photo = mToByteArray.converterToByteArray(photo_employee)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()
@@ -166,40 +158,33 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val edit_admissao = edittext_admissao
         val edit_aniversario = edittext_aniversário
 
-        when{
-            hora1 == "" -> {
-                edit_horario1.error = "Horário Obrigatório"
-            }
-            hora2 == "" -> {
-                edit_horario2.error = "Horário Obrigatório"
-            }
-            hora3 == "" -> {
-                edit_horario3.error = "Horário Obrigatório"
-            }
-            hora4 == ""  -> {
-                edit_horario4.error = "Horário Obrigatório"
-            }
-            name == ""  -> {
-                edit_name.error = "Digite Nome"
-            }
-            email == "" -> {
-                edit_email.error = "Digite Email"
-            }
-            cargo == "" -> {
-                edit_cargo.error = "Digite Cargo"
-            }
-            phone == ""  -> {
-                edit_phone.error = "Digite Telefone"
-            }
-            admissao == "" -> {
-                edit_admissao.error = "Digite Admissão"
-            }
-            aniversario == ""  -> {
-                edit_aniversario.error = "Digite Aniversário"
-            }
-            mBusinessEmployee.registerEmployee(photo!!, hora1, hora2, hora3, hora4, name, cargo,
-                email, phone, admissao, aniversario) ->
-                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
-            }
+        if (hora1 == "") {
+            edit_horario1.error = "Horário Obrigatório"
+        } else if (hora2 == "") {
+            edit_horario2.error = "Horário Obrigatório"
+        } else if (hora3 == "") {
+            edit_horario3.error = "Horário Obrigatório"
+        } else if (hora4 == "") {
+            edit_horario4.error = "Horário Obrigatório"
+        } else if (name == "") {
+            edit_name.error = "Digite Nome"
+        } else if (email == "") {
+            edit_email.error = "Digite Email"
+        } else if (cargo == "") {
+            edit_cargo.error = "Digite Cargo"
+        } else if (phone == "") {
+            edit_phone.error = "Digite Telefone"
+        } else if (admissao == "") {
+            edit_admissao.error = "Digite Admissão"
+        } else if (aniversario == "") {
+            edit_aniversario.error = "Digite Aniversário"
+        } else if (mBusinessEmployee.registerEmployee(
+                photo, hora1, hora2, hora3, hora4, name, cargo,
+                email, phone, admissao, aniversario
+            )
+        ) Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+        else {
+            Toast.makeText(this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT).show()
         }
+    }
 }
