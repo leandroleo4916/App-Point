@@ -1,7 +1,7 @@
 package com.example.app_point.utils
 
 data class EmployeeEntity(
-    val photo: ByteArray?,
+    val photo: ByteArray,
     val horario1: String,
     val horario2: String,
     val horario3: String,

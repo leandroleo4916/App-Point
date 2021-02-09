@@ -25,4 +25,10 @@ class BusinessEmployee(context: Context) {
         return mRespositoryEmployee.consultDadosEmployee(nome)
     }
 
+    fun editEmployee(photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
+                     cargo: String, email: String, phone: String, admissao: String,
+                     aniversario: String): Boolean{
+        return true
+    }
+
 }

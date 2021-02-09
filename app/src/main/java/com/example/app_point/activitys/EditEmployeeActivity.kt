@@ -21,10 +21,10 @@ import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
 
-class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
+class EditEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
-    private val mToByteArray: ConverterPhoto = ConverterPhoto()
+    private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
     private lateinit var mPhoto: CropImageView
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
@@ -32,9 +32,31 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_employee)
+        setContentView(R.layout.activity_edit_employee)
 
+        // Pega informações do Funcionário pela PerfilActivity
+        val extras = intent.extras
+        if (extras != null) {
+            editEmployee(extras)
+        }
         listener()
+    }
+
+    private fun editEmployee(extras: Bundle){
+        val photo = extras.getByteArray("foto")!!
+        val photoBitmap = mConverterPhoto.converterToBitmap(photo)
+
+        photo_employee.setImageBitmap(photoBitmap)
+        edittext_username.setText(extras.getString("nome"))
+        edittext_cargo.setText(extras.getString("cargo"))
+        edittext_email.setText(extras.getString("email"))
+        edittext_phone.setText(extras.getString("phone"))
+        edittext_aniversário.setText(extras.getString("aniversario"))
+        edittext_admissao.setText(extras.getString("admissao"))
+        horario1.setText(extras.getString("hora1"))
+        horario2.setText(extras.getString("hora2"))
+        horario3.setText(extras.getString("hora3"))
+        horario4.setText(extras.getString("hora4"))
     }
 
     private fun listener() {
@@ -47,7 +69,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         when (view) {
             image_back -> finish()
             photo_employee -> openPopUp()
-            buttom_register_employee -> saveEmployee()
+            buttom_register_employee -> modifyEmployee()
         }
     }
 
@@ -122,8 +144,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
-    private fun saveEmployee() {
-        val photo = mToByteArray.converterToByteArray(photo_employee)
+    private fun modifyEmployee() {
+        val photo = mConverterPhoto.converterToByteArray(photo_employee)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()
@@ -162,18 +184,17 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             admissao == "" -> edit_admissao.error = "Digite Admissão"
             aniversario == "" -> edit_aniversario.error = "Digite Aniversário"
 
-            mBusinessEmployee.registerEmployee(
+            mBusinessEmployee.editEmployee(
                 photo, hora1, hora2, hora3, hora4, name, cargo,
                 email, phone, admissao, aniversario
             ) -> {
-                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this, "Funcionário editado com sucesso!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, PerfilActivity::class.java))
                 finish()
             }
             else -> Toast.makeText(
-                this, "Não foi possível fazer o cadastro!",
-                Toast.LENGTH_SHORT
-            ).show()
+                this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT).show()
         }
     }
 }

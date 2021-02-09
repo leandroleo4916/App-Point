@@ -2,7 +2,6 @@ package com.example.app_point.activitys
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,13 +9,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*
-import java.io.ByteArrayInputStream
 
 class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -40,29 +37,47 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     }
 
     private fun buscarEmployee(nomeEmploye: String){
-        val position = nomeEmploye
-        val dadosEmployee: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(position)!!
-        val image = mConverterPhoto.converterToBitmap(dadosEmployee.photo!!)
+        val dadosEmployee: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(nomeEmploye)!!
+        val image = mConverterPhoto.converterToBitmap(dadosEmployee.photo)
 
         image_photo_employee.setImageBitmap(image)
-        text_name_employee.setText(dadosEmployee.nameEmployee)
-        text_cargo_employee.setText(dadosEmployee.cargoEmployee)
-        text_toolbar_email.setText(dadosEmployee.emailEmployee)
-        text_toolbar_phone.setText(dadosEmployee.phoneEmployee)
-        text_toolbar_birthday.setText(dadosEmployee.aniversarioEmployee)
-        text_toolbar_admissao.setText(dadosEmployee.admissaoEmployee)
-        text_toolbar_hora1.setText(dadosEmployee.horario1)
-        text_toolbar_hora2.setText(dadosEmployee.horario2)
-        text_toolbar_hora3.setText(dadosEmployee.horario3)
-        text_toolbar_hora4.setText(dadosEmployee.horario4)
+        text_name_employee.text = dadosEmployee.nameEmployee
+        text_cargo_employee.text = dadosEmployee.cargoEmployee
+        text_toolbar_email.text = dadosEmployee.emailEmployee
+        text_toolbar_phone.text = dadosEmployee.phoneEmployee
+        text_toolbar_birthday.text = dadosEmployee.aniversarioEmployee
+        text_toolbar_admissao.text = dadosEmployee.admissaoEmployee
+        text_toolbar_hora1.text = dadosEmployee.horario1
+        text_toolbar_hora2.text = dadosEmployee.horario2
+        text_toolbar_hora3.text = dadosEmployee.horario3
+        text_toolbar_hora4.text = dadosEmployee.horario4
     }
 
     override fun onClick(view: View?) {
         when(view){
             image_back_perfil -> finish()
-            edit_employee -> startActivity(Intent(this, RegisterEmployeeActivity::class.java))
+            edit_employee -> editEmployee()
             search -> dialogListEmployee()
         }
+    }
+
+    private fun editEmployee(){
+        val image = mConverterPhoto.converterToByteArray(image_photo_employee)
+
+        val intent = Intent(this, EditEmployeeActivity::class.java)
+        intent.putExtra("foto", image)
+        intent.putExtra("nome", text_name_employee.text)
+        intent.putExtra("cargo", text_cargo_employee.text)
+        intent.putExtra("email", text_toolbar_email.text)
+        intent.putExtra("phone", text_toolbar_phone.text)
+        intent.putExtra("aniversario", text_toolbar_birthday.text)
+        intent.putExtra("admissao", text_toolbar_admissao.text)
+        intent.putExtra("hora1", text_toolbar_hora1.text)
+        intent.putExtra("hora2", text_toolbar_hora2.text)
+        intent.putExtra("hora3", text_toolbar_hora3.text)
+        intent.putExtra("hora4", text_toolbar_hora4.text)
+        startActivity(intent)
+
     }
 
     private fun dialogListEmployee(){
