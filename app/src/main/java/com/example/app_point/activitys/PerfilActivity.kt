@@ -69,6 +69,7 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
         intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id.id)
         startActivity(intent)
+        finish()
 
     }
 

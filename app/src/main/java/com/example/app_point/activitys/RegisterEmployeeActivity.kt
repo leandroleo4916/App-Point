@@ -157,8 +157,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun saveEmployee(id: Int) {
-
-        val photo = mToByteArray.converterToByteArray(photo_employee)
+        val image = photo_employee
+        val photo = mToByteArray.converterToByteArray(image)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()
@@ -182,8 +182,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val edit_aniversario = edittext_aniversário
 
         when {
-            photo == null -> Toast.makeText(this, "Obrigatório tirar a foto!",
-                Toast.LENGTH_SHORT).show()
+            image == null -> Toast.makeText(
+                this, "Tire uma foto!", Toast.LENGTH_SHORT).show()
             hora1 == "" -> edit_horario1.error = "Horário Obrigatório"
             hora2 == "" -> edit_horario2.error = "Horário Obrigatório"
             hora3 == "" -> edit_horario3.error = "Horário Obrigatório"
