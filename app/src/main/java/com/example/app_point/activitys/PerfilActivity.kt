@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.database.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*
@@ -56,26 +57,17 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     override fun onClick(view: View?) {
         when(view){
             image_back_perfil -> finish()
-            edit_employee -> editEmployee()
+            edit_employee -> editEmployee(text_name_employee.text.toString())
             search -> dialogListEmployee()
         }
     }
 
-    private fun editEmployee(){
-        val image = mConverterPhoto.converterToByteArray(image_photo_employee)
+    private fun editEmployee(employee: String){
 
-        val intent = Intent(this, EditEmployeeActivity::class.java)
-        intent.putExtra("foto", image)
-        intent.putExtra("nome", text_name_employee.text)
-        intent.putExtra("cargo", text_cargo_employee.text)
-        intent.putExtra("email", text_toolbar_email.text)
-        intent.putExtra("phone", text_toolbar_phone.text)
-        intent.putExtra("aniversario", text_toolbar_birthday.text)
-        intent.putExtra("admissao", text_toolbar_admissao.text)
-        intent.putExtra("hora1", text_toolbar_hora1.text)
-        intent.putExtra("hora2", text_toolbar_hora2.text)
-        intent.putExtra("hora3", text_toolbar_hora3.text)
-        intent.putExtra("hora4", text_toolbar_hora4.text)
+        val id: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(employee)!!
+        val intent = Intent(this, RegisterEmployeeActivity::class.java)
+
+        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id.id)
         startActivity(intent)
 
     }

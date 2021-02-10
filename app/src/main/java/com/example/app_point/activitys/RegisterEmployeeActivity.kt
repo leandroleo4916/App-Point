@@ -14,10 +14,11 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.edmodo.cropper.CropImageView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.database.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
+import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
 
@@ -25,7 +26,6 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mToByteArray: ConverterPhoto = ConverterPhoto()
-    private lateinit var mPhoto: CropImageView
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
     private var image_uri: Uri? = null
@@ -34,6 +34,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_employee)
 
+        carregaInfoEmployee()
         listener()
     }
 
@@ -47,7 +48,40 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         when (view) {
             image_back -> finish()
             photo_employee -> openPopUp()
-            buttom_register_employee -> saveEmployee()
+            buttom_register_employee -> extrasId()
+        }
+    }
+
+    private fun extrasId(){
+        val extras = intent.extras
+        if (extras != null){
+            saveEmployee(extras.getInt(ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+        }else{
+            saveEmployee(id = 0)
+        }
+    }
+
+    private fun carregaInfoEmployee(){
+
+        val extras = intent.extras
+        if (extras != null){
+
+            val id = extras.getInt(ConstantsEmployee.EMPLOYEE.COLUMNS.ID)
+            val infoEmployee: EmployeeEntity = mBusinessEmployee.consultEmployeeWithId(id)!!
+            val photo = mToByteArray.converterToBitmap(infoEmployee.photo)
+            photo_employee.setImageBitmap(photo)
+            horario1.setText(infoEmployee.horario1)
+            horario2.setText(infoEmployee.horario2)
+            horario3.setText(infoEmployee.horario3)
+            horario4.setText(infoEmployee.horario4)
+            edittext_username.setText(infoEmployee.nameEmployee)
+            edittext_email.setText(infoEmployee.emailEmployee)
+            edittext_cargo.setText(infoEmployee.cargoEmployee)
+            edittext_phone.setText(infoEmployee.phoneEmployee)
+            edittext_admissao.setText(infoEmployee.admissaoEmployee)
+            edittext_aniversário.setText(infoEmployee.aniversarioEmployee)
+            textViewHome.text = "Editar Funcionário"
+            buttom_register_employee.text = "EDITAR"
         }
     }
 
@@ -122,7 +156,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
-    private fun saveEmployee() {
+    private fun saveEmployee(id: Int) {
+
         val photo = mToByteArray.converterToByteArray(photo_employee)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
@@ -147,10 +182,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val edit_aniversario = edittext_aniversário
 
         when {
-            photo == null -> Toast.makeText(
-                this, "Obrigatório tirar a foto!",
-                Toast.LENGTH_SHORT
-            ).show()
+            photo == null -> Toast.makeText(this, "Obrigatório tirar a foto!",
+                Toast.LENGTH_SHORT).show()
             hora1 == "" -> edit_horario1.error = "Horário Obrigatório"
             hora2 == "" -> edit_horario2.error = "Horário Obrigatório"
             hora3 == "" -> edit_horario3.error = "Horário Obrigatório"
@@ -163,17 +196,14 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             aniversario == "" -> edit_aniversario.error = "Digite Aniversário"
 
             mBusinessEmployee.registerEmployee(
-                photo, hora1, hora2, hora3, hora4, name, cargo,
-                email, phone, admissao, aniversario
+                id, photo, hora1, hora2, hora3, hora4, name, cargo, email, phone, admissao, aniversario
             ) -> {
                 Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, PerfilActivity::class.java))
                 finish()
             }
             else -> Toast.makeText(
-                this, "Não foi possível fazer o cadastro!",
-                Toast.LENGTH_SHORT
-            ).show()
+                this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT).show()
         }
     }
 }

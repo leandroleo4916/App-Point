@@ -1,6 +1,7 @@
 package com.example.app_point.utils
 
 data class EmployeeEntity(
+    val id: Int,
     val photo: ByteArray,
     val horario1: String,
     val horario2: String,
@@ -12,5 +13,4 @@ data class EmployeeEntity(
     val phoneEmployee: String,
     val admissaoEmployee: String,
     val aniversarioEmployee: String
-
 )
