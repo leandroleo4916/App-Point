@@ -2,18 +2,17 @@ package com.example.app_point.activitys
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -25,15 +24,14 @@ import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import java.text.SimpleDateFormat
-import java.time.LocalTime
 import java.util.*
-import kotlin.time.hours
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mToByteArray: ConverterPhoto = ConverterPhoto()
     private val PERMISSION_CODE = 1000
+    private val IMAGE_GALERY = 1
     private val IMAGE_CAPTURE_CODE = 1001
     private var image_uri: Uri? = null
 
@@ -68,37 +66,47 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun timePicker(id: Int){
+    private fun timePicker(id: Int) {
 
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
             when (id) {
-                1 -> { horario1.text = SimpleDateFormat("HH:mm").format(cal.time) }
-                2 -> { horario2.text = SimpleDateFormat("HH:mm").format(cal.time) }
-                3 -> { horario3.text = SimpleDateFormat("HH:mm").format(cal.time) }
-                4 -> { horario4.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                1 -> {
+                    horario1.text = SimpleDateFormat("HH:mm").format(cal.time)
+                }
+                2 -> {
+                    horario2.text = SimpleDateFormat("HH:mm").format(cal.time)
+                }
+                3 -> {
+                    horario3.text = SimpleDateFormat("HH:mm").format(cal.time)
+                }
+                4 -> {
+                    horario4.text = SimpleDateFormat("HH:mm").format(cal.time)
+                }
             }
         }
-        TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY),
-            cal.get(Calendar.MINUTE), true).show()
+        TimePickerDialog(
+            this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY),
+            cal.get(Calendar.MINUTE), true
+        ).show()
 
     }
 
-    private fun extrasId(){
+    private fun extrasId() {
         val extras = intent.extras
-        if (extras != null){
+        if (extras != null) {
             saveEmployee(extras.getInt(ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
-        }else{
+        } else {
             saveEmployee(id = 0)
         }
     }
 
-    private fun carregaInfoEmployee(){
+    private fun carregaInfoEmployee() {
 
         val extras = intent.extras
-        if (extras != null){
+        if (extras != null) {
 
             val id = extras.getInt(ConstantsEmployee.EMPLOYEE.COLUMNS.ID)
             val infoEmployee: EmployeeEntity = mBusinessEmployee.consultEmployeeWithId(id)!!
@@ -125,7 +133,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         popMenu.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {
                 R.id.abrir_camera -> permissionCamera()
-                R.id.abrir_galeria -> openGaleria()
+                R.id.abrir_galeria -> openGalery()
             }
             true
         }
@@ -152,8 +160,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>,
-        grantResults: IntArray,
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -180,14 +187,36 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
-            val extras = data!!.extras!!["data"] as Bitmap
-            photo_employee.setImageBitmap(extras)
+        if (resultCode == RESULT_OK) {
+
+            // Captura imagem da galeria
+            if (requestCode == IMAGE_GALERY) {
+                val selectedImage: Uri? = data!!.data
+                photo_employee.setImageURI(selectedImage)
+            }
+
+            // Captura Imagem da câmera
+            else if (resultCode == Activity.RESULT_OK) {
+                val extras = data!!.extras!!["data"] as Bitmap
+                photo_employee.setImageBitmap(extras)
+            }
         }
+
     }
 
-    private fun openGaleria(): Boolean {
-        return true
+    /*val selectedImage = data.data
+    val filePath = arrayOf(MediaStore.Images.Media.DATA)
+    val c: Cursor? = contentResolver.query(selectedImage!!, filePath, null, null, null)
+    c.moveToFirst()
+    val columnIndex: Int = c.getColumnIndex(filePath[0])
+    val picturePath: String = c.getString(columnIndex)
+    c.close()
+    val thumbnail = BitmapFactory.decodeFile(picturePath)
+    imagem.setImageBitmap(thumbnail)*/
+
+    private fun openGalery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, IMAGE_GALERY)
     }
 
     private fun saveEmployee(id: Int) {
