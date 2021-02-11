@@ -62,7 +62,7 @@ class ReposiitoryUser(context: Context) {
                 cursor.moveToFirst()
 
                 val idUser = cursor.getInt(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.ID))
-                val nameUser= cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.EMAIL))
+                val nameUser= cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.NAME))
                 val emailUser= cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.EMAIL))
                 val passwordUser = cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.PASSWORD))
 

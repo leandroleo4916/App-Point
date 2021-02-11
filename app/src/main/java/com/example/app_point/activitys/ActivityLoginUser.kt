@@ -13,13 +13,16 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 
-    private val mBusinessUser: BusinessUser = BusinessUser(this)
+    private lateinit var mBusinessUser: BusinessUser
+    private lateinit var mSecurityPreferences: SecurityPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        mBusinessUser = BusinessUser(this)
+        mSecurityPreferences = SecurityPreferences(this)
         listener()
+        verifyLoggedUser()
     }
 
     private fun listener(){
@@ -32,6 +35,21 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
             text_register_user -> startActivity(Intent(this, RegisterUser::class.java))
             buttom_login_user -> loginUser()
         }
+    }
+
+    private fun verifyLoggedUser(){
+        val nome = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
+        val email = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
+        val password = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
+
+        if (email != "" && password != ""){
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra(ConstantsUser.USER.COLUNAS.NAME, nome)
+
+            startActivity(intent)
+        }
+
     }
 
     private fun loginUser(){

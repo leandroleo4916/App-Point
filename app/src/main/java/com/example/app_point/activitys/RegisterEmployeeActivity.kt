@@ -201,18 +201,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
                 photo_employee.setImageBitmap(extras)
             }
         }
-
     }
-
-    /*val selectedImage = data.data
-    val filePath = arrayOf(MediaStore.Images.Media.DATA)
-    val c: Cursor? = contentResolver.query(selectedImage!!, filePath, null, null, null)
-    c.moveToFirst()
-    val columnIndex: Int = c.getColumnIndex(filePath[0])
-    val picturePath: String = c.getString(columnIndex)
-    c.close()
-    val thumbnail = BitmapFactory.decodeFile(picturePath)
-    imagem.setImageBitmap(thumbnail)*/
 
     private fun openGalery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

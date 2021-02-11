@@ -14,12 +14,13 @@ import kotlinx.android.synthetic.main.register_user.*
 
 class RegisterUser : AppCompatActivity(), View.OnClickListener {
 
-    private val mBusinessUser: BusinessUser = BusinessUser(this)
+    private lateinit var mBusinessUser: BusinessUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.register_user)
 
+        mBusinessUser = BusinessUser(this)
         listener()
     }
 

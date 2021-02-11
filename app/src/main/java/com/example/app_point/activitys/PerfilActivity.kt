@@ -18,14 +18,14 @@ import kotlinx.android.synthetic.main.activity_perfil.*
 
 class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
-    private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
+    private lateinit var mBusinessEmployee: BusinessEmployee
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+        mBusinessEmployee = BusinessEmployee(this)
         val listEmployee = mBusinessEmployee.consultEmployee()
         when {
             listEmployee.isNotEmpty() -> {
@@ -88,7 +88,7 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         val inflate_view = inflater.inflate(R.layout.dialog_list_employee, null)
 
         // Capturando Lista de Funcionarios e adiciona ao spinner
-        val list = mListEmployee.consultEmployee()
+        val list = mBusinessEmployee.consultEmployee()
         val listSpinner= inflate_view.findViewById(R.id.spinner_employee) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
