@@ -2,6 +2,8 @@ package com.example.app_point.activitys
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +13,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,6 +24,10 @@ import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.util.*
+import kotlin.time.hours
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -42,6 +49,11 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         image_back.setOnClickListener(this)
         photo_employee.setOnClickListener(this)
         buttom_register_employee.setOnClickListener(this)
+        horario1.setOnClickListener(this)
+        horario2.setOnClickListener(this)
+        horario3.setOnClickListener(this)
+        horario4.setOnClickListener(this)
+
     }
 
     override fun onClick(view: View?) {
@@ -49,7 +61,29 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             image_back -> finish()
             photo_employee -> openPopUp()
             buttom_register_employee -> extrasId()
+            horario1 -> timePicker(1)
+            horario2 -> timePicker(2)
+            horario3 -> timePicker(3)
+            horario4 -> timePicker(4)
         }
+    }
+
+    private fun timePicker(id: Int){
+
+        val cal = Calendar.getInstance()
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, minute)
+            when (id) {
+                1 -> { horario1.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                2 -> { horario2.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                3 -> { horario3.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                4 -> { horario4.text = SimpleDateFormat("HH:mm").format(cal.time) }
+            }
+        }
+        TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY),
+            cal.get(Calendar.MINUTE), true).show()
+
     }
 
     private fun extrasId(){
@@ -70,10 +104,10 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             val infoEmployee: EmployeeEntity = mBusinessEmployee.consultEmployeeWithId(id)!!
             val photo = mToByteArray.converterToBitmap(infoEmployee.photo)
             photo_employee.setImageBitmap(photo)
-            horario1.setText(infoEmployee.horario1)
-            horario2.setText(infoEmployee.horario2)
-            horario3.setText(infoEmployee.horario3)
-            horario4.setText(infoEmployee.horario4)
+            horario1.text = infoEmployee.horario1
+            horario2.text = infoEmployee.horario2
+            horario3.text = infoEmployee.horario3
+            horario4.text = infoEmployee.horario4
             edittext_username.setText(infoEmployee.nameEmployee)
             edittext_email.setText(infoEmployee.emailEmployee)
             edittext_cargo.setText(infoEmployee.cargoEmployee)
@@ -183,7 +217,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
         when {
             image == null -> Toast.makeText(
-                this, "Tire uma foto!", Toast.LENGTH_SHORT).show()
+                this, "Tire uma foto!", Toast.LENGTH_SHORT
+            ).show()
             hora1 == "" -> edit_horario1.error = "Horário Obrigatório"
             hora2 == "" -> edit_horario2.error = "Horário Obrigatório"
             hora3 == "" -> edit_horario3.error = "Horário Obrigatório"
@@ -196,14 +231,16 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             aniversario == "" -> edit_aniversario.error = "Digite Aniversário"
 
             mBusinessEmployee.registerEmployee(
-                id, photo, hora1, hora2, hora3, hora4, name, cargo, email, phone, admissao, aniversario
+                id, photo, hora1, hora2, hora3, hora4, name, cargo, email, phone,
+                admissao, aniversario
             ) -> {
                 Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, PerfilActivity::class.java))
                 finish()
             }
             else -> Toast.makeText(
-                this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT).show()
+                this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
         // Capturando Lista de Funcionarios e adiciona ao spinner
         val list = mListEmployee.consultEmployee()
-        val listSpinner= inflate_view.findViewById(R.id.spinnerGetFuncionario) as Spinner
+        val listSpinner = inflate_view.findViewById(R.id.spinnerGetFuncionario) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this

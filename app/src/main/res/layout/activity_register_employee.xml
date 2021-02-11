@@ -151,13 +151,14 @@
         app:layout_constraintStart_toEndOf="@+id/horario3"
         app:layout_constraintTop_toTopOf="@+id/horario3" />
 
-    <EditText
+    <TextView
         android:id="@+id/horario1"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:inputType="time"
+        android:layout_marginBottom="8dp"
         android:singleLine="true"
+        android:text="08:00"
         android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
@@ -165,17 +166,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
         app:layout_constraintStart_toEndOf="@+id/icon_username2"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
-    <EditText
+    <TextView
         android:id="@+id/horario2"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:inputType="time"
+        android:layout_marginBottom="8dp"
         android:singleLine="true"
+        android:text="12:00"
         android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
@@ -183,17 +183,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
         app:layout_constraintStart_toEndOf="@+id/horario1"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
-    <EditText
+    <TextView
         android:id="@+id/horario3"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:inputType="time"
+        android:layout_marginBottom="8dp"
         android:singleLine="true"
+        android:text="14:00"
         android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
@@ -201,17 +200,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
         app:layout_constraintStart_toEndOf="@+id/horario2"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
-    <EditText
+    <TextView
         android:id="@+id/horario4"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:inputType="time"
+        android:layout_marginBottom="8dp"
         android:singleLine="true"
+        android:text="18:00"
         android:textAlignment="center"
         android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
@@ -219,8 +217,6 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha7"
         app:layout_constraintStart_toEndOf="@+id/horario3"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHorario"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
