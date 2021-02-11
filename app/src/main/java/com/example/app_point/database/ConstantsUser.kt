@@ -1,6 +1,6 @@
 package com.example.app_point.database
 
-class ConstantsUser {
+class ConstantsUser private constructor(){
 
     object USER {
         const val TABLE_NAME = "user"

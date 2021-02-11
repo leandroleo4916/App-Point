@@ -38,6 +38,7 @@ class ReposiitoryUser(context: Context) {
 
             val projection = arrayOf(
                 ConstantsUser.USER.COLUNAS.ID,
+                ConstantsUser.USER.COLUNAS.NAME,
                 ConstantsUser.USER.COLUNAS.EMAIL,
                 ConstantsUser.USER.COLUNAS.PASSWORD
             )
@@ -61,10 +62,11 @@ class ReposiitoryUser(context: Context) {
                 cursor.moveToFirst()
 
                 val idUser = cursor.getInt(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.ID))
+                val nameUser= cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.EMAIL))
                 val emailUser= cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.EMAIL))
-                val nameUser = cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.PASSWORD))
+                val passwordUser = cursor.getString(cursor.getColumnIndex(ConstantsUser.USER.COLUNAS.PASSWORD))
 
-                user = UserEntity(idUser, emailUser, nameUser)
+                user = UserEntity(idUser, nameUser, emailUser, passwordUser)
             }
             cursor?.close()
         }catch (e: Exception) {

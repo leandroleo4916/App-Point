@@ -27,7 +27,11 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         setContentView(R.layout.activity_perfil)
 
         val listEmployee = mBusinessEmployee.consultEmployee()
-        buscarEmployee(listEmployee[0])
+        when {
+            listEmployee.isNotEmpty() -> {
+                buscarEmployee(listEmployee[0])
+            }
+        }
         listener()
     }
 

@@ -13,6 +13,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.model.ViewModel
+import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         setContentView(R.layout.activity_main)
 
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
-
 
         // 1 - Captura a recycler
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
