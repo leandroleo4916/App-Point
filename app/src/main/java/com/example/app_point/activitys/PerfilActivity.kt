@@ -39,6 +39,19 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         image_back_perfil.setOnClickListener(this)
         edit_employee.setOnClickListener(this)
         search.setOnClickListener(this)
+        float_bottom_perfil.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View?) {
+        when(view){
+            image_back_perfil -> finish()
+            edit_employee -> editEmployee(text_name_employee.text.toString())
+            search -> dialogListEmployee()
+            float_bottom_perfil -> {
+                startActivity(Intent(this, RegisterEmployeeActivity::class.java))
+                finish()
+            }
+        }
     }
 
     private fun buscarEmployee(nomeEmploye: String){
@@ -56,14 +69,6 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         text_toolbar_hora2.text = dadosEmployee.horario2
         text_toolbar_hora3.text = dadosEmployee.horario3
         text_toolbar_hora4.text = dadosEmployee.horario4
-    }
-
-    override fun onClick(view: View?) {
-        when(view){
-            image_back_perfil -> finish()
-            edit_employee -> editEmployee(text_name_employee.text.toString())
-            search -> dialogListEmployee()
-        }
     }
 
     private fun editEmployee(employee: String){

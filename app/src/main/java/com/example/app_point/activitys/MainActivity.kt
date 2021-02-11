@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
+import com.example.app_point.database.ConstantsUser
 import com.example.app_point.model.ViewModel
+import com.example.app_point.utils.EmployeeEntity
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -41,6 +43,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         buscarPoints()
         listener()
         observe()
+        modifyName()
+    }
+
+    private fun modifyName(){
+        val extras = intent.extras
+        if (extras != null) {
+            text_name_user.text = extras.getString(ConstantsUser.USER.COLUNAS.NAME)
+        }
     }
 
     private fun buscarPoints(){
