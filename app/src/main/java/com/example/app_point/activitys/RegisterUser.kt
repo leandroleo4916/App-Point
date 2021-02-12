@@ -7,9 +7,6 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
-import com.example.app_point.repository.ReposiitoryUser
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.perfil_funcionario.*
 import kotlinx.android.synthetic.main.register_user.*
 
 class RegisterUser : AppCompatActivity(), View.OnClickListener {
@@ -50,22 +47,13 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
         val editTextConfirma = edittext_confirme_senha
 
         when {
-            name == ""  -> {
-                editTextName.error = "Digite Nome"
-            }
-            email == "" -> {
-                editTextEmail.error = "Digite Email"
-            }
-            senha == "" -> {
-                editTextSenha.error == "Digite Senha"
-            }
-            confirmeSenha == "" -> {
-                editTextConfirma.error == "Confirme Senha"
-            }
-            senha != confirmeSenha -> {
-                Toast.makeText(this, getString(R.string.senhas_diferentes), Toast.LENGTH_SHORT).show()
-            }
-            mBusinessUser.getUser(name, email, senha)->{
+            name == ""  -> editTextName.error = "Digite Nome"
+            email == "" -> editTextEmail.error = "Digite Email"
+            senha == "" -> editTextSenha.error == "Digite Senha"
+            confirmeSenha == "" -> editTextConfirma.error == "Confirme Senha"
+            senha != confirmeSenha -> Toast.makeText(this, getString(R.string.senhas_diferentes), Toast.LENGTH_SHORT).show()
+
+            mBusinessUser.getUser(name, email, senha) -> {
                 Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()

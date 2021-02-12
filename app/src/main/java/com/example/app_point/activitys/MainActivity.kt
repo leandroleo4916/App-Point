@@ -14,7 +14,6 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.database.ConstantsUser
 import com.example.app_point.model.ViewModel
-import com.example.app_point.utils.EmployeeEntity
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
     private val mPontosAdapter: PontosAdapter = PontosAdapter()
+    private lateinit var mSecurityPreferences: SecurityPreferences
     private lateinit var mViewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         setContentView(R.layout.activity_main)
 
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        mSecurityPreferences = SecurityPreferences(this)
 
         // 1 - Captura a recycler
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
@@ -47,9 +48,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     }
 
     private fun modifyName(){
-        val extras = intent.extras
-        if (extras != null) {
-            text_name_user.text = extras.getString(ConstantsUser.USER.COLUNAS.NAME)
+        val extras = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
+        if (extras != "") {
+            text_name_user.text = extras
         }
     }
 
@@ -60,13 +61,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     }
 
     private fun observe(){
-        mViewModel.employeeList.observe(this, androidx.lifecycle.Observer {
+        mViewModel.employeeList.observe(this, {
             mPontosAdapter.updateFuncionario(it)
         })
-        mViewModel.dataList.observe(this, androidx.lifecycle.Observer {
+        mViewModel.dataList.observe(this, {
             mPontosAdapter.updateData(it)
         })
-        mViewModel.horaList.observe(this, androidx.lifecycle.Observer {
+        mViewModel.horaList.observe(this, {
             mPontosAdapter.updateHora(it)
         })
     }
@@ -98,7 +99,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         alertDialog.setTitle("Deseja sair do App?")
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Sim") {
-                dialog, which -> finish()
+                dialog, which ->
+            mSecurityPreferences.removeString()
+            finish()
         }
         alertDialog.setNegativeButton("Não") {
                 dialog, which -> Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
