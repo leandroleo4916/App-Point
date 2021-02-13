@@ -2,7 +2,7 @@ package com.example.app_point.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.app_point.database.ConstantsUser
+import com.example.app_point.Constants.ConstantsUser
 
 class SecurityPreferences(context: Context) {
 

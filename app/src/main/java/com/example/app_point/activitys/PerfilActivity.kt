@@ -11,7 +11,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.database.ConstantsEmployee
+import com.example.app_point.Constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*

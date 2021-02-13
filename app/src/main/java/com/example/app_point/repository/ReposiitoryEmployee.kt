@@ -3,7 +3,8 @@ package com.example.app_point.repository
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import com.example.app_point.database.ConstantsEmployee
+import com.example.app_point.Constants.ConstantsEmployee
+import com.example.app_point.Constants.ConstantsPoint
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.utils.EmployeeEntity
 
@@ -51,8 +52,8 @@ class RepositoryEmployee(context: Context?) {
     }
 
     fun employeeList(): ArrayList<String> {
-        val list: ArrayList<String> = ArrayList()
 
+        val list: ArrayList<String> = ArrayList()
         try {
             val cursor: Cursor
             val db = mDataBaseEmployee.readableDatabase
@@ -107,7 +108,8 @@ class RepositoryEmployee(context: Context?) {
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
             val args = arrayOf(nome)
 
-            val cursor = db.query(ConstantsEmployee.EMPLOYEE.TABLE_NAME,
+            val cursor = db.query(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
                 projection,
                 selection,
                 args,
@@ -164,7 +166,8 @@ class RepositoryEmployee(context: Context?) {
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            val cursor = db.query(ConstantsEmployee.EMPLOYEE.TABLE_NAME,
+            val cursor = db.query(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
                 projection,
                 selection,
                 args,

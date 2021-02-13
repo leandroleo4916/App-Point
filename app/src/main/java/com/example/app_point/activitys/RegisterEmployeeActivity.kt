@@ -7,7 +7,6 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -18,10 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.database.ConstantsEmployee
+import com.example.app_point.Constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.EmployeeEntity
-import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import java.text.SimpleDateFormat
 import java.util.*

@@ -1,4 +1,4 @@
-package com.example.app_point.database
+package com.example.app_point.Constants
 
 class ConstantsUser private constructor(){
 

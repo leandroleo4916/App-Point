@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
-import com.example.app_point.database.ConstantsUser
+import com.example.app_point.Constants.ConstantsUser
 import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*

@@ -3,7 +3,7 @@ package com.example.app_point.repository
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import com.example.app_point.database.ConstantsUser
+import com.example.app_point.Constants.ConstantsUser
 import com.example.app_point.database.DataBaseUser
 import com.example.app_point.utils.UserEntity
 
