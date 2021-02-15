@@ -101,12 +101,13 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textViewHorario"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="14dp"
         android:text="Horário de Trabalho"
         android:textColor="@color/letrashint"
+        android:textSize="12dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/icon_username2"
         app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha7" />
@@ -155,7 +156,7 @@
         android:id="@+id/horario1"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="14dp"
         android:layout_marginBottom="8dp"
         android:singleLine="true"
         android:text="08:00"
@@ -189,7 +190,7 @@
         android:id="@+id/horario3"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="26dp"
         android:layout_marginBottom="8dp"
         android:singleLine="true"
         android:text="14:00"
@@ -338,64 +339,57 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="300dp"
+    <TextView
+        android:id="@+id/textViewAdmissao"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Data de admissão"
+        android:textColor="@color/letrashint"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/text_admissao"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha4" />
+
+    <TextView
+        android:id="@+id/text_admissao"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:singleLine="true"
+        android:text="21/02/2021"
+        android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha4"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha4"
         app:layout_constraintStart_toEndOf="@+id/icon_admissao"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha4"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/textViewAdmissao" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edittext_admissao"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="Admissão"
-            android:singleLine="true"
-            android:textColor="@color/letras"
-            android:textColorHint="@color/letrashint"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:inputType="datetime"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-            app:layout_constraintStart_toEndOf="@+id/image_view_email"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-            tools:ignore="MissingConstraints" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout7"
-        android:layout_width="300dp"
+    <TextView
+        android:id="@+id/textViewAniversario"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Data de admissão"
+        android:textColor="@color/letrashint"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/text_aniversario"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha5" />
+
+    <TextView
+        android:id="@+id/text_aniversario"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:singleLine="true"
+        android:text="21/02/2021"
+        android:textColor="@color/letras"
         android:textColorHint="@color/letrashint"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_confirme_senha5"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha5"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_confirme_senha4"
         app:layout_constraintStart_toEndOf="@+id/icon_aniversario"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_confirme_senha5"
-        tools:ignore="MissingConstraints">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edittext_aniversário"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="Aniversário"
-            android:singleLine="true"
-            android:textColor="@color/letras"
-            android:textColorHint="@color/letrashint"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:inputType="datetime"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_email"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_email"
-            app:layout_constraintStart_toEndOf="@+id/image_view_email"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_email"
-            tools:ignore="MissingConstraints" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textViewAniversario" />
 
     <ImageView
         android:id="@+id/icon_email"

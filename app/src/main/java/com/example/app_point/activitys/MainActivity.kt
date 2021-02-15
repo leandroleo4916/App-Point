@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
-import com.example.app_point.Constants.ConstantsUser
+import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         val inflater = layoutInflater
         val inflate_view = inflater.inflate(R.layout.dialog_bater_ponto, null)
         val textData = inflate_view.findViewById(R.id.dataPonto) as TextView
-        textData.text = dateTime.format(date)
+        textData.text = dataAtual
 
         // Capturando Lista de Funcionarios e adiciona ao spinner
         val list = mListEmployee.consultEmployee()

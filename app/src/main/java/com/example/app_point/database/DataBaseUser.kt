@@ -3,7 +3,7 @@ package com.example.app_point.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.app_point.Constants.ConstantsUser
+import com.example.app_point.constants.ConstantsUser
 
 class DataBaseUser(context: Context) : SQLiteOpenHelper(context, DATA_NAME, null, DATA_VERSION) {
 

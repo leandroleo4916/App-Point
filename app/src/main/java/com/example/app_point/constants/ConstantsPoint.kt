@@ -1,4 +1,4 @@
-package com.example.app_point.Constants
+package com.example.app_point.constants
 
 class ConstantsPoint private constructor(){
 

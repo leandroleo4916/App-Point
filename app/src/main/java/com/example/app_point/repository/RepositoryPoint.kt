@@ -3,7 +3,7 @@ package com.example.app_point.repository
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import com.example.app_point.Constants.ConstantsPoint
+import com.example.app_point.constants.ConstantsPoint
 import com.example.app_point.database.DataBasePoint
 
 class RepositoryPoint(context: Context?) {

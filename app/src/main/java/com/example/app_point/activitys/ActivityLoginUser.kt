@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
-import com.example.app_point.Constants.ConstantsUser
+import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_login.*
 

@@ -2,6 +2,7 @@ package com.example.app_point.activitys
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Intent
@@ -11,18 +12,20 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.DatePicker
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.Constants.ConstantsEmployee
+import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Calendar.*
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -38,6 +41,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_register_employee)
 
         carregaInfoEmployee()
+        inicialDate()
         listener()
     }
 
@@ -49,6 +53,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         horario2.setOnClickListener(this)
         horario3.setOnClickListener(this)
         horario4.setOnClickListener(this)
+        text_admissao.setOnClickListener(this)
+        text_aniversario.setOnClickListener(this)
 
     }
 
@@ -61,33 +67,51 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             horario2 -> timePicker(2)
             horario3 -> timePicker(3)
             horario4 -> timePicker(4)
+            text_admissao -> calendar(1)
+            text_aniversario -> calendar(2)
         }
+    }
+
+    private fun inicialDate(){
+        val date = getInstance().time
+        val dateTime = SimpleDateFormat("d/MM/YYYY", Locale.ENGLISH)
+        val dataAtual = dateTime.format(date)
+        text_admissao.text = dataAtual
+        text_aniversario.text = dataAtual
+    }
+
+    private fun calendar(id: Int) {
+        val date = getInstance()
+        val dateTime = DatePickerDialog.OnDateSetListener { datePicker, year, month, dayOfMonth ->
+            date.set(DAY_OF_MONTH, dayOfMonth)
+            date.set(MONTH, month)
+            date.set(YEAR, year)
+            when (id) {
+                1 -> text_admissao.text = SimpleDateFormat("dd:MM:YYYY").format(date.time)
+                2 -> text_aniversario.text = SimpleDateFormat("dd:MM:YYYY").format(date.time)
+            }
+        }
+        DatePickerDialog(
+            this, dateTime, date.get(YEAR), date.get(MONTH), date.get(YEAR)
+        ).show()
     }
 
     private fun timePicker(id: Int) {
 
-        val cal = Calendar.getInstance()
+        val cal = getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-            cal.set(Calendar.HOUR_OF_DAY, hour)
-            cal.set(Calendar.MINUTE, minute)
+            cal.set(HOUR_OF_DAY, hour)
+            cal.set(MINUTE, minute)
             when (id) {
-                1 -> {
-                    horario1.text = SimpleDateFormat("HH:mm").format(cal.time)
-                }
-                2 -> {
-                    horario2.text = SimpleDateFormat("HH:mm").format(cal.time)
-                }
-                3 -> {
-                    horario3.text = SimpleDateFormat("HH:mm").format(cal.time)
-                }
-                4 -> {
-                    horario4.text = SimpleDateFormat("HH:mm").format(cal.time)
-                }
+                1 -> { horario1.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                2 -> { horario2.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                3 -> { horario3.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                4 -> { horario4.text = SimpleDateFormat("HH:mm").format(cal.time) }
             }
         }
         TimePickerDialog(
-            this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY),
-            cal.get(Calendar.MINUTE), true
+            this, timeSetListener, cal.get(HOUR_OF_DAY),
+            cal.get(MINUTE), true
         ).show()
 
     }
@@ -118,8 +142,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             edittext_email.setText(infoEmployee.emailEmployee)
             edittext_cargo.setText(infoEmployee.cargoEmployee)
             edittext_phone.setText(infoEmployee.phoneEmployee)
-            edittext_admissao.setText(infoEmployee.admissaoEmployee)
-            edittext_aniversário.setText(infoEmployee.aniversarioEmployee)
+            text_admissao.text = infoEmployee.admissaoEmployee
+            text_aniversario.text = infoEmployee.aniversarioEmployee
             textViewHome.text = "Editar Funcionário"
             buttom_register_employee.text = "EDITAR"
         }
@@ -217,8 +241,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val email = edittext_email.text.toString()
         val cargo = edittext_cargo.text.toString()
         val phone = edittext_phone.text.toString()
-        val admissao = edittext_admissao.text.toString()
-        val aniversario = edittext_aniversário.text.toString()
+        val admissao = text_admissao.text.toString()
+        val aniversario = text_aniversario.text.toString()
 
         val edit_horario1 = horario1
         val edit_horario2 = horario2
@@ -228,8 +252,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val edit_email = edittext_email
         val edit_cargo = edittext_cargo
         val edit_phone = edittext_phone
-        val edit_admissao = edittext_admissao
-        val edit_aniversario = edittext_aniversário
+        val edit_admissao = text_admissao
+        val edit_aniversario = text_aniversario
 
         when {
             image == null -> Toast.makeText(
