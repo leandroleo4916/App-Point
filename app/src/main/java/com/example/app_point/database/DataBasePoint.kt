@@ -14,15 +14,14 @@ class DataBasePoint(context: Context?) : SQLiteOpenHelper(context, DATA_NAME, nu
     }
 
     private val createTablePoint = """ CREATE TABLE 
-            ${ConstantsPoint.POINT.TABLE_NAME} (
+            ${ConstantsPoint.POINT.TABLE_NAME}(
             ${ConstantsPoint.POINT.COLUMNS.ID} integer primary key autoincrement ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR} text ,
             ${ConstantsPoint.POINT.COLUMNS.DATE} text ,
-            ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text not null ,
-            
+            ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text ,
             FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.EMPLOYEE}) 
                 REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}
-                (${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME})
+                (${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME}) ON DELETE CASCADE ON UPDATE CASCADE
     );"""
 
     override fun onOpen(db: SQLiteDatabase) {

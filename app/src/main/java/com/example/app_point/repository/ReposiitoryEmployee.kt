@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
-import com.example.app_point.utils.EmployeeEntity
+import com.example.app_point.entity.EmployeeEntity
 
 class RepositoryEmployee(context: Context?) {
 

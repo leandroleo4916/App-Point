@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.DatePicker
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
-import com.example.app_point.utils.EmployeeEntity
+import com.example.app_point.entity.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import java.text.SimpleDateFormat
 import java.util.*

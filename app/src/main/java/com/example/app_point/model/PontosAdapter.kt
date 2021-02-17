@@ -1,21 +1,20 @@
 package com.example.app_point.activitys
 
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
+import com.example.app_point.business.BusinessEmployee
 
 class PontosAdapter : RecyclerView.Adapter<PontosViewHolder>() {
 
     private var mListFuncionario: List<String> = arrayListOf()
     private var mListData: List<String> = arrayListOf()
     private var mListHora: List<String> = arrayListOf()
-    private var mListImage: Bitmap? = null
+    private lateinit var mPhoto: BusinessEmployee
 
     // cria a listagem do layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PontosViewHolder {
-
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_points, parent, false)
         return PontosViewHolder(item)
@@ -43,10 +42,6 @@ class PontosAdapter : RecyclerView.Adapter<PontosViewHolder>() {
     }
     fun updateHora(list: List<String>){
         mListHora = list.asReversed()
-        notifyDataSetChanged()
-    }
-    fun updateImage(list: Bitmap){
-        mListImage = list
         notifyDataSetChanged()
     }
 }

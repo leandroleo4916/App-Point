@@ -3,12 +3,14 @@ package com.example.app_point.repository
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsPoint
-import com.example.app_point.database.DataBasePoint
+import com.example.app_point.database.DataBaseEmployee
+import com.example.app_point.entity.PointsEntity
 
 class RepositoryPoint(context: Context?) {
 
-    private val mDataBasePoint: DataBasePoint = DataBasePoint(context)
+    private val mDataBasePoint: DataBaseEmployee = DataBaseEmployee(context)
 
     fun getPoint(employee: String, date: String, hour: String): Boolean {
 
@@ -101,6 +103,37 @@ class RepositoryPoint(context: Context?) {
                     val date =
                         cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.DATE))
                     list.add(date)
+                }
+            }
+            cursor?.close()
+            return list
+
+        } catch (e: Exception) {
+            return list
+        }
+    }
+
+    fun storePointName (nome: String): PointsEntity? {
+
+        var list: PointsEntity? = null
+        try {
+            val cursor: Cursor
+            val db = mDataBasePoint.readableDatabase
+            val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.HOUR, ConstantsPoint.POINT.COLUMNS.DATE)
+            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
+            val args = arrayOf(nome)
+
+            cursor = db.query(
+                ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,
+                null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val hours = cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR))
+                    val date = cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.DATE))
+
+                    list = PointsEntity(hours, date)
                 }
             }
             cursor?.close()

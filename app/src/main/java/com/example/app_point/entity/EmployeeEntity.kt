@@ -1,4 +1,4 @@
-package com.example.app_point.utils
+package com.example.app_point.entity
 
 data class EmployeeEntity(
     val id: Int,

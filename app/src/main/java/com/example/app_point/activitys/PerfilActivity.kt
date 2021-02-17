@@ -13,7 +13,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
-import com.example.app_point.utils.EmployeeEntity
+import com.example.app_point.entity.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_perfil.*
 
 class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {

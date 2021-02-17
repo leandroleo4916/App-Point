@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseUser
-import com.example.app_point.utils.UserEntity
+import com.example.app_point.entity.UserEntity
 
 class ReposiitoryUser(context: Context) {
 

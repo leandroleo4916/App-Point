@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <Spinner
         android:id="@+id/spinnerGetFuncionario"
@@ -21,7 +20,6 @@
         android:id="@+id/dataPonto"
         android:layout_width="90dp"
         android:layout_height="30dp"
-        android:text="12 Set"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/spinnerGetFuncionario"
@@ -35,7 +33,6 @@
         android:layout_width="80dp"
         android:layout_height="30dp"
         android:layout_marginStart="0dp"
-        android:text="22:00"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/dataPonto"

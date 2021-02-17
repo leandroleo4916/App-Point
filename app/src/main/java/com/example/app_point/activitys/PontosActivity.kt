@@ -1,21 +1,24 @@
 package com.example.app_point.activitys
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
+import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.business.BusinessPoints
 import com.example.app_point.model.ViewModel
 import kotlinx.android.synthetic.main.activity_pontos.*
-import kotlinx.android.synthetic.main.activity_register_employee.*
-import kotlinx.android.synthetic.main.activity_tools.*
 
-class PontosActivity : AppCompatActivity(), View.OnClickListener {
+class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private val mPontosAdapter: PontosAdapter = PontosAdapter()
+    private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
+    private val mListPoint: BusinessPoints = BusinessPoints(this)
     private lateinit var mViewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,15 +53,56 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun listener(){
         image_back_pontos.setOnClickListener(this)
-        recycler_activity_pontos.setOnClickListener(this)
+        image_filter.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         when(view){
             image_back_pontos -> finish()
-            recycler_activity_pontos -> Toast.makeText(this,
-                "Falta implementar esta chamada!", Toast.LENGTH_SHORT).show()
+            image_filter -> dialogPoint()
         }
+    }
+
+    private fun dialogPoint(){
+        val inflater = layoutInflater
+        val inflate_view = inflater.inflate(R.layout.dialog_bater_ponto, null)
+
+        // Capturando Lista de Funcionarios e adiciona ao spinner
+        val list = mListEmployee.consultEmployee()
+        val listSpinner = inflate_view.findViewById(R.id.spinnerGetFuncionario) as Spinner
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
+        listSpinner.adapter = adapter
+        listSpinner.onItemSelectedListener = this
+
+        // Cria o Dialog
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Bater Ponto")
+        alertDialog.setView(inflate_view)
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("Ok") {
+                dialog, which ->
+
+            // Captura item do Spinner
+            val itemSpinner = listSpinner.selectedItem.toString()
+
+        }
+        alertDialog.setNegativeButton("Cancelar") {
+                dialog, which -> Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
+        }
+        val dialog = alertDialog.create()
+        dialog.show()
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when(parent?.id) {
+            R.id.spinnerGetFuncionario -> {
+                parent.getItemAtPosition(position).toString()
+            }
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
     }
 
 }

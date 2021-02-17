@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.repository.ReposiitoryUser
 import com.example.app_point.utils.SecurityPreferences
-import com.example.app_point.utils.UserEntity
+import com.example.app_point.entity.UserEntity
 
 class BusinessUser(context: Context) {
 
