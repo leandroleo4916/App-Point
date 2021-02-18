@@ -1,5 +1,6 @@
 package com.example.app_point.business
 
+import android.app.Application
 import android.content.Context
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.entity.EmployeeEntity
@@ -25,5 +26,9 @@ class BusinessEmployee(context: Context) {
 
     fun consultEmployeeWithId(id: Int): EmployeeEntity?{
         return mRespositoryEmployee.consultDadosEmployeeId(id)
+    }
+
+    fun consultPhoto(nome: String): ByteArray?{
+        return mRespositoryEmployee.consultPhoto(nome)
     }
 }

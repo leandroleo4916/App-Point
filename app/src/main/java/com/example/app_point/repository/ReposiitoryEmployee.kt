@@ -231,5 +231,36 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
+    fun consultPhoto(nome: String): ByteArray? {
+
+        try {
+            val db = mDataBaseEmployee.readableDatabase
+            val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO)
+            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
+            val args = arrayOf(nome)
+
+            val cursor = db.query(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
+                projection,
+                selection,
+                args,
+                null,
+                null,
+                null
+            )
+            if (cursor != null && cursor.count > 0) {
+                cursor.moveToNext()
+
+                return cursor.getBlob(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+
+            }
+            cursor?.close()
+            return null
+
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
 }
 

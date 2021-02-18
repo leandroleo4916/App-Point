@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
-    private val mPontosAdapter: PontosAdapter = PontosAdapter()
+    private lateinit var  mPontosAdapter: PontosAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
     private lateinit var mViewModel: ViewModel
 
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         // 2 - Adiciona o Layout
         recycler.layoutManager = LinearLayoutManager(this)
         // 3 - Implementa o modelo layout
+        mPontosAdapter = PontosAdapter(application)
         recycler.adapter = mPontosAdapter
 
         buscarPoints()

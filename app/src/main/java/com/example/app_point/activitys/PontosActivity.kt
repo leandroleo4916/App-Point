@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_pontos.*
 
 class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private val mPontosAdapter: PontosAdapter = PontosAdapter()
+    private lateinit var mPontosAdapter: PontosAdapter
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mListPoint: BusinessPoints = BusinessPoints(this)
     private lateinit var mViewModel: ViewModel
@@ -29,6 +29,7 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
         val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
         recycler.layoutManager = LinearLayoutManager(this)
+        mPontosAdapter = PontosAdapter(application)
         recycler.adapter = mPontosAdapter
 
         mViewModel.getEmployee()
