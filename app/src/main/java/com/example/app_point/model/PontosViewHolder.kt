@@ -1,7 +1,5 @@
-package com.example.app_point.activitys
+package com.example.app_point.model
 
-import android.app.Application
-import android.content.Context
 import android.graphics.Bitmap
 import android.view.View
 import android.widget.ImageView
@@ -11,6 +9,7 @@ import com.example.app_point.R
 
 class PontosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    // Adiciona cada item a posição do Layout
     fun bind(funcionario: String){
         val textFuncionario = itemView.findViewById<TextView>(R.id.text_nome_funcionario)
         textFuncionario.text = funcionario

@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream
 
 class ConverterPhoto {
 
+    // Converte foto de Bitmap para Bytearray
     fun converterToByteArray(image: ImageView): ByteArray {
         val bitmap = (image.drawable as BitmapDrawable).bitmap
         val stream = ByteArrayOutputStream()
@@ -16,6 +17,7 @@ class ConverterPhoto {
         return stream.toByteArray()
     }
 
+    // Converte foto de Bytearray para Bitmap
     fun converterToBitmap(image: ByteArray): Bitmap{
         val photo = ByteArrayInputStream(image)
         return BitmapFactory.decodeStream(photo)

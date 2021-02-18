@@ -25,6 +25,7 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+        // Captura do DB uma lista de Funcionários e mostra o que está na primeira posição.
         mBusinessEmployee = BusinessEmployee(this)
         val listEmployee = mBusinessEmployee.consultEmployee()
         when {
@@ -71,15 +72,14 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         text_toolbar_hora4.text = dadosEmployee.horario4
     }
 
+    // Captura id do funcionário e envia para Activity Register para edição
     private fun editEmployee(employee: String){
-
         val id: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(employee)!!
         val intent = Intent(this, RegisterEmployeeActivity::class.java)
 
         intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id.id)
         startActivity(intent)
         finish()
-
     }
 
     private fun dialogListEmployee(){

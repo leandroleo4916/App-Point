@@ -19,6 +19,7 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         mBusinessUser = BusinessUser(this)
         mSecurityPreferences = SecurityPreferences(this)
         listener()
@@ -37,6 +38,7 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Login automático caso Admin já logou anteriormente
     private fun verifyLoggedUser(){
         val nome = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
         val email = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
@@ -49,9 +51,9 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 
             startActivity(intent)
         }
-
     }
 
+    // Captura e valida User Admin
     private fun loginUser(){
         val userLogin = edittext_user.text.toString()
         val userPassword = edittext_senha.text.toString()

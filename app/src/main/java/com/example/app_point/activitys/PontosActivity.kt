@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
+import com.example.app_point.model.PontosAdapter
 import com.example.app_point.model.ViewModel
 import kotlinx.android.synthetic.main.activity_pontos.*
 
@@ -27,6 +28,7 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
+        // Monta a recyclerview
         val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
         recycler.layoutManager = LinearLayoutManager(this)
         mPontosAdapter = PontosAdapter(application)

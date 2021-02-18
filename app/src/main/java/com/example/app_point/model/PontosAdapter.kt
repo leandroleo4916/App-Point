@@ -1,14 +1,12 @@
-package com.example.app_point.activitys
+package com.example.app_point.model
 
 import android.app.Application
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.entity.EmployeeEntity
-import java.io.ByteArrayInputStream
+import com.example.app_point.utils.ConverterPhoto
 
 class PontosAdapter(application: Application) : RecyclerView.Adapter<PontosViewHolder>() {
 
@@ -16,6 +14,7 @@ class PontosAdapter(application: Application) : RecyclerView.Adapter<PontosViewH
     private var mListData: List<String> = arrayListOf()
     private var mListHora: List<String> = arrayListOf()
     private val mPhoto: BusinessEmployee = BusinessEmployee(application)
+    private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
     // cria a listagem do layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PontosViewHolder {
@@ -24,11 +23,16 @@ class PontosAdapter(application: Application) : RecyclerView.Adapter<PontosViewH
         return PontosViewHolder(item)
     }
 
+    // Envia para ViewHolder cada item da Lista
     override fun onBindViewHolder(holder: PontosViewHolder, position: Int) {
         holder.bind(mListFuncionario[position])
+
+        // Captura nome do cliente e busca foto no DB
         val photo = mPhoto.consultPhoto(mListFuncionario[position])
-        val photoBitmap = ByteArrayInputStream(photo)
-        val photoConvert = BitmapFactory.decodeStream(photoBitmap)
+
+        // Converte foto
+        val photoConvert = mConverterPhoto.converterToBitmap(photo!!)
+
         holder.bindPhoto(photoConvert)
         holder.bindData(mListData[position])
         holder.bindHora(mListHora[position])
@@ -40,6 +44,7 @@ class PontosAdapter(application: Application) : RecyclerView.Adapter<PontosViewH
         return mListHora.count()
     }
 
+    // Função inverte a lista
     fun updateFuncionario(list: List<String>){
         mListFuncionario = list.asReversed()
         notifyDataSetChanged()

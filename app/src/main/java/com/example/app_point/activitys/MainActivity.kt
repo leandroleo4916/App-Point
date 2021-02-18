@@ -13,6 +13,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.constants.ConstantsUser
+import com.example.app_point.model.PontosAdapter
 import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,11 +35,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
         mSecurityPreferences = SecurityPreferences(this)
 
-        // 1 - Captura a recycler
+        // Implementação da recycler
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
-        // 2 - Adiciona o Layout
         recycler.layoutManager = LinearLayoutManager(this)
-        // 3 - Implementa o modelo layout
         mPontosAdapter = PontosAdapter(application)
         recycler.adapter = mPontosAdapter
 
@@ -48,6 +47,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         modifyName()
     }
 
+    // Recebe nome do Usuário Administrador e deixa visível no Toolbar
     private fun modifyName(){
         val extras = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
         if (extras != "") {
@@ -55,12 +55,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         }
     }
 
+    // Busca pontos no Banco de Dados
     private fun buscarPoints(){
         mViewModel.getEmployee()
         mViewModel.getData()
         mViewModel.getHora()
     }
 
+    // Observe as Listas de Pontos Batidos
     private fun observe(){
         mViewModel.employeeList.observe(this, {
             mPontosAdapter.updateFuncionario(it)
@@ -73,6 +75,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         })
     }
 
+    // Gerencia os clicks
     private fun listener(){
         image_in_register.setOnClickListener(this)
         image_in_perfil.setOnClickListener(this)
@@ -115,11 +118,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         val date = Calendar.getInstance().time
         val dateTime = SimpleDateFormat("d/MM/YYYY", Locale.ENGLISH)
 
-        // Pegando hora atual
+        // Captura hora atual
         val hora = SimpleDateFormat("HH:mm")
         val horaAtual: String = hora.format(date)
 
-        // Pegando data atual
+        // Captura data atual
         val dataAtual = dateTime.format(date)
 
         val inflater = layoutInflater
@@ -154,6 +157,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         dialog.show()
     }
 
+    // Envia dados capturados para a Business
     private fun savePoint(itemSpinner: String, dateAtual: String, horaAtual: String){
         when{
             itemSpinner == "" -> {

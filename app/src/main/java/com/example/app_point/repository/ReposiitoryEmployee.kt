@@ -11,6 +11,8 @@ class RepositoryEmployee(context: Context?) {
 
     private val mDataBaseEmployee: DataBaseEmployee = DataBaseEmployee(context)
 
+    // Funções faz consulta e grava diretamente no DB
+
     fun conditionEmployee(id: Int, photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
                           cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean{
 

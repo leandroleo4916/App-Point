@@ -54,7 +54,6 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         horario4.setOnClickListener(this)
         text_admissao.setOnClickListener(this)
         text_aniversario.setOnClickListener(this)
-
     }
 
     override fun onClick(view: View?) {
@@ -71,6 +70,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Captura data e mostra no EditText data e hora
     private fun inicialDate(){
         val date = getInstance().time
         val dateTime = SimpleDateFormat("d/MM/YYYY", Locale.ENGLISH)
@@ -79,6 +79,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         text_aniversario.text = dataAtual
     }
 
+    // Direciona cada data selecionada pelo Admin para seu respectivo EditText
     private fun calendar(id: Int) {
         val date = getInstance()
         val dateTime = DatePickerDialog.OnDateSetListener { datePicker, year, month, dayOfMonth ->
@@ -86,8 +87,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             date.set(MONTH, month)
             date.set(YEAR, year)
             when (id) {
-                1 -> text_admissao.text = SimpleDateFormat("dd:MM:YYYY").format(date.time)
-                2 -> text_aniversario.text = SimpleDateFormat("dd:MM:YYYY").format(date.time)
+                1 -> text_admissao.text = SimpleDateFormat("d/MM/YYYY").format(date.time)
+                2 -> text_aniversario.text = SimpleDateFormat("d/MM/YYYY").format(date.time)
             }
         }
         DatePickerDialog(
@@ -95,6 +96,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         ).show()
     }
 
+    //Direciona cada horário selecionado pelo Admin para seu respectivo EditText
     private fun timePicker(id: Int) {
 
         val cal = getInstance()
@@ -115,6 +117,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    // Direciona pelo id se será opção salvar ou editar funcionárop
     private fun extrasId() {
         val extras = intent.extras
         if (extras != null) {
@@ -124,6 +127,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Recebe dados para edição
     private fun carregaInfoEmployee() {
 
         val extras = intent.extras
@@ -148,6 +152,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Popup abrir câmera ou galeria
     private fun openPopUp() {
         val popMenu = PopupMenu(this, photo_employee)
         popMenu.menuInflater.inflate(R.menu.popup, popMenu.menu)
@@ -161,6 +166,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         popMenu.show()
     }
 
+    // Gerencia as permissões de câmera e galeria
     private fun permissionCamera(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
             PackageManager.PERMISSION_DENIED ||
@@ -180,6 +186,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
+    // Result da permissão
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
     ) {
@@ -195,6 +202,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Abre a câmera
     private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "Nova Foto")
@@ -205,6 +213,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
     }
 
+    // Captura imagem da galeria ou câmera
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -224,6 +233,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Abre a galeria
     private fun openGalery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, IMAGE_GALERY)
