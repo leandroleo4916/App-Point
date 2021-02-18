@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -57,9 +58,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     // Busca pontos no Banco de Dados
     private fun buscarPoints(){
-        mViewModel.getEmployee()
-        mViewModel.getData()
-        mViewModel.getHora()
+        Thread{
+            Thread.sleep(1000)
+            runOnUiThread {
+                mViewModel.getEmployee()
+                mViewModel.getData()
+                mViewModel.getHora()
+                progress.visibility = View.GONE
+            }
+        }.start()
+
     }
 
     // Observe as Listas de Pontos Batidos

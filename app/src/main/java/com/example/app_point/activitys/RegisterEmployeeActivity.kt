@@ -22,6 +22,10 @@ import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
 import kotlinx.android.synthetic.main.activity_register_employee.*
+import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
+import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
+import kotlinx.android.synthetic.main.activity_register_employee.image_back
+import kotlinx.android.synthetic.main.register_user.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
