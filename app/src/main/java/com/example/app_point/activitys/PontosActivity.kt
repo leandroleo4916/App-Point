@@ -13,6 +13,7 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.model.PontosAdapter
 import com.example.app_point.model.ViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pontos.*
 
 class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -34,12 +35,22 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         mPontosAdapter = PontosAdapter(application)
         recycler.adapter = mPontosAdapter
 
-        mViewModel.getEmployee()
-        mViewModel.getData()
-        mViewModel.getHora()
-
+        buscarPoints()
         listener()
         observe()
+    }
+
+    private fun buscarPoints(){
+        Thread{
+            Thread.sleep(1000)
+            runOnUiThread {
+                mViewModel.getEmployee()
+                mViewModel.getData()
+                mViewModel.getHora()
+                progress_ponto.visibility = View.GONE
+            }
+        }.start()
+
     }
 
     private fun observe(){

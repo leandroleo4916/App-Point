@@ -1,12 +1,12 @@
 package com.example.app_point.activitys
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.core.view.isInvisible
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,14 +45,37 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         buscarPoints()
         listener()
         observe()
-        modifyName()
+        salutation()
     }
 
     // Recebe nome do Usuário Administrador e deixa visível no Toolbar
-    private fun modifyName(){
+    // Saldação de Bom dia, tarde e noite
+    @SuppressLint("SimpleDateFormat")
+    private fun salutation(){
+
         val extras = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
         if (extras != "") {
             text_name_user.text = extras
+        }
+        
+        val date = Calendar.getInstance().time
+        val hora = SimpleDateFormat("HH:mm")
+        val horaAtual = hora.format(date)
+
+        val clockSixMorning = "06:00"
+        val clockTwelveMorning = "12:00"
+        val clockSixEvening = "18:00"
+        
+        when {
+            horaAtual > clockSixMorning && horaAtual < clockTwelveMorning -> {
+                text_ola.text = getString(R.string.bom_dia)
+            }
+            horaAtual > clockTwelveMorning && horaAtual < clockSixEvening -> {
+                text_ola.text = getString(R.string.boa_tarde)
+            }
+            else -> {
+                text_ola.text = getString(R.string.boa_noite)
+            }
         }
     }
 
@@ -67,7 +90,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
                 progress.visibility = View.GONE
             }
         }.start()
-
     }
 
     // Observe as Listas de Pontos Batidos
@@ -96,10 +118,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     override fun onClick(view: View?) {
         when(view){
-            image_in_register -> {startActivity(Intent(this, RegisterEmployeeActivity::class.java))}
-            image_in_perfil -> {startActivity(Intent(this, PerfilActivity::class.java))}
-            image_in_clock -> {startActivity(Intent(this, PontosActivity::class.java))}
-            image_in_opcoes -> {startActivity(Intent(this, ToolsActivity::class.java))}
+            image_in_register -> {
+                startActivity(Intent(this, RegisterEmployeeActivity::class.java))
+            }
+            image_in_perfil -> {
+                startActivity(Intent(this, PerfilActivity::class.java))
+            }
+            image_in_clock -> {
+                startActivity(Intent(this, PontosActivity::class.java))
+            }
+            image_in_opcoes -> {
+                startActivity(Intent(this, ToolsActivity::class.java))
+            }
             image_add_ponto -> dialogPoint()
             text_logout -> dialogLogout()
             float_bottom -> dialogPoint()
@@ -110,37 +140,40 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Deseja sair do App?")
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Sim") {
-                dialog, which ->
+        alertDialog.setPositiveButton("Sim") { _, _ ->
             mSecurityPreferences.removeString()
             finish()
         }
-        alertDialog.setNegativeButton("Não") {
-                dialog, which -> Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton("Não") { _, _ -> Toast.makeText(
+            this,
+            getString(R.string.cancelado),
+            Toast.LENGTH_SHORT
+        ).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
     }
 
+    @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun dialogPoint(){
         val date = Calendar.getInstance().time
-        val dateTime = SimpleDateFormat("d/MM/YYYY", Locale.ENGLISH)
+        val dateTime = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
 
         // Captura hora atual
         val hora = SimpleDateFormat("HH:mm")
-        val horaAtual: String = hora.format(date)
+        val horaAtual = hora.format(date)
 
         // Captura data atual
         val dataAtual = dateTime.format(date)
 
         val inflater = layoutInflater
-        val inflate_view = inflater.inflate(R.layout.dialog_bater_ponto, null)
-        val textData = inflate_view.findViewById(R.id.dataPonto) as TextView
+        val inflateView = inflater.inflate(R.layout.dialog_bater_ponto, null)
+        val textData = inflateView.findViewById(R.id.dataPonto) as TextView
         textData.text = dataAtual
 
         // Capturando Lista de Funcionarios e adiciona ao spinner
         val list = mListEmployee.consultEmployee()
-        val listSpinner = inflate_view.findViewById(R.id.spinnerGetFuncionario) as Spinner
+        val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
@@ -148,18 +181,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         // Cria o Dialog
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Bater Ponto")
-        alertDialog.setView(inflate_view)
+        alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Registrar") {
-                dialog, which ->
+        alertDialog.setPositiveButton("Registrar") { _, _ ->
 
             // Captura item do Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
             savePoint(itemSpinner, dataAtual, horaAtual)
 
         }
-        alertDialog.setNegativeButton("Cancelar") {
-                dialog, which -> Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> Toast.makeText(
+            this,
+            R.string.cancelado,
+            Toast.LENGTH_SHORT).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -189,6 +223,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         }
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
+
     }
 }

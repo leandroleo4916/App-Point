@@ -8,6 +8,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.utils.ConverterPhoto
 
+@Suppress("UNREACHABLE_CODE")
 class PontosAdapter(application: Application) : RecyclerView.Adapter<PontosViewHolder>() {
 
     private var mListFuncionario: List<String> = arrayListOf()
