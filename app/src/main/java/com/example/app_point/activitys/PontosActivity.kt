@@ -10,17 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.business.BusinessPoints
 import com.example.app_point.model.PontosAdapter
 import com.example.app_point.model.ViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pontos.*
 
 class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private lateinit var mPontosAdapter: PontosAdapter
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
-    private val mListPoint: BusinessPoints = BusinessPoints(this)
     private lateinit var mViewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +51,13 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     }
 
     private fun observe(){
-        mViewModel.employeeList.observe(this, androidx.lifecycle.Observer {
+        mViewModel.employeeList.observe(this, {
             mPontosAdapter.updateFuncionario(it)
         })
-        mViewModel.dataList.observe(this, androidx.lifecycle.Observer {
+        mViewModel.dataList.observe(this, {
             mPontosAdapter.updateData(it)
         })
-        mViewModel.horaList.observe(this, androidx.lifecycle.Observer {
+        mViewModel.horaList.observe(this, {
             mPontosAdapter.updateHora(it)
         })
     }
@@ -79,11 +76,11 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
     private fun dialogPoint(){
         val inflater = layoutInflater
-        val inflate_view = inflater.inflate(R.layout.dialog_bater_ponto, null)
+        val inflateView = inflater.inflate(R.layout.dialog_bater_ponto, null)
 
         // Capturando Lista de Funcionarios e adiciona ao spinner
         val list = mListEmployee.consultEmployee()
-        val listSpinner = inflate_view.findViewById(R.id.spinnerGetFuncionario) as Spinner
+        val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
@@ -91,17 +88,15 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         // Cria o Dialog
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Bater Ponto")
-        alertDialog.setView(inflate_view)
+        alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Ok") {
-                dialog, which ->
-
+        alertDialog.setPositiveButton("Ok") { _, _ ->
             // Captura item do Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
 
         }
-        alertDialog.setNegativeButton("Cancelar") {
-                dialog, which -> Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->
+            Toast.makeText(this, R.string.cancelado, Toast.LENGTH_SHORT).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -116,7 +111,7 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
+
     }
 
 }

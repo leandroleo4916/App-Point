@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
-    private lateinit var  mPontosAdapter: PontosAdapter
+    private lateinit var  mPointAdapter: PontosAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
     private lateinit var mViewModel: ViewModel
 
@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         // Implementação da recycler
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
         recycler.layoutManager = LinearLayoutManager(this)
-        mPontosAdapter = PontosAdapter(application)
-        recycler.adapter = mPontosAdapter
+        mPointAdapter = PontosAdapter(application)
+        recycler.adapter = mPointAdapter
 
         buscarPoints()
         listener()
@@ -95,13 +95,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     // Observe as Listas de Pontos Batidos
     private fun observe(){
         mViewModel.employeeList.observe(this, {
-            mPontosAdapter.updateFuncionario(it)
+            mPointAdapter.updateFuncionario(it)
         })
         mViewModel.dataList.observe(this, {
-            mPontosAdapter.updateData(it)
+            mPointAdapter.updateData(it)
         })
         mViewModel.horaList.observe(this, {
-            mPontosAdapter.updateHora(it)
+            mPointAdapter.updateHora(it)
         })
     }
 

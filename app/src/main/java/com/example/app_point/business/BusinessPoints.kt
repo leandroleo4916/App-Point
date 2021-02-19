@@ -2,7 +2,6 @@ package com.example.app_point.business
 
 import android.content.Context
 import com.example.app_point.repository.RepositoryPoint
-import com.example.app_point.entity.PointsEntity
 
 class BusinessPoints(context: Context) {
 
@@ -11,7 +10,5 @@ class BusinessPoints(context: Context) {
     fun getPoints(name: String, date: String, hour: String): Boolean{
         return mRepositoryPoint.getPoint(name, date, hour)
     }
-    fun getPointsName(name: String): PointsEntity? {
-        return mRepositoryPoint.storePointName(name)
-    }
+
 }

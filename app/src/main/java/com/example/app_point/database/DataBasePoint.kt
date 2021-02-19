@@ -24,12 +24,7 @@ class DataBasePoint(context: Context?) : SQLiteOpenHelper(context, DATA_NAME, nu
                 (${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME}) ON DELETE CASCADE ON UPDATE CASCADE
     );"""
 
-    override fun onOpen(db: SQLiteDatabase) {
-        super.onOpen(db)
-        if (!db.isReadOnly) {
-            db.execSQL("PRAGMA foreign_key=ON;")
-        }
-    }
+
 
     private val removeTablePoint = "drop table if exists ${ConstantsPoint.POINT.TABLE_NAME}"
 

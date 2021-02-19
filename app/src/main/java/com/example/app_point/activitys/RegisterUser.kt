@@ -7,10 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
-import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.utils.SecurityPreferences
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_register_employee.*
 import kotlinx.android.synthetic.main.register_user.*
 import kotlinx.android.synthetic.main.register_user.edittext_email
 import kotlinx.android.synthetic.main.register_user.edittext_username

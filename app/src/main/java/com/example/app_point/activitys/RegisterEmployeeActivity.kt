@@ -1,6 +1,7 @@
 package com.example.app_point.activitys
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -25,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_register_employee.*
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
 import kotlinx.android.synthetic.main.activity_register_employee.image_back
-import kotlinx.android.synthetic.main.register_user.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -75,6 +75,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // Captura data e mostra no EditText data e hora
+    @SuppressLint("WeekBasedYear")
     private fun inicialDate(){
         val date = getInstance().time
         val dateTime = SimpleDateFormat("d/MM/YYYY", Locale.ENGLISH)
@@ -84,9 +85,10 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // Direciona cada data selecionada pelo Admin para seu respectivo EditText
+    @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun calendar(id: Int) {
         val date = getInstance()
-        val dateTime = DatePickerDialog.OnDateSetListener { datePicker, year, month, dayOfMonth ->
+        val dateTime = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             date.set(DAY_OF_MONTH, dayOfMonth)
             date.set(MONTH, month)
             date.set(YEAR, year)
@@ -101,10 +103,11 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //Direciona cada horário selecionado pelo Admin para seu respectivo EditText
+    @SuppressLint("SimpleDateFormat")
     private fun timePicker(id: Int) {
 
         val cal = getInstance()
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             cal.set(HOUR_OF_DAY, hour)
             cal.set(MINUTE, minute)
             when (id) {
@@ -151,8 +154,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             edittext_phone.setText(infoEmployee.phoneEmployee)
             text_admissao.text = infoEmployee.admissaoEmployee
             text_aniversario.text = infoEmployee.aniversarioEmployee
-            textViewHome.text = "Editar Funcionário"
-            buttom_register_employee.text = "EDITAR"
+            textViewHome.text = getString(R.string.editar_funcionario)
+            buttom_register_employee.text = getString(R.string.editar)
         }
     }
 

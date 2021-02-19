@@ -8,16 +8,16 @@ import com.example.app_point.entity.UserEntity
 
 class BusinessUser(context: Context) {
 
-    private val mReposiitoryUser: ReposiitoryUser = ReposiitoryUser(context)
+    private val mRepositoryUser: ReposiitoryUser = ReposiitoryUser(context)
     private val mSecurityPreferences: SecurityPreferences = SecurityPreferences(context)
 
     fun getUser(name: String, email: String, senha: String): Boolean {
-        return mReposiitoryUser.getUser(name, email, senha)
+        return mRepositoryUser.getUser(name, email, senha)
     }
 
     fun storeUser(name: String, senha: String): Boolean {
 
-        val user: UserEntity? = mReposiitoryUser.storeUser(name, senha)
+        val user: UserEntity? = mRepositoryUser.storeUser(name, senha)
         return if (user!= null){
             mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.NAME, user.nome)
             mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.EMAIL, user.email)

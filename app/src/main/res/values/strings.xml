@@ -52,4 +52,7 @@
     <string name="boa_noite">Boa noite,</string>
     <string name="cancelado">Cancelado!</string>
     <string name="cancelar">Cancelar</string>
+    <string name="selecione_funcionario">Selecione o Funcionário</string>
+    <string name="editar_funcionario">Editar Funcionário</string>
+    <string name="editar">EDITAR</string>
 </resources>

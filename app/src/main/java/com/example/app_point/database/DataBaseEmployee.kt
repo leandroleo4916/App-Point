@@ -13,6 +13,13 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
         private const val DATA_VERSION: Int = 1
     }
 
+    override fun onOpen(db: SQLiteDatabase) {
+        super.onOpen(db)
+        if (!db.isReadOnly) {
+            db.execSQL("PRAGMA foreign_key=ON;")
+        }
+    }
+
     private val createTableEmployee = """ CREATE TABLE 
             ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.ID} integer primary key autoincrement ,

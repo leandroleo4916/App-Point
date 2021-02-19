@@ -85,29 +85,29 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     private fun dialogListEmployee(){
         // Infla o layout
         val inflater = layoutInflater
-        val inflate_view = inflater.inflate(R.layout.dialog_list_employee, null)
+        val inflateView = inflater.inflate(R.layout.dialog_list_employee, null)
 
         // Capturando Lista de Funcionarios e adiciona ao spinner
         val list = mBusinessEmployee.consultEmployee()
-        val listSpinner= inflate_view.findViewById(R.id.spinner_employee) as Spinner
+        val listSpinner= inflateView.findViewById(R.id.spinner_employee) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
         // Cria o Dialog
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Selecione o Funcionário")
-        alertDialog.setView(inflate_view)
+        alertDialog.setTitle(getString(R.string.selecione_funcionario))
+        alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Ok") { dialog, which ->
+        alertDialog.setPositiveButton("Ok") { _, _ ->
 
             // Captura item do Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
             buscarEmployee(itemSpinner)
 
         }
-        alertDialog.setNegativeButton("Cancelar") {
-                dialog, which -> Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton("Cancelar") { _, _ ->
+            Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -121,7 +121,7 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         }
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
+
     }
 
 }
