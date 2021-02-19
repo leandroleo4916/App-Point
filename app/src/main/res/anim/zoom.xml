@@ -5,10 +5,10 @@
     android:interpolator="@android:anim/linear_interpolator"
     >
 
-    <translate
-        android:fromXDelta="100%p"
-        android:toXDelta="0%p"
-        android:duration="1000"
+    <scale
+        android:toYScale="1"
+        android:toXScale="1"
+        android:duration="400"
         />
 
 </set>

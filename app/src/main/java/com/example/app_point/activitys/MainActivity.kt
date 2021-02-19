@@ -82,7 +82,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     // Busca pontos no Banco de Dados
     private fun buscarPoints(){
         Thread{
-            Thread.sleep(1000)
+            // Block Thread
+            Thread.sleep(500)
             runOnUiThread {
                 mViewModel.getEmployee()
                 mViewModel.getData()

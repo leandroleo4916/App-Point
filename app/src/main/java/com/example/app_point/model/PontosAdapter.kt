@@ -3,13 +3,17 @@ package com.example.app_point.model
 import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.utils.ConverterPhoto
+import kotlinx.coroutines.newSingleThreadContext
+import kotlin.coroutines.coroutineContext
 
 @Suppress("UNREACHABLE_CODE")
-class PontosAdapter(application: Application) : RecyclerView.Adapter<PontosViewHolder>() {
+class PontosAdapter(private val application: Application) : RecyclerView.Adapter<PontosViewHolder>() {
 
     private var mListFuncionario: List<String> = arrayListOf()
     private var mListData: List<String> = arrayListOf()
@@ -21,6 +25,11 @@ class PontosAdapter(application: Application) : RecyclerView.Adapter<PontosViewH
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PontosViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_points, parent, false)
+
+        // Add animation to item RecyclerView
+        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
+        item.startAnimation(animation)
+
         return PontosViewHolder(item)
     }
 

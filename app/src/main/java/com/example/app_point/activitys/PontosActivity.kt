@@ -39,7 +39,8 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
     private fun buscarPoints(){
         Thread{
-            Thread.sleep(1000)
+            // Block Thread
+            Thread.sleep(500)
             runOnUiThread {
                 mViewModel.getEmployee()
                 mViewModel.getData()
@@ -47,7 +48,6 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
                 progress_ponto.visibility = View.GONE
             }
         }.start()
-
     }
 
     private fun observe(){
