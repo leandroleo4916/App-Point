@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     // Observe List Points
     private fun observe(){
         mViewModel.employeeList.observe(this, {
-            mPointAdapter.updateFuncionario(it)
+            mPointAdapter.updateEmployee(it)
         })
         mViewModel.dataList.observe(this, {
             mPointAdapter.updateData(it)

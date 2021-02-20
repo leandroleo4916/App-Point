@@ -53,7 +53,7 @@ class PontosAdapter(private val application: Application) : RecyclerView.Adapter
     }
 
     // Function inverter list
-    fun updateFuncionario(list: List<String>){
+    fun updateEmployee(list: List<String>){
         mListEmployee = list.asReversed()
         notifyDataSetChanged()
     }

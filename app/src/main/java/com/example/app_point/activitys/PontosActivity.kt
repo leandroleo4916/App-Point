@@ -52,7 +52,7 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
     private fun observe(){
         mViewModel.employeeList.observe(this, {
-            mPontosAdapter.updateFuncionario(it)
+            mPontosAdapter.updateEmployee(it)
         })
         mViewModel.dataList.observe(this, {
             mPontosAdapter.updateData(it)

@@ -7,7 +7,7 @@
     android:layout_marginRight="4dp"
     android:layout_marginLeft="4dp"
     android:layout_marginTop="4dp"
-    android:elevation="@dimen/cardview_default_radius"
+    android:elevation="10dp"
     android:background="@drawable/back_toolbar"
     android:layout_height="85dp">
 
