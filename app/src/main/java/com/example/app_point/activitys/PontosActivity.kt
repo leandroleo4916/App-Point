@@ -42,9 +42,9 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
             // Block Thread
             Thread.sleep(500)
             runOnUiThread {
-                mViewModel.getEmployee()
-                mViewModel.getData()
-                mViewModel.getHora()
+                mViewModel.getEmployee("")
+                mViewModel.getData("")
+                mViewModel.getHora("")
                 progress_ponto.visibility = View.GONE
             }
         }.start()
@@ -78,21 +78,26 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         val inflater = layoutInflater
         val inflateView = inflater.inflate(R.layout.dialog_bater_ponto, null)
 
-        // Capturando Lista de Funcionarios e adiciona ao spinner
+        // Capture List employee and add spinner
         val list = mListEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        // Cria o Dialog
+        // Add Dialog
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Bater Ponto")
         alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Ok") { _, _ ->
-            // Captura item do Spinner
+
+            // Capture item Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
+
+            mViewModel.getEmployee(itemSpinner)
+            mViewModel.getData(itemSpinner)
+            mViewModel.getHora(itemSpinner)
 
         }
         alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->
@@ -113,5 +118,4 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
-
 }

@@ -8,10 +8,10 @@ import com.example.app_point.repository.RepositoryPoint
 
 class ViewModel (application: Application): AndroidViewModel(application) {
 
-    private var mBuscarRecycler: RepositoryPoint = RepositoryPoint (application)
+    private var mSearchRecycler: RepositoryPoint = RepositoryPoint (application)
 
-    private val mFuncionarioList = MutableLiveData<List<String>>()
-    val employeeList: LiveData<List<String>> = mFuncionarioList
+    private val mEmployeeList = MutableLiveData<List<String>>()
+    val employeeList: LiveData<List<String>> = mEmployeeList
 
     private val mDataList = MutableLiveData<List<String>>()
     val dataList: LiveData<List<String>> = mDataList
@@ -19,13 +19,27 @@ class ViewModel (application: Application): AndroidViewModel(application) {
     private val mHoraList = MutableLiveData<List<String>>()
     val horaList: LiveData<List<String>> = mHoraList
 
-    fun getEmployee(){
-        mFuncionarioList.value = mBuscarRecycler.storePointEmployee()
+    fun getEmployee(employee: String){
+        if (employee == ""){
+            mEmployeeList.value = mSearchRecycler.storePointEmployee()
+        }else {
+            mEmployeeList.value = mSearchRecycler.storeSelectName(employee)
+        }
     }
-    fun getData(){
-        mDataList.value = mBuscarRecycler.storePointDate()
+
+    fun getData(employee: String){
+        if (employee == ""){
+            mDataList.value = mSearchRecycler.storePointDate()
+        }else {
+            mDataList.value = mSearchRecycler.storeSelectDate(employee)
+        }
     }
-    fun getHora(){
-        mHoraList.value = mBuscarRecycler.storePointHour()
+
+    fun getHora(employee: String){
+        if (employee == ""){
+            mHoraList.value = mSearchRecycler.storePointHour()
+        }else {
+            mHoraList.value = mSearchRecycler.storeSelectHours(employee)
+        }
     }
 }

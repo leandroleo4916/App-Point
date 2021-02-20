@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         mPointAdapter = PontosAdapter(application)
         recycler.adapter = mPointAdapter
 
-        buscarPoints()
+        searchPoints()
         listener()
         observe()
         salutation()
@@ -79,21 +79,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         }
     }
 
-    // Busca pontos no Banco de Dados
-    private fun buscarPoints(){
+    // Search Points DB
+    private fun searchPoints(){
         Thread{
             // Block Thread
             Thread.sleep(500)
             runOnUiThread {
-                mViewModel.getEmployee()
-                mViewModel.getData()
-                mViewModel.getHora()
+                mViewModel.getEmployee("")
+                mViewModel.getData("")
+                mViewModel.getHora("")
                 progress.visibility = View.GONE
             }
         }.start()
     }
 
-    // Observe as Listas de Pontos Batidos
+    // Observe List Points
     private fun observe(){
         mViewModel.employeeList.observe(this, {
             mPointAdapter.updateFuncionario(it)
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         })
     }
 
-    // Gerencia os clicks
+    // clicks management
     private fun listener(){
         image_in_register.setOnClickListener(this)
         image_in_perfil.setOnClickListener(this)
@@ -208,7 +208,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             }
             mBusinessPoints.getPoints(itemSpinner, dateAtual, horaAtual) -> {
                 Toast.makeText(this, "Adicionado com sucesso!", Toast.LENGTH_SHORT).show()
-                buscarPoints()
+                searchPoints()
             }
             else -> {
                 Toast.makeText(this, "Não foi possível adicionar ponto!", Toast.LENGTH_SHORT).show()

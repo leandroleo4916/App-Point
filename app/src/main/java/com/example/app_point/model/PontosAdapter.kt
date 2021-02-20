@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.utils.ConverterPhoto
-import kotlinx.coroutines.newSingleThreadContext
-import kotlin.coroutines.coroutineContext
 
 @Suppress("UNREACHABLE_CODE")
 class PontosAdapter(private val application: Application) : RecyclerView.Adapter<PontosViewHolder>() {
 
-    private var mListFuncionario: List<String> = arrayListOf()
+    private var mListEmployee: List<String> = arrayListOf()
     private var mListData: List<String> = arrayListOf()
     private var mListHora: List<String> = arrayListOf()
     private val mPhoto: BusinessEmployee = BusinessEmployee(application)
@@ -33,12 +31,12 @@ class PontosAdapter(private val application: Application) : RecyclerView.Adapter
         return PontosViewHolder(item)
     }
 
-    // Envia para ViewHolder cada item da Lista
+    // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: PontosViewHolder, position: Int) {
-        holder.bind(mListFuncionario[position])
+        holder.bind(mListEmployee[position])
 
         // Captura nome do cliente e busca foto no DB
-        val photo = mPhoto.consultPhoto(mListFuncionario[position])
+        val photo = mPhoto.consultPhoto(mListEmployee[position])
 
         // Converte foto
         val photoConvert = mConverterPhoto.converterToBitmap(photo!!)
@@ -49,14 +47,14 @@ class PontosAdapter(private val application: Application) : RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-        return mListFuncionario.count()
+        return mListEmployee.count()
         return mListData.count()
         return mListHora.count()
     }
 
-    // Função inverte a lista
+    // Function inverter list
     fun updateFuncionario(list: List<String>){
-        mListFuncionario = list.asReversed()
+        mListEmployee = list.asReversed()
         notifyDataSetChanged()
     }
     fun updateData(list: List<String>){

@@ -1,6 +1,8 @@
 package com.example.app_point.business
 
 import android.content.Context
+import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.PointsEntity
 import com.example.app_point.repository.RepositoryPoint
 
 class BusinessPoints(context: Context) {
