@@ -19,7 +19,7 @@ class PontosAdapter(private val application: Application) : RecyclerView.Adapter
     private val mPhoto: BusinessEmployee = BusinessEmployee(application)
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
-    // cria a listagem do layout
+    // Create the list of the layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PontosViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_points, parent, false)
@@ -35,10 +35,10 @@ class PontosAdapter(private val application: Application) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: PontosViewHolder, position: Int) {
         holder.bind(mListEmployee[position])
 
-        // Captura nome do cliente e busca foto no DB
+        // Captures name employee and search photo
         val photo = mPhoto.consultPhoto(mListEmployee[position])
 
-        // Converte foto
+        // Converter photo
         val photoConvert = mConverterPhoto.converterToBitmap(photo!!)
 
         holder.bindPhoto(photoConvert)

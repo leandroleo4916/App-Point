@@ -74,7 +74,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // Captura data e mostra no EditText data e hora
+    // Captures date and show in the EditText date and hour
     @SuppressLint("WeekBasedYear")
     private fun inicialDate(){
         val date = getInstance().time

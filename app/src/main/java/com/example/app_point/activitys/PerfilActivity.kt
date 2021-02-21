@@ -25,7 +25,7 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
-        // Captura do DB uma lista de Funcionários e mostra o que está na primeira posição.
+        // Captures a list employee and shows what is in the first position
         mBusinessEmployee = BusinessEmployee(this)
         val listEmployee = mBusinessEmployee.consultEmployee()
         when {
@@ -83,31 +83,31 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     }
 
     private fun dialogListEmployee(){
-        // Infla o layout
+        // Inflater the layout
         val inflater = layoutInflater
         val inflateView = inflater.inflate(R.layout.dialog_list_employee, null)
 
-        // Capturando Lista de Funcionarios e adiciona ao spinner
+        // Captures a list employee and add to spinner
         val list = mBusinessEmployee.consultEmployee()
         val listSpinner= inflateView.findViewById(R.id.spinner_employee) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        // Cria o Dialog
+        // Create the Dialog
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle(getString(R.string.selecione_funcionario))
         alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Ok") { _, _ ->
 
-            // Captura item do Spinner
+            // Captures item of Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
             buscarEmployee(itemSpinner)
 
         }
-        alertDialog.setNegativeButton("Cancelar") { _, _ ->
-            Toast.makeText(this, "Cancelado!", Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->
+            Toast.makeText(this, R.string.cancelado, Toast.LENGTH_SHORT).show()
         }
         val dialog = alertDialog.create()
         dialog.show()

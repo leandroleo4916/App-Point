@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -33,10 +35,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        animationIcons()
+
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
         mSecurityPreferences = SecurityPreferences(this)
 
-        // Implementação da recycler
+        // Recycler Implementation
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
         recycler.layoutManager = LinearLayoutManager(this)
         mPointAdapter = PontosAdapter(application)
@@ -48,8 +52,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         salutation()
     }
 
-    // Recebe nome do Usuário Administrador e deixa visível no Toolbar
-    // Saldação de Bom dia, tarde e noite
+    // Animation to imageView
+    private fun animationIcons(){
+        val icon1 = findViewById<ImageView>(R.id.image_register_employee)
+        val icon2 = findViewById<ImageView>(R.id.image_perfil_employee)
+        val icon3 = findViewById<ImageView>(R.id.image_historicos_pontos)
+        val icon4 = findViewById<ImageView>(R.id.image_opcoes)
+        val icon5 = findViewById<ImageView>(R.id.image_in_register)
+        val icon6 = findViewById<ImageView>(R.id.image_in_perfil)
+        val icon7 = findViewById<ImageView>(R.id.image_in_clock)
+        val icon8 = findViewById<ImageView>(R.id.image_in_opcoes)
+        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
+        icon1.startAnimation(animation)
+        icon2.startAnimation(animation)
+        icon3.startAnimation(animation)
+        icon4.startAnimation(animation)
+        icon5.startAnimation(animation)
+        icon6.startAnimation(animation)
+        icon7.startAnimation(animation)
+        icon8.startAnimation(animation)
+
+    }
+
+    // Shows admin name + greeting implement
     @SuppressLint("SimpleDateFormat")
     private fun salutation(){
 
@@ -60,17 +85,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         
         val date = Calendar.getInstance().time
         val hora = SimpleDateFormat("HH:mm")
-        val horaAtual = hora.format(date)
+        val horaCurrent = hora.format(date)
 
         val clockSixMorning = "06:00"
         val clockTwelveMorning = "12:00"
         val clockSixEvening = "18:00"
         
         when {
-            horaAtual > clockSixMorning && horaAtual < clockTwelveMorning -> {
+            horaCurrent > clockSixMorning && horaCurrent < clockTwelveMorning -> {
                 text_ola.text = getString(R.string.bom_dia)
             }
-            horaAtual > clockTwelveMorning && horaAtual < clockSixEvening -> {
+            horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> {
                 text_ola.text = getString(R.string.boa_tarde)
             }
             else -> {
@@ -113,7 +138,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         image_in_clock.setOnClickListener(this)
         image_in_opcoes.setOnClickListener(this)
         image_add_ponto.setOnClickListener(this)
-        text_logout.setOnClickListener(this)
+        option_menu.setOnClickListener(this)
         float_bottom.setOnClickListener(this)
     }
 
@@ -132,14 +157,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
                 startActivity(Intent(this, ToolsActivity::class.java))
             }
             image_add_ponto -> dialogPoint()
-            text_logout -> dialogLogout()
+            option_menu -> showMenuOption()
             float_bottom -> dialogPoint()
         }
     }
 
     private fun dialogLogout(){
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Deseja sair do App?")
+        alertDialog.setTitle(getString(R.string.deseja_sair))
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Sim") { _, _ ->
             mSecurityPreferences.removeString()
@@ -186,7 +211,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Registrar") { _, _ ->
 
-            // Captura item do Spinner
+            // Captures item do Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
             savePoint(itemSpinner, dataAtual, horaAtual)
 
@@ -200,7 +225,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         dialog.show()
     }
 
-    // Envia dados capturados para a Business
+    // Send data captured to Business
     private fun savePoint(itemSpinner: String, dateAtual: String, horaAtual: String){
         when{
             itemSpinner == "" -> {
@@ -225,5 +250,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
+    }
+
+    private fun showMenuOption(){
+        val menuOption = PopupMenu(this, option_menu)
+        menuOption.menuInflater.inflate(R.menu.menu, menuOption.menu)
+        menuOption.setOnMenuItemClickListener { item ->
+            when (item!!.itemId) {
+                R.id.profile_admin_menu -> {}
+                R.id.employee_menu -> {}
+                R.id.logout_app_menu -> dialogLogout()
+            }
+            true
+        }
+        menuOption.show()
     }
 }

@@ -12,7 +12,9 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.model.PontosAdapter
 import com.example.app_point.model.ViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pontos.*
+import kotlinx.android.synthetic.main.dialog_bater_ponto.*
 
 class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -26,18 +28,18 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
-        // Monta a recyclerview
+        // Create the recyclerview
         val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
         recycler.layoutManager = LinearLayoutManager(this)
         mPontosAdapter = PontosAdapter(application)
         recycler.adapter = mPontosAdapter
 
-        buscarPoints()
+        searchPoints()
         listener()
         observe()
     }
 
-    private fun buscarPoints(){
+    private fun searchPoints(){
         Thread{
             // Block Thread
             Thread.sleep(500)
@@ -76,21 +78,21 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
     private fun dialogPoint(){
         val inflater = layoutInflater
-        val inflateView = inflater.inflate(R.layout.dialog_bater_ponto, null)
+        val inflateView = inflater.inflate(R.layout.dialog_list_employee, null)
 
         // Capture List employee and add spinner
         val list = mListEmployee.consultEmployee()
-        val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
+        val listSpinner = inflateView.findViewById(R.id.spinner_employee) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
         // Add Dialog
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Bater Ponto")
+        alertDialog.setTitle(getString(R.string.filtrar_funcionario))
         alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Ok") { _, _ ->
+        alertDialog.setPositiveButton("Filtrar") { _, _ ->
 
             // Capture item Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
@@ -100,8 +102,10 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
             mViewModel.getHora(itemSpinner)
 
         }
-        alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->
-            Toast.makeText(this, R.string.cancelado, Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton("Todos") { _, _ ->
+            mViewModel.getEmployee("")
+            mViewModel.getData("")
+            mViewModel.getHora("")
         }
         val dialog = alertDialog.create()
         dialog.show()

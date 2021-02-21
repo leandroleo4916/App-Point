@@ -47,27 +47,29 @@
         app:layout_constraintStart_toEndOf="@+id/text_name_user"
         app:layout_constraintTop_toTopOf="@+id/text_name_user" />
 
-    <TextView
-        android:id="@+id/text_logout"
+    <ImageView
+        android:id="@+id/option_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/sair"
         android:textColor="@color/letras"
+        android:src="@drawable/ic_option"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_ola"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/image_register_employee"
@@ -199,21 +201,6 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_register_employee"
-            android:layout_alignStart="@+id/text_register_employee"
-            android:layout_alignEnd="@+id/text_register_employee"
-            android:layout_marginStart="-8dp"
-            android:layout_marginEnd="-8dp"
-            android:text="@string/funcionario"
-            android:textColor="@color/letras"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
             android:id="@+id/text_perfil_employee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -229,21 +216,6 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_perfil_employee"
-            android:layout_alignStart="@+id/text_perfil_employee"
-            android:layout_alignEnd="@+id/text_perfil_employee"
-            android:layout_marginStart="-17dp"
-            android:layout_marginEnd="-25dp"
-            android:text="@string/funcionario"
-            android:textColor="@color/letras"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
             android:id="@+id/text_pontos_employee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -253,20 +225,6 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="22dp"
             android:text="@string/title_pontos"
-            android:textColor="@color/letras"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_below="@+id/text_pontos_employee"
-            android:layout_alignStart="@+id/text_pontos_employee"
-            android:layout_alignEnd="@+id/text_pontos_employee"
-            android:layout_marginStart="-14dp"
-            android:layout_marginEnd="-14dp"
-            android:text="@string/funcionario"
             android:textColor="@color/letras"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -293,7 +251,6 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp">
@@ -304,7 +261,6 @@
             android:layout_height="60dp"
             android:background="@drawable/back_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />

@@ -42,7 +42,7 @@
     <string name="fulano">Fulano</string>
     <string name="exclamacao">!</string>
     <string name="sair">Sair</string>
-    <string name="registrar">Registrar</string>
+    <string name="registrar">Cadastrar</string>
     <string name="opcoes">Opções</string>
     <string name="pontos_recentes">Pontos Recentes</string>
     <string name="perfil_funcionario">Perfil Funcionário</string>
@@ -55,4 +55,6 @@
     <string name="selecione_funcionario">Selecione o Funcionário</string>
     <string name="editar_funcionario">Editar Funcionário</string>
     <string name="editar">EDITAR</string>
+    <string name="filtrar_funcionario">Filtrar pontos por funcionário</string>
+    <string name="deseja_sair">Deseja sair do App?</string>
 </resources>
