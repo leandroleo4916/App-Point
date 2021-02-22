@@ -38,7 +38,7 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // Login automático caso Admin tenha logado anteriormente
+    // Login automatic
     private fun verifyLoggedUser(){
         val email = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
         val password = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)

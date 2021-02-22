@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
+import com.example.app_point.entity.UserEntity
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.register_user.*
 import kotlinx.android.synthetic.main.register_user.edittext_email
@@ -61,6 +62,7 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
 
             mBusinessUser.getUser(name, email, senha) -> {
                 Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
+                mSecurityPreferences.storeString("name", name)
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }

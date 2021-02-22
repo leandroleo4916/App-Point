@@ -57,4 +57,7 @@
     <string name="editar">EDITAR</string>
     <string name="filtrar_funcionario">Filtrar pontos por funcionário</string>
     <string name="deseja_sair">Deseja sair do App?</string>
+    <string name="precisa_add_funcionarios">Você precisa adicionar funcionários!</string>
+    <string name="adicionado_sucesso">Adicionado com sucesso!</string>
+    <string name="nao_possivel_add_ponto">Não foi possível adicionar ponto!</string>
 </resources>

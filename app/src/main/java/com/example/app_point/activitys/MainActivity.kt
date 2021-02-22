@@ -171,10 +171,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             finish()
         }
         alertDialog.setNegativeButton("Não") { _, _ -> Toast.makeText(
-            this,
-            getString(R.string.cancelado),
-            Toast.LENGTH_SHORT
-        ).show()
+            this, getString(R.string.cancelado), Toast.LENGTH_SHORT).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -185,26 +182,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         val date = Calendar.getInstance().time
         val dateTime = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
 
-        // Captura hora atual
+        // Captures current hour
         val hora = SimpleDateFormat("HH:mm")
-        val horaAtual = hora.format(date)
+        val hourCurrent = hora.format(date)
 
-        // Captura data atual
-        val dataAtual = dateTime.format(date)
+        // Captures current date
+        val dateCurrent = dateTime.format(date)
 
         val inflater = layoutInflater
         val inflateView = inflater.inflate(R.layout.dialog_bater_ponto, null)
         val textData = inflateView.findViewById(R.id.dataPonto) as TextView
-        textData.text = dataAtual
+        textData.text = dateCurrent
 
-        // Capturando Lista de Funcionarios e adiciona ao spinner
+        // Captures employee list and add to spinner
         val list = mListEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        // Cria o Dialog
+        // Create the Dialog
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Bater Ponto")
         alertDialog.setView(inflateView)
@@ -213,7 +210,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
             // Captures item do Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
-            savePoint(itemSpinner, dataAtual, horaAtual)
+            savePoint(itemSpinner, dateCurrent, hourCurrent)
 
         }
         alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> Toast.makeText(
@@ -229,14 +226,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private fun savePoint(itemSpinner: String, dateAtual: String, horaAtual: String){
         when{
             itemSpinner == "" -> {
-                Toast.makeText(this, "Você precisa adicionar funcionários!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.precisa_add_funcionarios), Toast.LENGTH_SHORT).show()
             }
             mBusinessPoints.getPoints(itemSpinner, dateAtual, horaAtual) -> {
-                Toast.makeText(this, "Adicionado com sucesso!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.adicionado_sucesso), Toast.LENGTH_SHORT).show()
                 searchPoints()
             }
             else -> {
-                Toast.makeText(this, "Não foi possível adicionar ponto!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.nao_possivel_add_ponto), Toast.LENGTH_SHORT).show()
             }
         }
     }
