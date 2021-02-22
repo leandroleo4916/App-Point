@@ -159,7 +159,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // Popup abrir câmera ou galeria
+    // Popup open camera or gallery
     private fun openPopUp() {
         val popMenu = PopupMenu(this, photo_employee)
         popMenu.menuInflater.inflate(R.menu.popup, popMenu.menu)
@@ -173,7 +173,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         popMenu.show()
     }
 
-    // Gerencia as permissões de câmera e galeria
+    // Management the permission of the camera and gallery
     private fun permissionCamera(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
             PackageManager.PERMISSION_DENIED ||

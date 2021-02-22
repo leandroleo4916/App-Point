@@ -62,7 +62,6 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
 
             mBusinessUser.getUser(name, email, senha) -> {
                 Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
-                mSecurityPreferences.storeString("name", name)
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
