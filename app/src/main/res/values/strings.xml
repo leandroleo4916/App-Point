@@ -60,4 +60,6 @@
     <string name="precisa_add_funcionarios">Você precisa adicionar funcionários!</string>
     <string name="adicionado_sucesso">Adicionado com sucesso!</string>
     <string name="nao_possivel_add_ponto">Não foi possível adicionar ponto!</string>
+    <string name="filtrar">Filtrar</string>
+    <string name="todos">Todos</string>
 </resources>

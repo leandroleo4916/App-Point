@@ -16,7 +16,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.constants.ConstantsUser
-import com.example.app_point.model.PontosAdapter
+import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
-    private lateinit var  mPointAdapter: PontosAdapter
+    private lateinit var  mPointAdapter: PointsAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
     private lateinit var mViewModel: ViewModel
 
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         // Recycler Implementation
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
         recycler.layoutManager = LinearLayoutManager(this)
-        mPointAdapter = PontosAdapter(application)
+        mPointAdapter = PointsAdapter(application)
         recycler.adapter = mPointAdapter
 
         searchPoints()
@@ -148,10 +148,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
                 startActivity(Intent(this, RegisterEmployeeActivity::class.java))
             }
             image_in_perfil -> {
-                startActivity(Intent(this, PerfilActivity::class.java))
+                startActivity(Intent(this, ProfileActivity::class.java))
             }
             image_in_clock -> {
-                startActivity(Intent(this, PontosActivity::class.java))
+                startActivity(Intent(this, PointsActivity::class.java))
             }
             image_in_opcoes -> {
                 startActivity(Intent(this, ToolsActivity::class.java))

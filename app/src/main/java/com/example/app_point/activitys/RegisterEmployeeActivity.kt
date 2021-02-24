@@ -291,7 +291,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
                 admissao, aniversario
             ) -> {
                 Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, PerfilActivity::class.java))
+                startActivity(Intent(this, ProfileActivity::class.java))
                 finish()
             }
             else -> Toast.makeText(

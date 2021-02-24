@@ -1,0 +1,58 @@
+package com.example.app_point.model
+
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
+import com.example.app_point.R
+import com.example.app_point.utils.AddHours
+
+class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    private val mAddHours: AddHours = AddHours()
+
+    // Add item the position of the Layout
+    fun bind(employee: String){
+        val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_funcionario)
+        textEmployee.text = employee
+    }
+
+    fun bindData(data: String){
+        val textData = itemView.findViewById<TextView>(R.id.text_data)
+        textData.text = data
+    }
+
+    fun bindHora(hoursCurrent: String, hours: String){
+        val textHora = itemView.findViewById<TextView>(R.id.text_hora)
+        val toolbar = itemView.findViewById<ImageView>(R.id.icon_image_back)
+
+        val minutesCurrent = mAddHours.addHours(hoursCurrent)
+        val minutes = mAddHours.addHours(hours)
+
+        textHora.text = hoursCurrent
+
+        when {
+            minutesCurrent < minutes -> {
+                toolbar.setImageResource(R.color.colorGreen)
+            }
+            minutesCurrent > minutes + 15 -> {
+                toolbar.setImageResource(R.color.colorRed)
+            }
+            else -> {
+                toolbar.setImageResource(R.color.colorYellow)
+            }
+        }
+
+    }
+
+    fun bindPhoto(image: Bitmap){
+        val imageView = itemView.findViewById<ImageView>(R.id.icon_image)
+        imageView.setImageBitmap(image)
+
+    }
+
+}

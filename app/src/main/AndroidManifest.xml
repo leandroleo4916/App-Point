@@ -21,8 +21,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity android:name=".activitys.ToolsActivity" />
-        <activity android:name=".activitys.PontosActivity" />
-        <activity android:name=".activitys.PerfilActivity" />
+        <activity android:name=".activitys.PointsActivity" />
+        <activity android:name=".activitys.ProfileActivity" />
         <activity android:name=".activitys.RegisterEmployeeActivity" />
         <activity android:name=".activitys.MainActivity" />
         <activity android:name=".activitys.RegisterUser" />

@@ -10,5 +10,9 @@
     <color name="corToolBar">#645c64</color>
     <color name="textButtom">#7a69b0</color>
     <color name="backfrag">#434357</color>
+    <color name="colorBlue">#3F51B5</color>
+    <color name="colorGreen">#14D606</color>
+    <color name="colorRed">#E4050C</color>
+    <color name="colorYellow">#FFA000</color>
 
 </resources>

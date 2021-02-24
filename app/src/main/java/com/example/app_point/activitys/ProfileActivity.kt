@@ -9,15 +9,21 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.model.PointsAdapter
+import com.example.app_point.model.ViewModel
+import com.example.app_point.repository.RepositoryPoint
 import kotlinx.android.synthetic.main.activity_perfil.*
 
-class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+    private lateinit var mViewModel: ViewModel
+    private lateinit var mPontosAdapter: PointsAdapter
     private lateinit var mBusinessEmployee: BusinessEmployee
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
@@ -25,12 +31,15 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+        mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        mPontosAdapter = PointsAdapter(application)
+
         // Captures a list employee and shows what is in the first position
         mBusinessEmployee = BusinessEmployee(this)
         val listEmployee = mBusinessEmployee.consultEmployee()
         when {
             listEmployee.isNotEmpty() -> {
-                buscarEmployee(listEmployee[0])
+                searchEmployee(listEmployee[0])
             }
         }
         listener()
@@ -55,24 +64,24 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         }
     }
 
-    private fun buscarEmployee(nomeEmploye: String){
-        val dadosEmployee: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(nomeEmploye)!!
-        val image = mConverterPhoto.converterToBitmap(dadosEmployee.photo)
+    private fun searchEmployee(nomeEmploye: String){
+        val dataEmployee: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(nomeEmploye)!!
+        val image = mConverterPhoto.converterToBitmap(dataEmployee.photo)
 
         image_photo_employee.setImageBitmap(image)
-        text_name_employee.text = dadosEmployee.nameEmployee
-        text_cargo_employee.text = dadosEmployee.cargoEmployee
-        text_toolbar_email.text = dadosEmployee.emailEmployee
-        text_toolbar_phone.text = dadosEmployee.phoneEmployee
-        text_toolbar_birthday.text = dadosEmployee.aniversarioEmployee
-        text_toolbar_admissao.text = dadosEmployee.admissaoEmployee
-        text_toolbar_hora1.text = dadosEmployee.horario1
-        text_toolbar_hora2.text = dadosEmployee.horario2
-        text_toolbar_hora3.text = dadosEmployee.horario3
-        text_toolbar_hora4.text = dadosEmployee.horario4
+        text_name_employee.text = dataEmployee.nameEmployee
+        text_cargo_employee.text = dataEmployee.cargoEmployee
+        text_toolbar_email.text = dataEmployee.emailEmployee
+        text_toolbar_phone.text = dataEmployee.phoneEmployee
+        text_toolbar_birthday.text = dataEmployee.aniversarioEmployee
+        text_toolbar_admissao.text = dataEmployee.admissaoEmployee
+        text_toolbar_hora1.text = dataEmployee.horario1
+        text_toolbar_hora2.text = dataEmployee.horario2
+        text_toolbar_hora3.text = dataEmployee.horario3
+        text_toolbar_hora4.text = dataEmployee.horario4
     }
 
-    // Captura id do funcionário e envia para Activity Register para edição
+    // Captures id employee and send to Activity Register to edition
     private fun editEmployee(employee: String){
         val id: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(employee)!!
         val intent = Intent(this, RegisterEmployeeActivity::class.java)
@@ -103,7 +112,7 @@ class PerfilActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
             // Captures item of Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
-            buscarEmployee(itemSpinner)
+            searchEmployee(itemSpinner)
 
         }
         alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->

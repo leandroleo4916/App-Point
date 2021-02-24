@@ -8,7 +8,7 @@
     android:background="@color/back"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    tools:context=".activitys.PerfilActivity">
+    tools:context=".activitys.ProfileActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -93,11 +93,11 @@
         android:id="@+id/edit_employee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:src="@drawable/ic_edit_24"
+        app:layout_constraintBottom_toBottomOf="@+id/text_cargo_employee"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/text_cargo_employee"
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -180,7 +180,7 @@
         android:id="@+id/edit_hrs_feitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="152"
+        android:text="0"
         android:elevation="10dp"
         android:textColor="@color/back"
         android:textSize="16sp"
@@ -210,7 +210,7 @@
         android:id="@+id/edit_hrs_restantes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="68"
+        android:text="0"
         android:elevation="10dp"
         android:textColor="@color/back"
         android:textSize="16sp"
@@ -239,7 +239,7 @@
         android:id="@+id/edit_hrs_extras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="13"
+        android:text="0"
         android:elevation="10dp"
         android:textColor="@color/back"
         android:textSize="16sp"

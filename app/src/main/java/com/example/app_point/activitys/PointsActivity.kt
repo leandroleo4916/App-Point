@@ -10,15 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.model.PontosAdapter
+import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pontos.*
-import kotlinx.android.synthetic.main.dialog_bater_ponto.*
 
-class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private lateinit var mPontosAdapter: PontosAdapter
+    private lateinit var mPointsAdapter: PointsAdapter
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private lateinit var mViewModel: ViewModel
 
@@ -31,8 +29,8 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         // Create the recyclerview
         val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
         recycler.layoutManager = LinearLayoutManager(this)
-        mPontosAdapter = PontosAdapter(application)
-        recycler.adapter = mPontosAdapter
+        mPointsAdapter = PointsAdapter(application)
+        recycler.adapter = mPointsAdapter
 
         searchPoints()
         listener()
@@ -54,13 +52,13 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
     private fun observe(){
         mViewModel.employeeList.observe(this, {
-            mPontosAdapter.updateEmployee(it)
+            mPointsAdapter.updateEmployee(it)
         })
         mViewModel.dataList.observe(this, {
-            mPontosAdapter.updateData(it)
+            mPointsAdapter.updateData(it)
         })
         mViewModel.horaList.observe(this, {
-            mPontosAdapter.updateHora(it)
+            mPointsAdapter.updateHora(it)
         })
     }
 
@@ -92,7 +90,7 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         alertDialog.setTitle(getString(R.string.filtrar_funcionario))
         alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Filtrar") { _, _ ->
+        alertDialog.setPositiveButton(getString(R.string.filtrar)) { _, _ ->
 
             // Capture item Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
@@ -102,7 +100,7 @@ class PontosActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
             mViewModel.getHora(itemSpinner)
 
         }
-        alertDialog.setNegativeButton("Todos") { _, _ ->
+        alertDialog.setNegativeButton(getString(R.string.todos)) { _, _ ->
             mViewModel.getEmployee("")
             mViewModel.getData("")
             mViewModel.getHora("")

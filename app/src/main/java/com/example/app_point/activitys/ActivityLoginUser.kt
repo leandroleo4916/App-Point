@@ -45,10 +45,11 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 
         if (email != "" && password != ""){
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 
-    // Captura e valida User Admin
+    // Captures and valida User Admin
     private fun loginUser(){
         val userLogin = edittext_user.text.toString()
         val userPassword = edittext_senha.text.toString()
