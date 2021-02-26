@@ -223,12 +223,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     }
 
     // Send data captured to Business
-    private fun savePoint(itemSpinner: String, dateAtual: String, horaAtual: String){
+    private fun savePoint(itemSpinner: String, dateCurrent: String, horaCurrent: String){
         when{
             itemSpinner == "" -> {
                 Toast.makeText(this, getString(R.string.precisa_add_funcionarios), Toast.LENGTH_SHORT).show()
             }
-            mBusinessPoints.getPoints(itemSpinner, dateAtual, horaAtual) -> {
+            mBusinessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
                 Toast.makeText(this, getString(R.string.adicionado_sucesso), Toast.LENGTH_SHORT).show()
                 searchPoints()
             }
