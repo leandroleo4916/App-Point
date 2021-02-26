@@ -1,12 +1,9 @@
 package com.example.app_point.model
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.utils.AddHours
@@ -28,8 +25,8 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bindHora(hoursCurrent: String, hours: String){
         val textHora = itemView.findViewById<TextView>(R.id.text_hora)
-        val toolbar = itemView.findViewById<ImageView>(R.id.icon_image_back)
-
+        val imageBack = itemView.findViewById<ImageView>(R.id.icon_image_back)
+        
         val minutesCurrent = mAddHours.addHours(hoursCurrent)
         val minutes = mAddHours.addHours(hours)
 
@@ -37,13 +34,13 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         when {
             minutesCurrent < minutes -> {
-                toolbar.setImageResource(R.color.colorGreen)
+                imageBack.setImageResource(R.color.colorGreen)
             }
             minutesCurrent > minutes + 15 -> {
-                toolbar.setImageResource(R.color.colorRed)
+                imageBack.setImageResource(R.color.colorRed)
             }
             else -> {
-                toolbar.setImageResource(R.color.colorYellow)
+                imageBack.setImageResource(R.color.colorYellow)
             }
         }
 

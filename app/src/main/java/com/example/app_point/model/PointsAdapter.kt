@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.utils.AddHours
 import com.example.app_point.utils.ConverterPhoto
 
@@ -17,6 +18,7 @@ class PointsAdapter(private val application: Application) : RecyclerView.Adapter
     private var mListEmployee: List<String> = arrayListOf()
     private var mListData: List<String> = arrayListOf()
     private var mListHora: List<String> = arrayListOf()
+    private var mEmployeeData: EmployeeEntity? = null
     private val mBusiness: BusinessEmployee = BusinessEmployee(application)
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
@@ -35,13 +37,12 @@ class PointsAdapter(private val application: Application) : RecyclerView.Adapter
     // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: PointsViewHolder, position: Int) {
         holder.bind(mListEmployee[position])
+        holder.bindData(mListData[position])
 
         // Captures name employee and search photo
         val photo = mBusiness.consultPhoto(mListEmployee[position])
         val photoConvert = mConverterPhoto.converterToBitmap(photo!!)
         holder.bindPhoto(photoConvert)
-
-        holder.bindData(mListData[position])
 
         val hoursToMinutes = mBusiness.consultHours(mListEmployee[position])!!
         holder.bindHora(mListHora[position], hoursToMinutes)
@@ -55,15 +56,19 @@ class PointsAdapter(private val application: Application) : RecyclerView.Adapter
 
     // Function inverter list
     fun updateEmployee(list: List<String>){
-        mListEmployee = list.asReversed()
+        mListEmployee = list.reversed()
         notifyDataSetChanged()
     }
     fun updateData(list: List<String>){
-        mListData = list.asReversed()
+        mListData = list.reversed()
         notifyDataSetChanged()
     }
     fun updateHora(list: List<String>){
-        mListHora = list.asReversed()
+        mListHora = list.reversed()
+        notifyDataSetChanged()
+    }
+    fun updateDataEmployee(list: EmployeeEntity){
+        mEmployeeData = list
         notifyDataSetChanged()
     }
 }

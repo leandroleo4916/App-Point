@@ -20,7 +20,7 @@ class BusinessEmployee(context: Context) {
     }
 
     fun consultDadosEmployee(nome: String): EmployeeEntity?{
-        return mRepositoryEmployee.consultDadosEmployee(nome)
+        return mRepositoryEmployee.consultDataEmployee(nome)
     }
 
     fun consultEmployeeWithId(id: Int): EmployeeEntity?{

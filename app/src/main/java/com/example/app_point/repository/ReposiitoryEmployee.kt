@@ -87,9 +87,9 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    fun consultDadosEmployee(nome: String): EmployeeEntity? {
+    fun consultDataEmployee(nome: String): EmployeeEntity? {
 
-        var listDados: EmployeeEntity? = null
+        var listData: EmployeeEntity? = null
         try {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
@@ -134,14 +134,14 @@ class RepositoryEmployee(context: Context?) {
                     val admissao = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
                     val niver = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                    listDados = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, name, email, cargo, phone, admissao, niver)
+                    listData = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, name, email, cargo, phone, admissao, niver)
 
             }
             cursor?.close()
-            return listDados!!
+            return listData!!
 
         } catch (e: Exception) {
-            return listDados!!
+            return listData!!
         }
     }
 

@@ -40,7 +40,7 @@
         android:id="@+id/text_nome_funcionario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:text="@string/funcionario"
         android:textColor="@color/letras"
         android:textSize="16sp"
