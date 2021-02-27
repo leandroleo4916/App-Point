@@ -14,7 +14,6 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.model.AdapterPoints
-import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.activity_perfil.*
@@ -81,9 +80,10 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         image_photo_employee.setImageBitmap(photoConverter)
     }
 
-    private fun viewModel(nomeEmployee: String){
-        mViewModelPoints.getData(nomeEmployee)
-        mViewModelPoints.getHora(nomeEmployee)
+    private fun viewModel(nameEmployee: String){
+        mViewModelPoints.getEmployee(nameEmployee)
+        mViewModelPoints.getData(nameEmployee)
+        mViewModelPoints.getHora(nameEmployee)
     }
 
     private fun observer(){
@@ -92,6 +92,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         })
         mViewModelPoints.horaList.observe(this, {
             mAdapterPoints.updateHora(it)
+        })
+        mViewModelPoints.employeeList.observe(this, {
+            mAdapterPoints.updateEmployee(it)
         })
     }
 
@@ -127,6 +130,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             // Captures item of Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
             searchEmployee(itemSpinner)
+            viewModel(itemSpinner)
 
         }
         alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->

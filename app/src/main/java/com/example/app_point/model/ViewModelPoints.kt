@@ -12,8 +12,8 @@ class ViewModelPoints (application: Application): AndroidViewModel(application) 
 
     private var mSearchRecycler: RepositoryPoint = RepositoryPoint (application)
 
-    private val mEmployeeList = MutableLiveData<List<String>>()
-    val employeeList: LiveData<List<String>> = mEmployeeList
+    private val mEmployeeList = MutableLiveData<String>()
+    val employeeList: LiveData<String> = mEmployeeList
 
     private val mDataList = MutableLiveData<List<String>>()
     val dataList: LiveData<List<String>> = mDataList
@@ -22,7 +22,7 @@ class ViewModelPoints (application: Application): AndroidViewModel(application) 
     val horaList: LiveData<List<String>> = mHoraList
 
     fun getEmployee(employee: String){
-        mEmployeeList.value = listOf(employee)
+        mEmployeeList.value = employee
     }
 
     fun getData(employee: String){

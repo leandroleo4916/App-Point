@@ -5,11 +5,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.utils.AddHours
+import com.example.app_point.utils.ConverterHours
 
 class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val mAddHours: AddHours = AddHours()
+    private val mConverterHours: ConverterHours = ConverterHours()
 
     // Add item the position of the Layout
     fun bindData(data: String){
@@ -17,16 +17,17 @@ class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textData.text = data
     }
 
-    fun bindHora(hoursCurrent: String){
+    fun bindHora(hoursCurrent: String, hours: String){
+
         val textHora = itemView.findViewById<TextView>(R.id.text_hour_time_line)
-        //val imageTimeLine = itemView.findViewById<ImageView>(R.id.imageViewColorTimeLine)
+        val imageTimeLine = itemView.findViewById<ImageView>(R.id.imageViewColorTimeLine)
         
-        //val minutesCurrent = mAddHours.addHours(hoursCurrent)
-        //val minutes = mAddHours.addHours(hours)
+        val minutesCurrent = mConverterHours.converterHoursInMinutes(hoursCurrent)
+        val minutes = mConverterHours.converterHoursInMinutes(hours)
 
         textHora.text = hoursCurrent
 
-        /*when {
+        when {
             minutesCurrent < minutes -> {
                 imageTimeLine.setImageResource(R.color.colorGreen)
             }
@@ -36,6 +37,6 @@ class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
             else -> {
                 imageTimeLine.setImageResource(R.color.colorYellow)
             }
-        }*/
+        }
     }
 }

@@ -12,7 +12,7 @@ import com.example.app_point.business.BusinessEmployee
 @Suppress("UNREACHABLE_CODE")
 class AdapterPoints(private val application: Application) : RecyclerView.Adapter<ViewHolderPoints>() {
 
-    private var mListEmployee: List<String> = arrayListOf()
+    private var mListEmployee: String = ""
     private var mListData: List<String> = arrayListOf()
     private var mListHora: List<String> = arrayListOf()
     private val mBusiness: BusinessEmployee = BusinessEmployee(application)
@@ -32,9 +32,12 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
 
     // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: ViewHolderPoints, position: Int) {
-
         holder.bindData(mListData[position])
-        holder.bindHora(mListHora[position])
+
+        val employee = mBusiness.consultDadosEmployee(mListEmployee)
+        val hours = employee!!.horario1
+
+        holder.bindHora(mListHora[position], hours)
     }
 
     override fun getItemCount(): Int {
@@ -43,6 +46,9 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
     }
 
     // Function inverter list
+    fun updateEmployee(nameEmployee: String){
+        mListEmployee = nameEmployee
+    }
 
     fun updateData(list: List<String>){
         mListData = list.reversed()

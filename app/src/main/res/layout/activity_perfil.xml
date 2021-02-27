@@ -205,38 +205,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription" />
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="14dp"
+        android:background="@color/letras"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee" />
+
     <TextView
         android:id="@+id/text_date_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="12dp"
         android:text="Pontos realizados"
         android:textColor="@color/letras"
-        app:layout_constraintBottom_toBottomOf="@+id/search_date"
-        app:layout_constraintStart_toEndOf="@+id/search_date"
-        app:layout_constraintTop_toTopOf="@+id/search_date"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/search_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="30dp"
         android:src="@drawable/ic_calendar"
-        android:text="Pesquisar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewProfile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_date"
+        android:layout_height="match_parent"
+        android:layout_marginTop="310dp"
+        app:layout_constraintEnd_toEndOf="@+id/text_date_current"
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="@+id/text_date_current"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/recycler_time_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,15 +6,16 @@
     android:layout_width="match_parent"
     android:layout_marginRight="4dp"
     android:layout_marginLeft="4dp"
+    android:layout_marginTop="1dp"
     android:elevation="10dp"
     android:background="@color/backfrag"
     android:id="@+id/time_line"
-    android:layout_height="40dp">
+    android:layout_height="50dp">
 
     <ImageView
         android:id="@+id/imageViewTimeLine"
-        android:layout_width="41dp"
-        android:layout_height="42dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:src="@drawable/line"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,30 +23,29 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription,MissingConstraints" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewColorTimeLine"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:background="@drawable/back_fundo_photo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewTimeLine"
         app:layout_constraintEnd_toEndOf="@+id/imageViewTimeLine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageViewTimeLine"
+        app:layout_constraintTop_toTopOf="@+id/imageViewTimeLine"
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <TextView
         android:id="@+id/text_date_time_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="21 dez 2020"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewTimeLine"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476"
+        app:layout_constraintVertical_bias="0.451"
         tools:ignore="MissingConstraints" />
 
     <TextView
