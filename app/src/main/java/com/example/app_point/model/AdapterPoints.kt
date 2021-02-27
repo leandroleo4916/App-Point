@@ -8,56 +8,42 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.utils.ConverterPhoto
 
 @Suppress("UNREACHABLE_CODE")
-class PointsAdapter(private val application: Application) : RecyclerView.Adapter<PointsViewHolder>() {
+class AdapterPoints(private val application: Application) : RecyclerView.Adapter<ViewHolderPoints>() {
 
     private var mListEmployee: List<String> = arrayListOf()
     private var mListData: List<String> = arrayListOf()
     private var mListHora: List<String> = arrayListOf()
     private val mBusiness: BusinessEmployee = BusinessEmployee(application)
-    private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
+
 
     // Create the list of the layout
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderPoints {
         val item = LayoutInflater.from(parent.context).inflate(
-            R.layout.recycler_points, parent, false)
+            R.layout.recycler_time_line, parent, false)
 
         // Add animation to item RecyclerView
         val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
         item.startAnimation(animation)
 
-        return PointsViewHolder(item)
+        return ViewHolderPoints(item)
     }
 
     // Send to ViewHolder item of List
-    override fun onBindViewHolder(holder: PointsViewHolder, position: Int) {
-        val employee = mListEmployee[position]
+    override fun onBindViewHolder(holder: ViewHolderPoints, position: Int) {
 
-        holder.bind(employee)
         holder.bindData(mListData[position])
-
-        // Captures name employee and search photo
-        val photo = mBusiness.consultPhoto(employee)
-        val photoConvert = mConverterPhoto.converterToBitmap(photo!!)
-        holder.bindPhoto(photoConvert)
-
-        val hoursToMinutes = mBusiness.consultHours(employee)!!
-        holder.bindHora(mListHora[position], hoursToMinutes)
+        holder.bindHora(mListHora[position])
     }
 
     override fun getItemCount(): Int {
-        return mListEmployee.count()
         return mListData.count()
         return mListHora.count()
     }
 
     // Function inverter list
-    fun updateEmployee(list: List<String>){
-        mListEmployee = list.reversed()
-        notifyDataSetChanged()
-    }
+
     fun updateData(list: List<String>){
         mListData = list.reversed()
         notifyDataSetChanged()

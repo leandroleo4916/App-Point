@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="Fulano Beltrano"
-        android:textColor="@color/letrashint"
+        android:textColor="@color/fundo"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/image_photo_employee"
@@ -76,7 +76,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_cargo_employee2"
+        android:id="@+id/text_cargo_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -111,108 +111,30 @@
         app:layout_constraintTop_toTopOf="@+id/image_photo_employee"
         tools:ignore="ContentDescription,MissingConstraints" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="212dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/back_fragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee" />
-
-    <ImageView
-        android:id="@+id/imageViewEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_email_write"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewHide"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/imageViewHide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:src="@android:drawable/arrow_down_float"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/imageViewPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/ic_phone"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewEmail"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/imageViewBirthday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/ic_niver"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPhone"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/imageViewAdmission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/ic_admissao"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewBirthday"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/imageViewTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/ic_time"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewAdmission"
-        tools:ignore="ContentDescription" />
-
     <ImageView
         android:id="@+id/image_toolbar_hrs"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_marginEnd="60dp"
         android:background="@drawable/back_fundo"
         android:contentDescription="@string/buttom_back"
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_photo_employee"
         app:layout_constraintEnd_toStartOf="@+id/image_photo_employee"
-        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee2"
+        app:layout_constraintTop_toBottomOf="@+id/text_cargo_active"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/image_toolbar_"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/back_fundo"
         android:contentDescription="@string/buttom_back"
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_photo_employee"
         app:layout_constraintStart_toEndOf="@+id/edit_employee"
-        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee2"
+        app:layout_constraintTop_toBottomOf="@+id/text_cargo_active"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -223,7 +145,6 @@
         android:text="Horas Feitas"
         android:textColor="@color/letras"
         android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs"
         app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs"
         app:layout_constraintTop_toBottomOf="@+id/image_toolbar_hrs"
@@ -252,7 +173,6 @@
         android:text="Horas Extras"
         android:textColor="@color/letras"
         android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_"
         app:layout_constraintStart_toStartOf="@+id/image_toolbar_"
         app:layout_constraintTop_toBottomOf="@+id/image_toolbar_"
@@ -273,165 +193,6 @@
         app:layout_constraintTop_toTopOf="@+id/image_toolbar_"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/text_toolbar_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="fulanobeltrano@gmail.com"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewEmail"
-        app:layout_constraintStart_toEndOf="@+id/imageViewEmail"
-        app:layout_constraintTop_toTopOf="@+id/imageViewEmail"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="(11) 93722-3128"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewPhone"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPhone"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPhone"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_birthday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="22/11/1988"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewBirthday"
-        app:layout_constraintStart_toEndOf="@+id/imageViewBirthday"
-        app:layout_constraintTop_toTopOf="@+id/imageViewBirthday"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_admissao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="02/02/2021"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewAdmission"
-        app:layout_constraintStart_toEndOf="@+id/imageViewAdmission"
-        app:layout_constraintTop_toTopOf="@+id/imageViewAdmission"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_hora1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="08:00"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewTime"
-        app:layout_constraintStart_toEndOf="@+id/imageViewTime"
-        app:layout_constraintTop_toTopOf="@+id/imageViewTime"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_barra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="-"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_toolbar_hora1"
-        app:layout_constraintStart_toEndOf="@+id/text_toolbar_hora1"
-        app:layout_constraintTop_toTopOf="@+id/text_toolbar_hora1"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_barra2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="-"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_toolbar_hora3"
-        app:layout_constraintStart_toEndOf="@+id/text_toolbar_hora3"
-        app:layout_constraintTop_toTopOf="@+id/text_toolbar_hora3"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_barra3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="/"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_toolbar_hora2"
-        app:layout_constraintStart_toEndOf="@+id/text_toolbar_hora2"
-        app:layout_constraintTop_toTopOf="@+id/text_toolbar_hora2"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_hora2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="12:00"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_toolbar_barra"
-        app:layout_constraintStart_toEndOf="@+id/text_toolbar_barra"
-        app:layout_constraintTop_toTopOf="@+id/text_toolbar_barra"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_hora3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="14:00"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_toolbar_barra3"
-        app:layout_constraintStart_toEndOf="@+id/text_toolbar_barra3"
-        app:layout_constraintTop_toTopOf="@+id/text_toolbar_barra3"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_toolbar_hora4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="18:00"
-        android:textColor="@color/letrashint"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_toolbar_barra2"
-        app:layout_constraintStart_toEndOf="@+id/text_toolbar_barra2"
-        app:layout_constraintTop_toTopOf="@+id/text_toolbar_barra2"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/float_bottom_perfil"
         android:layout_width="wrap_content"
@@ -448,34 +209,34 @@
         android:id="@+id/text_date_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:text="21 dez 2021"
+        android:layout_marginStart="16dp"
+        android:text="Pontos realizados"
         android:textColor="@color/letras"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/search_date"
+        app:layout_constraintStart_toEndOf="@+id/search_date"
+        app:layout_constraintTop_toTopOf="@+id/search_date"
         tools:ignore="MissingConstraints" />
 
-    <TextView
+    <ImageView
         android:id="@+id/search_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_calendar"
         android:text="Pesquisar"
-        android:textColor="@color/fundo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee"
+        tools:ignore="ContentDescription,MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        tools:listitem="@layout/recycler_points"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_date_current" />
+        app:layout_constraintTop_toBottomOf="@+id/search_date"
+        tools:listitem="@layout/recycler_time_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

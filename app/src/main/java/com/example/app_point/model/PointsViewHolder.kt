@@ -43,7 +43,6 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 imageBack.setImageResource(R.color.colorYellow)
             }
         }
-
     }
 
     fun bindPhoto(image: Bitmap){

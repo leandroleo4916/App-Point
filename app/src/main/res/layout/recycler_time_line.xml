@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginRight="4dp"
+    android:layout_marginLeft="4dp"
+    android:elevation="10dp"
+    android:background="@color/backfrag"
+    android:id="@+id/time_line"
+    android:layout_height="40dp">
+
+    <ImageView
+        android:id="@+id/imageViewTimeLine"
+        android:layout_width="41dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageViewColorTimeLine"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/back_fundo_photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewTimeLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_date_time_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21 dez 2020"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewTimeLine"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.476"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_barra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text=" - "
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_date_time_line"
+        app:layout_constraintStart_toEndOf="@+id/text_date_time_line"
+        app:layout_constraintTop_toTopOf="@+id/text_date_time_line" />
+
+    <TextView
+        android:id="@+id/text_hour_time_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="08:22"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_barra"
+        app:layout_constraintStart_toEndOf="@+id/text_barra"
+        app:layout_constraintTop_toTopOf="@+id/text_barra" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,34 +5,38 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
-import androidx.lifecycle.Observer
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
-import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.model.AdapterPoints
 import com.example.app_point.model.PointsAdapter
-import com.example.app_point.model.ViewModel
+import com.example.app_point.model.ViewModelPoints
+import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.activity_perfil.*
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private lateinit var mViewModel: ViewModel
-    private lateinit var mAdapter: PointsAdapter
+    private lateinit var mViewModelPoints: ViewModelPoints
+    private lateinit var mAdapterPoints: AdapterPoints
     private lateinit var mBusinessEmployee: BusinessEmployee
-    private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
+    private lateinit var mPhoto: ConverterPhoto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
-        mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
-        mAdapter = PointsAdapter(application)
+        mViewModelPoints = ViewModelProvider(this).get(ViewModelPoints::class.java)
+        mPhoto = ConverterPhoto()
+
+        val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
+        recycler.layoutManager = LinearLayoutManager(this)
+        mAdapterPoints = AdapterPoints(application)
+        recycler.adapter = mAdapterPoints
 
         // Captures a list employee and shows what is in the first position
         mBusinessEmployee = BusinessEmployee(this)
@@ -40,9 +44,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         when {
             listEmployee.isNotEmpty() -> {
                 searchEmployee(listEmployee[0])
+                viewModel(listEmployee[0])
             }
         }
         listener()
+        observer()
     }
 
     private fun listener(){
@@ -50,6 +56,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         edit_employee.setOnClickListener(this)
         search.setOnClickListener(this)
         float_bottom_perfil.setOnClickListener(this)
+        text_name_employee.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -57,6 +64,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             image_back_perfil -> finish()
             edit_employee -> editEmployee(text_name_employee.text.toString())
             search -> dialogListEmployee()
+            text_name_employee -> {}
             float_bottom_perfil -> {
                 startActivity(Intent(this, RegisterEmployeeActivity::class.java))
                 finish()
@@ -65,21 +73,25 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun searchEmployee(nomeEmployee: String){
-        mViewModel.getDataEmployee(nomeEmployee)
+        val dataEmployee = mBusinessEmployee.consultDadosEmployee(nomeEmployee)
+        text_name_employee.text = dataEmployee!!.nameEmployee
+        text_cargo_employee.text = dataEmployee.cargoEmployee
+        val photo = dataEmployee.photo
+        val photoConverter = mPhoto.converterToBitmap(photo)
+        image_photo_employee.setImageBitmap(photoConverter)
+    }
 
-        mViewModel.employeeData.observe(this, Observer {
-            val image = mConverterPhoto.converterToBitmap(it.photo)
-            image_photo_employee.setImageBitmap(image)
-            text_name_employee.text = it.nameEmployee
-            text_cargo_employee.text = it.cargoEmployee
-            text_toolbar_email.text = it.emailEmployee
-            text_toolbar_phone.text = it.phoneEmployee
-            text_toolbar_birthday.text = it.aniversarioEmployee
-            text_toolbar_admissao.text = it.admissaoEmployee
-            text_toolbar_hora1.text = it.horario1
-            text_toolbar_hora2.text = it.horario2
-            text_toolbar_hora3.text = it.horario3
-            text_toolbar_hora4.text = it.horario4
+    private fun viewModel(nomeEmployee: String){
+        mViewModelPoints.getData(nomeEmployee)
+        mViewModelPoints.getHora(nomeEmployee)
+    }
+
+    private fun observer(){
+        mViewModelPoints.dataList.observe(this, {
+            mAdapterPoints.updateData(it)
+        })
+        mViewModelPoints.horaList.observe(this, {
+            mAdapterPoints.updateHora(it)
         })
     }
 

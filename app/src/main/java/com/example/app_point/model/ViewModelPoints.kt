@@ -8,7 +8,7 @@ import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 
-class ViewModel (application: Application): AndroidViewModel(application) {
+class ViewModelPoints (application: Application): AndroidViewModel(application) {
 
     private var mSearchRecycler: RepositoryPoint = RepositoryPoint (application)
 
@@ -22,27 +22,14 @@ class ViewModel (application: Application): AndroidViewModel(application) {
     val horaList: LiveData<List<String>> = mHoraList
 
     fun getEmployee(employee: String){
-        if (employee == ""){
-            mEmployeeList.value = mSearchRecycler.storePointEmployee()
-        }else {
-            mEmployeeList.value = mSearchRecycler.storeSelectName(employee)
-        }
+        mEmployeeList.value = listOf(employee)
     }
 
     fun getData(employee: String){
-        if (employee == ""){
-            mDataList.value = mSearchRecycler.storePointDate()
-        }else {
-            mDataList.value = mSearchRecycler.storeSelectDate(employee)
-        }
+        mDataList.value = mSearchRecycler.storeSelectDate(employee)
     }
 
     fun getHora(employee: String){
-        if (employee == ""){
-            mHoraList.value = mSearchRecycler.storePointHour()
-        }else {
-            mHoraList.value = mSearchRecycler.storeSelectHours(employee)
-        }
+        mHoraList.value = mSearchRecycler.storeSelectHours(employee)
     }
-
 }
