@@ -6,6 +6,8 @@ import android.database.Cursor
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsPoint
 import com.example.app_point.database.DataBaseEmployee
+import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.PointsEntity
 
 class RepositoryPoint(context: Context?) {
 
@@ -27,7 +29,7 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun storePointEmployee (): List<String> {
+    fun storePointEmployee(): List<String> {
 
         val list: ArrayList<String> = ArrayList()
         try {
@@ -56,7 +58,7 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun storePointHour (): List<String> {
+    fun storePointHour(): List<String> {
 
         val list: ArrayList<String> = ArrayList()
         try {
@@ -84,7 +86,7 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun storePointDate (): List<String> {
+    fun storePointDate(): List<String> {
 
         val list: ArrayList<String> = ArrayList()
         try {
@@ -112,7 +114,7 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun storeSelectName (nome: String): List<String> {
+    fun storeSelectName(nome: String): List<String> {
 
         val list: ArrayList<String> = arrayListOf()
         try {
@@ -129,7 +131,8 @@ class RepositoryPoint(context: Context?) {
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val employee = cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.EMPLOYEE))
+                    val employee =
+                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.EMPLOYEE))
 
                     list.add(employee)
                 }
@@ -142,7 +145,7 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun storeSelectDate (nome: String): List<String> {
+    fun storeSelectDate(nome: String): List<String> {
 
         val list: ArrayList<String> = arrayListOf()
         try {
@@ -159,7 +162,8 @@ class RepositoryPoint(context: Context?) {
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val date = cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.DATE))
+                    val date =
+                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.DATE))
 
                     list.add(date)
                 }
@@ -172,7 +176,7 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun storeSelectHours (nome: String): List<String> {
+    fun storeSelectHours(nome: String): List<String> {
 
         val list: ArrayList<String> = arrayListOf()
         try {
@@ -189,9 +193,50 @@ class RepositoryPoint(context: Context?) {
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val hours = cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR))
+                    val hours =
+                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR))
 
                     list.add(hours)
+                }
+            }
+            cursor?.close()
+            return list
+
+        } catch (e: Exception) {
+            return list
+        }
+    }
+
+    fun storeSelectNameDate(nome: String, date: String): PointsEntity? {
+
+        var list: PointsEntity? = null
+        try {
+            val cursor: Cursor
+            val db = mDataBasePoint.readableDatabase
+            val projection = arrayOf(
+                ConstantsPoint.POINT.COLUMNS.EMPLOYEE,
+                ConstantsPoint.POINT.COLUMNS.HOUR,
+                ConstantsPoint.POINT.COLUMNS.DATE
+            )
+            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?" +
+                    ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
+            val args = arrayOf(nome, date)
+
+            cursor = db.query(
+                ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,
+                null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val name =
+                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.EMPLOYEE))
+                    val hour =
+                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR))
+                    val date =
+                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.DATE))
+
+                    list = PointsEntity(name, hour, date)
                 }
             }
             cursor?.close()

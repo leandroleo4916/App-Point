@@ -81,12 +81,15 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
 
     @SuppressLint("SimpleDateFormat")
     private fun calendar(){
+        val nameEmployee = text_name_employee.text.toString()
         val date = Calendar.getInstance()
 
         val dateTime = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             date.set(Calendar.MONTH, month)
             date.set(Calendar.YEAR, year)
+            val dateSelected = SimpleDateFormat("dd/MM/YYYY").format(date.time)
+
         }
 
         DatePickerDialog(

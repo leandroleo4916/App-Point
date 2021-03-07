@@ -32,7 +32,6 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
 
     // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: ViewHolderPoints, position: Int) {
-        holder.bindData(mListData[position])
 
         val employee = mBusiness.consultDadosEmployee(mListEmployee)
         val hours = employee!!.horario1
@@ -49,7 +48,6 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
     fun updateEmployee(nameEmployee: String){
         mListEmployee = nameEmployee
     }
-
     fun updateData(list: List<String>){
         mListData = list.reversed()
         notifyDataSetChanged()

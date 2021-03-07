@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.PointsEntity
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 
