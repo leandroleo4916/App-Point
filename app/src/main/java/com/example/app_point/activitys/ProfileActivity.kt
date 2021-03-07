@@ -1,6 +1,8 @@
 package com.example.app_point.activitys
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +19,10 @@ import com.example.app_point.model.AdapterPoints
 import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.activity_perfil.*
+import kotlinx.android.synthetic.main.activity_perfil.edit_employee
+import kotlinx.android.synthetic.main.activity_register_employee.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -56,6 +62,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         search.setOnClickListener(this)
         float_bottom_perfil.setOnClickListener(this)
         text_name_employee.setOnClickListener(this)
+        search_date.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -64,11 +71,27 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             edit_employee -> editEmployee(text_name_employee.text.toString())
             search -> dialogListEmployee()
             text_name_employee -> {}
+            search_date -> calendar()
             float_bottom_perfil -> {
                 startActivity(Intent(this, RegisterEmployeeActivity::class.java))
                 finish()
             }
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun calendar(){
+        val date = Calendar.getInstance()
+
+        val dateTime = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            date.set(Calendar.MONTH, month)
+            date.set(Calendar.YEAR, year)
+        }
+
+        DatePickerDialog(
+            this, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)
+        ).show()
     }
 
     private fun searchEmployee(nomeEmployee: String){
@@ -78,6 +101,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         val photo = dataEmployee.photo
         val photoConverter = mPhoto.converterToBitmap(photo)
         image_photo_employee.setImageBitmap(photoConverter)
+    }
+
+    private fun viewModelSelected(){
+        mViewModelPoints.getData("")
+        mViewModelPoints.getHora("")
     }
 
     private fun viewModel(nameEmployee: String){

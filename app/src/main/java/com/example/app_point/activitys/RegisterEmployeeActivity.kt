@@ -78,13 +78,13 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("WeekBasedYear")
     private fun inicialDate(){
         val date = getInstance().time
-        val dateTime = SimpleDateFormat("d/MM/YYYY", Locale.ENGLISH)
-        val dataAtual = dateTime.format(date)
-        text_admissao.text = dataAtual
-        text_aniversario.text = dataAtual
+        val dateTime = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
+        val dataCurrent = dateTime.format(date)
+        text_admissao.text = dataCurrent
+        text_aniversario.text = dataCurrent
     }
 
-    // Direciona cada data selecionada pelo Admin para seu respectivo EditText
+    // Direction date selected to EditText
     @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun calendar(id: Int) {
         val date = getInstance()
@@ -93,16 +93,16 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             date.set(MONTH, month)
             date.set(YEAR, year)
             when (id) {
-                1 -> text_admissao.text = SimpleDateFormat("d/MM/YYYY").format(date.time)
-                2 -> text_aniversario.text = SimpleDateFormat("d/MM/YYYY").format(date.time)
+                1 -> text_admissao.text = SimpleDateFormat("dd/MM/YYYY").format(date.time)
+                2 -> text_aniversario.text = SimpleDateFormat("dd/MM/YYYY").format(date.time)
             }
         }
         DatePickerDialog(
-            this, dateTime, date.get(YEAR), date.get(MONTH), date.get(YEAR)
+            this, dateTime, date.get(YEAR), date.get(MONTH), date.get(DAY_OF_MONTH)
         ).show()
     }
 
-    //Direciona cada horário selecionado pelo Admin para seu respectivo EditText
+    //Direction hours selected to EditText
     @SuppressLint("SimpleDateFormat")
     private fun timePicker(id: Int) {
 
