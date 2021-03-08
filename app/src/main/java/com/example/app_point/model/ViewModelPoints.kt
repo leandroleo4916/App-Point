@@ -22,15 +22,23 @@ class ViewModelPoints (application: Application): AndroidViewModel(application) 
     private val mHoraList = MutableLiveData<List<String>>()
     val horaList: LiveData<List<String>> = mHoraList
 
+    private val mDateSelected = MutableLiveData<List<String>>()
+    val dateSelected: LiveData<List<String>> = mDateSelected
+
+    private val mHourSelected = MutableLiveData<List<String>>()
+    val hourSelected: LiveData<List<String>> = mHourSelected
+
     fun getEmployee(employee: String){
         mEmployeeList.value = employee
     }
-
     fun getData(employee: String){
         mDataList.value = mSearchRecycler.storeSelectDate(employee)
     }
-
     fun getHora(employee: String){
         mHoraList.value = mSearchRecycler.storeSelectHours(employee)
+    }
+    fun getDateAndHourSelected(name: String, date: String){
+        mDateSelected.value = mSearchRecycler.storeSelectNameDate(name, date)
+        mHourSelected.value = mSearchRecycler.storeSelectNameHours(name, date)
     }
 }

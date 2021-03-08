@@ -10,7 +10,7 @@
     android:elevation="10dp"
     android:background="@color/backfrag"
     android:id="@+id/time_line"
-    android:layout_height="50dp">
+    android:layout_height="55dp">
 
     <ImageView
         android:id="@+id/imageViewTimeLine"

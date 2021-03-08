@@ -15,8 +15,9 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
     private var mListEmployee: String = ""
     private var mListData: List<String> = arrayListOf()
     private var mListHora: List<String> = arrayListOf()
+    private var mListDateSelected: List<String> = arrayListOf()
+    private var mListHoraSelected: List<String> = arrayListOf()
     private val mBusiness: BusinessEmployee = BusinessEmployee(application)
-
 
     // Create the list of the layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderPoints {
@@ -32,6 +33,8 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
 
     // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: ViewHolderPoints, position: Int) {
+
+        holder.bindData(mListData[position])
 
         val employee = mBusiness.consultDadosEmployee(mListEmployee)
         val hours = employee!!.horario1

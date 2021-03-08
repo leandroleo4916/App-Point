@@ -207,20 +207,18 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun storeSelectNameDate(nome: String, date: String): PointsEntity? {
+    fun storeSelectNameDate(nome: String, date: String): List<String>? {
 
-        var list: PointsEntity? = null
+        val list: ArrayList<String> = arrayListOf()
         try {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase
             val projection = arrayOf(
-                ConstantsPoint.POINT.COLUMNS.EMPLOYEE,
                 ConstantsPoint.POINT.COLUMNS.HOUR,
                 ConstantsPoint.POINT.COLUMNS.DATE
             )
-            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?" +
-                    ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
-            val args = arrayOf(nome, date)
+            val selection = ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
+            val args = arrayOf(date)
 
             cursor = db.query(
                 ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,
@@ -229,14 +227,43 @@ class RepositoryPoint(context: Context?) {
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val name =
-                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.EMPLOYEE))
-                    val hour =
-                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR))
-                    val date =
-                        cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.DATE))
 
-                    list = PointsEntity(name, hour, date)
+                    val dateSelected = cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.DATE))
+
+                    list.add(dateSelected)
+                }
+            }
+            cursor?.close()
+            return list
+
+        } catch (e: Exception) {
+            return list
+        }
+    }
+
+    fun storeSelectNameHours(nome: String, date: String): List<String>? {
+
+        val list: ArrayList<String> = arrayListOf()
+        try {
+            val cursor: Cursor
+            val db = mDataBasePoint.readableDatabase
+            val projection = arrayOf(
+                ConstantsPoint.POINT.COLUMNS.HOUR,
+                ConstantsPoint.POINT.COLUMNS.DATE
+            )
+            val selection = ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
+            val args = arrayOf(date)
+
+            cursor = db.query(
+                ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,
+                null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+
+                    val hour = cursor.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR))
+                    list.add(hour)
                 }
             }
             cursor?.close()

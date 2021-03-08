@@ -26,7 +26,7 @@
         android:contentDescription="@string/logo_digital" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_login"
+        android:id="@+id/toolbar_profile"
         android:layout_width="360dp"
         android:layout_height="65dp"
         android:layout_marginTop="22dp"
@@ -41,10 +41,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:textColorHint="@color/letrashint"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_login"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_login"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
         app:layout_constraintStart_toEndOf="@+id/image_view_user"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_login"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -57,10 +57,10 @@
             android:textColorHint="@color/letras"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_login"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_login"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
             app:layout_constraintStart_toEndOf="@+id/image_view_user"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_login"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
             tools:ignore="MissingConstraints" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_login"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -114,9 +114,9 @@
         android:layout_marginStart="10dp"
         android:scaleType="center"
         android:src="@drawable/ic_email_write"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_login"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_login"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_login"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
         app:layout_constraintVertical_bias="0.527"
         tools:ignore="MissingConstraints"
         android:contentDescription="@string/image_name" />
@@ -157,7 +157,7 @@
         android:text="@string/fa_a_login_para_continuar"
         android:textColor="@color/letras"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_login"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
         app:layout_constraintTop_toBottomOf="@+id/text_login"
         tools:ignore="MissingConstraints" />
 

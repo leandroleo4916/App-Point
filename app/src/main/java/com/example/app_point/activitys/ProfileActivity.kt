@@ -20,7 +20,6 @@ import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_perfil.edit_employee
-import kotlinx.android.synthetic.main.activity_register_employee.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -89,6 +88,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             date.set(Calendar.MONTH, month)
             date.set(Calendar.YEAR, year)
             val dateSelected = SimpleDateFormat("dd/MM/YYYY").format(date.time)
+            viewModelSelected(nameEmployee, dateSelected)
 
         }
 
@@ -106,15 +106,21 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         image_photo_employee.setImageBitmap(photoConverter)
     }
 
-    private fun viewModelSelected(){
-        mViewModelPoints.getData("")
-        mViewModelPoints.getHora("")
+    private fun viewModelSelected(name: String, date: String){
+        mViewModelPoints.getDateAndHourSelected(name, date)
     }
 
     private fun viewModel(nameEmployee: String){
-        mViewModelPoints.getEmployee(nameEmployee)
-        mViewModelPoints.getData(nameEmployee)
-        mViewModelPoints.getHora(nameEmployee)
+        Thread{
+            // Block Thread
+            Thread.sleep(500)
+            runOnUiThread {
+                mViewModelPoints.getEmployee(nameEmployee)
+                mViewModelPoints.getData(nameEmployee)
+                mViewModelPoints.getHora(nameEmployee)
+                progress_points.visibility = View.GONE
+            }
+        }.start()
     }
 
     private fun observer(){
@@ -126,6 +132,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         })
         mViewModelPoints.employeeList.observe(this, {
             mAdapterPoints.updateEmployee(it)
+        })
+        mViewModelPoints.dateSelected.observe(this, {
+            mAdapterPoints.updateData(it)
+        })
+        mViewModelPoints.hourSelected.observe(this, {
+            mAdapterPoints.updateHora(it)
         })
     }
 
