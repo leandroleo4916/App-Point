@@ -107,9 +107,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun viewModelSelected(name: String, date: String){
+
+        progress_points.visibility = View.VISIBLE
         Thread{
             // Block Thread
-            Thread.sleep(500)
+            Thread.sleep(1000)
             runOnUiThread {
                 mViewModelPoints.getDateAndHourSelected(name, date)
                 progress_points.visibility = View.GONE
