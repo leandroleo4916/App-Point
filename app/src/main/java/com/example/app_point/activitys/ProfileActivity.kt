@@ -78,7 +78,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun calendar(){
         val nameEmployee = text_name_employee.text.toString()
         val date = Calendar.getInstance()
@@ -89,9 +89,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             date.set(Calendar.YEAR, year)
             val dateSelected = SimpleDateFormat("dd/MM/YYYY").format(date.time)
             viewModelSelected(nameEmployee, dateSelected)
+            text_date_selected.text = dateSelected
 
         }
-
         DatePickerDialog(
             this, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)
         ).show()
@@ -107,7 +107,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun viewModelSelected(name: String, date: String){
-        mViewModelPoints.getDateAndHourSelected(name, date)
+        Thread{
+            // Block Thread
+            Thread.sleep(500)
+            runOnUiThread {
+                mViewModelPoints.getDateAndHourSelected(name, date)
+                progress_points.visibility = View.GONE
+            }
+        }.start()
     }
 
     private fun viewModel(nameEmployee: String){
@@ -118,6 +125,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
                 mViewModelPoints.getEmployee(nameEmployee)
                 mViewModelPoints.getData(nameEmployee)
                 mViewModelPoints.getHora(nameEmployee)
+                text_date_selected.text = getString(R.string.todos)
                 progress_points.visibility = View.GONE
             }
         }.start()

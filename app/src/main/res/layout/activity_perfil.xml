@@ -210,7 +210,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/back_toolbar"
+        android:background="@drawable/back_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee"
@@ -220,7 +220,7 @@
         android:id="@+id/text_date_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="25dp"
         android:text="Pontos realizados"
         android:textColor="@color/letras"
         android:textSize="18dp"
@@ -230,11 +230,26 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/text_date_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="Todos"
+        android:textColor="@color/letras"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintEnd_toStartOf="@+id/search_date"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
+        app:layout_constraintVertical_bias="0.483"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:id="@+id/search_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="25dp"
         android:src="@drawable/ic_calendar"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
@@ -246,7 +261,7 @@
         android:id="@+id/recyclerViewProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -258,10 +273,10 @@
         android:id="@+id/progress_points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewProfile"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerViewProfile"
+        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
