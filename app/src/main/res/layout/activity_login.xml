@@ -15,7 +15,7 @@
         android:id="@+id/logo_digital"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="45dp"
         android:elevation="8dp"
         android:background="@drawable/ic_digital"
         app:layout_constraintEnd_toEndOf="parent"
@@ -198,15 +198,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="82dp"
-        android:layout_marginBottom="4dp"
         android:text="@string/n_o_tem_conta"
         android:textColor="@color/letras"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_register_user"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/text_register_user"
@@ -219,9 +219,8 @@
         android:textColor="@color/fundo"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_new_account"
-        app:layout_constraintStart_toEndOf="@+id/text_new_account"
-        app:layout_constraintTop_toTopOf="@+id/text_new_account"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/text_new_account"
+        app:layout_constraintStart_toStartOf="@+id/text_new_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

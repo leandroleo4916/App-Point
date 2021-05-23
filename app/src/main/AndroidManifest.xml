@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".activitys.EmployeeActivity"></activity>
         <activity android:name=".activitys.ToolsActivity" />
         <activity android:name=".activitys.PointsActivity" />
         <activity android:name=".activitys.ProfileActivity" />

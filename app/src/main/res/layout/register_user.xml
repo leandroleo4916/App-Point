@@ -24,28 +24,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="3dp"
         android:layout_toEndOf="@id/ready_account"
         android:text="@string/entre_aqui"
         android:textColor="@color/fundo"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/ready_account"
-        app:layout_constraintStart_toEndOf="@+id/ready_account"
-        app:layout_constraintTop_toTopOf="@+id/ready_account"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ready_account"
+        app:layout_constraintStart_toStartOf="@+id/ready_account" />
 
     <TextView
         android:id="@+id/ready_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginBottom="4dp"
         android:text="@string/se_voc_j_tiver_conta"
         android:textColor="@color/letras"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_inicio"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
