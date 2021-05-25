@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +30,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     private lateinit var mAdapterPoints: AdapterPoints
     private lateinit var mBusinessEmployee: BusinessEmployee
     private lateinit var mPhoto: ConverterPhoto
+    private val handler: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +106,42 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         val photo = dataEmployee.photo
         val photoConverter = mPhoto.converterToBitmap(photo)
         image_photo_employee.setImageBitmap(photoConverter)
+
+        Thread {
+            val numFicticio1 = 92
+            var pStatus = 0
+
+            while (pStatus <= numFicticio1) {
+                handler.post {
+                    image_toolbar_hrs.progress = pStatus
+                    edit_hrs_feitas.text = pStatus.toString()
+                }
+                try {
+                    Thread.sleep(20)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+                pStatus++
+            }
+        }.start()
+
+        Thread {
+            val numFicticio2 = 13
+            var pStatus = 0
+
+            while (pStatus <= numFicticio2) {
+                handler.post {
+                    image_toolbar_.progress = pStatus
+                    edit_hrs_extras.text = pStatus.toString()
+                }
+                try {
+                    Thread.sleep(20)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+                pStatus++
+            }
+        }.start()
     }
 
     private fun viewModelSelected(name: String, date: String){
