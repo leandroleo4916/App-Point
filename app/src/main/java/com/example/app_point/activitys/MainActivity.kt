@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         icon6.startAnimation(animation)
         icon7.startAnimation(animation)
         icon8.startAnimation(animation)
-
     }
 
     // Shows admin name + greeting implement
@@ -92,15 +91,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         val clockSixEvening = "18:00"
         
         when {
-            horaCurrent > clockSixMorning && horaCurrent < clockTwelveMorning -> {
-                text_ola.text = getString(R.string.bom_dia)
-            }
-            horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> {
-                text_ola.text = getString(R.string.boa_tarde)
-            }
-            else -> {
-                text_ola.text = getString(R.string.boa_noite)
-            }
+            horaCurrent > clockSixMorning && horaCurrent < clockTwelveMorning -> { text_ola.text = getString(R.string.bom_dia) }
+            horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> { text_ola.text = getString(R.string.boa_tarde) }
+            else -> text_ola.text = getString(R.string.boa_noite)
         }
     }
 
@@ -120,15 +113,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     // Observe List Points
     private fun observe(){
-        mViewModel.employeeList.observe(this, {
-            mPointAdapter.updateEmployee(it)
-        })
-        mViewModel.dataList.observe(this, {
-            mPointAdapter.updateData(it)
-        })
-        mViewModel.horaList.observe(this, {
-            mPointAdapter.updateHora(it)
-        })
+        mViewModel.employeeList.observe(this, { mPointAdapter.updateEmployee(it) })
+        mViewModel.dataList.observe(this, { mPointAdapter.updateData(it) })
+        mViewModel.horaList.observe(this, { mPointAdapter.updateHora(it) })
     }
 
     // clicks management
@@ -245,9 +232,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             }
         }
     }
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-
-    }
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showMenuOption(){
         val menuOption = PopupMenu(this, option_menu)

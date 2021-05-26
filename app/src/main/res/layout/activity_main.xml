@@ -8,33 +8,41 @@
     android:background="@color/back"
     tools:context=".activitys.MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"/>
+
     <TextView
         android:id="@+id/text_ola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:text="@string/ola"
         android:textColor="@color/letras"
         android:textSize="22sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar_home" />
 
     <TextView
         android:id="@+id/text_name_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="16dp"
         android:text="@string/fulano"
         android:textColor="@color/letras"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/text_ola"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_home"
         app:layout_constraintStart_toEndOf="@+id/text_ola"
-        app:layout_constraintTop_toTopOf="@+id/text_ola"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar_home" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,24 +59,24 @@
         android:id="@+id/option_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
-        android:textColor="@color/letras"
         android:src="@drawable/ic_option"
+        android:textColor="@color/letras"
         android:textSize="22sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_home"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_home"
         tools:ignore="ContentDescription" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="124dp"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_ola"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
         tools:ignore="MissingConstraints">
 
         <ImageView
@@ -78,6 +86,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:padding="6dp"
             android:src="@drawable/back_fundo"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,9 +98,9 @@
             android:layout_width="59dp"
             android:layout_height="64dp"
             android:layout_alignStart="@+id/image_register_employee"
+            android:layout_alignTop="@+id/image_register_employee"
             android:layout_alignEnd="@+id/image_register_employee"
             android:layout_alignBottom="@+id/image_register_employee"
-            android:layout_alignParentTop="true"
             android:layout_marginStart="15dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
@@ -105,6 +114,7 @@
             android:layout_height="90dp"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/image_register_employee"
             android:padding="6dp"
             android:src="@drawable/back_fundo"
@@ -117,9 +127,9 @@
             android:layout_width="59dp"
             android:layout_height="64dp"
             android:layout_alignStart="@+id/image_perfil_employee"
+            android:layout_alignTop="@+id/image_perfil_employee"
             android:layout_alignEnd="@+id/image_perfil_employee"
             android:layout_alignBottom="@+id/image_perfil_employee"
-            android:layout_alignParentTop="true"
             android:layout_marginStart="15dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
@@ -133,6 +143,7 @@
             android:layout_height="90dp"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/image_perfil_employee"
             android:padding="6dp"
             android:src="@drawable/back_fundo"
@@ -145,9 +156,9 @@
             android:layout_width="59dp"
             android:layout_height="64dp"
             android:layout_alignStart="@+id/image_historicos_pontos"
+            android:layout_alignTop="@+id/image_historicos_pontos"
             android:layout_alignEnd="@+id/image_historicos_pontos"
             android:layout_alignBottom="@+id/image_historicos_pontos"
-            android:layout_alignParentTop="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="16dp"
@@ -160,9 +171,8 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/image_historicos_pontos"
             android:padding="6dp"
             android:src="@drawable/back_fundo"
@@ -175,9 +185,9 @@
             android:layout_width="59dp"
             android:layout_height="64dp"
             android:layout_alignStart="@+id/image_opcoes"
+            android:layout_alignTop="@+id/image_opcoes"
             android:layout_alignEnd="@+id/image_opcoes"
             android:layout_alignBottom="@+id/image_opcoes"
-            android:layout_alignParentTop="true"
             android:layout_marginStart="17dp"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="17dp"
@@ -211,8 +221,8 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:text="@string/title_perfil"
-            android:textColor="@color/letras"
             android:textAlignment="center"
+            android:textColor="@color/letras"
             android:textSize="12sp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
@@ -227,8 +237,8 @@
             android:layout_marginStart="22dp"
             android:layout_marginEnd="22dp"
             android:text="@string/title_pontos"
-            android:textColor="@color/letras"
             android:textAlignment="center"
+            android:textColor="@color/letras"
             android:textSize="12sp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
@@ -243,8 +253,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:text="@string/opcoes"
-            android:textColor="@color/letras"
             android:textAlignment="center"
+            android:textColor="@color/letras"
             android:textSize="12sp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
@@ -262,8 +272,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_profile"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/back_toolbar"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -293,19 +302,19 @@
             app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
             tools:ignore="ContentDescription" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_points"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"
-            tools:listitem="@layout/recycler_points" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        tools:listitem="@layout/recycler_points" />
 
     <ProgressBar
         android:id="@+id/progress"

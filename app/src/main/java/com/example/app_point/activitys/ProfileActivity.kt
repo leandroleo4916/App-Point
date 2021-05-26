@@ -116,17 +116,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
                     image_toolbar_hrs.progress = pStatus
                     edit_hrs_feitas.text = pStatus.toString()
                 }
-                try {
-                    Thread.sleep(20)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
+                try { Thread.sleep(20) }
+                catch (e: InterruptedException) { e.printStackTrace() }
                 pStatus++
             }
         }.start()
 
         Thread {
-            val numFicticio2 = 13
+            val numFicticio2 = 23
             var pStatus = 0
 
             while (pStatus <= numFicticio2) {
@@ -134,18 +131,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
                     image_toolbar_.progress = pStatus
                     edit_hrs_extras.text = pStatus.toString()
                 }
-                try {
-                    Thread.sleep(20)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
+                try { Thread.sleep(20) }
+                catch (e: InterruptedException) { e.printStackTrace() }
                 pStatus++
             }
         }.start()
     }
 
     private fun viewModelSelected(name: String, date: String){
-
         progress_points.visibility = View.VISIBLE
         Thread{
             // Block Thread
@@ -172,21 +165,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun observer(){
-        mViewModelPoints.dataList.observe(this, {
-            mAdapterPoints.updateData(it)
-        })
-        mViewModelPoints.horaList.observe(this, {
-            mAdapterPoints.updateHora(it)
-        })
-        mViewModelPoints.employeeList.observe(this, {
-            mAdapterPoints.updateEmployee(it)
-        })
-        mViewModelPoints.dateSelected.observe(this, {
-            mAdapterPoints.updateData(it)
-        })
-        mViewModelPoints.hourSelected.observe(this, {
-            mAdapterPoints.updateHora(it)
-        })
+        mViewModelPoints.dataList.observe(this, { mAdapterPoints.updateData(it) })
+        mViewModelPoints.horaList.observe(this, { mAdapterPoints.updateHora(it) })
+        mViewModelPoints.employeeList.observe(this, { mAdapterPoints.updateEmployee(it) })
+        mViewModelPoints.dateSelected.observe(this, { mAdapterPoints.updateData(it) })
+        mViewModelPoints.hourSelected.observe(this, { mAdapterPoints.updateHora(it) })
     }
 
     // Captures id employee and send to Activity Register to edition
@@ -238,8 +221,5 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             }
         }
     }
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-
-    }
-
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 }

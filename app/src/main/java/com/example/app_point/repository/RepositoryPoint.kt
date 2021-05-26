@@ -273,5 +273,4 @@ class RepositoryPoint(context: Context?) {
             return list
         }
     }
-
 }
