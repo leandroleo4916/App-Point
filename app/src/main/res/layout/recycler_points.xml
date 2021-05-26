@@ -10,7 +10,7 @@
     android:elevation="10dp"
     android:background="@drawable/back_toolbar"
     android:id="@+id/toolbar_points"
-    android:layout_height="85dp">
+    android:layout_height="80dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_image_back"
