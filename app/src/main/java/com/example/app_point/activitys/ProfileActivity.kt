@@ -70,8 +70,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         when(view){
             image_back_perfil -> finish()
             edit_employee -> editEmployee(text_name_employee.text.toString())
+            image_photo_employee -> editEmployee(text_name_employee.text.toString())
             search -> dialogListEmployee()
-            text_name_employee -> {}
+            text_name_employee -> editEmployee(text_name_employee.text.toString())
             search_date -> calendar()
             float_bottom_perfil -> {
                 startActivity(Intent(this, RegisterEmployeeActivity::class.java))
@@ -92,7 +93,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             val dateSelected = SimpleDateFormat("dd/MM/YYYY").format(date.time)
             viewModelSelected(nameEmployee, dateSelected)
             text_date_selected.text = dateSelected
-
         }
         DatePickerDialog(
             this, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)

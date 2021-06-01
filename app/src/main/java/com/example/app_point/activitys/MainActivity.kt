@@ -215,6 +215,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             itemSpinner == "" -> {
                 Toast.makeText(this, getString(R.string.precisa_add_funcionarios), Toast.LENGTH_SHORT).show()
             }
+
+            
+
             mBusinessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
                 Toast.makeText(this, getString(R.string.adicionado_sucesso), Toast.LENGTH_SHORT).show()
                 searchPoints()
@@ -232,6 +235,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             }
         }
     }
+
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showMenuOption(){

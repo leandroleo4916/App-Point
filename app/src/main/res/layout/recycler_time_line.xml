@@ -16,7 +16,7 @@
         android:id="@+id/imageViewTimeLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:src="@drawable/line"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,5 +70,17 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_barra"
         app:layout_constraintStart_toEndOf="@+id/text_barra"
+        app:layout_constraintTop_toTopOf="@+id/text_barra" />
+
+    <TextView
+        android:id="@+id/text_hour_time_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        android:text="Ponto no Horário"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_barra"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_barra" />
 </androidx.constraintlayout.widget.ConstraintLayout>
