@@ -51,15 +51,9 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     }
 
     private fun observe(){
-        mViewModel.employeeList.observe(this, {
-            mPointsAdapter.updateEmployee(it)
-        })
-        mViewModel.dataList.observe(this, {
-            mPointsAdapter.updateData(it)
-        })
-        mViewModel.horaList.observe(this, {
-            mPointsAdapter.updateHora(it)
-        })
+        mViewModel.employeeList.observe(this, { mPointsAdapter.updateEmployee(it) })
+        mViewModel.dataList.observe(this, { mPointsAdapter.updateData(it) })
+        mViewModel.horaList.observe(this, { mPointsAdapter.updateHora(it) })
     }
 
     private fun listener(){

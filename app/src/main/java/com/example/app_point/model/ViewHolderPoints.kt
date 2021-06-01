@@ -21,12 +21,10 @@ class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val textHora = itemView.findViewById<TextView>(R.id.text_hour_time_line)
         val imageTimeLine = itemView.findViewById<ImageView>(R.id.imageViewColorTimeLine)
-        
         val minutesCurrent = mConverterHours.converterHoursInMinutes(hoursCurrent)
         val minutes = mConverterHours.converterHoursInMinutes(hours)
 
         textHora.text = hoursCurrent
-
         when {
             minutesCurrent < minutes -> {
                 imageTimeLine.setImageResource(R.color.colorGreen)

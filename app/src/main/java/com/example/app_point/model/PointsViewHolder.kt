@@ -24,14 +24,13 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bindHora(hoursCurrent: String, hours: String){
+
         val textHora = itemView.findViewById<TextView>(R.id.text_hora)
         val imageBack = itemView.findViewById<ImageView>(R.id.icon_image_back)
-        
         val minutesCurrent = mAddHours.converterHoursInMinutes(hoursCurrent)
         val minutes = mAddHours.converterHoursInMinutes(hours)
 
         textHora.text = hoursCurrent
-
         when {
             minutesCurrent < minutes -> {
                 imageBack.setImageResource(R.color.colorGreen)
