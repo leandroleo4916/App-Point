@@ -51,7 +51,7 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     private fun observe(){
         mViewModel.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Toast.makeText(this, "Ainda não foi adicionado funcionários", Toast.LENGTH_LONG).show() }
+                0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
                 else -> { mPointsAdapter.updateFullEmployee(it) }
             }
         })

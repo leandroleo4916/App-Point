@@ -179,7 +179,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     private fun observer(){
         mViewModelPoints.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Toast.makeText(this, "Ainda não foi adicionado funcionários", Toast.LENGTH_LONG).show() }
+                0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
                 else -> { mAdapterPoints.updateFullEmployee(it) }
             }
         })

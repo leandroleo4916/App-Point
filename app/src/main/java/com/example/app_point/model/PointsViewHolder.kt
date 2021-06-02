@@ -35,10 +35,32 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //val minutesCurrent = mAddHours.converterHoursInMinutes(hoursCurrent)
         //val minutes = mAddHours.converterHoursInMinutes(hours)
 
-        textHora.text = fullEmployee.hora1
-        textHora2.text = fullEmployee.hora2
-        textHora3.text = fullEmployee.hora3
-        textHora4.text = fullEmployee.hora4
+        when {
+            fullEmployee.hora1 != null && fullEmployee.hora2 == null -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = "--:--"
+                textHora3.text = "--:--"
+                textHora4.text = "--:--"
+            }
+            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 == null -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = fullEmployee.hora2
+                textHora3.text = "--:--"
+                textHora4.text = "--:--"
+            }
+            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 != null && fullEmployee.hora4 == null -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = fullEmployee.hora2
+                textHora3.text = fullEmployee.hora3
+                textHora4.text = "--:--"
+            }
+            else -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = fullEmployee.hora2
+                textHora3.text = fullEmployee.hora3
+                textHora4.text = fullEmployee.hora4
+            }
+        }
 
         /*when {
             minutesCurrent < minutes -> {
