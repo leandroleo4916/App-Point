@@ -18,7 +18,7 @@ class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textData.text = data
     }
 
-    fun bindHora(hoursCurrent: PointsEntity, hours: String){
+    fun bindHora(fullEmployee: PointsEntity, hours: String){
 
         val textHora = itemView.findViewById<TextView>(R.id.text_hour_time_line)
         val textHora2 = itemView.findViewById<TextView>(R.id.text_hour_time_line2)
@@ -29,10 +29,32 @@ class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //val minutesCurrent = mConverterHours.converterHoursInMinutes(hoursCurrent.hora1.toString())
         //val minutes = mConverterHours.converterHoursInMinutes(hours)
 
-        textHora.text = hoursCurrent.hora1
-        textHora2.text = hoursCurrent.hora2
-        textHora3.text = hoursCurrent.hora3
-        textHora4.text = hoursCurrent.hora4
+        when {
+            fullEmployee.hora1 != null && fullEmployee.hora2 == null -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = "--:--"
+                textHora3.text = "--:--"
+                textHora4.text = "--:--"
+            }
+            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 == null -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = fullEmployee.hora2
+                textHora3.text = "--:--"
+                textHora4.text = "--:--"
+            }
+            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 != null && fullEmployee.hora4 == null -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = fullEmployee.hora2
+                textHora3.text = fullEmployee.hora3
+                textHora4.text = "--:--"
+            }
+            else -> {
+                textHora.text = fullEmployee.hora1
+                textHora2.text = fullEmployee.hora2
+                textHora3.text = fullEmployee.hora3
+                textHora4.text = fullEmployee.hora4
+            }
+        }
 
         /*when {
             minutesCurrent < minutes -> {
