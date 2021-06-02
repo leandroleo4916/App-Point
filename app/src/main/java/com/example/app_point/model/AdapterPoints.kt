@@ -46,10 +46,9 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
 
     // Function inverter list
     fun updateFullEmployee(list: ArrayList<PointsEntity>){
-        if (list.size > 1) {
-            mListFullEmployee = list.reversed() as ArrayList<PointsEntity>
-        }else {
-            mListFullEmployee = list
+        mListFullEmployee = when {
+            list.size > 1 -> { list.reversed() as ArrayList<PointsEntity> }
+            else -> { list }
         }
         notifyDataSetChanged()
     }

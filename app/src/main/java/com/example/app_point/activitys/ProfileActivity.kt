@@ -45,16 +45,30 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         recycler.adapter = mAdapterPoints
 
         // Captures a list employee and shows what is in the first position
-        mBusinessEmployee = BusinessEmployee(this)
-        val listEmployee = mBusinessEmployee.consultEmployee()
-        when {
-            listEmployee.isNotEmpty() -> {
-                searchEmployee(listEmployee[0])
-                viewModel(listEmployee[0])
-            }
-        }
+
+        buscarFuncionario()
         listener()
         observer()
+    }
+
+    private fun buscarFuncionario(){
+        mBusinessEmployee = BusinessEmployee(this)
+        val listEmployee = mBusinessEmployee.consultEmployee()
+
+        if (listEmployee.isNotEmpty()) {
+            searchEmployee(listEmployee[0])
+            viewModel(listEmployee[0])
+        }
+        else {
+            Thread{
+                // Block Thread
+                Thread.sleep(1000)
+                runOnUiThread {
+                    progress_points.visibility = View.GONE
+                    Toast.makeText(this, "Ainda não foi adicionado funcionários", Toast.LENGTH_LONG).show()
+                }
+            }.start()
+        }
     }
 
     private fun listener(){
@@ -153,7 +167,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     private fun viewModel(name: String){
         Thread{
             // Block Thread
-            Thread.sleep(500)
+            Thread.sleep(1000)
             runOnUiThread {
                 mViewModelPoints.getFullEmployee(name, "")
                 text_date_selected.text = getString(R.string.todos)
@@ -163,7 +177,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun observer(){
-        mViewModelPoints.employeeFullList.observe(this, { mAdapterPoints.updateFullEmployee(it) })
+        mViewModelPoints.employeeFullList.observe(this, {
+            when (it.size) {
+                0 -> { Toast.makeText(this, "Ainda não foi adicionado funcionários", Toast.LENGTH_LONG).show() }
+                else -> { mAdapterPoints.updateFullEmployee(it) }
+            }
+        })
     }
 
     // Captures id employee and send to Activity Register to edition

@@ -347,9 +347,9 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun fullPoints(): ArrayList<PointsEntity>? {
+    fun fullPoints(): ArrayList<PointsEntity> {
 
-        var list: ArrayList<PointsEntity>? = arrayListOf()
+        val list: ArrayList<PointsEntity> = arrayListOf()
         try {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase
@@ -378,7 +378,7 @@ class RepositoryPoint(context: Context?) {
                     val hour3 = cursor?.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR3))
                     val hour4 = cursor?.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR4))
 
-                    list?.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4))
+                    list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4))
                 }
             }
             cursor?.close()
