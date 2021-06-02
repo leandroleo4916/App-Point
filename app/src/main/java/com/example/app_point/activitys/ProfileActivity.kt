@@ -144,20 +144,18 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             // Block Thread
             Thread.sleep(1000)
             runOnUiThread {
-                mViewModelPoints.getDateAndHourSelected(name, date)
+                mViewModelPoints.getFullEmployee(name, date)
                 progress_points.visibility = View.GONE
             }
         }.start()
     }
 
-    private fun viewModel(nameEmployee: String){
+    private fun viewModel(name: String){
         Thread{
             // Block Thread
             Thread.sleep(500)
             runOnUiThread {
-                mViewModelPoints.getEmployee(nameEmployee)
-                mViewModelPoints.getData(nameEmployee)
-                mViewModelPoints.getHora(nameEmployee)
+                mViewModelPoints.getFullEmployee(name, "")
                 text_date_selected.text = getString(R.string.todos)
                 progress_points.visibility = View.GONE
             }
@@ -165,11 +163,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun observer(){
-        mViewModelPoints.dataList.observe(this, { mAdapterPoints.updateData(it) })
-        mViewModelPoints.horaList.observe(this, { mAdapterPoints.updateHora(it) })
-        mViewModelPoints.employeeList.observe(this, { mAdapterPoints.updateEmployee(it) })
-        mViewModelPoints.dateSelected.observe(this, { mAdapterPoints.updateData(it) })
-        mViewModelPoints.hourSelected.observe(this, { mAdapterPoints.updateHora(it) })
+        mViewModelPoints.employeeFullList.observe(this, { mAdapterPoints.updateFullEmployee(it) })
     }
 
     // Captures id employee and send to Activity Register to edition

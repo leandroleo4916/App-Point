@@ -10,7 +10,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
 
     companion object {
         private const val DATA_NAME: String = "employee.db"
-        private const val DATA_VERSION: Int = 1
+        private const val DATA_VERSION: Int = 2
     }
 
     override fun onOpen(db: SQLiteDatabase) {
@@ -38,8 +38,11 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
     private val createTablePoint = """ CREATE TABLE 
             ${ConstantsPoint.POINT.TABLE_NAME}(
             ${ConstantsPoint.POINT.COLUMNS.ID} integer primary key autoincrement ,
-            ${ConstantsPoint.POINT.COLUMNS.HOUR} text ,
             ${ConstantsPoint.POINT.COLUMNS.DATE} text ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR1} text ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR2} text ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR3} text ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR4} text ,
             ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text not null ,
             FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.EMPLOYEE}) 
                 REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}

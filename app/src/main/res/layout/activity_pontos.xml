@@ -12,7 +12,7 @@
         android:id="@+id/recycler_activity_pontos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="70dp"
         tools:listitem="@layout/recycler_points"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

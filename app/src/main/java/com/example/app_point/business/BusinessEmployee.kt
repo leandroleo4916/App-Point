@@ -31,7 +31,7 @@ class BusinessEmployee(context: Context) {
         return mRepositoryEmployee.consultPhoto(nome)
     }
 
-    fun consultHours(nome: String): String?{
+    fun consultHours(nome: String): List<String>? {
         return mRepositoryEmployee.consultHours(nome)
     }
 }

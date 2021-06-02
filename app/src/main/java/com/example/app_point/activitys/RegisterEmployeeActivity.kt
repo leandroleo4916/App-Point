@@ -134,7 +134,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // Recebe dados para edição
+    // Receive data to edition
     private fun carregaInfoEmployee() {
 
         val extras = intent.extras
@@ -193,7 +193,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
-    // Result da permissão
+    // Result permission
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
     ) {
@@ -209,7 +209,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // Abre a câmera
+    // Open camera
     private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "Nova Foto")
@@ -220,7 +220,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
     }
 
-    // Captura imagem da galeria ou câmera
+    // Capture image of the gallery or camera
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -240,7 +240,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // Abre a galeria
+    // Open gallery
     private fun openGalery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, IMAGE_GALERY)
@@ -272,9 +272,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val edit_aniversario = text_aniversario
 
         when {
-            image == null -> Toast.makeText(
-                this, "Tire uma foto!", Toast.LENGTH_SHORT
-            ).show()
+            image == null -> Toast.makeText(this, "Tire uma foto!", Toast.LENGTH_SHORT).show()
             hora1 == "" -> edit_horario1.error = "Horário Obrigatório"
             hora2 == "" -> edit_horario2.error = "Horário Obrigatório"
             hora3 == "" -> edit_horario3.error = "Horário Obrigatório"
@@ -286,11 +284,9 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             admissao == "" -> edit_admissao.error = "Digite Admissão"
             aniversario == "" -> edit_aniversario.error = "Digite Aniversário"
 
-            mBusinessEmployee.registerEmployee(
-                id, photo, hora1, hora2, hora3, hora4, name, cargo, email, phone,
-                admissao, aniversario
-            ) -> {
-                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+            mBusinessEmployee.registerEmployee(id, photo, hora1, hora2, hora3, hora4, name, cargo,
+                email, phone, admissao, aniversario) ->
+                { Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, ProfileActivity::class.java))
                 finish()
             }

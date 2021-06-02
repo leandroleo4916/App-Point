@@ -42,18 +42,14 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
             // Block Thread
             Thread.sleep(500)
             runOnUiThread {
-                mViewModel.getEmployee("")
-                mViewModel.getData("")
-                mViewModel.getHora("")
+                mViewModel.getFullEmployee("")
                 progress_ponto.visibility = View.GONE
             }
         }.start()
     }
 
     private fun observe(){
-        mViewModel.employeeList.observe(this, { mPointsAdapter.updateEmployee(it) })
-        mViewModel.dataList.observe(this, { mPointsAdapter.updateData(it) })
-        mViewModel.horaList.observe(this, { mPointsAdapter.updateHora(it) })
+        mViewModel.employeeFullList.observe(this, { mPointsAdapter.updateFullEmployee(it)})
     }
 
     private fun listener(){
@@ -89,15 +85,11 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
             // Capture item Spinner
             val itemSpinner = listSpinner.selectedItem.toString()
 
-            mViewModel.getEmployee(itemSpinner)
-            mViewModel.getData(itemSpinner)
-            mViewModel.getHora(itemSpinner)
+            mViewModel.getFullEmployee(itemSpinner)
 
         }
         alertDialog.setNegativeButton(getString(R.string.todos)) { _, _ ->
-            mViewModel.getEmployee("")
-            mViewModel.getData("")
-            mViewModel.getHora("")
+            mViewModel.getFullEmployee("")
         }
         val dialog = alertDialog.create()
         dialog.show()

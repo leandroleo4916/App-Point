@@ -264,11 +264,17 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    fun consultHours(nome: String): String? {
+    fun consultHours(nome: String): ArrayList<String>? {
+
+        var list: ArrayList<String>? = arrayListOf()
 
         try {
             val db = mDataBaseEmployee.readableDatabase
-            val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1)
+            val projection = arrayOf(
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4)
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
             val args = arrayOf(nome)
 
@@ -278,14 +284,19 @@ class RepositoryEmployee(context: Context?) {
             )
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
-                return cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
+                val hora1 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
+                val hora2 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
+                val hora3 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
+                val hora4 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
+
+                list = arrayListOf(hora1, hora2, hora3, hora4)
 
             }
             cursor?.close()
-            return null
+            return list
 
         } catch (e: Exception) {
-            return null
+            return list
         }
     }
 

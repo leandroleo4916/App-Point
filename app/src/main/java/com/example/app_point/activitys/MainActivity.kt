@@ -103,9 +103,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             // Block Thread
             Thread.sleep(500)
             runOnUiThread {
-                mViewModel.getEmployee("")
-                mViewModel.getData("")
-                mViewModel.getHora("")
+                mViewModel.getFullEmployee("")
                 progress.visibility = View.GONE
             }
         }.start()
@@ -113,9 +111,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     // Observe List Points
     private fun observe(){
-        mViewModel.employeeList.observe(this, { mPointAdapter.updateEmployee(it) })
-        mViewModel.dataList.observe(this, { mPointAdapter.updateData(it) })
-        mViewModel.horaList.observe(this, { mPointAdapter.updateHora(it) })
+        mViewModel.employeeFullList.observe(this, { mPointAdapter.updateFullEmployee(it) })
     }
 
     // clicks management
@@ -215,8 +211,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             itemSpinner == "" -> {
                 Toast.makeText(this, getString(R.string.precisa_add_funcionarios), Toast.LENGTH_SHORT).show()
             }
-
-            
 
             mBusinessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
                 Toast.makeText(this, getString(R.string.adicionado_sucesso), Toast.LENGTH_SHORT).show()

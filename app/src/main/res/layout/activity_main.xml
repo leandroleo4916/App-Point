@@ -339,5 +339,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

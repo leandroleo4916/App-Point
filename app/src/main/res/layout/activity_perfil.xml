@@ -51,7 +51,7 @@
         android:id="@+id/text_name_employee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:text="Fulano Beltrano"
         android:textColor="@color/fundoBlue"
         android:textSize="18sp"
@@ -75,25 +75,11 @@
         app:layout_constraintTop_toBottomOf="@+id/text_name_employee"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/text_cargo_active"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Ativo"
-        android:textColor="#4CAF50"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/image_photo_employee"
-        app:layout_constraintEnd_toEndOf="@+id/image_photo_employee"
-        app:layout_constraintStart_toStartOf="@+id/image_photo_employee"
-        tools:ignore="MissingConstraints" />
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_photo_employee"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/buttom_back"
         android:src="@drawable/man"
         app:layout_constraintCircleRadius="50dp"
@@ -125,7 +111,7 @@
         android:secondaryProgress="0"
         app:layout_constraintBottom_toBottomOf="@+id/image_photo_employee"
         app:layout_constraintEnd_toStartOf="@+id/image_photo_employee"
-        app:layout_constraintTop_toBottomOf="@+id/text_cargo_active"
+        app:layout_constraintTop_toTopOf="@+id/image_photo_employee"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
@@ -152,16 +138,15 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="55dp"
+        android:layout_marginStart="40dp"
         android:indeterminate="false"
         android:max="220"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs_fix"
         android:secondaryProgress="0"
-        android:layout_marginStart="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_photo_employee"
         app:layout_constraintStart_toEndOf="@+id/edit_employee"
-        app:layout_constraintTop_toBottomOf="@+id/text_cargo_active"
+        app:layout_constraintTop_toTopOf="@+id/image_photo_employee"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
@@ -262,7 +247,7 @@
         android:id="@+id/text_date_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="22dp"
         android:text="Pontos realizados"
         android:textColor="@color/letras"
         android:textSize="18dp"
@@ -281,9 +266,9 @@
         android:textColor="@color/letras"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/search_date"
         app:layout_constraintEnd_toStartOf="@+id/search_date"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
+        app:layout_constraintTop_toTopOf="@+id/search_date"
         app:layout_constraintVertical_bias="0.483"
         tools:ignore="MissingConstraints" />
 
@@ -291,7 +276,7 @@
         android:id="@+id/search_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="22dp"
         android:src="@drawable/ic_calendar"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
@@ -304,8 +289,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"

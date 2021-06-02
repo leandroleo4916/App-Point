@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
+import com.example.app_point.entity.PointsEntity
 import com.example.app_point.utils.ConverterHours
 
 class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,15 +24,23 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textData.text = data
     }
 
-    fun bindHora(hoursCurrent: String, hours: String){
+    fun bindHora(fullEmployee: PointsEntity, horarioEmployee: List<String> ){
 
         val textHora = itemView.findViewById<TextView>(R.id.text_hora)
+        val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
+        val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
+        val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
         val imageBack = itemView.findViewById<ImageView>(R.id.icon_image_back)
-        val minutesCurrent = mAddHours.converterHoursInMinutes(hoursCurrent)
-        val minutes = mAddHours.converterHoursInMinutes(hours)
 
-        textHora.text = hoursCurrent
-        when {
+        //val minutesCurrent = mAddHours.converterHoursInMinutes(hoursCurrent)
+        //val minutes = mAddHours.converterHoursInMinutes(hours)
+
+        textHora.text = fullEmployee.hora1
+        textHora2.text = fullEmployee.hora2
+        textHora3.text = fullEmployee.hora3
+        textHora4.text = fullEmployee.hora4
+
+        /*when {
             minutesCurrent < minutes -> {
                 imageBack.setImageResource(R.color.colorGreen)
             }
@@ -41,7 +50,7 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             else -> {
                 imageBack.setImageResource(R.color.colorYellow)
             }
-        }
+        }*/
     }
 
     fun bindPhoto(image: Bitmap){
@@ -49,5 +58,4 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         imageView.setImageBitmap(image)
 
     }
-
 }
