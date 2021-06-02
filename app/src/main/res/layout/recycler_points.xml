@@ -17,7 +17,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginStart="20dp"
-        android:background="@drawable/back_fundo_photo"
+        android:background="@drawable/back_fundo"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,53 +65,53 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.529" />
 
-    <androidx.appcompat.widget.Toolbar
+    <ImageView
         android:id="@+id/toolbar"
         android:layout_width="50dp"
         android:layout_height="24dp"
         android:layout_marginStart="12dp"
-        android:background="@drawable/back_toolbar_hours"
+        android:background="@drawable/back_fundo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon_image_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.714"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="ContentDescription,MissingConstraints" />
 
-    <androidx.appcompat.widget.Toolbar
+    <ImageView
         android:id="@+id/toolbar2"
         android:layout_width="50dp"
         android:layout_height="24dp"
         android:layout_marginStart="4dp"
-        android:background="@drawable/back_toolbar_hours"
+        android:background="@drawable/back_fundo"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toEndOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.516"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="ContentDescription,MissingConstraints" />
 
-    <androidx.appcompat.widget.Toolbar
+    <ImageView
         android:id="@+id/toolbar3"
         android:layout_width="50dp"
         android:layout_height="24dp"
         android:layout_marginStart="4dp"
-        android:background="@drawable/back_toolbar_hours"
+        android:background="@drawable/back_fundo"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintStart_toEndOf="@+id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="ContentDescription,MissingConstraints" />
 
-    <androidx.appcompat.widget.Toolbar
+    <ImageView
         android:id="@+id/toolbar4"
         android:layout_width="50dp"
         android:layout_height="24dp"
         android:layout_marginStart="4dp"
-        android:background="@drawable/back_toolbar_hours"
+        android:background="@drawable/back_fundo"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
         app:layout_constraintStart_toEndOf="@+id/toolbar3"
         app:layout_constraintTop_toTopOf="@+id/toolbar3"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="ContentDescription,MissingConstraints" />
 
     <TextView
         android:id="@+id/text_hora"
