@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private fun searchPoints(){
         Thread{
             // Block Thread
-            Thread.sleep(500)
+            Thread.sleep(1000)
             runOnUiThread {
                 mViewModel.getFullEmployee("")
                 progress.visibility = View.GONE
@@ -111,7 +111,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     // Observe List Points
     private fun observe(){
-        mViewModel.employeeFullList.observe(this, { mPointAdapter.updateFullEmployee(it) })
+        mViewModel.employeeFullList.observe(this, {
+            when (it.size) {
+                0 -> { Toast.makeText(this, "Ainda não foi adicionado funcionários", Toast.LENGTH_LONG).show() }
+                else -> { mPointAdapter.updateFullEmployee(it) }
+            }
+        })
     }
 
     // clicks management
