@@ -51,7 +51,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         observer()
     }
 
-    private fun buscarFuncionario(){
+    private fun buscarFuncionario() {
         mBusinessEmployee = BusinessEmployee(this)
         val listEmployee = mBusinessEmployee.consultEmployee()
 
@@ -78,6 +78,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         float_bottom_perfil.setOnClickListener(this)
         text_name_employee.setOnClickListener(this)
         search_date.setOnClickListener(this)
+        text_date_selected.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
