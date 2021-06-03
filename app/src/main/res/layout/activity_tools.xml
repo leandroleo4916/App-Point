@@ -8,45 +8,27 @@
     android:background="@color/back"
     tools:context=".activitys.ToolsActivity">
 
-    <TextView
-        android:id="@+id/tema"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_ferramentas"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:text="Tema"
-        android:textColor="@color/letras"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="_______________________________"
-        android:textColor="@color/letrashint"
-        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
         android:text="Ferramentas"
         android:textColor="@color/letrashint"
         android:textSize="22sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_ferramentas"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_ferramentas"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_ferramentas"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -54,21 +36,35 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="20dp"
         android:contentDescription="@string/buttom_back"
         android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_ferramentas"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <Switch
-        android:id="@+id/switch_theme"
+    <ImageView
+        android:id="@+id/option_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="38dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_option"
+        android:textColor="@color/letras"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_ferramentas"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar_ferramentas"
+        tools:ignore="ContentDescription" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_employee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_ferramentas"
+        tools:ignore="MissingConstraints"
+        tools:listitem="@layout/recycler_employee" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
