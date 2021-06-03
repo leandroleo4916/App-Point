@@ -9,6 +9,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private lateinit var  mPointAdapter: PointsAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
     private lateinit var mViewModel: ViewModel
+    private lateinit var constraintLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
         mSecurityPreferences = SecurityPreferences(this)
+        constraintLayout = findViewById(R.id.container)
 
         // Recycler Implementation
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
@@ -113,7 +117,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private fun observe(){
         mViewModel.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
+                0 -> { Snackbar.make(constraintLayout, "Nenhum ponto foi adicionado", Snackbar.LENGTH_LONG).show() }
                 else -> { mPointAdapter.updateFullEmployee(it) }
             }
         })
@@ -201,10 +205,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             savePoint(itemSpinner, dateCurrent, hourCurrent)
 
         }
-        alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> Toast.makeText(
-            this,
-            R.string.cancelado,
-            Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> Snackbar.make(
+            constraintLayout, "Cancelado", Snackbar.LENGTH_LONG).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
