@@ -36,19 +36,25 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //val minutes = mAddHours.converterHoursInMinutes(hours)
 
         when {
-            fullEmployee.hora1 != null && fullEmployee.hora2 == null -> {
+            fullEmployee.hora1 == null -> {
+                textHora.text = "--:--"
+                textHora2.text = "--:--"
+                textHora3.text = "--:--"
+                textHora4.text = "--:--"
+            }
+            fullEmployee.hora2 == null -> {
                 textHora.text = fullEmployee.hora1
                 textHora2.text = "--:--"
                 textHora3.text = "--:--"
                 textHora4.text = "--:--"
             }
-            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 == null -> {
+            fullEmployee.hora3 == null -> {
                 textHora.text = fullEmployee.hora1
                 textHora2.text = fullEmployee.hora2
                 textHora3.text = "--:--"
                 textHora4.text = "--:--"
             }
-            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 != null && fullEmployee.hora4 == null -> {
+            fullEmployee.hora4 == null -> {
                 textHora.text = fullEmployee.hora1
                 textHora2.text = fullEmployee.hora2
                 textHora3.text = fullEmployee.hora3

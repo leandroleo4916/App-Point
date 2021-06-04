@@ -50,7 +50,7 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener {
                 mViewModelEmployee.getFullEmployee()
                 //mViewModelEmployee.getFullPoints(name, "")
                 //text_date_selected.text = getString(R.string.todos)
-                //progress_points.visibility = View.GONE
+                progress_employee.visibility = View.GONE
             }
         }.start()
     }

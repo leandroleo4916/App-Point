@@ -8,6 +8,18 @@
     android:background="@color/back"
     tools:context=".activitys.ToolsActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_employee"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_ferramentas"
+        tools:ignore="MissingConstraints" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_ferramentas"
         android:layout_width="match_parent"
