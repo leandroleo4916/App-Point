@@ -29,7 +29,7 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener {
         recycler.adapter = mEmployeeAdapter
 
         listener()
-        viewModel("")
+        viewModel()
         observer()
     }
 
@@ -43,15 +43,15 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun viewModel(name: String){
+    private fun viewModel(){
         Thread{
             // Block Thread
             Thread.sleep(1000)
             runOnUiThread {
-                mViewModelEmployee.getFullEmployee(name)
-                mViewModelEmployee.getFullPoints(name, "")
-                text_date_selected.text = getString(R.string.todos)
-                progress_points.visibility = View.GONE
+                mViewModelEmployee.getFullEmployee()
+                //mViewModelEmployee.getFullPoints(name, "")
+                //text_date_selected.text = getString(R.string.todos)
+                //progress_points.visibility = View.GONE
             }
         }.start()
     }
@@ -61,12 +61,6 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener {
             when (it.size) {
                 0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
                 else -> { mEmployeeAdapter.updateFullEmployee(it) }
-            }
-        })
-        mViewModelEmployee.employeePointsList.observe(this, {
-            when (it.size) {
-                0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
-                else -> { mEmployeeAdapter.updateFullPoints(it) }
             }
         })
     }

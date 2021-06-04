@@ -16,14 +16,14 @@ import com.example.app_point.utils.ConverterPhoto
 class EmployeeAdapter(private val application: Application) : RecyclerView.Adapter<EmployeeViewHolder>() {
 
     private var mListFullEmployee: ArrayList<EmployeeEntity> = arrayListOf()
-    private var mListFullPoints: ArrayList<PointsEntity> = arrayListOf()
+    //private var mListFullPoints: ArrayList<PointsEntity> = arrayListOf()
     private val mBusiness: BusinessEmployee = BusinessEmployee(application)
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
     // Create the list of the layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
-            R.layout.recycler_points, parent, false)
+            R.layout.recycler_employee, parent, false)
 
         // Add animation to item RecyclerView
         val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
@@ -35,31 +35,29 @@ class EmployeeAdapter(private val application: Application) : RecyclerView.Adapt
     // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
         //val employee = mListEmployee[position]
-        val fullPoints = mListFullPoints[position]
+        //val fullPoints = mListFullPoints[position]
         val fullEmployee = mListFullEmployee[position]
 
-        holder.bind(fullPoints.employee.toString())
-        holder.bindData(fullPoints.data.toString())
+        holder.bind(fullEmployee.nameEmployee, fullEmployee.cargoEmployee, fullEmployee.admissaoEmployee)
+        //holder.bindData(fullPoints.data.toString())
 
-        // Captures name employee and search photo
-        val photo = mBusiness.consultPhoto(fullPoints.employee.toString())
-        val photoConvert = photo?.let { mConverterPhoto.converterToBitmap(it) }
-        photoConvert?.let { holder.bindPhoto(it) }
+        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterToBitmap(it) }
+        photoConvert.let { holder.bindPhoto(it) }
 
-        val horarioEmployee = mBusiness.consultHours(fullPoints.employee.toString())!!
-        holder.bindHora(fullPoints, horarioEmployee)
+        //val horarioEmployee = mBusiness.consultHours(fullPoints.employee.toString())!!
+        //holder.bindHora(fullPoints, horarioEmployee)
     }
 
     override fun getItemCount(): Int {
         return mListFullEmployee.count()
-        return mListFullPoints.count()
+        //return mListFullPoints.count()
     }
 
     // Function inverter list
-    fun updateFullPoints(list: ArrayList<PointsEntity>){
+    /*fun updateFullPoints(list: ArrayList<PointsEntity>){
         mListFullPoints = list
         notifyDataSetChanged()
-    }
+    }*/
     fun updateFullEmployee(list: ArrayList<EmployeeEntity>){
         mListFullEmployee = list
         notifyDataSetChanged()

@@ -14,48 +14,52 @@ class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val mAddHours: ConverterHours = ConverterHours()
 
     // Add item the position of the Layout
-    fun bind(employee: String){
-        val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_funcionario)
+    fun bind(employee: String, cargo: String, admission: String){
+        val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_employee)
         textEmployee.text = employee
+        val textCargo = itemView.findViewById<TextView>(R.id.text_cargo)
+        textCargo.text = cargo
+        val textadmission = itemView.findViewById<TextView>(R.id.text_data_admission)
+        textadmission.text = admission
     }
 
-    fun bindData(data: String){
+    /*fun bindData(data: String){
         val textData = itemView.findViewById<TextView>(R.id.text_data)
         textData.text = data
-    }
+    }*/
 
     fun bindHora(fullEmployee: PointsEntity, horarioEmployee: List<String> ){
 
-        val textHora = itemView.findViewById<TextView>(R.id.text_hora)
+        val textHora1 = itemView.findViewById<TextView>(R.id.text_hora1)
         val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
         val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
         val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
-        val imageBack = itemView.findViewById<ImageView>(R.id.icon_image_back)
+        //val imageBack = itemView.findViewById<ImageView>(R.id.icon_image_back)
 
         //val minutesCurrent = mAddHours.converterHoursInMinutes(hoursCurrent)
         //val minutes = mAddHours.converterHoursInMinutes(hours)
 
         when {
             fullEmployee.hora1 != null && fullEmployee.hora2 == null -> {
-                textHora.text = fullEmployee.hora1
+                textHora1.text = fullEmployee.hora1
                 textHora2.text = "--:--"
                 textHora3.text = "--:--"
                 textHora4.text = "--:--"
             }
             fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 == null -> {
-                textHora.text = fullEmployee.hora1
+                textHora1.text = fullEmployee.hora1
                 textHora2.text = fullEmployee.hora2
                 textHora3.text = "--:--"
                 textHora4.text = "--:--"
             }
             fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 != null && fullEmployee.hora4 == null -> {
-                textHora.text = fullEmployee.hora1
+                textHora1.text = fullEmployee.hora1
                 textHora2.text = fullEmployee.hora2
                 textHora3.text = fullEmployee.hora3
                 textHora4.text = "--:--"
             }
             else -> {
-                textHora.text = fullEmployee.hora1
+                textHora1.text = fullEmployee.hora1
                 textHora2.text = fullEmployee.hora2
                 textHora3.text = fullEmployee.hora3
                 textHora4.text = fullEmployee.hora4
@@ -76,7 +80,7 @@ class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bindPhoto(image: Bitmap){
-        val imageView = itemView.findViewById<ImageView>(R.id.icon_image)
+        val imageView = itemView.findViewById<ImageView>(R.id.icon_image_perfil)
         imageView.setImageBitmap(image)
 
     }

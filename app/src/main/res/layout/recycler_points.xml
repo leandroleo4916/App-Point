@@ -25,7 +25,7 @@
         tools:ignore="ContentDescription" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/icon_image"
+        android:id="@+id/icon_image_perfil"
         android:layout_width="58dp"
         android:layout_height="58dp"
         android:background="@drawable/back_buttom"
@@ -37,7 +37,7 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/text_nome_funcionario"
+        android:id="@+id/text_nome_employee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -46,7 +46,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/icon_image"
+        app:layout_constraintStart_toEndOf="@+id/icon_image_perfil"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.203" />
 
@@ -117,7 +117,7 @@
         android:id="@+id/text_hora"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -130,7 +130,7 @@
         android:id="@+id/text_hora2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -144,7 +144,7 @@
         android:id="@+id/text_hora3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -158,7 +158,7 @@
         android:id="@+id/text_hora4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"

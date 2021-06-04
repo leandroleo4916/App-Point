@@ -15,7 +15,7 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     // Add item the position of the Layout
     fun bind(employee: String){
-        val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_funcionario)
+        val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_employee)
         textEmployee.text = employee
     }
 
@@ -76,7 +76,7 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bindPhoto(image: Bitmap){
-        val imageView = itemView.findViewById<ImageView>(R.id.icon_image)
+        val imageView = itemView.findViewById<ImageView>(R.id.icon_image_perfil)
         imageView.setImageBitmap(image)
 
     }

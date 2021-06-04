@@ -17,18 +17,17 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/back_fundo"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/icon_image"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:id="@+id/icon_image_perfil"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:background="@drawable/back_buttom"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/icon_image_back"
@@ -38,18 +37,17 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/text_nome_funcionario"
+        android:id="@+id/text_nome_employee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:text="@string/funcionario"
         android:textColor="@color/letras"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/icon_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.151" />
+        app:layout_constraintStart_toEndOf="@+id/icon_image_perfil"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/edit_employee"
@@ -88,7 +86,7 @@
         android:id="@+id/remove_employee"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/ic_delete"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,22 +97,20 @@
         android:id="@+id/text_cargo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:singleLine="true"
         android:textStyle="italic"
         android:text="Cargo"
         android:textColor="@color/letras"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/text_nome_funcionario"
-        app:layout_constraintTop_toBottomOf="@+id/text_nome_funcionario" />
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/text_nome_employee"
+        app:layout_constraintTop_toBottomOf="@+id/text_nome_employee" />
 
     <TextView
-        android:id="@+id/text_data_admission3"
+        android:id="@+id/text_data_admission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:singleLine="true"
-        android:text="@string/_10_fev"
+        android:text="Admissão"
         android:textColor="@color/letras"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/text_cargo"
@@ -124,26 +120,25 @@
         android:id="@+id/text_data_ponto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginBottom="40dp"
         android:singleLine="true"
         android:text="Hoje"
         android:textColor="@color/letras"
-        android:textSize="12sp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/toolbar3"
-        app:layout_constraintStart_toEndOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/text_data_admission3" />
+        app:layout_constraintStart_toEndOf="@+id/toolbar" />
 
     <ImageView
         android:id="@+id/toolbar"
         android:layout_width="50dp"
         android:layout_height="24dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/back_fundo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.286"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.887"
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <ImageView
@@ -185,7 +180,7 @@
         android:id="@+id/text_hora1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -198,7 +193,7 @@
         android:id="@+id/text_hora2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -212,7 +207,7 @@
         android:id="@+id/text_hora3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -226,7 +221,7 @@
         android:id="@+id/text_hora4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_funcionario"
+        android:layout_below="@+id/text_nome_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
