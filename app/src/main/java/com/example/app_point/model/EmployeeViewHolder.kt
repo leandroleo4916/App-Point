@@ -28,7 +28,7 @@ class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textData.text = data
     }*/
 
-    fun bindHora(fullEmployee: PointsEntity, horarioEmployee: List<String> ){
+    fun bindHora(fullEmployee: PointsEntity, horarioEmployee: String ){
 
         val textHora1 = itemView.findViewById<TextView>(R.id.text_hora1)
         val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
@@ -40,19 +40,25 @@ class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //val minutes = mAddHours.converterHoursInMinutes(hours)
 
         when {
-            fullEmployee.hora1 != null && fullEmployee.hora2 == null -> {
+            fullEmployee.hora1 == null -> {
+                textHora1.text = "--:--"
+                textHora2.text = "--:--"
+                textHora3.text = "--:--"
+                textHora4.text = "--:--"
+            }
+            fullEmployee.hora2 == null -> {
                 textHora1.text = fullEmployee.hora1
                 textHora2.text = "--:--"
                 textHora3.text = "--:--"
                 textHora4.text = "--:--"
             }
-            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 == null -> {
+            fullEmployee.hora3 == null -> {
                 textHora1.text = fullEmployee.hora1
                 textHora2.text = fullEmployee.hora2
                 textHora3.text = "--:--"
                 textHora4.text = "--:--"
             }
-            fullEmployee.hora1 != null && fullEmployee.hora2 != null && fullEmployee.hora3 != null && fullEmployee.hora4 == null -> {
+            fullEmployee.hora4 == null -> {
                 textHora1.text = fullEmployee.hora1
                 textHora2.text = fullEmployee.hora2
                 textHora3.text = fullEmployee.hora3

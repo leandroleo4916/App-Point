@@ -11,12 +11,10 @@ import com.example.app_point.repository.RepositoryPoint
 
 class ViewModelEmployee (application: Application): AndroidViewModel(application) {
 
-
     private var mSearchEmployee: RepositoryEmployee = RepositoryEmployee (application)
 
     private val mEmployeeFullList = MutableLiveData<ArrayList<EmployeeEntity>>()
     val employeeFullList: LiveData<ArrayList<EmployeeEntity>> = mEmployeeFullList
-
 
     fun getFullEmployee(){
         mEmployeeFullList.value = mSearchEmployee.consultFullEmployee()
