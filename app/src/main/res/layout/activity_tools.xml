@@ -12,6 +12,7 @@
         android:id="@+id/progress_employee"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@color/fundoBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="true"
@@ -45,8 +46,8 @@
 
     <ImageView
         android:id="@+id/image_back_tools"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="18dp"
         android:contentDescription="@string/buttom_back"
         android:src="@drawable/ic_back"
