@@ -79,6 +79,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         text_name_employee.setOnClickListener(this)
         search_date.setOnClickListener(this)
         text_date_selected.setOnClickListener(this)
+        image_photo_employee.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {

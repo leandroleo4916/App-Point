@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     android:background="@color/back">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_cadastro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/buttom_register_employee"
         android:layout_width="235dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/back_buttom"
+        android:background="@drawable/back_fundo"
         android:text="Cadastrar"
         android:elevation="8dp"
         android:textColor="@color/back"
@@ -93,7 +103,7 @@
         android:id="@+id/toolbar_confirme_senha7"
         android:layout_width="360dp"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -484,25 +494,26 @@
 
     <ImageView
         android:id="@+id/image_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="20dp"
         android:contentDescription="@string/buttom_back"
         android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_cadastro"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_cadastro"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_cadastro"
         tools:ignore="MissingConstraints" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photo_employee"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:src="@drawable/man"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHome"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_cadastro"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -518,14 +529,14 @@
         android:id="@+id/textViewHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
         android:text="Cadastrar Funcionário"
         android:textColor="@color/letrashint"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_cadastro"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_cadastro"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_cadastro"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_cadastro"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

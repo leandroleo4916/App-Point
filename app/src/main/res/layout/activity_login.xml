@@ -166,7 +166,7 @@
         android:layout_width="235dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/back_buttom"
+        android:background="@drawable/back_fundo"
         android:text="@string/entrar"
         android:elevation="8dp"
         android:textColor="@color/back"
