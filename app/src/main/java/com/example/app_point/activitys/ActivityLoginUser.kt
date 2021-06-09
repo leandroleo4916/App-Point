@@ -9,17 +9,24 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.utils.SecurityPreferences
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 
 class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBusinessUser: BusinessUser
     private lateinit var mSecurityPreferences: SecurityPreferences
+    private var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        auth = Firebase.auth
         mBusinessUser = BusinessUser(this)
         mSecurityPreferences = SecurityPreferences(this)
         listener()
@@ -38,8 +45,19 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    public override fun onStart() {
+        super.onStart()
+        val currentUser = auth?.currentUser
+        if(currentUser != null){
+            startActivity(Intent(this, MainActivity::class.java))
+            Toast.makeText(this, getString(R.string.bem_vindo_de_volta), Toast.LENGTH_SHORT).show()
+            finish()
+        }
+    }
+
     // Login automatic
     private fun verifyLoggedUser(){
+
         val email = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
         val password = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
 
@@ -56,21 +74,27 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
         val editTextUser = edittext_user
         val editTextPassword = edittext_senha
 
-        when {
-            userLogin == "" -> {
-                editTextUser.error = "Digite Login"
-            }
-            userPassword == "" -> {
-                editTextPassword.error = "Digite Senha"
-            }
-            mBusinessUser.storeUser(userLogin, userPassword) -> {
+        if (userLogin == "") {
+            editTextUser.error = "Digite Login"
+        }
+        else if (userPassword == "") {
+            editTextPassword.error = "Digite Senha"
+        }
+        else {
+            signIn(userLogin, userPassword)
+        }
+    }
+
+    private fun signIn(email: String, password: String){
+        auth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener(this) { task ->
+            if (task.isSuccessful){
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()
                 finish()
-            }
-            else -> {
+            }else{
                 Toast.makeText(this, getString(R.string.erro_usuario), Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 }

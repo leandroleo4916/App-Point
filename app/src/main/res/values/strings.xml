@@ -31,6 +31,7 @@
     <string name="senhas_diferentes">Senhas estão diferentes!</string>
     <string name="login_feito">Login feito com sucesso!</string>
     <string name="bem_vindo">Seja bem-vindo</string>
+    <string name="bem_vindo_de_volta">Bem-vindo de volta</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="nome">Nome</string>
     <string name="cargo">Cargo</string>

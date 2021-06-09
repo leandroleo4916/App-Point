@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "236233984219",
+    "firebase_url": "https://app-point-49-default-rtdb.firebaseio.com",
+    "project_id": "app-point-49",
+    "storage_bucket": "app-point-49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236233984219:android:a105222bf87fef5d78a4fe",
+        "android_client_info": {
+          "package_name": "com.example.app_point"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236233984219-bbor4bdq2qqhua0s52gusb5klch9k8io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-ZOKN5xeNy2bTcRIBLWnE-H1qgdyhS5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236233984219-bbor4bdq2qqhua0s52gusb5klch9k8io.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236233984219:android:447bc74e5e581f7878a4fe",
+        "android_client_info": {
+          "package_name": "com.example.appfinances"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236233984219-bbor4bdq2qqhua0s52gusb5klch9k8io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-ZOKN5xeNy2bTcRIBLWnE-H1qgdyhS5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236233984219-bbor4bdq2qqhua0s52gusb5klch9k8io.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

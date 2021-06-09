@@ -9,6 +9,9 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.entity.UserEntity
 import com.example.app_point.utils.SecurityPreferences
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 import kotlinx.android.synthetic.main.register_user.*
 import kotlinx.android.synthetic.main.register_user.edittext_email
 import kotlinx.android.synthetic.main.register_user.edittext_username
@@ -18,11 +21,13 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBusinessUser: BusinessUser
     private lateinit var mSecurityPreferences: SecurityPreferences
+    var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.register_user)
 
+        auth = FirebaseAuth.getInstance()
         mBusinessUser = BusinessUser(this)
         mSecurityPreferences = SecurityPreferences(this)
         listener()
