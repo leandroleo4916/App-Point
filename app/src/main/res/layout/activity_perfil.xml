@@ -8,6 +8,7 @@
     android:background="@color/back"
     android:paddingEnd="8dp"
     android:paddingStart="8dp"
+    android:id="@+id/container_perfil"
     tools:context=".activitys.ProfileActivity">
 
     <ImageView

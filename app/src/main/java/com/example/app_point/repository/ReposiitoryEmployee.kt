@@ -52,9 +52,9 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    fun employeeList(): ArrayList<String> {
+    fun employeeList(): ArrayList<String>? {
 
-        val list: ArrayList<String> = ArrayList()
+        val list: ArrayList<String>? = ArrayList()
         try {
             val cursor: Cursor
             val db = mDataBaseEmployee.readableDatabase
@@ -76,7 +76,7 @@ class RepositoryEmployee(context: Context?) {
                     val nomeEmployee =
                         cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
 
-                    list.add(nomeEmployee)
+                    list?.add(nomeEmployee)
                 }
             }
             cursor?.close()

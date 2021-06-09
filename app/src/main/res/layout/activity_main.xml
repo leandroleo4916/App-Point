@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:text="@string/fulano"
+        android:text="@string/usuario"
         android:textColor="@color/letras"
         android:textSize="22sp"
         android:textStyle="bold"

@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/image_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -52,7 +52,7 @@
         android:layout_width="235dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/back_buttom"
+        android:background="@drawable/back_fundo"
         android:text="@string/criar_conta"
         android:textColor="@color/back"
         android:textSize="16sp"

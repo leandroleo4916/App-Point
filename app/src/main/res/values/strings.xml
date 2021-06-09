@@ -10,8 +10,8 @@
     <string name="cadastro_feito">Cadastro efetuado com sucesso!</string>
     <string name="erro_inesperado">Erro inesperado aconteceu!</string>
     <string name="buttom_back">Buttom Back</string>
-    <string name="entre_aqui"> entre aqui!</string>
-    <string name="se_voc_j_tiver_conta">Se você já tiver conta,</string>
+    <string name="entre_aqui">Entre aqui!</string>
+    <string name="se_voc_j_tiver_conta">Você já tem conta?</string>
     <string name="criar_conta">criar conta</string>
     <string name="email">Email</string>
     <string name="senha">Senha</string>
@@ -40,7 +40,7 @@
     <string name="_10_fev">10 Fev</string>
     <string name="_00_00">--:--</string>
     <string name="ola">Olá,</string>
-    <string name="fulano">Fulano</string>
+    <string name="usuario">Usuário</string>
     <string name="exclamacao">!</string>
     <string name="sair">Sair</string>
     <string name="registrar">Cadastrar</string>
@@ -58,9 +58,11 @@
     <string name="editar">EDITAR</string>
     <string name="filtrar_funcionario">Filtrar pontos por funcionário</string>
     <string name="deseja_sair">Deseja sair do App?</string>
+    <string name="nao_foi_possivel_cadastrar">Não foi possível fazer o cadastro!</string>
     <string name="precisa_add_funcionarios">Você precisa adicionar funcionários!</string>
     <string name="adicionado_sucesso">Adicionado com sucesso!</string>
     <string name="nao_possivel_add_ponto">Atingido limite de batidas diário!</string>
     <string name="filtrar">Filtrar</string>
     <string name="todos">Todos</string>
+    <string name="nenhum_ponto_registrado">Nenhum ponto registrado!</string>
 </resources>

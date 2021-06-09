@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_pontos.*
 
 class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -19,12 +21,14 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     private lateinit var mPointsAdapter: PointsAdapter
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private lateinit var mViewModel: ViewModel
+    private lateinit var constraintLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pontos)
 
         mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        constraintLayout = findViewById(R.id.container_pontos)
 
         // Create the recyclerview
         val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
@@ -51,7 +55,8 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     private fun observe(){
         mViewModel.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
+                0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
+                    Snackbar.LENGTH_LONG).show() }
                 else -> { mPointsAdapter.updateFullEmployee(it) }
             }
         })
@@ -76,7 +81,7 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         // Capture List employee and add spinner
         val list = mListEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinner_employee) as Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list!!)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
@@ -88,16 +93,20 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         alertDialog.setPositiveButton(getString(R.string.filtrar)) { _, _ ->
 
             // Capture item Spinner
-            val itemSpinner = listSpinner.selectedItem.toString()
-
-            mViewModel.getFullEmployee(itemSpinner)
-
+            when (val itemSpinner = listSpinner.selectedItem) {
+                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
+                    Snackbar.LENGTH_LONG).show() }
+                else -> { mViewModel.getFullEmployee(itemSpinner.toString()) }
+            }
         }
         alertDialog.setNegativeButton(getString(R.string.todos)) { _, _ ->
-            mViewModel.getFullEmployee("")
+            when (listSpinner.selectedItem) {
+                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios), Snackbar.LENGTH_LONG).show() }
+                else -> { mViewModel.getFullEmployee("") }
+            }
+
         }
-        val dialog = alertDialog.create()
-        dialog.show()
+        alertDialog.create().show()
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

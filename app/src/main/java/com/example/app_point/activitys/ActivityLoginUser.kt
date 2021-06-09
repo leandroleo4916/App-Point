@@ -9,8 +9,6 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.utils.SecurityPreferences
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -45,16 +43,6 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    public override fun onStart() {
-        super.onStart()
-        val currentUser = auth?.currentUser
-        if(currentUser != null){
-            startActivity(Intent(this, MainActivity::class.java))
-            Toast.makeText(this, getString(R.string.bem_vindo_de_volta), Toast.LENGTH_SHORT).show()
-            finish()
-        }
-    }
-
     // Login automatic
     private fun verifyLoggedUser(){
 
@@ -74,14 +62,10 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
         val editTextUser = edittext_user
         val editTextPassword = edittext_senha
 
-        if (userLogin == "") {
-            editTextUser.error = "Digite Login"
-        }
-        else if (userPassword == "") {
-            editTextPassword.error = "Digite Senha"
-        }
-        else {
-            signIn(userLogin, userPassword)
+        when {
+            userLogin == "" -> { editTextUser.error = "Digite Login" }
+            userPassword == "" -> { editTextPassword.error = "Digite Senha" }
+            else -> { signIn(userLogin, userPassword) }
         }
     }
 
@@ -90,6 +74,9 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
             if (task.isSuccessful){
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()
+                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.NAME, "")
+                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.EMAIL, email)
+                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.PASSWORD, password)
                 finish()
             }else{
                 Toast.makeText(this, getString(R.string.erro_usuario), Toast.LENGTH_SHORT).show()

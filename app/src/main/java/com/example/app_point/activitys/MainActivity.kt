@@ -115,12 +115,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     // Observe List Points
     private fun observe(){
-        mViewModel.employeeFullList.observe(this, {
-            when (it.size) {
-                0 -> { Snackbar.make(constraintLayout, "Nenhum ponto foi adicionado", Snackbar.LENGTH_LONG).show() }
-                else -> { mPointAdapter.updateFullEmployee(it) }
+        Thread{
+            // Block Thread
+            Thread.sleep(1000)
+            runOnUiThread {
+                mViewModel.employeeFullList.observe(this, {
+                    when (it.size) {
+                        0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
+                            Snackbar.LENGTH_LONG).show() }
+                        else -> { mPointAdapter.updateFullEmployee(it) }
+                    }
+                })
+                progress.visibility = View.GONE
             }
-        })
+        }.start()
     }
 
     // clicks management
@@ -162,8 +170,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             mSecurityPreferences.removeString()
             finish()
         }
-        alertDialog.setNegativeButton("Não") { _, _ -> Toast.makeText(
-            this, getString(R.string.cancelado), Toast.LENGTH_SHORT).show()
+        alertDialog.setNegativeButton("Não") { _, _ -> Snackbar.make(
+            constraintLayout, getString(R.string.cancelado), Snackbar.LENGTH_LONG).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -189,7 +197,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         // Captures employee list and add to spinner
         val list = mListEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list!!)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
@@ -201,12 +209,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         alertDialog.setPositiveButton("Registrar") { _, _ ->
 
             // Captures item do Spinner
-            val itemSpinner = listSpinner.selectedItem.toString()
-            savePoint(itemSpinner, dateCurrent, hourCurrent)
-
+            when (val itemSpinner = listSpinner.selectedItem) {
+                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios), Snackbar.LENGTH_LONG).show() }
+                else -> { savePoint(itemSpinner.toString(), dateCurrent, hourCurrent) }
+            }
         }
         alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> Snackbar.make(
-            constraintLayout, "Cancelado", Snackbar.LENGTH_LONG).show()
+            constraintLayout, R.string.cancelado, Snackbar.LENGTH_LONG).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -214,11 +223,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     // Send data captured to Business
     private fun savePoint(itemSpinner: String, dateCurrent: String, horaCurrent: String){
-        when{
-            itemSpinner == "" -> {
-                Toast.makeText(this, getString(R.string.precisa_add_funcionarios), Toast.LENGTH_SHORT).show()
-            }
 
+        when{
             mBusinessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
                 Toast.makeText(this, getString(R.string.adicionado_sucesso), Toast.LENGTH_SHORT).show()
                 searchPoints()

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
+import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.entity.UserEntity
 import com.example.app_point.utils.SecurityPreferences
 import com.google.firebase.auth.FirebaseAuth
@@ -64,11 +65,22 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
             senha == "" -> editTextSenha.error == "Digite Senha"
             confirmeSenha == "" -> editTextConfirma.error == "Confirme Senha"
             senha != confirmeSenha -> Toast.makeText(this, getString(R.string.senhas_diferentes), Toast.LENGTH_SHORT).show()
+            else -> createEmailAndPassword(name, email, senha)
+        }
+    }
 
-            mBusinessUser.getUser(name, email, senha) -> {
+    private fun createEmailAndPassword(name: String, email: String, password: String){
+        auth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener(this) { task ->
+            if (task.isSuccessful){
                 Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
+                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.NAME, name)
+                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.EMAIL, email)
+                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.PASSWORD, password)
                 finish()
+
+            }else{
+                Toast.makeText(this, getString(R.string.nao_foi_possivel_cadastrar), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.model.AdapterPoints
 import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_perfil.edit_employee
 import java.text.SimpleDateFormat
@@ -31,11 +33,13 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     private lateinit var mBusinessEmployee: BusinessEmployee
     private lateinit var mPhoto: ConverterPhoto
     private val handler: Handler = Handler()
+    private lateinit var constraintLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+        constraintLayout = findViewById(R.id.container_perfil)
         mViewModelPoints = ViewModelProvider(this).get(ViewModelPoints::class.java)
         mPhoto = ConverterPhoto()
 
@@ -55,7 +59,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         mBusinessEmployee = BusinessEmployee(this)
         val listEmployee = mBusinessEmployee.consultEmployee()
 
-        if (listEmployee.isNotEmpty()) {
+        if (listEmployee!!.isNotEmpty()) {
             searchEmployee(listEmployee[0])
             viewModel(listEmployee[0])
         }
@@ -65,7 +69,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
                 Thread.sleep(1000)
                 runOnUiThread {
                     progress_points.visibility = View.GONE
-                    Toast.makeText(this, "Ainda não foi adicionado funcionários", Toast.LENGTH_LONG).show()
+                    Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
+                        Snackbar.LENGTH_LONG).show()
                 }
             }.start()
         }
@@ -111,8 +116,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             text_date_selected.text = dateSelected
         }
         DatePickerDialog(
-            this, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH)
-        ).show()
+            this, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH),
+            date.get(Calendar.DAY_OF_MONTH)).show()
     }
 
     private fun searchEmployee(nomeEmployee: String){
@@ -181,7 +186,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     private fun observer(){
         mViewModelPoints.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
+                0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
+                    Snackbar.LENGTH_LONG).show() }
                 else -> { mAdapterPoints.updateFullEmployee(it) }
             }
         })
@@ -205,7 +211,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         // Captures a list employee and add to spinner
         val list = mBusinessEmployee.consultEmployee()
         val listSpinner= inflateView.findViewById(R.id.spinner_employee) as Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list!!)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
@@ -217,13 +223,16 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         alertDialog.setPositiveButton("Ok") { _, _ ->
 
             // Captures item of Spinner
-            val itemSpinner = listSpinner.selectedItem.toString()
-            searchEmployee(itemSpinner)
-            viewModel(itemSpinner)
-
+            when (val itemSpinner = listSpinner.selectedItem) {
+                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
+                    Snackbar.LENGTH_LONG).show() }
+                else -> {
+                    searchEmployee(itemSpinner.toString())
+                    viewModel(itemSpinner.toString()) }
+            }
         }
         alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->
-            Toast.makeText(this, R.string.cancelado, Toast.LENGTH_SHORT).show()
+            Snackbar.make(constraintLayout, getString(R.string.cancelado), Snackbar.LENGTH_LONG).show()
         }
         val dialog = alertDialog.create()
         dialog.show()
