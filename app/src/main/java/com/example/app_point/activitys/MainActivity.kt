@@ -250,8 +250,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         menuOption.menuInflater.inflate(R.menu.menu, menuOption.menu)
         menuOption.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {
-                R.id.profile_admin_menu -> {}
-                R.id.employee_menu -> {}
+                R.id.employee_menu -> startActivity(Intent(this, ToolsActivity::class.java))
                 R.id.logout_app_menu -> dialogLogout()
             }
             true

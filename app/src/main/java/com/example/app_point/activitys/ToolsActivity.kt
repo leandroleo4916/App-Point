@@ -4,23 +4,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.model.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_tools.*
 
 class ToolsActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mEmployeeAdapter: EmployeeAdapter
     private lateinit var mViewModelEmployee: ViewModelEmployee
+    private lateinit var constraintLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tools)
 
         mViewModelEmployee = ViewModelProvider(this).get(ViewModelEmployee::class.java)
+        constraintLayout = findViewById(R.id.container_employee)
 
         val recycler = findViewById<RecyclerView>(R.id.recycler_employee)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -58,7 +62,8 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener {
     private fun observer(){
         mViewModelEmployee.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Toast.makeText(this, "Ainda não foi adicionado Pontos", Toast.LENGTH_LONG).show() }
+                0 -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
+                    Snackbar.LENGTH_LONG).show() }
                 else -> { mEmployeeAdapter.updateFullEmployee(it) }
             }
         })
