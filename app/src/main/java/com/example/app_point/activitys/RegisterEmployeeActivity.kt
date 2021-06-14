@@ -9,10 +9,12 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,10 +24,16 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
 import kotlinx.android.synthetic.main.activity_register_employee.image_back
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -34,6 +42,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mToByteArray: ConverterPhoto = ConverterPhoto()
+    private lateinit var database: FirebaseDatabase
+    private lateinit var storage: FirebaseStorage
     private val PERMISSION_CODE = 1000
     private val IMAGE_GALERY = 1
     private val IMAGE_CAPTURE_CODE = 1001
@@ -43,10 +53,52 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_employee)
 
+        database = Firebase.database
+        storage = Firebase.storage
+
         carregaInfoEmployee()
         inicialDate()
         listener()
     }
+
+    private fun writeNewEmployee(image: ImageView, name: String) {
+
+        val storageRef = storage.reference
+        val imageRef = storageRef.child(name)
+        val wayImageRef = storageRef.child("images/image.jpg")
+        imageRef.name == wayImageRef.name
+        imageRef.path == wayImageRef.path
+
+        val bitmap = (image.drawable as BitmapDrawable).bitmap
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val img = stream.toByteArray()
+
+        val uploadTask = imageRef.putBytes(img)
+        uploadTask
+            .addOnFailureListener {
+
+            }
+            .addOnSuccessListener {
+
+            }
+
+        /*
+        database = FirebaseDatabase.getInstance().getReference(ConstantsEmployee.EMPLOYEE.TABLE_NAME)
+
+        database.child(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME).setValue(employee)
+            .addOnSuccessListener {
+                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+                //startActivity(Intent(this, ProfileActivity::class.java))
+                //finish()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, getString(R.string.nao_foi_possivel_cadastrar), Toast.LENGTH_SHORT).show()
+            }
+
+         */
+    }
+
 
     private fun listener() {
         image_back.setOnClickListener(this)
@@ -226,13 +278,13 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
         if (resultCode == RESULT_OK) {
 
-            // Captura imagem da galeria
+            // Capture Image of the Gallery
             if (requestCode == IMAGE_GALERY) {
                 val selectedImage: Uri? = data!!.data
                 photo_employee.setImageURI(selectedImage)
             }
 
-            // Captura Imagem da câmera
+            // Capture Image of the Camera
             else if (resultCode == Activity.RESULT_OK) {
                 val extras = data!!.extras!!["data"] as Bitmap
                 photo_employee.setImageBitmap(extras)
@@ -260,38 +312,26 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val admissao = text_admissao.text.toString()
         val aniversario = text_aniversario.text.toString()
 
-        val edit_horario1 = horario1
-        val edit_horario2 = horario2
-        val edit_horario3 = horario3
-        val edit_horario4 = horario4
         val edit_name = edittext_username
         val edit_email = edittext_email
         val edit_cargo = edittext_cargo
         val edit_phone = edittext_phone
-        val edit_admissao = text_admissao
-        val edit_aniversario = text_aniversario
 
         when {
-            image == null -> Toast.makeText(this, "Tire uma foto!", Toast.LENGTH_SHORT).show()
-            hora1 == "" -> edit_horario1.error = "Horário Obrigatório"
-            hora2 == "" -> edit_horario2.error = "Horário Obrigatório"
-            hora3 == "" -> edit_horario3.error = "Horário Obrigatório"
-            hora4 == "" -> edit_horario4.error = "Horário Obrigatório"
-            name == "" -> edit_name.error = "Digite Nome"
-            email == "" -> edit_email.error = "Digite Email"
-            cargo == "" -> edit_cargo.error = "Digite Cargo"
-            phone == "" -> edit_phone.error = "Digite Telefone"
-            admissao == "" -> edit_admissao.error = "Digite Admissão"
-            aniversario == "" -> edit_aniversario.error = "Digite Aniversário"
+            name == "" -> edit_name.error = "Faltou mome"
+            email == "" -> edit_email.error = "Faltou email"
+            cargo == "" -> edit_cargo.error = "Faltou cargo"
+            phone == "" -> edit_phone.error = "Faltou telefone"
 
             mBusinessEmployee.registerEmployee(id, photo, hora1, hora2, hora3, hora4, name, cargo,
-                email, phone, admissao, aniversario) ->
-                { Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+                email, phone, admissao, aniversario) -> {
+                writeNewEmployee(image, name)
+                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, ProfileActivity::class.java))
                 finish()
             }
             else -> Toast.makeText(
-                this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT
+                this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_SHORT
             ).show()
         }
     }
