@@ -9,12 +9,10 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,18 +20,23 @@ import androidx.core.content.ContextCompat
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
+import com.example.app_point.entity.Employee
+import com.example.app_point.entity.EmployeeDados
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
 import kotlinx.android.synthetic.main.activity_register_employee.image_back
-import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -43,7 +46,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mToByteArray: ConverterPhoto = ConverterPhoto()
     private lateinit var database: FirebaseDatabase
-    private lateinit var storage: FirebaseStorage
+    private lateinit var fire: FirebaseFirestore
+    private lateinit var stor: FirebaseStorage
     private val PERMISSION_CODE = 1000
     private val IMAGE_GALERY = 1
     private val IMAGE_CAPTURE_CODE = 1001
@@ -54,35 +58,32 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_register_employee)
 
         database = Firebase.database
-        storage = Firebase.storage
+        stor = Firebase.storage
+        fire = Firebase.firestore
 
         carregaInfoEmployee()
         inicialDate()
         listener()
     }
 
-    private fun writeNewEmployee(image: ImageView, name: String) {
+    private fun writeNewEmployee(employee: Employee) {
 
-        val storageRef = storage.reference
-        val imageRef = storageRef.child(name)
-        val wayImageRef = storageRef.child("images/image.jpg")
-        imageRef.name == wayImageRef.name
-        imageRef.path == wayImageRef.path
+        val storageRef = stor.reference
+        val imageRef = storageRef.child(employee.nameEmployee)
+        val mImagesRef = storageRef.child("images/"+employee.nameEmployee)
+        imageRef.name == mImagesRef.name
+        imageRef.path == mImagesRef.path
 
-        val bitmap = (image.drawable as BitmapDrawable).bitmap
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        val img = stream.toByteArray()
-
-        val uploadTask = imageRef.putBytes(img)
+        /*
+        val uploadTask = mImagesRef.putBytes(employee.photo)
         uploadTask
             .addOnFailureListener {
-
+                Toast.makeText(this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_LONG).show()
             }
             .addOnSuccessListener {
-
+                save(employee, mImagesRef, it)
             }
-
+        */
         /*
         database = FirebaseDatabase.getInstance().getReference(ConstantsEmployee.EMPLOYEE.TABLE_NAME)
 
@@ -95,10 +96,46 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             .addOnFailureListener {
                 Toast.makeText(this, getString(R.string.nao_foi_possivel_cadastrar), Toast.LENGTH_SHORT).show()
             }
-
          */
     }
 
+    private fun save(employee: Employee, img: StorageReference, task: UploadTask.TaskSnapshot) {
+
+        val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(img.toString())
+        val st = storageRef.child(img.toString()).downloadUrl
+        val gsReference = stor.getReferenceFromUrl(img.toString())
+        //val firebase = Firebase.database.reference
+        gsReference.downloadUrl.addOnSuccessListener {
+            val it1 = it.isHierarchical
+        }
+        val up = task.uploadSessionUri
+
+        val dados = EmployeeDados("", employee.horario1, employee.horario2, employee.horario3,
+            employee.horario4, employee.nameEmployee, employee.emailEmployee, employee.cargoEmployee,
+            employee.phoneEmployee, employee.admissaoEmployee, employee.aniversarioEmployee)
+
+        fire.collection("funcionários")
+            .add(dados)
+            .addOnSuccessListener {
+
+                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_LONG).show()
+                startActivity(Intent(this, ToolsActivity::class.java))
+                finish()
+
+            }
+            .addOnFailureListener{
+                Toast.makeText(this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_LONG).show()
+            }
+
+        /*
+        firebase.child("funcionarios").child(employee.phoneEmployee)
+            .setValue(dados)
+            .addOnSuccessListener { Toast.makeText(this, R.string.cadastro_feito,
+                Toast.LENGTH_LONG).show() }
+            .addOnFailureListener { Toast.makeText(this, R.string.nao_foi_possivel_cadastrar,
+                Toast.LENGTH_LONG).show()
+            }*/
+    }
 
     private fun listener() {
         image_back.setOnClickListener(this)
@@ -247,7 +284,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     // Result permission
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -283,7 +320,6 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
                 val selectedImage: Uri? = data!!.data
                 photo_employee.setImageURI(selectedImage)
             }
-
             // Capture Image of the Camera
             else if (resultCode == Activity.RESULT_OK) {
                 val extras = data!!.extras!!["data"] as Bitmap
@@ -300,7 +336,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun saveEmployee(id: Int) {
         val image = photo_employee
-        val photo = mToByteArray.converterToByteArray(image)
+        val photo = mToByteArray.converterToByteArray(image!!)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()
@@ -323,16 +359,25 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             cargo == "" -> edit_cargo.error = "Faltou cargo"
             phone == "" -> edit_phone.error = "Faltou telefone"
 
-            mBusinessEmployee.registerEmployee(id, photo, hora1, hora2, hora3, hora4, name, cargo,
-                email, phone, admissao, aniversario) -> {
-                writeNewEmployee(image, name)
-                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, ProfileActivity::class.java))
-                finish()
-            }
-            else -> Toast.makeText(
-                this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_SHORT
-            ).show()
+            else -> saveTest (Employee(photo!!, hora1, hora2, hora3, hora4, name, email, cargo,
+                phone, admissao, aniversario))
         }
+    }
+
+    private fun saveTest (employee: Employee) {
+
+        fire.collection("funcionários")
+            .add(employee)
+            .addOnSuccessListener {
+
+                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_LONG).show()
+                startActivity(Intent(this, ToolsActivity::class.java))
+                finish()
+
+            }
+            .addOnFailureListener{
+                Toast.makeText(this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_LONG).show()
+            }
+
     }
 }

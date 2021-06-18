@@ -72,14 +72,14 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar_ferramentas"
         tools:ignore="ContentDescription" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_employee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+
+    <ImageView
+        android:id="@+id/img_test"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_ferramentas"
-        tools:ignore="MissingConstraints"
-        tools:listitem="@layout/recycler_employee" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_ferramentas" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

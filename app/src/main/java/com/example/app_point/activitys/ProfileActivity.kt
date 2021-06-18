@@ -125,7 +125,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         text_name_employee.text = dataEmployee!!.nameEmployee
         text_cargo_employee.text = dataEmployee.cargoEmployee
         val photo = dataEmployee.photo
-        val photoConverter = mPhoto.converterToBitmap(photo)
+        val photoConverter = mPhoto.converterToBitmap(photo!!)
         image_photo_employee.setImageBitmap(photoConverter)
 
         Thread {

@@ -8,14 +8,8 @@ import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.constants.ConstantsUser
-import com.example.app_point.entity.UserEntity
-import com.example.app_point.model.User
 import com.example.app_point.utils.SecurityPreferences
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.initialize
 import kotlinx.android.synthetic.main.register_user.*
 import kotlinx.android.synthetic.main.register_user.edittext_email
 import kotlinx.android.synthetic.main.register_user.edittext_username

@@ -41,7 +41,7 @@ class EmployeeAdapter(private val application: Application) : RecyclerView.Adapt
 
         holder.bind(fullEmployee.nameEmployee, fullEmployee.cargoEmployee, fullEmployee.admissaoEmployee)
 
-        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterToBitmap(it) }
+        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterToBitmap(it!!) }
         photoConvert.let { holder.bindPhoto(it) }
 
         val date = Calendar.getInstance().time
