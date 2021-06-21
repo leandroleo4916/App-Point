@@ -1,7 +1,5 @@
 package com.example.app_point.entity
 
-import java.io.ByteArrayInputStream
-
 data class EmployeeDados(
     val photo: String,
     val horario1: String,

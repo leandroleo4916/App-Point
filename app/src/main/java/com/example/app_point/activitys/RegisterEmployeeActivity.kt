@@ -114,7 +114,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             employee.horario4, employee.nameEmployee, employee.emailEmployee, employee.cargoEmployee,
             employee.phoneEmployee, employee.admissaoEmployee, employee.aniversarioEmployee)
 
-        fire.collection("funcionários")
+        fire.collection("funcionarios")
             .add(dados)
             .addOnSuccessListener {
 

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
-    private lateinit var  mPointAdapter: PointsAdapter
+    private lateinit var mPointAdapter: PointsAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
     private lateinit var mViewModel: ViewModel
     private lateinit var constraintLayout: ConstraintLayout
@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         mSecurityPreferences = SecurityPreferences(this)
         constraintLayout = findViewById(R.id.container)
 
-        // Recycler Implementation
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
         recycler.layoutManager = LinearLayoutManager(this)
         mPointAdapter = PointsAdapter(application)

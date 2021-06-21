@@ -7,9 +7,12 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
+import com.example.app_point.entity.EmployeeDados
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.local.QueryResult
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -17,7 +20,7 @@ import kotlin.collections.ArrayList
 @Suppress("UNREACHABLE_CODE")
 class EmployeeAdapter(private val application: Application) : RecyclerView.Adapter<EmployeeViewHolder>() {
 
-    private var mListFullEmployee: ArrayList<EmployeeEntity> = arrayListOf()
+    private var mListFullEmployee: ArrayList<EmployeeDados> = arrayListOf()
     //private var mListFullPoints: ArrayList<PointsEntity> = arrayListOf()
     private val mPoints: RepositoryPoint = RepositoryPoint(application)
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
@@ -38,10 +41,9 @@ class EmployeeAdapter(private val application: Application) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
 
         val fullEmployee = mListFullEmployee[position]
-
         holder.bind(fullEmployee.nameEmployee, fullEmployee.cargoEmployee, fullEmployee.admissaoEmployee)
 
-        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterToBitmap(it!!) }
+        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterStringToBitmap(it) }
         photoConvert.let { holder.bindPhoto(it) }
 
         val date = Calendar.getInstance().time
@@ -56,13 +58,14 @@ class EmployeeAdapter(private val application: Application) : RecyclerView.Adapt
         //return mListFullPoints.count()
     }
 
-    // Function inverter list
-    /*fun updateFullPoints(list: ArrayList<PointsEntity>){
-        mListFullPoints = list
-        notifyDataSetChanged()
-    }*/
-    fun updateFullEmployee(list: ArrayList<EmployeeEntity>){
-        mListFullEmployee = list
-        notifyDataSetChanged()
+    fun updateFullEmployee(list: QuerySnapshot){
+        for (element in list){
+            mListFullEmployee.add(EmployeeDados(element["photo"] as String, element["horario1"] as String,
+                element["horario2"] as String, element["horario3"] as String, element["horario4"] as String,
+                element["nameEmployee"] as String, element["emailEmployee"] as String, element["cargoEmployee"] as String,
+                element["phoneEmployee"] as String, element["admissaoEmployee"] as String, element["aniversarioEmployee"] as String))
+
+            notifyDataSetChanged()
+        }
     }
 }
