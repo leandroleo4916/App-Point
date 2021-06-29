@@ -19,6 +19,7 @@ Tecnológias Usadas
 =================
    * SQlite
    * MVVM
+   * Injeção de Dependência - Koin
    * API Firebase
    * Retrofit
    * Coroutines
