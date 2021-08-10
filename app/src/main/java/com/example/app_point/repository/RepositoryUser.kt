@@ -7,10 +7,9 @@ import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseUser
 import com.example.app_point.entity.UserEntity
 
-class ReposiitoryUser(context: Context) {
+class RepositoryUser(context: Context) {
 
     private val mDataBaseUser: DataBaseUser = DataBaseUser(context)
-
     fun getUser(name: String, email: String, password: String): Boolean {
 
         return try{
@@ -23,15 +22,12 @@ class ReposiitoryUser(context: Context) {
             db.insert(ConstantsUser.USER.TABLE_NAME, null, insertValues)
             true
 
-        } catch (e: Exception){
-            false
-        }
+        } catch (e: Exception){ false }
     }
 
     fun storeUser(email: String, senha: String): UserEntity? {
 
         var user: UserEntity? = null
-
         try {
             val cursor: Cursor
             val db = mDataBaseUser.readableDatabase

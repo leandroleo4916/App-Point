@@ -18,13 +18,11 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBusinessUser: BusinessUser
     private lateinit var mSecurityPreferences: SecurityPreferences
-    private var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        auth = Firebase.auth
         mBusinessUser = BusinessUser(this)
         mSecurityPreferences = SecurityPreferences(this)
         listener()
@@ -45,11 +43,10 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
 
     // Login automatic
     private fun verifyLoggedUser(){
-
         val email = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
         val password = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
 
-        if (email != "" && password != ""){
+        if (email.isNotBlank() && password.isNotBlank()){
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -65,23 +62,14 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
         when {
             userLogin == "" -> { editTextUser.error = "Digite Login" }
             userPassword == "" -> { editTextPassword.error = "Digite Senha" }
-            else -> { signIn(userLogin, userPassword) }
-        }
-    }
-
-    private fun signIn(email: String, password: String){
-        auth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener(this) { task ->
-            if (task.isSuccessful){
+            mBusinessUser.storeUser(userLogin, userPassword) -> {
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()
-                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.NAME, "")
-                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.EMAIL, email)
-                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.PASSWORD, password)
                 finish()
-            }else{
+            }
+            else -> {
                 Toast.makeText(this, getString(R.string.erro_usuario), Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 }

@@ -4,17 +4,23 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.app_point.entity.EmployeeDados
-import com.example.app_point.repository.RepositoryDataEmployee
-import com.google.firebase.firestore.QuerySnapshot
+import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.PointsEntity
+import com.example.app_point.repository.RepositoryEmployee
 
 class ViewModelEmployee (application: Application): AndroidViewModel(application) {
 
-    private val mEmployeeFullList = MutableLiveData<QuerySnapshot>()
-    val employeeFullList: LiveData<QuerySnapshot> = mEmployeeFullList
+    private var employee: RepositoryEmployee = RepositoryEmployee (application)
 
-    fun getFullEmployee(result: QuerySnapshot) {
-        mEmployeeFullList.value = result
+    private val mEmployeeFullList = MutableLiveData<ArrayList<EmployeeEntity>>()
+    val employeeFullList: LiveData<ArrayList<EmployeeEntity>> = mEmployeeFullList
+
+    fun getFullEmployee(){
+        mEmployeeFullList.value = employee.consultFullEmployee()
+    }
+
+    fun removeEmployee(name: String): Boolean{
+        return employee.removeEmployee(name)
     }
 
 }

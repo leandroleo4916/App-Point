@@ -2,13 +2,13 @@ package com.example.app_point.business
 
 import android.content.Context
 import com.example.app_point.constants.ConstantsUser
-import com.example.app_point.repository.ReposiitoryUser
+import com.example.app_point.repository.RepositoryUser
 import com.example.app_point.utils.SecurityPreferences
 import com.example.app_point.entity.UserEntity
 
 class BusinessUser(context: Context) {
 
-    private val mRepositoryUser: ReposiitoryUser = ReposiitoryUser(context)
+    private val mRepositoryUser: RepositoryUser = RepositoryUser(context)
     private val mSecurityPreferences: SecurityPreferences = SecurityPreferences(context)
 
     fun getUser(name: String, email: String, password: String): Boolean {
@@ -20,9 +20,7 @@ class BusinessUser(context: Context) {
 
                 true
             }
-            else -> {
-                false
-            }
+            else -> { false }
         }
     }
 
@@ -35,8 +33,6 @@ class BusinessUser(context: Context) {
             mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.PASSWORD, user.senha)
 
             true
-        } else {
-            false
-        }
+        } else { false }
     }
 }

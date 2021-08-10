@@ -6,12 +6,11 @@ import android.database.Cursor
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.EmployeeEntity
+import kotlinx.coroutines.selects.select
 
 class RepositoryEmployee(context: Context?) {
 
     private val mDataBaseEmployee: DataBaseEmployee = DataBaseEmployee(context)
-
-    // Funções faz consulta e grava diretamente no DB
 
     fun conditionEmployee(id: Int, photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
                           cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean{
@@ -26,8 +25,8 @@ class RepositoryEmployee(context: Context?) {
 
     }
 
-    fun getEmployee(photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
-                    cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean {
+    private fun getEmployee(photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
+                            cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean {
 
         return try{
             val db = mDataBaseEmployee.writableDatabase
@@ -260,8 +259,8 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    fun editEmployee(id: Int, photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
-                    cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean {
+    private fun editEmployee(id: Int, photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
+                             cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean {
 
         return try{
             val db = mDataBaseEmployee.writableDatabase
@@ -283,6 +282,21 @@ class RepositoryEmployee(context: Context?) {
             contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, aniversario)
 
             db.update(ConstantsEmployee.EMPLOYEE.TABLE_NAME, contentValues, projection, args)
+            true
+
+        } catch (e: Exception){
+            false
+        }
+    }
+
+    fun removeEmployee(name: String): Boolean {
+
+        return try{
+            val db = mDataBaseEmployee.writableDatabase
+            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
+            val args = arrayOf(name)
+
+            db.delete(ConstantsEmployee.EMPLOYEE.TABLE_NAME, selection, args)
             true
 
         } catch (e: Exception){

@@ -7,9 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
-import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.utils.SecurityPreferences
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.register_user.*
 import kotlinx.android.synthetic.main.register_user.edittext_email
 import kotlinx.android.synthetic.main.register_user.edittext_username
@@ -19,13 +17,11 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBusinessUser: BusinessUser
     private lateinit var mSecurityPreferences: SecurityPreferences
-    private var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.register_user)
 
-        auth = FirebaseAuth.getInstance()
         mBusinessUser = BusinessUser(this)
         mSecurityPreferences = SecurityPreferences(this)
         listener()
@@ -61,24 +57,23 @@ class RegisterUser : AppCompatActivity(), View.OnClickListener {
             email == "" -> editTextEmail.error = "Digite Email"
             senha == "" -> editTextSenha.error == "Digite Senha"
             confirmeSenha == "" -> editTextConfirma.error == "Confirme Senha"
-            senha != confirmeSenha -> Toast.makeText(this, getString(R.string.senhas_diferentes), Toast.LENGTH_SHORT).show()
+            senha != confirmeSenha -> Toast.makeText(this, getString(R.string.senhas_diferentes),
+                Toast.LENGTH_SHORT).show()
             else -> createEmailAndPassword(name, email, senha)
         }
     }
 
     private fun createEmailAndPassword(name: String, email: String, password: String){
-        auth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener(this) { task ->
-            if (task.isSuccessful){
-                Toast.makeText(this, getString(R.string.cadastro_feito), Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.NAME, name)
-                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.EMAIL, email)
-                mSecurityPreferences.storeString(ConstantsUser.USER.COLUNAS.PASSWORD, password)
-                finish()
 
-            }else{
-                Toast.makeText(this, getString(R.string.nao_foi_possivel_cadastrar), Toast.LENGTH_SHORT).show()
-            }
+        if (mBusinessUser.getUser(name, email, password)){
+            startActivity(Intent(this, MainActivity::class.java))
+            Toast.makeText(this, getString(R.string.bem_vindo),
+                Toast.LENGTH_SHORT).show()
+            finish()
+        }
+        else {
+            Toast.makeText(this, getString(R.string.nao_foi_possivel_cadastrar),
+                Toast.LENGTH_SHORT).show()
         }
     }
 }

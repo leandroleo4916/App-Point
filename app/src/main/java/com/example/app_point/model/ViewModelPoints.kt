@@ -15,10 +15,7 @@ class ViewModelPoints (application: Application): AndroidViewModel(application) 
     val employeeFullList: LiveData<ArrayList<PointsEntity>> = mEmployeeFullList
 
     fun getFullEmployee(employee: String, date: String){
-        if (employee == ""){
-            mEmployeeFullList.value = mSearchRecycler.fullPoints()
-        }else {
-            mEmployeeFullList.value = mSearchRecycler.fullPointsToName(employee, date)
-        }
+        if (employee == ""){ mEmployeeFullList.value = mSearchRecycler.fullPoints() }
+        else { mEmployeeFullList.value = mSearchRecycler.fullPointsToName(employee, date) }
     }
 }

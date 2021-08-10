@@ -1,6 +1,7 @@
 package com.example.app_point.model
 
 import android.graphics.Bitmap
+import android.icu.util.Calendar
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,13 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.PointsEntity
 import com.example.app_point.utils.ConverterHours
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class EmployeeViewHolderr(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val mAddHours: ConverterHours = ConverterHours()
 
-    // Add item the position of the Layout
     fun bind(employee: String, cargo: String, admission: String){
+
         val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_employee)
         textEmployee.text = employee
         val textCargo = itemView.findViewById<TextView>(R.id.text_cargo)
@@ -23,56 +27,52 @@ class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textadmission.text = admission
     }
 
-    /*fun bindData(data: String){
-        val textData = itemView.findViewById<TextView>(R.id.text_data)
-        textData.text = data
-    }*/
+    fun bindData(date: String){
 
-    fun bindHora(fullEmployee: PointsEntity, horarioEmployee: String ){
+        val calendar = Calendar.getInstance().time
+        val dateCalendar = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
+        val vDate = dateCalendar.format(calendar)
+        val textData = itemView.findViewById<TextView>(R.id.text_data)
+
+        when (date) {
+            vDate -> { }
+            else -> { textData.text = date }
+        }
+    }
+
+    fun bindHora(points: ArrayList<PointsEntity>){
 
         val textHora1 = itemView.findViewById<TextView>(R.id.text_hora1)
         val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
         val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
         val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
-        //val imageBack = itemView.findViewById<ImageView>(R.id.icon_image_back)
 
-        //val minutesCurrent = mAddHours.converterHoursInMinutes(hoursCurrent)
-        //val minutes = mAddHours.converterHoursInMinutes(hours)
+        //val minutesCurrent = mAddHours.converterHoursInMinutes(points[0].hora1!!)
+        //val minutes = mAddHours.converterHoursInMinutes(hora1)
 
         when {
-            fullEmployee.hora1 == null -> {
-                textHora1.text = "--:--"
-                textHora2.text = "--:--"
-                textHora3.text = "--:--"
-                textHora4.text = "--:--"
+            points.size == 0 -> { }
+            points[0].hora2 == null -> {
+                textHora1.text = points[0].hora1
             }
-            fullEmployee.hora2 == null -> {
-                textHora1.text = fullEmployee.hora1
-                textHora2.text = "--:--"
-                textHora3.text = "--:--"
-                textHora4.text = "--:--"
+            points[0].hora3 == null -> {
+                textHora1.text = points[0].hora1
+                textHora2.text = points[0].hora2
             }
-            fullEmployee.hora3 == null -> {
-                textHora1.text = fullEmployee.hora1
-                textHora2.text = fullEmployee.hora2
-                textHora3.text = "--:--"
-                textHora4.text = "--:--"
-            }
-            fullEmployee.hora4 == null -> {
-                textHora1.text = fullEmployee.hora1
-                textHora2.text = fullEmployee.hora2
-                textHora3.text = fullEmployee.hora3
-                textHora4.text = "--:--"
+            points[0].hora4 == null -> {
+                textHora1.text = points[0].hora1
+                textHora2.text = points[0].hora2
+                textHora3.text = points[0].hora3
             }
             else -> {
-                textHora1.text = fullEmployee.hora1
-                textHora2.text = fullEmployee.hora2
-                textHora3.text = fullEmployee.hora3
-                textHora4.text = fullEmployee.hora4
+                textHora1.text = points[0].hora1
+                textHora2.text = points[0].hora2
+                textHora3.text = points[0].hora3
+                textHora4.text = points[0].hora4
             }
         }
-
-        /*when {
+        /*
+        when {
             minutesCurrent < minutes -> {
                 imageBack.setImageResource(R.color.colorGreen)
             }
@@ -82,12 +82,12 @@ class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             else -> {
                 imageBack.setImageResource(R.color.colorYellow)
             }
-        }*/
+        }
+         */
     }
 
     fun bindPhoto(image: Bitmap){
         val imageView = itemView.findViewById<ImageView>(R.id.icon_image_perfil)
         imageView.setImageBitmap(image)
-
     }
 }

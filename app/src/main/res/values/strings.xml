@@ -65,4 +65,6 @@
     <string name="filtrar">Filtrar</string>
     <string name="todos">Todos</string>
     <string name="nenhum_ponto_registrado">Nenhum ponto registrado!</string>
+    <string name="removido_sucesso">removido com suscesso!</string>
+    <string name="nao_foi_possivel_remover">Não foi possível remover!</string>
 </resources>

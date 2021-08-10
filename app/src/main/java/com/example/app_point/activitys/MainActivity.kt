@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         mSecurityPreferences = SecurityPreferences(this)
         constraintLayout = findViewById(R.id.container)
 
+        // Recycler Implementation
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
         recycler.layoutManager = LinearLayoutManager(this)
         mPointAdapter = PointsAdapter(application)
@@ -76,15 +77,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         icon8.startAnimation(animation)
     }
 
-    // Shows admin name + greeting implement
-    @SuppressLint("SimpleDateFormat")
     private fun salutation(){
 
         val extras = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
         if (extras != "") {
             text_name_user.text = extras
         }
-        
+
         val date = Calendar.getInstance().time
         val hora = SimpleDateFormat("HH:mm")
         val horaCurrent = hora.format(date)
@@ -92,10 +91,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         val clockSixMorning = "06:00"
         val clockTwelveMorning = "12:00"
         val clockSixEvening = "18:00"
-        
+
         when {
-            horaCurrent > clockSixMorning && horaCurrent < clockTwelveMorning -> { text_ola.text = getString(R.string.bom_dia) }
-            horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> { text_ola.text = getString(R.string.boa_tarde) }
+            horaCurrent > clockSixMorning && horaCurrent < clockTwelveMorning -> {
+                text_ola.text = getString(R.string.bom_dia) }
+            horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> {
+                text_ola.text = getString(R.string.boa_tarde) }
             else -> text_ola.text = getString(R.string.boa_noite)
         }
     }
@@ -209,7 +210,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
             // Captures item do Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
-                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios), Snackbar.LENGTH_LONG).show() }
+                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
+                    Snackbar.LENGTH_LONG).show() }
                 else -> { savePoint(itemSpinner.toString(), dateCurrent, hourCurrent) }
             }
         }
@@ -225,11 +227,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
         when{
             mBusinessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
-                Toast.makeText(this, getString(R.string.adicionado_sucesso), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.adicionado_sucesso),
+                    Toast.LENGTH_SHORT).show()
                 searchPoints()
             }
             else -> {
-                Toast.makeText(this, getString(R.string.nao_possivel_add_ponto), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.nao_possivel_add_ponto),
+                    Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -249,7 +253,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         menuOption.menuInflater.inflate(R.menu.menu, menuOption.menu)
         menuOption.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {
-                R.id.employee_menu -> startActivity(Intent(this, ToolsActivity::class.java))
+                R.id.employee_menu -> startActivity(Intent(this,
+                    ToolsActivity::class.java))
                 R.id.logout_app_menu -> dialogLogout()
             }
             true

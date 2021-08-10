@@ -1,71 +1,163 @@
 package com.example.app_point.model
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.icu.util.Calendar
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.EmployeeDados
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.PointsEntity
+import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.utils.ConverterHours
 import com.example.app_point.utils.ConverterPhoto
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.local.QueryResult
+import kotlinx.android.synthetic.main.recycler_employee.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Suppress("UNREACHABLE_CODE")
-class EmployeeAdapter(private val application: Application) : RecyclerView.Adapter<EmployeeViewHolder>() {
+class EmployeeAdapter(application: Application, private val listener: OnItemClickRecycler):
+    RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
 
-    private var mListFullEmployee: ArrayList<EmployeeDados> = arrayListOf()
-    //private var mListFullPoints: ArrayList<PointsEntity> = arrayListOf()
-    private val mPoints: RepositoryPoint = RepositoryPoint(application)
+    private var mListFullEmployee: ArrayList<EmployeeEntity> = arrayListOf()
+    private var dateCurrent: String = ""
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
+    private var searchPoints: RepositoryPoint = RepositoryPoint (application)
 
-    // Create the list of the layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_employee, parent, false)
 
-        // Add animation to item RecyclerView
-        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
-        item.startAnimation(animation)
-
         return EmployeeViewHolder(item)
     }
 
-    // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
 
         val fullEmployee = mListFullEmployee[position]
+        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterToBitmap(it) }
+
         holder.bind(fullEmployee.nameEmployee, fullEmployee.cargoEmployee, fullEmployee.admissaoEmployee)
+        holder.bindPhoto(photoConvert)
 
-        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterStringToBitmap(it) }
-        photoConvert.let { holder.bindPhoto(it) }
+        val points = searchPoints.fullPointsToName(fullEmployee.nameEmployee, dateCurrent)
+        holder.bindData(dateCurrent)
+        holder.bindHora(points)
+    }
 
-        val date = Calendar.getInstance().time
-        val dateTime = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
-        val dateCurrent = dateTime.format(date)
-        val fullPoints = mPoints.selectFullPoints(fullEmployee.nameEmployee, dateCurrent)
-        fullPoints?.let { holder.bindHora(it, "") }
+    inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        //private val mAddHours: ConverterHours = ConverterHours()
+
+        fun bind(employee: String, cargo: String, admission: String){
+
+            val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_employee)
+            textEmployee.text = employee
+            val textCargo = itemView.findViewById<TextView>(R.id.text_cargo)
+            textCargo.text = cargo
+            val textadmission = itemView.findViewById<TextView>(R.id.text_data_admission)
+            textadmission.text = admission
+        }
+
+        fun bindData(date: String){
+
+            val calendar = Calendar.getInstance().time
+            val dateCalendar = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
+            val vDate = dateCalendar.format(calendar)
+            val textData = itemView.findViewById<TextView>(R.id.text_data)
+
+            when (date) {
+                vDate -> { }
+                else -> { textData.text = date }
+            }
+        }
+
+        fun bindHora(points: ArrayList<PointsEntity>){
+
+            val textHora1 = itemView.findViewById<TextView>(R.id.text_hora1)
+            val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
+            val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
+            val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
+
+            //val minutesCurrent = mAddHours.converterHoursInMinutes(points[0].hora1!!)
+            //val minutes = mAddHours.converterHoursInMinutes(hora1)
+
+            when {
+                points.size == 0 -> { }
+                points[0].hora2 == null -> {
+                    textHora1.text = points[0].hora1
+                }
+                points[0].hora3 == null -> {
+                    textHora1.text = points[0].hora1
+                    textHora2.text = points[0].hora2
+                }
+                points[0].hora4 == null -> {
+                    textHora1.text = points[0].hora1
+                    textHora2.text = points[0].hora2
+                    textHora3.text = points[0].hora3
+                }
+                else -> {
+                    textHora1.text = points[0].hora1
+                    textHora2.text = points[0].hora2
+                    textHora3.text = points[0].hora3
+                    textHora4.text = points[0].hora4
+                }
+            }
+            /*
+            when {
+                minutesCurrent < minutes -> {
+                    imageBack.setImageResource(R.color.colorGreen)
+                }
+                minutesCurrent > minutes + 15 -> {
+                    imageBack.setImageResource(R.color.colorRed)
+                }
+                else -> {
+                    imageBack.setImageResource(R.color.colorYellow)
+                }
+            }
+             */
+        }
+
+        fun bindPhoto(image: Bitmap){
+            val imageView = itemView.findViewById<ImageView>(R.id.icon_image_perfil)
+            imageView.setImageBitmap(image)
+        }
+
+        init {
+            itemView.edit_employee.setOnClickListener(this)
+            itemView.remove_employee.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            val position = bindingAdapterPosition
+            when(view){
+                itemView.remove_employee -> listener.clickRemove(position)
+                itemView.edit_employee -> listener.clickEdit(position)
+                itemView.back -> {}
+                itemView.next -> {}
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return mListFullEmployee.count()
-        //return mListFullPoints.count()
     }
 
-    fun updateFullEmployee(list: QuerySnapshot){
-        for (element in list){
-            mListFullEmployee.add(EmployeeDados(element["photo"] as String, element["horario1"] as String,
-                element["horario2"] as String, element["horario3"] as String, element["horario4"] as String,
-                element["nameEmployee"] as String, element["emailEmployee"] as String, element["cargoEmployee"] as String,
-                element["phoneEmployee"] as String, element["admissaoEmployee"] as String, element["aniversarioEmployee"] as String))
+    fun updateDateCurrent(date: String){
+        dateCurrent = date
+    }
 
-            notifyDataSetChanged()
-        }
+    fun updateFullEmployee(list: ArrayList<EmployeeEntity>){
+        mListFullEmployee = list
+        notifyDataSetChanged()
     }
 }

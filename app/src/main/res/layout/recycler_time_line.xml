@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="@+id/text_date_time_line" />
 
     <ImageView
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar1"
         android:layout_width="50dp"
         android:layout_height="24dp"
         android:layout_marginStart="4dp"
@@ -74,9 +74,9 @@
         android:layout_height="24dp"
         android:layout_marginStart="4dp"
         android:background="@drawable/back_fundo"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintStart_toEndOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
+        app:layout_constraintStart_toEndOf="@+id/toolbar1"
+        app:layout_constraintTop_toTopOf="@+id/toolbar1"
         app:layout_constraintVertical_bias="0.516"
         tools:ignore="ContentDescription,MissingConstraints" />
 
@@ -111,10 +111,10 @@
         android:text="--:--"
         android:textColor="@android:color/white"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar1"
+        app:layout_constraintStart_toStartOf="@+id/toolbar1"
+        app:layout_constraintTop_toTopOf="@+id/toolbar1"
         app:layout_constraintVertical_bias="0.4" />
 
     <TextView

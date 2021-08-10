@@ -45,9 +45,6 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
     private val mToByteArray: ConverterPhoto = ConverterPhoto()
-    private lateinit var database: FirebaseDatabase
-    private lateinit var fire: FirebaseFirestore
-    private lateinit var stor: FirebaseStorage
     private val PERMISSION_CODE = 1000
     private val IMAGE_GALERY = 1
     private val IMAGE_CAPTURE_CODE = 1001
@@ -57,84 +54,9 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_employee)
 
-        database = Firebase.database
-        stor = Firebase.storage
-        fire = Firebase.firestore
-
         carregaInfoEmployee()
         inicialDate()
         listener()
-    }
-
-    private fun writeNewEmployee(employee: Employee) {
-
-        val storageRef = stor.reference
-        val imageRef = storageRef.child(employee.nameEmployee)
-        val mImagesRef = storageRef.child("images/"+employee.nameEmployee)
-        imageRef.name == mImagesRef.name
-        imageRef.path == mImagesRef.path
-
-        /*
-        val uploadTask = mImagesRef.putBytes(employee.photo)
-        uploadTask
-            .addOnFailureListener {
-                Toast.makeText(this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_LONG).show()
-            }
-            .addOnSuccessListener {
-                save(employee, mImagesRef, it)
-            }
-        */
-        /*
-        database = FirebaseDatabase.getInstance().getReference(ConstantsEmployee.EMPLOYEE.TABLE_NAME)
-
-        database.child(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME).setValue(employee)
-            .addOnSuccessListener {
-                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
-                //startActivity(Intent(this, ProfileActivity::class.java))
-                //finish()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, getString(R.string.nao_foi_possivel_cadastrar), Toast.LENGTH_SHORT).show()
-            }
-         */
-    }
-
-    private fun save(employee: Employee, img: StorageReference, task: UploadTask.TaskSnapshot) {
-
-        val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(img.toString())
-        val st = storageRef.child(img.toString()).downloadUrl
-        val gsReference = stor.getReferenceFromUrl(img.toString())
-        //val firebase = Firebase.database.reference
-        gsReference.downloadUrl.addOnSuccessListener {
-            val it1 = it.isHierarchical
-        }
-        val up = task.uploadSessionUri
-
-        val dados = EmployeeDados("", employee.horario1, employee.horario2, employee.horario3,
-            employee.horario4, employee.nameEmployee, employee.emailEmployee, employee.cargoEmployee,
-            employee.phoneEmployee, employee.admissaoEmployee, employee.aniversarioEmployee)
-
-        fire.collection("funcionarios")
-            .add(dados)
-            .addOnSuccessListener {
-
-                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, ToolsActivity::class.java))
-                finish()
-
-            }
-            .addOnFailureListener{
-                Toast.makeText(this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_LONG).show()
-            }
-
-        /*
-        firebase.child("funcionarios").child(employee.phoneEmployee)
-            .setValue(dados)
-            .addOnSuccessListener { Toast.makeText(this, R.string.cadastro_feito,
-                Toast.LENGTH_LONG).show() }
-            .addOnFailureListener { Toast.makeText(this, R.string.nao_foi_possivel_cadastrar,
-                Toast.LENGTH_LONG).show()
-            }*/
     }
 
     private fun listener() {
@@ -284,7 +206,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     // Result permission
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -315,12 +237,13 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
         if (resultCode == RESULT_OK) {
 
-            // Capture Image of the Gallery
+            // Captura imagem da galeria
             if (requestCode == IMAGE_GALERY) {
                 val selectedImage: Uri? = data!!.data
                 photo_employee.setImageURI(selectedImage)
             }
-            // Capture Image of the Camera
+
+            // Captura Imagem da câmera
             else if (resultCode == Activity.RESULT_OK) {
                 val extras = data!!.extras!!["data"] as Bitmap
                 photo_employee.setImageBitmap(extras)
@@ -336,7 +259,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun saveEmployee(id: Int) {
         val image = photo_employee
-        val photo = mToByteArray.converterToByteArray(image!!)
+        val photo = mToByteArray.converterToByteArray(image)
         val hora1 = horario1.text.toString()
         val hora2 = horario2.text.toString()
         val hora3 = horario3.text.toString()
@@ -348,36 +271,39 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val admissao = text_admissao.text.toString()
         val aniversario = text_aniversario.text.toString()
 
+        val edit_horario1 = horario1
+        val edit_horario2 = horario2
+        val edit_horario3 = horario3
+        val edit_horario4 = horario4
         val edit_name = edittext_username
         val edit_email = edittext_email
         val edit_cargo = edittext_cargo
         val edit_phone = edittext_phone
+        val edit_admissao = text_admissao
+        val edit_aniversario = text_aniversario
 
         when {
-            name == "" -> edit_name.error = "Faltou mome"
-            email == "" -> edit_email.error = "Faltou email"
-            cargo == "" -> edit_cargo.error = "Faltou cargo"
-            phone == "" -> edit_phone.error = "Faltou telefone"
+            image == null -> Toast.makeText(this, "Tire uma foto!", Toast.LENGTH_SHORT).show()
+            hora1 == "" -> edit_horario1.error = "Horário Obrigatório"
+            hora2 == "" -> edit_horario2.error = "Horário Obrigatório"
+            hora3 == "" -> edit_horario3.error = "Horário Obrigatório"
+            hora4 == "" -> edit_horario4.error = "Horário Obrigatório"
+            name == "" -> edit_name.error = "Digite Nome"
+            email == "" -> edit_email.error = "Digite Email"
+            cargo == "" -> edit_cargo.error = "Digite Cargo"
+            phone == "" -> edit_phone.error = "Digite Telefone"
+            admissao == "" -> edit_admissao.error = "Digite Admissão"
+            aniversario == "" -> edit_aniversario.error = "Digite Aniversário"
 
-            else -> saveTest (Employee(photo!!, hora1, hora2, hora3, hora4, name, email, cargo,
-                phone, admissao, aniversario))
-        }
-    }
-
-    private fun saveTest (employee: Employee) {
-
-        fire.collection("funcionários")
-            .add(employee)
-            .addOnSuccessListener {
-
-                Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, ToolsActivity::class.java))
+            mBusinessEmployee.registerEmployee(id, photo, hora1, hora2, hora3, hora4, name, cargo,
+                email, phone, admissao, aniversario) ->
+            { Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, ProfileActivity::class.java))
                 finish()
-
             }
-            .addOnFailureListener{
-                Toast.makeText(this, R.string.nao_foi_possivel_cadastrar, Toast.LENGTH_LONG).show()
-            }
-
+            else -> Toast.makeText(
+                this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
