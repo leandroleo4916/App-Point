@@ -19,8 +19,12 @@ class BusinessEmployee(context: Context) {
         return mRepositoryEmployee.employeeList()
     }
 
-    fun consultDadosEmployee(nome: String): EmployeeEntity?{
+    fun consultDataEmployee(nome: String): EmployeeEntity?{
         return mRepositoryEmployee.consultDataEmployee(nome)
+    }
+
+    fun consultIdEmployee(nome: String): Int{
+        return mRepositoryEmployee.consultIdEmployee(nome)
     }
 
     fun consultEmployeeWithId(id: Int): EmployeeEntity?{

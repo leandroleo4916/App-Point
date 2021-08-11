@@ -42,14 +42,8 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     }
 
     private fun searchPoints(){
-        Thread{
-            // Block Thread
-            Thread.sleep(500)
-            runOnUiThread {
-                mViewModel.getFullEmployee("")
-                progress_ponto.visibility = View.GONE
-            }
-        }.start()
+        mViewModel.getFullEmployee("")
+        progress_ponto.visibility = View.GONE
     }
 
     private fun observe(){

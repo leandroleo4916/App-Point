@@ -201,6 +201,39 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
+    fun consultIdEmployee(nome: String): Int {
+
+        val id = 0
+        try {
+            val db = mDataBaseEmployee.readableDatabase
+            val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.ID)
+
+            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
+            val args = arrayOf(nome)
+
+            val cursor = db.query(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
+                projection,
+                selection,
+                args,
+                null,
+                null,
+                null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                cursor.moveToNext()
+                return cursor.getInt(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+
+            }
+            cursor?.close()
+            return id
+
+        } catch (e: Exception) {
+            return id
+        }
+    }
+
     fun consultDadosEmployeeId(id: Int): EmployeeEntity? {
 
         var listDados: EmployeeEntity? = null

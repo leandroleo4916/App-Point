@@ -64,15 +64,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             viewModel(listEmployee[0])
         }
         else {
-            Thread{
-                // Block Thread
-                Thread.sleep(1000)
-                runOnUiThread {
-                    progress_points.visibility = View.GONE
-                    Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
-                        Snackbar.LENGTH_LONG).show()
-                }
-            }.start()
+            progress_points.visibility = View.GONE
+            Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
+                Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -121,84 +115,72 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun searchEmployee(nomeEmployee: String){
-        val dataEmployee = mBusinessEmployee.consultDadosEmployee(nomeEmployee)
+        val dataEmployee = mBusinessEmployee.consultDataEmployee(nomeEmployee)
         text_name_employee.text = dataEmployee!!.nameEmployee
         text_cargo_employee.text = dataEmployee.cargoEmployee
         val photo = dataEmployee.photo
         val photoConverter = mPhoto.converterToBitmap(photo!!)
         image_photo_employee.setImageBitmap(photoConverter)
 
-        Thread {
-            val numFicticio1 = 92
-            var pStatus = 0
+        val numMock1 = 92
+        var pStatus1 = 0
 
-            while (pStatus <= numFicticio1) {
-                handler.post {
-                    image_toolbar_hrs.progress = pStatus
-                    edit_hrs_feitas.text = pStatus.toString()
-                }
-                try { Thread.sleep(20) }
-                catch (e: InterruptedException) { e.printStackTrace() }
-                pStatus++
+        while (pStatus1 <= numMock1) {
+            handler.post {
+                image_toolbar_hrs.progress = pStatus1
+                edit_hrs_feitas.text = pStatus1.toString()
             }
-        }.start()
+            try { Thread.sleep(20) }
+            catch (e: InterruptedException) { e.printStackTrace() }
+            pStatus1++
+        }
 
-        Thread {
-            val numFicticio2 = 23
-            var pStatus = 0
+        val numMock2 = 23
+        var pStatus2 = 0
 
-            while (pStatus <= numFicticio2) {
-                handler.post {
-                    image_toolbar_.progress = pStatus
-                    edit_hrs_extras.text = pStatus.toString()
-                }
-                try { Thread.sleep(20) }
-                catch (e: InterruptedException) { e.printStackTrace() }
-                pStatus++
+        while (pStatus2 <= numMock2) {
+            handler.post {
+                image_toolbar_.progress = pStatus2
+                edit_hrs_extras.text = pStatus2.toString()
             }
-        }.start()
+            try { Thread.sleep(20) }
+            catch (e: InterruptedException) { e.printStackTrace() }
+            pStatus2++
+        }
     }
 
     private fun viewModelSelected(name: String, date: String){
         progress_points.visibility = View.VISIBLE
-        Thread{
-            // Block Thread
-            Thread.sleep(1000)
-            runOnUiThread {
-                mViewModelPoints.getFullEmployee(name, date)
-                progress_points.visibility = View.GONE
-            }
-        }.start()
+        mViewModelPoints.getFullEmployee(name, date)
     }
 
     private fun viewModel(name: String){
-        Thread{
-            // Block Thread
-            Thread.sleep(1000)
-            runOnUiThread {
-                mViewModelPoints.getFullEmployee(name, "")
-                text_date_selected.text = getString(R.string.todos)
-                progress_points.visibility = View.GONE
-            }
-        }.start()
+        mViewModelPoints.getFullEmployee(name, "")
+        text_date_selected.text = getString(R.string.todos)
+        progress_points.visibility = View.GONE
     }
 
     private fun observer(){
         mViewModelPoints.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
-                    Snackbar.LENGTH_LONG).show() }
-                else -> { mAdapterPoints.updateFullEmployee(it) }
+                    Snackbar.LENGTH_LONG).show()
+                    progress_points.visibility = View.GONE
+                }
+                else -> {
+                    mAdapterPoints.updateFullEmployee(it)
+                    progress_points.visibility = View.GONE
+                }
             }
         })
     }
 
     // Captures id employee and send to Activity Register to edition
     private fun editEmployee(employee: String){
-        val id: EmployeeEntity = mBusinessEmployee.consultDadosEmployee(employee)!!
+        val id = mBusinessEmployee.consultIdEmployee(employee)
         val intent = Intent(this, RegisterEmployeeActivity::class.java)
 
-        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id.id)
+        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
         startActivity(intent)
         finish()
     }

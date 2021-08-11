@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private fun salutation(){
 
         val extras = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
-        if (extras != "") {
+        if (extras.isNotBlank()) {
             text_name_user.text = extras
         }
 
@@ -97,38 +97,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
                 text_ola.text = getString(R.string.bom_dia) }
             horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> {
                 text_ola.text = getString(R.string.boa_tarde) }
-            else -> text_ola.text = getString(R.string.boa_noite)
+            else ->
+                text_ola.text = getString(R.string.boa_noite)
         }
     }
 
-    // Search Points DB
     private fun searchPoints(){
-        Thread{
-            // Block Thread
-            Thread.sleep(1000)
-            runOnUiThread {
-                mViewModel.getFullEmployee("")
-                progress.visibility = View.GONE
-            }
-        }.start()
+
+        mViewModel.getFullEmployee("")
+        progress.visibility = View.GONE
+
     }
 
-    // Observe List Points
     private fun observe(){
-        Thread{
-            // Block Thread
-            Thread.sleep(1000)
-            runOnUiThread {
-                mViewModel.employeeFullList.observe(this, {
-                    when (it.size) {
-                        0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
-                            Snackbar.LENGTH_LONG).show() }
-                        else -> { mPointAdapter.updateFullEmployee(it) }
-                    }
-                })
-                progress.visibility = View.GONE
+
+        mViewModel.employeeFullList.observe(this, {
+            when (it.size) {
+                0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
+                    Snackbar.LENGTH_LONG).show() }
+                else -> { mPointAdapter.updateFullEmployee(it) }
             }
-        }.start()
+        })
     }
 
     // clicks management

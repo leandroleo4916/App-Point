@@ -11,17 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
+import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
-import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.*
-import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_tools.*
 import kotlinx.android.synthetic.main.recycler_employee.*
 import kotlinx.android.synthetic.main.recycler_employee.view.*
@@ -33,6 +27,7 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
     private lateinit var mEmployeeAdapter: EmployeeAdapter
     private lateinit var mViewModelEmployee: ViewModelEmployee
     private lateinit var constraintLayout: ConstraintLayout
+    private lateinit var businessEmployee: BusinessEmployee
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +35,7 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
 
         mViewModelEmployee = ViewModelProvider(this).get(ViewModelEmployee::class.java)
         constraintLayout = findViewById(R.id.container_employee)
+        businessEmployee = BusinessEmployee(this)
 
         val recycler = findViewById<RecyclerView>(R.id.recycler_employee)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -70,10 +66,13 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
         mViewModelEmployee.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
-                    Snackbar.LENGTH_LONG).show() }
+                    Snackbar.LENGTH_LONG).show()
+                    progress_employee.visibility = View.GONE
+                }
                 else -> {
                     mEmployeeAdapter.updateFullEmployee(it)
                     mEmployeeAdapter.updateDateCurrent(date)
+                    progress_employee.visibility = View.GONE
                 }
             }
         })
@@ -98,8 +97,9 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
 
     override fun clickEdit(position: Int) {
         val name = recycler_employee[position].text_nome_employee.text.toString()
+        val id = businessEmployee.consultIdEmployee(name)
         val intent = Intent(this, RegisterEmployeeActivity::class.java)
-        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, name)
+        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
         startActivity(intent)
         finish()
     }
