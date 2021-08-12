@@ -56,7 +56,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun buscarFuncionario() {
-        mBusinessEmployee = BusinessEmployee(this)
         val listEmployee = mBusinessEmployee.consultEmployee()
 
         if (listEmployee!!.isNotEmpty()) {

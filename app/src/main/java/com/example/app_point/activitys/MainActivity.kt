@@ -22,6 +22,8 @@ import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
     private lateinit var mPointAdapter: PointsAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
-    private lateinit var mViewModel: ViewModel
+    private val mViewModel: ViewModel by viewModel()
     private lateinit var constraintLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +42,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
         animationIcons()
 
-        mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
         mSecurityPreferences = SecurityPreferences(this)
         constraintLayout = findViewById(R.id.container)
 

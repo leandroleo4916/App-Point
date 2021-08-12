@@ -14,7 +14,6 @@ import com.example.app_point.entity.PointsEntity
 class AdapterPoints(private val application: Application) : RecyclerView.Adapter<ViewHolderPoints>() {
 
     private var mListFullEmployee: ArrayList<PointsEntity> = arrayListOf()
-    private val mBusiness: BusinessEmployee = BusinessEmployee(application)
 
     // Create the list of the layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderPoints {

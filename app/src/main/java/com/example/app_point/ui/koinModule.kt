@@ -4,9 +4,7 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.model.*
-import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryFirebase
-import com.example.app_point.repository.RepositoryPoint
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -58,6 +56,10 @@ val viewModelModule = module {
     viewModel { ViewModelEmployee(get()) }
 }
 
+val viewModelMainModule = module {
+    viewModel { ViewModel(get()) }
+}
+
 val viewModelPoints = module {
     viewModel { ViewModelPoints(get()) }
 }
@@ -68,5 +70,5 @@ val adapterModule = module {
 
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelModule, businessModule,
-    pointsModule, userModule, adapterModule, viewModelPoints
+    pointsModule, userModule, adapterModule, viewModelPoints, viewModelMainModule
 )

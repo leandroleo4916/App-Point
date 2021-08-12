@@ -20,12 +20,13 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_tools.*
 import kotlinx.android.synthetic.main.recycler_employee.*
 import kotlinx.android.synthetic.main.recycler_employee.view.*
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecycler {
 
-    private lateinit var mEmployeeAdapter: EmployeeAdapter
+    private val mEmployeeAdapter: EmployeeAdapter by inject()
     private lateinit var mViewModelEmployee: ViewModelEmployee
     private lateinit var constraintLayout: ConstraintLayout
     private lateinit var businessEmployee: BusinessEmployee
@@ -36,11 +37,9 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
 
         mViewModelEmployee = ViewModelProvider(this).get(ViewModelEmployee::class.java)
         constraintLayout = findViewById(R.id.container_employee)
-        businessEmployee = BusinessEmployee(this)
 
         val recycler = findViewById<RecyclerView>(R.id.recycler_employee)
         recycler.layoutManager = LinearLayoutManager(this)
-        mEmployeeAdapter = EmployeeAdapter(application, this)
         recycler.adapter = mEmployeeAdapter
 
         listener()

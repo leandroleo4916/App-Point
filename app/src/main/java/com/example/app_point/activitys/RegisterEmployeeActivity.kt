@@ -37,13 +37,14 @@ import kotlinx.android.synthetic.main.activity_register_employee.*
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
 import kotlinx.android.synthetic.main.activity_register_employee.image_back
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
 
 class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val mBusinessEmployee: BusinessEmployee = BusinessEmployee(this)
+    private val mBusinessEmployee: BusinessEmployee by inject()
     private val mToByteArray: ConverterPhoto = ConverterPhoto()
     private val PERMISSION_CODE = 1000
     private val IMAGE_GALERY = 1
