@@ -1,5 +1,6 @@
 package com.example.app_point.activitys
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
@@ -67,6 +68,7 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
             when (it.size) {
                 0 -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
                     Snackbar.LENGTH_LONG).show()
+                    mEmployeeAdapter.updateFullEmployee(it)
                     progress_employee.visibility = View.GONE
                 }
                 else -> {
@@ -86,8 +88,8 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
 
     private fun removeEmployee(name: String){
         if (mViewModelEmployee.removeEmployee(name)){
-            Snackbar.make(constraintLayout, getString(R.string.removido_sucesso),
-                Snackbar.LENGTH_LONG).show()
+            mViewModelEmployee.removePoints(name)
+            Snackbar.make(constraintLayout, getString(R.string.removido_sucesso), Snackbar.LENGTH_LONG).show()
             viewModel()
         }else {
             Snackbar.make(constraintLayout, getString(R.string.nao_foi_possivel_remover),
@@ -106,6 +108,16 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
 
     override fun clickRemove(position: Int) {
         val name = recycler_employee[position].text_nome_employee.text.toString()
-        removeEmployee(name)
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Deseja remover $name?")
+        alertDialog.setCancelable(false)
+        alertDialog.setPositiveButton("Sim") { _, _ ->
+            removeEmployee(name)
+        }
+        alertDialog.setNegativeButton("Não") { _, _ -> Snackbar.make(
+            constraintLayout, getString(R.string.cancelado), Snackbar.LENGTH_LONG).show()
+        }
+        val dialog = alertDialog.create()
+        dialog.show()
     }
 }

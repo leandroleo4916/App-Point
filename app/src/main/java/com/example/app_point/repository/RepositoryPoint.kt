@@ -3,10 +3,8 @@ package com.example.app_point.repository
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsPoint
 import com.example.app_point.database.DataBaseEmployee
-import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.PointsEntity
 
 class RepositoryPoint(context: Context?) {
@@ -59,7 +57,7 @@ class RepositoryPoint(context: Context?) {
         }
     }
 
-    fun selectFullPoints(nome: String, date: String): PointsEntity? {
+    private fun selectFullPoints(nome: String, date: String): PointsEntity? {
 
         var list: PointsEntity? = null
         try {
@@ -231,6 +229,21 @@ class RepositoryPoint(context: Context?) {
             } catch (e: Exception) {
                 return list
             }
+        }
+    }
+
+    fun removePoints(name: String): Boolean {
+
+        return try{
+            val db = mDataBasePoint.writableDatabase
+            val selection = ConstantsPoint.POINT.COLUMNS.EMPLOYEE + " = ?"
+            val args = arrayOf(name)
+
+            db.delete(ConstantsPoint.POINT.TABLE_NAME, selection, args)
+            true
+
+        } catch (e: Exception){
+            false
         }
     }
 }

@@ -103,14 +103,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     }
 
     private fun searchPoints(){
-
         mViewModel.getFullEmployee("")
         progress.visibility = View.GONE
-
     }
 
     private fun observe(){
-
         mViewModel.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),

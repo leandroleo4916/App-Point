@@ -6,21 +6,15 @@ import android.icu.util.Calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.entity.EmployeeDados
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.PointsEntity
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
-import com.example.app_point.utils.ConverterHours
 import com.example.app_point.utils.ConverterPhoto
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.local.QueryResult
 import kotlinx.android.synthetic.main.recycler_employee.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,8 +58,8 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
             textEmployee.text = employee
             val textCargo = itemView.findViewById<TextView>(R.id.text_cargo)
             textCargo.text = cargo
-            val textadmission = itemView.findViewById<TextView>(R.id.text_data_admission)
-            textadmission.text = admission
+            val textAdmission = itemView.findViewById<TextView>(R.id.text_data_admission)
+            textAdmission.text = admission
         }
 
         fun bindData(date: String){
