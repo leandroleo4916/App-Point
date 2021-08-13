@@ -11,7 +11,7 @@ class RepositoryPoint(context: Context?) {
 
     private val mDataBasePoint: DataBaseEmployee = DataBaseEmployee(context)
 
-    fun getPoint(employee: String, date: String, hour: String): Boolean {
+    fun setPoint(employee: String, date: String, hour: String): Boolean {
 
         val mSearchPoint = selectFullPoints(employee, date)
 

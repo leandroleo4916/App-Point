@@ -15,7 +15,7 @@ class BusinessEmployee(context: Context) {
             cargo, email, phone, admissao, aniversario)
     }
 
-    fun consultEmployee(): List<String>?{
+    fun consultEmployee(): List<String>{
         return mRepositoryEmployee.employeeList()
     }
 

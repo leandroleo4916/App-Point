@@ -5,6 +5,7 @@ import com.example.app_point.business.BusinessPoints
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.model.*
 import com.example.app_point.repository.RepositoryFirebase
+import com.example.app_point.repository.RepositoryPoint
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -41,9 +42,13 @@ val businessModule = module {
 }
 
 val pointsModule = module {
-    factory { BusinessPoints(get())
-    }
+    factory { BusinessPoints(get()) }
 }
+
+val repositoryPointModule = module {
+    factory { RepositoryPoint(get()) }
+}
+
 val userModule = module {
     factory { BusinessUser(get()) }
 }
@@ -57,7 +62,7 @@ val viewModelModule = module {
 }
 
 val viewModelMainModule = module {
-    viewModel { ViewModel(get()) }
+    viewModel { ViewModel(get(), get()) }
 }
 
 val viewModelPoints = module {
@@ -70,5 +75,6 @@ val adapterModule = module {
 
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelModule, businessModule,
-    pointsModule, userModule, adapterModule, viewModelPoints, viewModelMainModule
+    pointsModule, userModule, adapterModule, viewModelPoints, viewModelMainModule,
+    repositoryPointModule
 )

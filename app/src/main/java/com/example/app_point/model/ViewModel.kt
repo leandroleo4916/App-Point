@@ -7,9 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.app_point.entity.PointsEntity
 import com.example.app_point.repository.RepositoryPoint
 
-class ViewModel (application: Application): AndroidViewModel(application) {
-
-    private var mSearchRecycler: RepositoryPoint = RepositoryPoint (application)
+class ViewModel (application: Application, private var mSearchRecycler: RepositoryPoint):
+    AndroidViewModel(application) {
 
     private val mEmployeeFullList = MutableLiveData<ArrayList<PointsEntity>>()
     val employeeFullList: LiveData<ArrayList<PointsEntity>> = mEmployeeFullList

@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -29,8 +28,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
-    private val mBusinessPoints: BusinessPoints = BusinessPoints(this)
+    private val mListEmployee: BusinessEmployee by inject()
+    private val mBusinessPoints: BusinessPoints by inject()
     private lateinit var mPointAdapter: PointsAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
     private val mViewModel: ViewModel by viewModel()

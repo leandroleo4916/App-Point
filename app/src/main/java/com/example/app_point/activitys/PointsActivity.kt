@@ -15,22 +15,21 @@ import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_pontos.*
+import org.koin.android.ext.android.inject
 
 class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private lateinit var mPointsAdapter: PointsAdapter
-    private val mListEmployee: BusinessEmployee = BusinessEmployee(this)
-    private lateinit var mViewModel: ViewModel
+    private val mListEmployee: BusinessEmployee by inject()
+    private val mViewModel: ViewModel by inject()
     private lateinit var constraintLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pontos)
 
-        mViewModel = ViewModelProvider(this).get(ViewModel::class.java)
         constraintLayout = findViewById(R.id.container_pontos)
 
-        // Create the recyclerview
         val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
         recycler.layoutManager = LinearLayoutManager(this)
         mPointsAdapter = PointsAdapter(application)

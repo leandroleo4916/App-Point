@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
-import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.model.AdapterPoints
 import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_perfil.edit_employee
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,7 +30,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
 
     private lateinit var mViewModelPoints: ViewModelPoints
     private lateinit var mAdapterPoints: AdapterPoints
-    private lateinit var mBusinessEmployee: BusinessEmployee
+    private val mBusinessEmployee: BusinessEmployee by inject()
     private lateinit var mPhoto: ConverterPhoto
     private val handler: Handler = Handler()
     private lateinit var constraintLayout: ConstraintLayout
@@ -48,17 +48,15 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         mAdapterPoints = AdapterPoints(application)
         recycler.adapter = mAdapterPoints
 
-        // Captures a list employee and shows what is in the first position
-
-        buscarFuncionario()
+        searchEmployee()
         listener()
         observer()
     }
 
-    private fun buscarFuncionario() {
+    private fun searchEmployee() {
         val listEmployee = mBusinessEmployee.consultEmployee()
 
-        if (listEmployee!!.isNotEmpty()) {
+        if (listEmployee.isNotEmpty()) {
             searchEmployee(listEmployee[0])
             viewModel(listEmployee[0])
         }
@@ -174,7 +172,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         })
     }
 
-    // Captures id employee and send to Activity Register to edition
     private fun editEmployee(employee: String){
         val id = mBusinessEmployee.consultIdEmployee(employee)
         val intent = Intent(this, RegisterEmployeeActivity::class.java)

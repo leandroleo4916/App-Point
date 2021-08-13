@@ -20,19 +20,8 @@ import androidx.core.content.ContextCompat
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
-import com.example.app_point.entity.Employee
-import com.example.app_point.entity.EmployeeDados
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_register_employee.*
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
 import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
@@ -136,7 +125,6 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    // Direciona pelo id se será opção salvar ou editar funcionárop
     private fun extrasId() {
         val extras = intent.extras
         if (extras != null) {
@@ -238,13 +226,11 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
         if (resultCode == RESULT_OK) {
 
-            // Captura imagem da galeria
             if (requestCode == IMAGE_GALERY) {
                 val selectedImage: Uri? = data!!.data
                 photo_employee.setImageURI(selectedImage)
             }
 
-            // Captura Imagem da câmera
             else if (resultCode == Activity.RESULT_OK) {
                 val extras = data!!.extras!!["data"] as Bitmap
                 photo_employee.setImageBitmap(extras)

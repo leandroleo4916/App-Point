@@ -20,12 +20,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EmployeeAdapter(private val listener: OnItemClickRecycler, private var searchPoints: RepositoryPoint):
+class EmployeeAdapter(application: Application, private val listener: OnItemClickRecycler):
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
 
     private var mListFullEmployee: ArrayList<EmployeeEntity> = arrayListOf()
     private var dateCurrent: String = ""
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
+    private var searchPoints: RepositoryPoint = RepositoryPoint (application)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
