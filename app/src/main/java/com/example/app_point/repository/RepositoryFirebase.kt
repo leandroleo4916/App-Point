@@ -1,12 +1,7 @@
 package com.example.app_point.repository
 
 import androidx.lifecycle.liveData
-import com.example.app_point.ui.EmployeeApi
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.example.app_point.interfaces.EmployeeApi
 import java.net.ConnectException
 
 sealed class Resultado<out R> {

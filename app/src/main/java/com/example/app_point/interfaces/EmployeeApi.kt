@@ -1,4 +1,4 @@
-package com.example.app_point.ui
+package com.example.app_point.interfaces
 
 import retrofit2.Response
 import retrofit2.http.GET

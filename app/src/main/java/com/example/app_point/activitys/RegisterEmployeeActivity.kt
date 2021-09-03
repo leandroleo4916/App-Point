@@ -44,8 +44,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_employee)
 
-        carregaInfoEmployee()
-        inicialDate()
+        infoEmployee()
+        initDate()
         listener()
     }
 
@@ -77,7 +77,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     // Captures date and show in the EditText date and hour
     @SuppressLint("WeekBasedYear")
-    private fun inicialDate(){
+    private fun initDate(){
         val date = getInstance().time
         val dateTime = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
         val dataCurrent = dateTime.format(date)
@@ -135,7 +135,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // Receive data to edition
-    private fun carregaInfoEmployee() {
+    private fun infoEmployee() {
 
         val extras = intent.extras
         if (extras != null) {

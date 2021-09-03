@@ -2,6 +2,7 @@ package com.example.app_point.activitys
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,9 +19,7 @@ import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.*
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_tools.*
-import kotlinx.android.synthetic.main.recycler_employee.*
 import kotlinx.android.synthetic.main.recycler_employee.view.*
-import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,8 +66,7 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
         val date = instanceCalendar()
         mViewModelEmployee.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
-                    Snackbar.LENGTH_LONG).show()
+                0 -> { showSnackBar(R.string.precisa_add_funcionarios)
                     mEmployeeAdapter.updateFullEmployee(it)
                     progress_employee.visibility = View.GONE
                 }
@@ -90,11 +88,10 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
     private fun removeEmployee(name: String){
         if (mViewModelEmployee.removeEmployee(name)){
             mViewModelEmployee.removePoints(name)
-            Snackbar.make(constraintLayout, getString(R.string.removido_sucesso), Snackbar.LENGTH_LONG).show()
+            showSnackBar(R.string.removido_sucesso)
             viewModel()
         }else {
-            Snackbar.make(constraintLayout, getString(R.string.nao_foi_possivel_remover),
-                Snackbar.LENGTH_LONG).show()
+            showSnackBar(R.string.nao_foi_possivel_remover)
         }
     }
 
@@ -120,5 +117,15 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
         }
         val dialog = alertDialog.create()
         dialog.show()
+    }
+
+    private fun showSnackBar(message: Int) {
+        Snackbar.make(constraintLayout,
+            message, Snackbar.LENGTH_LONG)
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(Color.BLACK)
+            .setAction("Ok") {}
+            .show()
     }
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -62,8 +63,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         }
         else {
             progress_points.visibility = View.GONE
-            Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
-                Snackbar.LENGTH_LONG).show()
+            showSnackBar(R.string.precisa_add_funcionarios)
         }
     }
 
@@ -160,8 +160,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     private fun observer(){
         mViewModelPoints.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
-                    Snackbar.LENGTH_LONG).show()
+                0 -> {
+                    showSnackBar(R.string.nenhum_ponto_registrado)
                     progress_points.visibility = View.GONE
                 }
                 else -> {
@@ -173,12 +173,16 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun editEmployee(employee: String){
-        val id = mBusinessEmployee.consultIdEmployee(employee)
-        val intent = Intent(this, RegisterEmployeeActivity::class.java)
+        if(employee == "Fulano Beltrano"){
+            showSnackBar(R.string.precisa_add_funcionarios)
+        }else {
+            val id = mBusinessEmployee.consultIdEmployee(employee)
+            val intent = Intent(this, RegisterEmployeeActivity::class.java)
 
-        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
-        startActivity(intent)
-        finish()
+            intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun dialogListEmployee(){
@@ -189,7 +193,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         // Captures a list employee and add to spinner
         val list = mBusinessEmployee.consultEmployee()
         val listSpinner= inflateView.findViewById(R.id.spinner_employee) as Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list!!)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
@@ -202,15 +206,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
 
             // Captures item of Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
-                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
-                    Snackbar.LENGTH_LONG).show() }
+                null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
                     searchEmployee(itemSpinner.toString())
                     viewModel(itemSpinner.toString()) }
             }
         }
         alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->
-            Snackbar.make(constraintLayout, getString(R.string.cancelado), Snackbar.LENGTH_LONG).show()
+            showSnackBar(R.string.cancelado)
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -224,4 +227,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         }
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    private fun showSnackBar(message: Int) {
+        Snackbar.make(constraintLayout,
+            message, Snackbar.LENGTH_LONG)
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(Color.BLACK)
+            .setAction("Ok") {}
+            .show()
+    }
 }

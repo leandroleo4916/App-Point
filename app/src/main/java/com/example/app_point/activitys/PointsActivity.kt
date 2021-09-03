@@ -1,6 +1,7 @@
 package com.example.app_point.activitys
 
 import android.app.AlertDialog
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,12 +17,13 @@ import com.example.app_point.model.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_pontos.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private lateinit var mPointsAdapter: PointsAdapter
     private val mListEmployee: BusinessEmployee by inject()
-    private val mViewModel: ViewModel by inject()
+    private val mViewModel: ViewModel by viewModel()
     private lateinit var constraintLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +50,7 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     private fun observe(){
         mViewModel.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
-                    Snackbar.LENGTH_LONG).show() }
+                0 -> showSnackBar(R.string.nenhum_ponto_registrado)
                 else -> { mPointsAdapter.updateFullEmployee(it) }
             }
         })
@@ -87,17 +88,15 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
 
             // Capture item Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
-                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
-                    Snackbar.LENGTH_LONG).show() }
+                null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> { mViewModel.getFullEmployee(itemSpinner.toString()) }
             }
         }
         alertDialog.setNegativeButton(getString(R.string.todos)) { _, _ ->
             when (listSpinner.selectedItem) {
-                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios), Snackbar.LENGTH_LONG).show() }
+                null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> { mViewModel.getFullEmployee("") }
             }
-
         }
         alertDialog.create().show()
     }
@@ -110,7 +109,15 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+    private fun showSnackBar(message: Int) {
+        Snackbar.make(constraintLayout,
+            message, Snackbar.LENGTH_LONG)
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(Color.BLACK)
+            .setAction("Ok") {}
+            .show()
     }
 }

@@ -3,13 +3,14 @@ package com.example.app_point.activitys
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -21,6 +22,8 @@ import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.text_name_user
+import kotlinx.android.synthetic.main.activity_main.text_ola
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -33,7 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private lateinit var mPointAdapter: PointsAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
     private val mViewModel: ViewModel by viewModel()
-    private lateinit var constraintLayout: ConstraintLayout
+    private lateinit var coordinator: CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +45,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         animationIcons()
 
         mSecurityPreferences = SecurityPreferences(this)
-        constraintLayout = findViewById(R.id.container)
+        coordinator = findViewById(R.id.coordinator)
 
-        // Recycler Implementation
         val recycler = findViewById<RecyclerView>(R.id.recycler_points)
         recycler.layoutManager = LinearLayoutManager(this)
         mPointAdapter = PointsAdapter(application)
@@ -110,8 +112,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     private fun observe(){
         mViewModel.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { Snackbar.make(constraintLayout, getString(R.string.nenhum_ponto_registrado),
-                    Snackbar.LENGTH_LONG).show() }
+                0 -> showSnackBar(R.string.nenhum_ponto_registrado)
                 else -> { mPointAdapter.updateFullEmployee(it) }
             }
         })
@@ -125,7 +126,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         image_in_opcoes.setOnClickListener(this)
         image_add_ponto.setOnClickListener(this)
         option_menu.setOnClickListener(this)
-        float_bottom.setOnClickListener(this)
+        //float_bottom.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             }
             image_add_ponto -> dialogPoint()
             option_menu -> showMenuOption()
-            float_bottom -> dialogPoint()
+            //float_bottom -> dialogPoint()
         }
     }
 
@@ -156,8 +157,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             mSecurityPreferences.removeString()
             finish()
         }
-        alertDialog.setNegativeButton("Não") { _, _ -> Snackbar.make(
-            constraintLayout, getString(R.string.cancelado), Snackbar.LENGTH_LONG).show()
+        alertDialog.setNegativeButton("Não") { _, _ ->
+            showSnackBar(R.string.cancelado)
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -183,7 +184,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         // Captures employee list and add to spinner
         val list = mListEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list!!)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
@@ -196,13 +197,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
             // Captures item do Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
-                null -> { Snackbar.make(constraintLayout, getString(R.string.precisa_add_funcionarios),
-                    Snackbar.LENGTH_LONG).show() }
+                null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> { savePoint(itemSpinner.toString(), dateCurrent, hourCurrent) }
             }
         }
-        alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> Snackbar.make(
-            constraintLayout, R.string.cancelado, Snackbar.LENGTH_LONG).show()
+        alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ ->
+            showSnackBar(R.string.cancelado)
         }
         val dialog = alertDialog.create()
         dialog.show()
@@ -246,5 +246,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
             true
         }
         menuOption.show()
+    }
+
+    private fun showSnackBar(message: Int) {
+        Snackbar.make(coordinator,
+            message, Snackbar.LENGTH_LONG)
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(Color.BLACK)
+            .setAction("Ok") {}
+            .show()
     }
 }

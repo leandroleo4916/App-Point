@@ -9,9 +9,6 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.utils.SecurityPreferences
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 
 class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {

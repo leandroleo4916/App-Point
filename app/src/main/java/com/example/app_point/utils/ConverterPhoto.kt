@@ -3,26 +3,31 @@ package com.example.app_point.utils
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.util.Base64InputStream
 import android.widget.ImageView
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.util.*
+import kotlin.math.roundToInt
 
 class ConverterPhoto {
 
-    // Converte foto de Bitmap para Bytearray
     fun converterToByteArray(image: ImageView): ByteArray {
         val bitmap = (image.drawable as BitmapDrawable).bitmap
+        val sizeImage = scaleDown(bitmap, 250.toFloat(), true)
         val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        sizeImage!!.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         return stream.toByteArray()
     }
 
-    // Converte foto de Bytearray para Bitmap
     fun converterToBitmap(image: ByteArray): Bitmap{
         val photo = ByteArrayInputStream(image)
         return BitmapFactory.decodeStream(photo)
+    }
+
+    private fun scaleDown(realImage: Bitmap, maxImageSize: Float, filter: Boolean): Bitmap? {
+        val ratio = (maxImageSize / realImage.width).coerceAtMost(maxImageSize / realImage.height)
+        val width = (ratio * realImage.width).roundToInt()
+        val height = (ratio * realImage.height).roundToInt()
+        return Bitmap.createScaledBitmap(realImage, width, height, filter)
     }
 
 }

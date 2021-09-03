@@ -13,10 +13,54 @@
         android:id="@+id/toolbar_registrados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/back_toolbar_points"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pontos Registrados"
+                android:textColor="@color/letras"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/image_back_pontos"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/buttom_back"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/image_filter"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/buttom_back"
+                android:src="@drawable/ic_filter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_activity_pontos"
@@ -27,44 +71,6 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_registrados"
         tools:ignore="MissingConstraints"
         tools:listitem="@layout/recycler_points" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pontos Registrados"
-        android:textColor="@color/letrashint"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_registrados"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_registrados"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/image_back_pontos"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="18dp"
-        android:contentDescription="@string/buttom_back"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_registrados"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_registrados"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_registrados"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/image_filter"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginEnd="18dp"
-        android:contentDescription="@string/buttom_back"
-        android:src="@drawable/ic_filter"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_registrados"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_registrados"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_registrados"
-        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/progress_ponto"

@@ -10,11 +10,44 @@
         android:id="@+id/toolbar_cadastro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways"
+        android:background="@drawable/back_toolbar_points"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp">
+
+            <ImageView
+                android:id="@+id/image_back"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/buttom_back"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/textViewHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cadastrar Funcionário"
+                android:textColor="@color/letras"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/image_back"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <Button
         android:id="@+id/buttom_register_employee"
@@ -492,42 +525,16 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_confirme_senha4"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/image_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="18dp"
-        android:contentDescription="@string/buttom_back"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_cadastro"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_cadastro"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_cadastro"
-        tools:ignore="MissingConstraints" />
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photo_employee"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:src="@drawable/man"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_cadastro"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textViewHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cadastrar Funcionário"
-        android:textColor="@color/letrashint"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_cadastro"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_cadastro"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_cadastro"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_cadastro"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
