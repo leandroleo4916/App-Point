@@ -3,7 +3,9 @@ package com.example.app_point.di
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.business.BusinessUser
+import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.interfaces.EmployeeApi
+import com.example.app_point.interfaces.RepositoryData
 import com.example.app_point.model.*
 import com.example.app_point.repository.RepositoryFirebase
 import com.example.app_point.repository.RepositoryPoint
@@ -47,7 +49,7 @@ val pointsModule = module {
 }
 
 val repositoryPointModule = module {
-    factory { RepositoryPoint(get()) }
+    single<RepositoryData> { RepositoryPoint(get()) }
 }
 
 val userModule = module {
@@ -67,15 +69,23 @@ val viewModelMainModule = module {
 }
 
 val viewModelPoints = module {
-    viewModel { ViewModelPoints(get()) }
+    viewModel { ViewModelPoints(get(), get()) }
 }
 
 val adapterModule = module {
     factory { AdapterPoints(get()) }
 }
 
+val dataBaseEmployeeModule = module {
+    factory { DataBaseEmployee(get()) }
+}
+
+val employeeAdapterModule = module {
+    factory { EmployeeAdapter(get(), get()) }
+}
+
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelEmployeeModule, businessModule,
     pointsModule, userModule, adapterModule, viewModelPoints, viewModelMainModule,
-    repositoryPointModule
+    repositoryPointModule, dataBaseEmployeeModule, employeeAdapterModule
 )

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_pontos.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var mPointsAdapter: PointsAdapter
     private val mListEmployee: BusinessEmployee by inject()
@@ -57,14 +56,11 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
     }
 
     private fun listener(){
-        image_back_pontos.setOnClickListener(this)
-        image_filter.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        when(view){
-            image_back_pontos -> finish()
-            image_filter -> dialogPoint()
+        image_back_pontos.setOnClickListener{
+            finish()
+        }
+        image_filter.setOnClickListener{
+            dialogPoint()
         }
     }
 
@@ -75,7 +71,7 @@ class PointsActivity : AppCompatActivity(), View.OnClickListener, AdapterView.On
         // Capture List employee and add spinner
         val list = mListEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinner_employee) as Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list!!)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 

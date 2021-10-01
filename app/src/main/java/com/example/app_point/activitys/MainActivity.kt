@@ -12,42 +12,40 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.constants.ConstantsUser
+import com.example.app_point.databinding.ActivityMainBinding
 import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModel
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.text_name_user
-import kotlinx.android.synthetic.main.activity_main.text_ola
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private val mListEmployee: BusinessEmployee by inject()
     private val mBusinessPoints: BusinessPoints by inject()
     private lateinit var mPointAdapter: PointsAdapter
     private lateinit var mSecurityPreferences: SecurityPreferences
-    private val mViewModel: ViewModel by viewModel()
+    private val mViewModel by viewModel<ViewModel>()
     private lateinit var coordinator: CoordinatorLayout
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         animationIcons()
 
         mSecurityPreferences = SecurityPreferences(this)
         coordinator = findViewById(R.id.coordinator)
 
-        val recycler = findViewById<RecyclerView>(R.id.recycler_points)
+        val recycler = binding.recyclerPoints
         recycler.layoutManager = LinearLayoutManager(this)
         mPointAdapter = PointsAdapter(application)
         recycler.adapter = mPointAdapter
@@ -60,34 +58,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
     // Animation to imageView
     private fun animationIcons(){
-        val icon1 = findViewById<ImageView>(R.id.image_register_employee)
-        val icon2 = findViewById<ImageView>(R.id.image_perfil_employee)
-        val icon3 = findViewById<ImageView>(R.id.image_historicos_pontos)
-        val icon4 = findViewById<ImageView>(R.id.image_opcoes)
-        val icon5 = findViewById<ImageView>(R.id.image_in_register)
-        val icon6 = findViewById<ImageView>(R.id.image_in_perfil)
-        val icon7 = findViewById<ImageView>(R.id.image_in_clock)
-        val icon8 = findViewById<ImageView>(R.id.image_in_opcoes)
         val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
-        icon1.startAnimation(animation)
-        icon2.startAnimation(animation)
-        icon3.startAnimation(animation)
-        icon4.startAnimation(animation)
-        icon5.startAnimation(animation)
-        icon6.startAnimation(animation)
-        icon7.startAnimation(animation)
-        icon8.startAnimation(animation)
+        binding.imageRegisterEmployee.startAnimation(animation)
+        binding.imagePerfilEmployee.startAnimation(animation)
+        binding.imageHistoricosPontos.startAnimation(animation)
+        binding.imageOpcoes.startAnimation(animation)
+        binding.imageInRegister.startAnimation(animation)
+        binding.imageInPerfil.startAnimation(animation)
+        binding.imageInClock.startAnimation(animation)
+        binding.imageInOpcoes.startAnimation(animation)
     }
 
     private fun salutation(){
 
         val extras = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
         if (extras.isNotBlank()) {
-            text_name_user.text = extras
+            binding.textNameUser.text = extras
         }
 
         val date = Calendar.getInstance().time
-        val hora = SimpleDateFormat("HH:mm")
+        val local = Locale("pt", "BR")
+        val hora = SimpleDateFormat("HH:mm", local)
         val horaCurrent = hora.format(date)
 
         val clockSixMorning = "06:00"
@@ -96,17 +87,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
 
         when {
             horaCurrent > clockSixMorning && horaCurrent < clockTwelveMorning -> {
-                text_ola.text = getString(R.string.bom_dia) }
+                binding.textOla.text = getString(R.string.bom_dia) }
             horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> {
-                text_ola.text = getString(R.string.boa_tarde) }
+                binding.textOla.text = getString(R.string.boa_tarde) }
             else ->
-                text_ola.text = getString(R.string.boa_noite)
+                binding.textOla.text = getString(R.string.boa_noite)
         }
     }
 
     private fun searchPoints(){
         mViewModel.getFullEmployee("")
-        progress.visibility = View.GONE
+        binding.progress.visibility = View.GONE
     }
 
     private fun observe(){
@@ -118,34 +109,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         })
     }
 
-    // clicks management
     private fun listener(){
-        image_in_register.setOnClickListener(this)
-        image_in_perfil.setOnClickListener(this)
-        image_in_clock.setOnClickListener(this)
-        image_in_opcoes.setOnClickListener(this)
-        image_add_ponto.setOnClickListener(this)
-        option_menu.setOnClickListener(this)
-        //float_bottom.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        when(view){
-            image_in_register -> {
-                startActivity(Intent(this, RegisterEmployeeActivity::class.java))
-            }
-            image_in_perfil -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
-            }
-            image_in_clock -> {
-                startActivity(Intent(this, PointsActivity::class.java))
-            }
-            image_in_opcoes -> {
-                startActivity(Intent(this, ToolsActivity::class.java))
-            }
-            image_add_ponto -> dialogPoint()
-            option_menu -> showMenuOption()
-            //float_bottom -> dialogPoint()
+        binding.imageInRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterEmployeeActivity::class.java))
+        }
+        binding.imageInPerfil.setOnClickListener{
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+        binding.imageInClock.setOnClickListener{
+            startActivity(Intent(this, PointsActivity::class.java))
+        }
+        binding.imageInOpcoes.setOnClickListener{
+            startActivity(Intent(this, ToolsActivity::class.java))
+        }
+        binding.imageAddPonto.setOnClickListener {
+            dialogPoint()
+        }
+        binding.optionMenu.setOnClickListener {
+            showMenuOption()
         }
     }
 
@@ -208,18 +189,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
         dialog.show()
     }
 
-    // Send data captured to Business
     private fun savePoint(itemSpinner: String, dateCurrent: String, horaCurrent: String){
 
         when{
             mBusinessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
-                Toast.makeText(this, getString(R.string.adicionado_sucesso),
-                    Toast.LENGTH_SHORT).show()
+                showSnackBar(R.string.adicionado_sucesso)
                 searchPoints()
             }
             else -> {
-                Toast.makeText(this, getString(R.string.nao_possivel_add_ponto),
-                    Toast.LENGTH_SHORT).show()
+                showSnackBar(R.string.nao_possivel_add_ponto)
             }
         }
     }
@@ -235,7 +213,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnIt
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showMenuOption(){
-        val menuOption = PopupMenu(this, option_menu)
+        val menuOption = PopupMenu(this, binding.optionMenu)
         menuOption.menuInflater.inflate(R.menu.menu, menuOption.menu)
         menuOption.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {

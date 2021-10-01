@@ -282,15 +282,35 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             admissao == "" -> edit_admissao.error = "Digite Admissão"
             aniversario == "" -> edit_aniversario.error = "Digite Aniversário"
 
-            mBusinessEmployee.registerEmployee(id, photo, hora1, hora2, hora3, hora4, name, cargo,
-                email, phone, admissao, aniversario) ->
-            { Toast.makeText(this, R.string.cadastro_feito, Toast.LENGTH_SHORT).show()
+            else -> setEmployee(EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, name, cargo,
+                email, phone, admissao, aniversario))
+        }
+    }
+
+    private fun setEmployee(employee: EmployeeEntity){
+        when(mBusinessEmployee.registerEmployee(employee)){
+            "salvo" -> {
+                toast(R.string.adicionado_sucesso)
                 startActivity(Intent(this, ProfileActivity::class.java))
                 finish()
             }
-            else -> Toast.makeText(
-                this, "Não foi possível fazer o cadastro!", Toast.LENGTH_SHORT
-            ).show()
+            "não salvo" -> {
+                toast(R.string.nao_foi_possivel_cadastrar)
+            }
+            "editado" -> {
+                toast(R.string.editado_sucesso)
+                startActivity(Intent(this, ProfileActivity::class.java))
+                finish()
+            }
+            "não editado" -> {
+                toast(R.string.nao_foi_possivel_editar)
+            }
+            else -> Toast.makeText(this, R.string.nao_foi_possivel_cadastrar,
+                Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun toast(message: Int){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }

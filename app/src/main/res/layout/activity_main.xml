@@ -32,9 +32,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/back_toolbar_points"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,9 +46,9 @@
                             android:text="@string/ola"
                             android:textColor="@color/letras"
                             android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/toolbar_home"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/toolbar_home" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/text_name_user"
@@ -61,7 +58,7 @@
                             android:text="@string/usuario"
                             android:textColor="@color/letras"
                             android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/toolbar_home"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_ola"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,10 +94,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:gravity="center"
+                    android:layout_marginBottom="8dp"
                     app:layout_scrollFlags="scroll|enterAlways"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
                     tools:ignore="MissingConstraints,UselessParent">
 
                     <ImageView
@@ -279,18 +274,14 @@
                         tools:ignore="MissingConstraints" />
 
                 </RelativeLayout>
-
             </LinearLayout>
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_tarefa">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -300,7 +291,6 @@
                 android:id="@+id/toolbar_tarefa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/back_toolbar_points"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

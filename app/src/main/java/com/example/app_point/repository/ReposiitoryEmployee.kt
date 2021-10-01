@@ -6,48 +6,43 @@ import android.database.Cursor
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.EmployeeEntity
-import kotlinx.coroutines.selects.select
 
 class RepositoryEmployee(context: Context?) {
 
     private val mDataBaseEmployee: DataBaseEmployee = DataBaseEmployee(context)
 
-    fun conditionEmployee(id: Int, photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
-                          cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean{
+    fun conditionEmployee(employee: EmployeeEntity): String{
 
-        return if (id == 0){
-            getEmployee(photo, hour1, hour2, hour3, hour4, name, cargo, email, phone,
-                admissao, aniversario)
+        return if (employee.id == 0){
+            setEmployee(employee)
         }else{
-            editEmployee(id, photo, hour1, hour2, hour3, hour4, name, cargo, email, phone,
-                admissao, aniversario)
+            editEmployee(employee)
         }
 
     }
 
-    private fun getEmployee(photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
-                            cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean {
+    private fun setEmployee(employee: EmployeeEntity): String {
 
         return try{
             val db = mDataBaseEmployee.writableDatabase
             val insertValues = ContentValues()
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, photo)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, hour1)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, hour2)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, hour3)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, hour4)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, name)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, cargo)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, email)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, phone)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, admissao)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, aniversario)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, employee.horario1)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, employee.horario2)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, employee.horario3)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, employee.horario4)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
+            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
 
             db.insert(ConstantsEmployee.EMPLOYEE.TABLE_NAME, null, insertValues)
-            true
+            "salvo"
 
         } catch (e: Exception){
-            false
+            "não salvo"
         }
     }
 
@@ -292,33 +287,32 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    private fun editEmployee(id: Int, photo: ByteArray, hour1: String, hour2: String, hour3: String, hour4: String, name: String,
-                             cargo: String, email: String, phone: String, admissao: String, aniversario: String): Boolean {
+    private fun editEmployee(employee: EmployeeEntity): String {
 
         return try{
             val db = mDataBaseEmployee.writableDatabase
             val projection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
-            val args = arrayOf(id.toString())
+            val args = arrayOf(employee.id.toString())
 
             val contentValues = ContentValues()
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, photo)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, hour1)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, hour2)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, hour3)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, hour4)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, name)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, cargo)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, email)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, phone)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, admissao)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, aniversario)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, employee.id)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, employee.horario1)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, employee.horario2)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, employee.horario3)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, employee.horario4)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
+            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
 
             db.update(ConstantsEmployee.EMPLOYEE.TABLE_NAME, contentValues, projection, args)
-            true
+            "editado"
 
         } catch (e: Exception){
-            false
+            "não editado"
         }
     }
 

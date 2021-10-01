@@ -11,7 +11,7 @@ import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_login.*
 
-class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
+class ActivityLoginUser : AppCompatActivity() {
 
     private lateinit var mBusinessUser: BusinessUser
     private lateinit var mSecurityPreferences: SecurityPreferences
@@ -27,14 +27,11 @@ class ActivityLoginUser : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun listener(){
-        buttom_login_user.setOnClickListener(this)
-        text_register_user.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        when(view){
-            text_register_user -> startActivity(Intent(this, RegisterUser::class.java))
-            buttom_login_user -> loginUser()
+        text_register_user.setOnClickListener{
+            startActivity(Intent(this, RegisterUser::class.java))
+        }
+        buttom_login_user.setOnClickListener{
+            loginUser()
         }
     }
 

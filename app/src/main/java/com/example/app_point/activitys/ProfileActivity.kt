@@ -16,33 +16,44 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.business.CalculationHours
 import com.example.app_point.constants.ConstantsEmployee
+import com.example.app_point.databinding.ActivityPerfilBinding
+import com.example.app_point.entity.PointsHours
 import com.example.app_point.model.AdapterPoints
 import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_perfil.*
 import kotlinx.android.synthetic.main.activity_perfil.edit_employee
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var mViewModelPoints: ViewModelPoints
+    private val mViewModelPoints by viewModel<ViewModelPoints>()
     private lateinit var mAdapterPoints: AdapterPoints
     private val mBusinessEmployee: BusinessEmployee by inject()
     private lateinit var mPhoto: ConverterPhoto
     private val handler: Handler = Handler()
     private lateinit var constraintLayout: ConstraintLayout
+    private lateinit var calculationHours: CalculationHours
+    private val binding by lazy { ActivityPerfilBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_perfil)
+        setContentView(binding.root)
 
         constraintLayout = findViewById(R.id.container_perfil)
-        mViewModelPoints = ViewModelProvider(this).get(ViewModelPoints::class.java)
         mPhoto = ConverterPhoto()
+        calculationHours = CalculationHours()
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -58,7 +69,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
         val listEmployee = mBusinessEmployee.consultEmployee()
 
         if (listEmployee.isNotEmpty()) {
-            searchEmployee(listEmployee[0])
+            searchByNameEmployee(listEmployee[0])
             viewModel(listEmployee[0])
         }
         else {
@@ -68,29 +79,16 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
     }
 
     private fun listener(){
-        image_back_perfil.setOnClickListener(this)
-        edit_employee.setOnClickListener(this)
-        search.setOnClickListener(this)
-        float_bottom_perfil.setOnClickListener(this)
-        text_name_employee.setOnClickListener(this)
-        search_date.setOnClickListener(this)
-        text_date_selected.setOnClickListener(this)
-        image_photo_employee.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        when(view){
-            image_back_perfil -> finish()
-            edit_employee -> editEmployee(text_name_employee.text.toString())
-            image_photo_employee -> editEmployee(text_name_employee.text.toString())
-            search -> dialogListEmployee()
-            text_name_employee -> editEmployee(text_name_employee.text.toString())
-            search_date -> calendar()
-            float_bottom_perfil -> {
-                startActivity(Intent(this, RegisterEmployeeActivity::class.java))
-                finish()
-            }
+        image_back_perfil.setOnClickListener{ finish() }
+        edit_employee.setOnClickListener{ editEmployee(text_name_employee.text.toString()) }
+        search.setOnClickListener{ dialogListEmployee() }
+        float_bottom_perfil.setOnClickListener{
+            startActivity(Intent(this, RegisterEmployeeActivity::class.java))
+            finish()
         }
+        text_name_employee.setOnClickListener{ editEmployee(text_name_employee.text.toString()) }
+        search_date.setOnClickListener{ calendar() }
+        image_photo_employee.setOnClickListener{ editEmployee(text_name_employee.text.toString()) }
     }
 
     @SuppressLint("SimpleDateFormat", "WeekBasedYear")
@@ -111,38 +109,53 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             date.get(Calendar.DAY_OF_MONTH)).show()
     }
 
-    private fun searchEmployee(nomeEmployee: String){
-        val dataEmployee = mBusinessEmployee.consultDataEmployee(nomeEmployee)
+    private fun searchByNameEmployee(name: String){
+        val dataEmployee = mBusinessEmployee.consultDataEmployee(name)
         text_name_employee.text = dataEmployee!!.nameEmployee
         text_cargo_employee.text = dataEmployee.cargoEmployee
         val photo = dataEmployee.photo
         val photoConverter = mPhoto.converterToBitmap(photo)
         image_photo_employee.setImageBitmap(photoConverter)
 
-        val numMock1 = 92
+        val points = mViewModelPoints.getFullPointsByName(name)
+
+        val hoursMake = 0
         var pStatus1 = 0
-
-        while (pStatus1 <= numMock1) {
-            handler.post {
-                image_toolbar_hrs.progress = pStatus1
-                edit_hrs_feitas.text = pStatus1.toString()
-            }
-            try { Thread.sleep(20) }
-            catch (e: InterruptedException) { e.printStackTrace() }
-            pStatus1++
-        }
-
-        val numMock2 = 23
+        val hoursExtra = 0
         var pStatus2 = 0
 
-        while (pStatus2 <= numMock2) {
-            handler.post {
-                image_toolbar_.progress = pStatus2
-                edit_hrs_extras.text = pStatus2.toString()
+        CoroutineScope(Main).launch {
+            withContext(Dispatchers.Default) {
+                while (pStatus1 <= hoursMake) {
+                    handler.post {
+                        image_toolbar_hrs.progress = pStatus1
+                        edit_hrs_feitas.text = pStatus1.toString()
+                    }
+                    try {
+                        Thread.sleep(20)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                    pStatus1++
+                }
             }
-            try { Thread.sleep(20) }
-            catch (e: InterruptedException) { e.printStackTrace() }
-            pStatus2++
+        }
+
+        CoroutineScope(Main).launch {
+            withContext(Dispatchers.Default) {
+                while (pStatus2 <= hoursExtra) {
+                    handler.post {
+                        image_toolbar_.progress = pStatus2
+                        edit_hrs_extras.text = pStatus2.toString()
+                    }
+                    try {
+                        Thread.sleep(20)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                    pStatus2++
+                }
+            }
         }
     }
 
@@ -208,7 +221,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener, AdapterView.O
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
-                    searchEmployee(itemSpinner.toString())
+                    searchByNameEmployee(itemSpinner.toString())
                     viewModel(itemSpinner.toString()) }
             }
         }

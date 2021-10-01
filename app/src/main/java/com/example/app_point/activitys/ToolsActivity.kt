@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.recycler_employee.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecycler {
+class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private lateinit var mEmployeeAdapter: EmployeeAdapter
     private lateinit var mViewModelEmployee: ViewModelEmployee
@@ -49,13 +49,7 @@ class ToolsActivity : AppCompatActivity(), View.OnClickListener, OnItemClickRecy
     }
 
     private fun listener(){
-        image_back_tools.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        when(view){
-            image_back_tools -> finish()
-        }
+        image_back_tools.setOnClickListener { finish() }
     }
 
     private fun viewModel(){
