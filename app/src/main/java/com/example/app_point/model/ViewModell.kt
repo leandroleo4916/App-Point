@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.app_point.entity.PointsEntity
 import com.example.app_point.interfaces.RepositoryData
-import com.example.app_point.repository.RepositoryPoint
 
 class ViewModel (application: Application, private var mSearchRecycler: RepositoryData):
     AndroidViewModel(application) {

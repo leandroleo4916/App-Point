@@ -1,6 +1,5 @@
 package com.example.app_point.repository
 
-import android.app.Application
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor

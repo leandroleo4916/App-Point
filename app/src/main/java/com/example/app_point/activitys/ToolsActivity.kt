@@ -9,34 +9,34 @@ import android.os.Bundle
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
+import com.example.app_point.databinding.ActivityToolsBinding
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.*
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_tools.*
 import kotlinx.android.synthetic.main.recycler_employee.view.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private lateinit var mEmployeeAdapter: EmployeeAdapter
-    private lateinit var mViewModelEmployee: ViewModelEmployee
+    private val mViewModelEmployee  by viewModel<ViewModelEmployee>()
     private lateinit var constraintLayout: ConstraintLayout
-    private lateinit var businessEmployee: BusinessEmployee
+    private val businessEmployee: BusinessEmployee by inject()
+    private val binding by lazy { ActivityToolsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tools)
+        setContentView(binding.root)
 
-        mViewModelEmployee = ViewModelProvider(this).get(ViewModelEmployee::class.java)
         constraintLayout = findViewById(R.id.container_employee)
-        businessEmployee = BusinessEmployee(this)
 
         val recycler = findViewById<RecyclerView>(R.id.recycler_employee)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -49,7 +49,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     }
 
     private fun listener(){
-        image_back_tools.setOnClickListener { finish() }
+        binding.imageBackTools.setOnClickListener { finish() }
     }
 
     private fun viewModel(){
@@ -60,14 +60,15 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         val date = instanceCalendar()
         mViewModelEmployee.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> { showSnackBar(R.string.precisa_add_funcionarios)
+                0 -> {
+                    showSnackBar(R.string.precisa_add_funcionarios)
                     mEmployeeAdapter.updateFullEmployee(it)
-                    progress_employee.visibility = View.GONE
+                    binding.progressEmployee.visibility = View.GONE
                 }
                 else -> {
                     mEmployeeAdapter.updateFullEmployee(it)
                     mEmployeeAdapter.updateDateCurrent(date)
-                    progress_employee.visibility = View.GONE
+                    binding.progressEmployee.visibility = View.GONE
                 }
             }
         })
@@ -90,7 +91,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     }
 
     override fun clickEdit(position: Int) {
-        val name = recycler_employee[position].text_nome_employee.text.toString()
+        val name = binding.recyclerEmployee[position].text_nome_employee.text.toString()
         val id = businessEmployee.consultIdEmployee(name)
         val intent = Intent(this, RegisterEmployeeActivity::class.java)
         intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
@@ -99,13 +100,11 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     }
 
     override fun clickRemove(position: Int) {
-        val name = recycler_employee[position].text_nome_employee.text.toString()
+        val name = binding.recyclerEmployee[position].text_nome_employee.text.toString()
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Deseja remover $name?")
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Sim") { _, _ ->
-            removeEmployee(name)
-        }
+        alertDialog.setPositiveButton("Sim") { _, _ -> removeEmployee(name) }
         alertDialog.setNegativeButton("Não") { _, _ -> Snackbar.make(
             constraintLayout, getString(R.string.cancelado), Snackbar.LENGTH_LONG).show()
         }

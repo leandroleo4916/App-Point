@@ -13,7 +13,6 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val mAddHours: ConverterHours = ConverterHours()
 
-    // Add item the position of the Layout
     fun bind(employee: String){
         val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_employee)
         textEmployee.text = employee
@@ -24,7 +23,7 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textData.text = data
     }
 
-    fun bindHora(fullEmployee: PointsEntity, horarioEmployee: List<String> ){
+    fun bindHora(fullEmployee: PointsEntity){
 
         val textHora = itemView.findViewById<TextView>(R.id.text_hora)
         val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)

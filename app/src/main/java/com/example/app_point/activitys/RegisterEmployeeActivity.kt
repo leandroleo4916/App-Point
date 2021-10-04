@@ -12,7 +12,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,21 +19,20 @@ import androidx.core.content.ContextCompat
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
+import com.example.app_point.databinding.ActivityRegisterEmployeeBinding
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
-import kotlinx.android.synthetic.main.activity_register_employee.*
-import kotlinx.android.synthetic.main.activity_register_employee.edittext_email
-import kotlinx.android.synthetic.main.activity_register_employee.edittext_username
-import kotlinx.android.synthetic.main.activity_register_employee.image_back
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
 
-class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
+class RegisterEmployeeActivity : AppCompatActivity() {
 
     private val mBusinessEmployee: BusinessEmployee by inject()
-    private val mToByteArray: ConverterPhoto = ConverterPhoto()
+    private val mToByteArray: ConverterPhoto by inject()
+    private val binding by lazy { ActivityRegisterEmployeeBinding.inflate(layoutInflater) }
+
     private val PERMISSION_CODE = 1000
     private val IMAGE_GALERY = 1
     private val IMAGE_CAPTURE_CODE = 1001
@@ -42,7 +40,7 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_employee)
+        setContentView(binding.root)
 
         infoEmployee()
         initDate()
@@ -50,29 +48,15 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun listener() {
-        image_back.setOnClickListener(this)
-        photo_employee.setOnClickListener(this)
-        buttom_register_employee.setOnClickListener(this)
-        horario1.setOnClickListener(this)
-        horario2.setOnClickListener(this)
-        horario3.setOnClickListener(this)
-        horario4.setOnClickListener(this)
-        text_admissao.setOnClickListener(this)
-        text_aniversario.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        when (view) {
-            image_back -> finish()
-            photo_employee -> openPopUp()
-            buttom_register_employee -> extrasId()
-            horario1 -> timePicker(1)
-            horario2 -> timePicker(2)
-            horario3 -> timePicker(3)
-            horario4 -> timePicker(4)
-            text_admissao -> calendar(1)
-            text_aniversario -> calendar(2)
-        }
+        binding.imageBack.setOnClickListener { finish() }
+        binding.photoEmployee.setOnClickListener { openPopUp() }
+        binding.buttomRegisterEmployee.setOnClickListener { extrasId() }
+        binding.horario1.setOnClickListener { timePicker(1) }
+        binding.horario2.setOnClickListener { timePicker(2) }
+        binding.horario3.setOnClickListener { timePicker(3) }
+        binding.horario4.setOnClickListener { timePicker(4) }
+        binding.textAdmissao.setOnClickListener { calendar(1) }
+        binding.textAniversario.setOnClickListener { calendar(2) }
     }
 
     // Captures date and show in the EditText date and hour
@@ -81,8 +65,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
         val date = getInstance().time
         val dateTime = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
         val dataCurrent = dateTime.format(date)
-        text_admissao.text = dataCurrent
-        text_aniversario.text = dataCurrent
+        binding.textAdmissao.text = dataCurrent
+        binding.textAniversario.text = dataCurrent
     }
 
     // Direction date selected to EditText
@@ -94,8 +78,8 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             date.set(MONTH, month)
             date.set(YEAR, year)
             when (id) {
-                1 -> text_admissao.text = SimpleDateFormat("dd/MM/YYYY").format(date.time)
-                2 -> text_aniversario.text = SimpleDateFormat("dd/MM/YYYY").format(date.time)
+                1 -> binding.textAdmissao.text = SimpleDateFormat("dd/MM/YYYY").format(date.time)
+                2 -> binding.textAniversario.text = SimpleDateFormat("dd/MM/YYYY").format(date.time)
             }
         }
         DatePickerDialog(
@@ -112,10 +96,10 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             cal.set(HOUR_OF_DAY, hour)
             cal.set(MINUTE, minute)
             when (id) {
-                1 -> { horario1.text = SimpleDateFormat("HH:mm").format(cal.time) }
-                2 -> { horario2.text = SimpleDateFormat("HH:mm").format(cal.time) }
-                3 -> { horario3.text = SimpleDateFormat("HH:mm").format(cal.time) }
-                4 -> { horario4.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                1 -> { binding.horario1.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                2 -> { binding.horario2.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                3 -> { binding.horario3.text = SimpleDateFormat("HH:mm").format(cal.time) }
+                4 -> { binding.horario4.text = SimpleDateFormat("HH:mm").format(cal.time) }
             }
         }
         TimePickerDialog(
@@ -143,25 +127,25 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
             val id = extras.getInt(ConstantsEmployee.EMPLOYEE.COLUMNS.ID)
             val infoEmployee: EmployeeEntity = mBusinessEmployee.consultEmployeeWithId(id)!!
             val photo = mToByteArray.converterToBitmap(infoEmployee.photo)
-            photo_employee.setImageBitmap(photo)
-            horario1.text = infoEmployee.horario1
-            horario2.text = infoEmployee.horario2
-            horario3.text = infoEmployee.horario3
-            horario4.text = infoEmployee.horario4
-            edittext_username.setText(infoEmployee.nameEmployee)
-            edittext_email.setText(infoEmployee.emailEmployee)
-            edittext_cargo.setText(infoEmployee.cargoEmployee)
-            edittext_phone.setText(infoEmployee.phoneEmployee)
-            text_admissao.text = infoEmployee.admissaoEmployee
-            text_aniversario.text = infoEmployee.aniversarioEmployee
-            textViewHome.text = getString(R.string.editar_funcionario)
-            buttom_register_employee.text = getString(R.string.editar)
+            binding.photoEmployee.setImageBitmap(photo)
+            binding.horario1.text = infoEmployee.horario1
+            binding.horario2.text = infoEmployee.horario2
+            binding.horario3.text = infoEmployee.horario3
+            binding.horario4.text = infoEmployee.horario4
+            binding.edittextUsername.setText(infoEmployee.nameEmployee)
+            binding.edittextEmail.setText(infoEmployee.emailEmployee)
+            binding.edittextCargo.setText(infoEmployee.cargoEmployee)
+            binding.edittextPhone.setText(infoEmployee.phoneEmployee)
+            binding.textAdmissao.text = infoEmployee.admissaoEmployee
+            binding.textAniversario.text = infoEmployee.aniversarioEmployee
+            binding.textViewHome.text = getString(R.string.editar_funcionario)
+            binding.buttomRegisterEmployee.text = getString(R.string.editar)
         }
     }
 
     // Popup open camera or gallery
     private fun openPopUp() {
-        val popMenu = PopupMenu(this, photo_employee)
+        val popMenu = PopupMenu(this, binding.photoEmployee)
         popMenu.menuInflater.inflate(R.menu.popup, popMenu.menu)
         popMenu.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {
@@ -228,12 +212,12 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
 
             if (requestCode == IMAGE_GALERY) {
                 val selectedImage: Uri? = data!!.data
-                photo_employee.setImageURI(selectedImage)
+                binding.photoEmployee.setImageURI(selectedImage)
             }
 
             else if (resultCode == Activity.RESULT_OK) {
                 val extras = data!!.extras!!["data"] as Bitmap
-                photo_employee.setImageBitmap(extras)
+                binding.photoEmployee.setImageBitmap(extras)
             }
         }
     }
@@ -245,32 +229,32 @@ class RegisterEmployeeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun saveEmployee(id: Int) {
-        val image = photo_employee
+        val image = binding.photoEmployee
         val photo = mToByteArray.converterToByteArray(image)
-        val hora1 = horario1.text.toString()
-        val hora2 = horario2.text.toString()
-        val hora3 = horario3.text.toString()
-        val hora4 = horario4.text.toString()
-        val name = edittext_username.text.toString()
-        val email = edittext_email.text.toString()
-        val cargo = edittext_cargo.text.toString()
-        val phone = edittext_phone.text.toString()
-        val admissao = text_admissao.text.toString()
-        val aniversario = text_aniversario.text.toString()
+        val hora1 = binding.horario1.text.toString()
+        val hora2 = binding.horario2.text.toString()
+        val hora3 = binding.horario3.text.toString()
+        val hora4 = binding.horario4.text.toString()
+        val name = binding.edittextUsername.text.toString()
+        val email = binding.edittextEmail.text.toString()
+        val cargo = binding.edittextCargo.text.toString()
+        val phone = binding.edittextPhone.text.toString()
+        val admissao = binding.textAdmissao.text.toString()
+        val aniversario = binding.textAniversario.text.toString()
 
-        val edit_horario1 = horario1
-        val edit_horario2 = horario2
-        val edit_horario3 = horario3
-        val edit_horario4 = horario4
-        val edit_name = edittext_username
-        val edit_email = edittext_email
-        val edit_cargo = edittext_cargo
-        val edit_phone = edittext_phone
-        val edit_admissao = text_admissao
-        val edit_aniversario = text_aniversario
+        val edit_horario1 = binding.horario1
+        val edit_horario2 = binding.horario2
+        val edit_horario3 = binding.horario3
+        val edit_horario4 = binding.horario4
+        val edit_name = binding.edittextUsername
+        val edit_email = binding.edittextEmail
+        val edit_cargo = binding.edittextCargo
+        val edit_phone = binding.edittextPhone
+        val edit_admissao = binding.textAdmissao
+        val edit_aniversario = binding.textAniversario
 
         when {
-            image == null -> Toast.makeText(this, "Tire uma foto!", Toast.LENGTH_SHORT).show()
+            false -> Toast.makeText(this, "Tire uma foto!", Toast.LENGTH_SHORT).show()
             hora1 == "" -> edit_horario1.error = "Horário Obrigatório"
             hora2 == "" -> edit_horario2.error = "Horário Obrigatório"
             hora3 == "" -> edit_horario3.error = "Horário Obrigatório"

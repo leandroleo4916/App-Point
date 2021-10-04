@@ -12,7 +12,7 @@ class ConverterPhoto {
 
     fun converterToByteArray(image: ImageView): ByteArray {
         val bitmap = (image.drawable as BitmapDrawable).bitmap
-        val sizeImage = scaleDown(bitmap, 250.toFloat(), true)
+        val sizeImage = scaleDown(bitmap)
         val stream = ByteArrayOutputStream()
         sizeImage!!.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         return stream.toByteArray()
@@ -23,11 +23,11 @@ class ConverterPhoto {
         return BitmapFactory.decodeStream(photo)
     }
 
-    private fun scaleDown(realImage: Bitmap, maxImageSize: Float, filter: Boolean): Bitmap? {
-        val ratio = (maxImageSize / realImage.width).coerceAtMost(maxImageSize / realImage.height)
+    private fun scaleDown(realImage: Bitmap): Bitmap? {
+        val ratio = (250.0 / realImage.width).coerceAtMost(250.0 / realImage.height)
         val width = (ratio * realImage.width).roundToInt()
         val height = (ratio * realImage.height).roundToInt()
-        return Bitmap.createScaledBitmap(realImage, width, height, filter)
+        return Bitmap.createScaledBitmap(realImage, width, height, true)
     }
 
 }

@@ -10,7 +10,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
@@ -28,12 +27,11 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val mListEmployee: BusinessEmployee by inject()
-    private val mBusinessPoints: BusinessPoints by inject()
-    private lateinit var mPointAdapter: PointsAdapter
-    private lateinit var mSecurityPreferences: SecurityPreferences
-    private val mViewModel by viewModel<ViewModel>()
-    private lateinit var coordinator: CoordinatorLayout
+    private val listEmployee: BusinessEmployee by inject()
+    private val businessPoints: BusinessPoints by inject()
+    private val pointAdapter: PointsAdapter by inject()
+    private val securityPreferences: SecurityPreferences by inject()
+    private val vViewModel by viewModel<ViewModel>()
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,13 +40,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         animationIcons()
 
-        mSecurityPreferences = SecurityPreferences(this)
-        coordinator = findViewById(R.id.coordinator)
-
         val recycler = binding.recyclerPoints
         recycler.layoutManager = LinearLayoutManager(this)
-        mPointAdapter = PointsAdapter(application)
-        recycler.adapter = mPointAdapter
+        recycler.adapter = pointAdapter
 
         searchPoints()
         listener()
@@ -71,7 +65,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun salutation(){
 
-        val extras = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
+        val extras = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
         if (extras.isNotBlank()) {
             binding.textNameUser.text = extras
         }
@@ -96,15 +90,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun searchPoints(){
-        mViewModel.getFullEmployee("")
+        vViewModel.getFullEmployee("")
         binding.progress.visibility = View.GONE
     }
 
     private fun observe(){
-        mViewModel.employeeFullList.observe(this, {
+        vViewModel.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> showSnackBar(R.string.nenhum_ponto_registrado)
-                else -> { mPointAdapter.updateFullEmployee(it) }
+                else -> { pointAdapter.updateFullEmployee(it) }
             }
         })
     }
@@ -122,12 +116,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding.imageInOpcoes.setOnClickListener{
             startActivity(Intent(this, ToolsActivity::class.java))
         }
-        binding.imageAddPonto.setOnClickListener {
-            dialogPoint()
-        }
-        binding.optionMenu.setOnClickListener {
-            showMenuOption()
-        }
+        binding.imageAddPonto.setOnClickListener { dialogPoint() }
+        binding.optionMenu.setOnClickListener { showMenuOption() }
     }
 
     private fun dialogLogout(){
@@ -135,7 +125,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         alertDialog.setTitle(getString(R.string.deseja_sair))
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Sim") { _, _ ->
-            mSecurityPreferences.removeString()
+            securityPreferences.removeString()
             finish()
         }
         alertDialog.setNegativeButton("Não") { _, _ ->
@@ -163,7 +153,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         textData.text = dateCurrent
 
         // Captures employee list and add to spinner
-        val list = mListEmployee.consultEmployee()
+        val list = listEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
@@ -192,7 +182,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun savePoint(itemSpinner: String, dateCurrent: String, horaCurrent: String){
 
         when{
-            mBusinessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
+            businessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
                 showSnackBar(R.string.adicionado_sucesso)
                 searchPoints()
             }
@@ -227,7 +217,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(coordinator,
+        Snackbar.make(binding.coordinator,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

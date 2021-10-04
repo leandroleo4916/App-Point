@@ -6,34 +6,29 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.databinding.ActivityPontosBinding
 import com.example.app_point.model.PointsAdapter
 import com.example.app_point.model.ViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_pontos.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var mPointsAdapter: PointsAdapter
+    private val mPointsAdapter: PointsAdapter by inject()
     private val mListEmployee: BusinessEmployee by inject()
     private val mViewModel: ViewModel by viewModel()
-    private lateinit var constraintLayout: ConstraintLayout
+    private val binding by lazy { ActivityPontosBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pontos)
+        setContentView(binding.root)
 
-        constraintLayout = findViewById(R.id.container_pontos)
-
-        val recycler = findViewById<RecyclerView>(R.id.recycler_activity_pontos)
+        val recycler = binding.recyclerActivityPontos
         recycler.layoutManager = LinearLayoutManager(this)
-        mPointsAdapter = PointsAdapter(application)
         recycler.adapter = mPointsAdapter
 
         searchPoints()
@@ -43,7 +38,7 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun searchPoints(){
         mViewModel.getFullEmployee("")
-        progress_ponto.visibility = View.GONE
+        binding.progressPonto.visibility = View.GONE
     }
 
     private fun observe(){
@@ -56,10 +51,10 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun listener(){
-        image_back_pontos.setOnClickListener{
+        binding.imageBackPontos.setOnClickListener{
             finish()
         }
-        image_filter.setOnClickListener{
+        binding.imageFilter.setOnClickListener{
             dialogPoint()
         }
     }
@@ -108,7 +103,7 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(constraintLayout,
+        Snackbar.make(binding.containerPontos,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

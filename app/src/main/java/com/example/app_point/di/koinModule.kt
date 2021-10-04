@@ -9,6 +9,8 @@ import com.example.app_point.interfaces.RepositoryData
 import com.example.app_point.model.*
 import com.example.app_point.repository.RepositoryFirebase
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.utils.ConverterPhoto
+import com.example.app_point.utils.SecurityPreferences
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -76,6 +78,10 @@ val adapterModule = module {
     factory { AdapterPoints(get()) }
 }
 
+val pointsAdapterModule = module {
+    factory { PointsAdapter(get(), get()) }
+}
+
 val dataBaseEmployeeModule = module {
     factory { DataBaseEmployee(get()) }
 }
@@ -84,8 +90,17 @@ val employeeAdapterModule = module {
     factory { EmployeeAdapter(get(), get()) }
 }
 
+val securityPreferencesModule = module {
+    single { SecurityPreferences(get()) }
+}
+
+val converterPhotoModule = module {
+    factory { ConverterPhoto() }
+}
+
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelEmployeeModule, businessModule,
     pointsModule, userModule, adapterModule, viewModelPoints, viewModelMainModule,
-    repositoryPointModule, dataBaseEmployeeModule, employeeAdapterModule
+    repositoryPointModule, dataBaseEmployeeModule, employeeAdapterModule, securityPreferencesModule,
+    pointsAdapterModule, converterPhotoModule
 )

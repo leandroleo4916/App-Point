@@ -3,34 +3,33 @@ package com.example.app_point.activitys
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.constants.ConstantsUser
+import com.example.app_point.databinding.ActivityLoginBinding
 import com.example.app_point.utils.SecurityPreferences
-import kotlinx.android.synthetic.main.activity_login.*
+import org.koin.android.ext.android.inject
 
 class ActivityLoginUser : AppCompatActivity() {
 
-    private lateinit var mBusinessUser: BusinessUser
-    private lateinit var mSecurityPreferences: SecurityPreferences
+    private val mBusinessUser: BusinessUser by inject()
+    private val mSecurityPreferences: SecurityPreferences by inject()
+    private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(binding.root)
 
-        mBusinessUser = BusinessUser(this)
-        mSecurityPreferences = SecurityPreferences(this)
         listener()
         verifyLoggedUser()
     }
 
     private fun listener(){
-        text_register_user.setOnClickListener{
+        binding.textRegisterUser.setOnClickListener{
             startActivity(Intent(this, RegisterUser::class.java))
         }
-        buttom_login_user.setOnClickListener{
+        binding.buttomLoginUser.setOnClickListener{
             loginUser()
         }
     }
@@ -48,10 +47,10 @@ class ActivityLoginUser : AppCompatActivity() {
 
     // Captures and valida User Admin
     private fun loginUser(){
-        val userLogin = edittext_user.text.toString()
-        val userPassword = edittext_senha.text.toString()
-        val editTextUser = edittext_user
-        val editTextPassword = edittext_senha
+        val userLogin = binding.edittextUser.text.toString()
+        val userPassword = binding.edittextSenha.text.toString()
+        val editTextUser = binding.edittextUser
+        val editTextPassword = binding.edittextSenha
 
         when {
             userLogin == "" -> { editTextUser.error = "Digite Login" }

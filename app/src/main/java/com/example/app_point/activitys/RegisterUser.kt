@@ -3,54 +3,40 @@ package com.example.app_point.activitys
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import com.example.app_point.R
 import com.example.app_point.business.BusinessUser
-import com.example.app_point.utils.SecurityPreferences
-import kotlinx.android.synthetic.main.register_user.*
-import kotlinx.android.synthetic.main.register_user.edittext_email
-import kotlinx.android.synthetic.main.register_user.edittext_username
-import kotlinx.android.synthetic.main.register_user.image_back
+import com.example.app_point.databinding.RegisterUserBinding
+import org.koin.android.ext.android.inject
 
-class RegisterUser : AppCompatActivity(), View.OnClickListener {
+class RegisterUser : AppCompatActivity() {
 
-    private lateinit var mBusinessUser: BusinessUser
-    private lateinit var mSecurityPreferences: SecurityPreferences
+    private val mBusinessUser: BusinessUser by inject()
+    private val binding by lazy { RegisterUserBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register_user)
+        setContentView(binding.root)
 
-        mBusinessUser = BusinessUser(this)
-        mSecurityPreferences = SecurityPreferences(this)
         listener()
     }
 
     private fun listener(){
-        image_back.setOnClickListener(this)
-        text_inicio.setOnClickListener(this)
-        buttom_register_user.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        when(view){
-            image_back -> finish()
-            text_inicio -> finish()
-            buttom_register_user -> registerUser()
-        }
+        binding.imageBack.setOnClickListener { finish() }
+        binding.textInicio.setOnClickListener { finish() }
+        binding.buttomRegisterUser.setOnClickListener { registerUser() }
     }
 
     private fun registerUser(){
-        val name = edittext_username.text.toString()
-        val email = edittext_email.text.toString()
-        val senha = edittext_senha.text.toString()
-        val confirmeSenha = edittext_confirme_senha.text.toString()
+        val name = binding.edittextUsername.text.toString()
+        val email = binding.edittextEmail.text.toString()
+        val senha = binding.edittextSenha.text.toString()
+        val confirmeSenha = binding.edittextConfirmeSenha.text.toString()
 
-        val editTextName = edittext_username
-        val editTextEmail = edittext_email
-        val editTextSenha = edittext_senha
-        val editTextConfirma = edittext_confirme_senha
+        val editTextName = binding.edittextUsername
+        val editTextEmail = binding.edittextEmail
+        val editTextSenha = binding.edittextSenha
+        val editTextConfirma = binding.edittextConfirmeSenha
 
         when {
             name == ""  -> editTextName.error = "Digite Nome"

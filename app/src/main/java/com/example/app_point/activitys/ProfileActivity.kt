@@ -11,7 +11,6 @@ import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -19,13 +18,10 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.CalculationHours
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityPerfilBinding
-import com.example.app_point.entity.PointsHours
 import com.example.app_point.model.AdapterPoints
 import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_perfil.*
-import kotlinx.android.synthetic.main.activity_perfil.edit_employee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -39,7 +35,7 @@ import java.util.*
 class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private val mViewModelPoints by viewModel<ViewModelPoints>()
-    private lateinit var mAdapterPoints: AdapterPoints
+    private val mAdapterPoints: AdapterPoints by inject()
     private val mBusinessEmployee: BusinessEmployee by inject()
     private lateinit var mPhoto: ConverterPhoto
     private val handler: Handler = Handler()
@@ -57,7 +53,6 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
         recycler.layoutManager = LinearLayoutManager(this)
-        mAdapterPoints = AdapterPoints(application)
         recycler.adapter = mAdapterPoints
 
         searchEmployee()
@@ -73,27 +68,33 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
             viewModel(listEmployee[0])
         }
         else {
-            progress_points.visibility = View.GONE
+            binding.progressPoints.visibility = View.GONE
             showSnackBar(R.string.precisa_add_funcionarios)
         }
     }
 
     private fun listener(){
-        image_back_perfil.setOnClickListener{ finish() }
-        edit_employee.setOnClickListener{ editEmployee(text_name_employee.text.toString()) }
-        search.setOnClickListener{ dialogListEmployee() }
-        float_bottom_perfil.setOnClickListener{
+        binding.imageBackPerfil.setOnClickListener{ finish() }
+        binding.editEmployee.setOnClickListener{
+            editEmployee(binding.textNameEmployee.text.toString())
+        }
+        binding.search.setOnClickListener{ dialogListEmployee() }
+        binding.floatBottomPerfil.setOnClickListener{
             startActivity(Intent(this, RegisterEmployeeActivity::class.java))
             finish()
         }
-        text_name_employee.setOnClickListener{ editEmployee(text_name_employee.text.toString()) }
-        search_date.setOnClickListener{ calendar() }
-        image_photo_employee.setOnClickListener{ editEmployee(text_name_employee.text.toString()) }
+        binding.textNameEmployee.setOnClickListener{
+            editEmployee(binding.textNameEmployee.text.toString())
+        }
+        binding.searchDate.setOnClickListener{ calendar() }
+        binding.imagePhotoEmployee.setOnClickListener{
+            editEmployee(binding.textNameEmployee.text.toString())
+        }
     }
 
     @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun calendar(){
-        val nameEmployee = text_name_employee.text.toString()
+        val nameEmployee = binding.textNameEmployee.text.toString()
         val date = Calendar.getInstance()
 
         val dateTime = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -102,7 +103,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
             date.set(Calendar.YEAR, year)
             val dateSelected = SimpleDateFormat("dd/MM/YYYY").format(date.time)
             viewModelSelected(nameEmployee, dateSelected)
-            text_date_selected.text = dateSelected
+            binding.textDateSelected.text = dateSelected
         }
         DatePickerDialog(
             this, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH),
@@ -111,11 +112,11 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
     private fun searchByNameEmployee(name: String){
         val dataEmployee = mBusinessEmployee.consultDataEmployee(name)
-        text_name_employee.text = dataEmployee!!.nameEmployee
-        text_cargo_employee.text = dataEmployee.cargoEmployee
+        binding.textNameEmployee.text = dataEmployee!!.nameEmployee
+        binding.textCargoEmployee.text = dataEmployee.cargoEmployee
         val photo = dataEmployee.photo
         val photoConverter = mPhoto.converterToBitmap(photo)
-        image_photo_employee.setImageBitmap(photoConverter)
+        binding.imagePhotoEmployee.setImageBitmap(photoConverter)
 
         val points = mViewModelPoints.getFullPointsByName(name)
 
@@ -128,8 +129,8 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
             withContext(Dispatchers.Default) {
                 while (pStatus1 <= hoursMake) {
                     handler.post {
-                        image_toolbar_hrs.progress = pStatus1
-                        edit_hrs_feitas.text = pStatus1.toString()
+                        binding.imageToolbarHrs.progress = pStatus1
+                        binding.editHrsFeitas.text = pStatus1.toString()
                     }
                     try {
                         Thread.sleep(20)
@@ -145,8 +146,8 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
             withContext(Dispatchers.Default) {
                 while (pStatus2 <= hoursExtra) {
                     handler.post {
-                        image_toolbar_.progress = pStatus2
-                        edit_hrs_extras.text = pStatus2.toString()
+                        binding.imageToolbar.progress = pStatus2
+                        binding.editHrsExtras.text = pStatus2.toString()
                     }
                     try {
                         Thread.sleep(20)
@@ -160,14 +161,14 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     }
 
     private fun viewModelSelected(name: String, date: String){
-        progress_points.visibility = View.VISIBLE
+        binding.progressPoints.visibility = View.VISIBLE
         mViewModelPoints.getFullEmployee(name, date)
     }
 
     private fun viewModel(name: String){
         mViewModelPoints.getFullEmployee(name, "")
-        text_date_selected.text = getString(R.string.todos)
-        progress_points.visibility = View.GONE
+        binding.textDateSelected.text = getString(R.string.todos)
+        binding.progressPoints.visibility = View.GONE
     }
 
     private fun observer(){
@@ -175,11 +176,12 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
             when (it.size) {
                 0 -> {
                     showSnackBar(R.string.nenhum_ponto_registrado)
-                    progress_points.visibility = View.GONE
+                    mAdapterPoints.updateFullEmployee(it)
+                    binding.progressPoints.visibility = View.GONE
                 }
                 else -> {
                     mAdapterPoints.updateFullEmployee(it)
-                    progress_points.visibility = View.GONE
+                    binding.progressPoints.visibility = View.GONE
                 }
             }
         })
@@ -242,7 +244,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(constraintLayout,
+        Snackbar.make(binding.containerPerfil,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

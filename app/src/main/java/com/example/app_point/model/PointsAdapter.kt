@@ -11,11 +11,10 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.PointsEntity
 import com.example.app_point.utils.ConverterPhoto
 
-@Suppress("UNREACHABLE_CODE")
-class PointsAdapter(private val application: Application) : RecyclerView.Adapter<PointsViewHolder>() {
+class PointsAdapter(private val application: Application, private val mBusiness: BusinessEmployee)
+    : RecyclerView.Adapter<PointsViewHolder>() {
 
     private var mListFullEmployee: ArrayList<PointsEntity> = arrayListOf()
-    private val mBusiness: BusinessEmployee = BusinessEmployee(application)
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
     // Create the list of the layout
