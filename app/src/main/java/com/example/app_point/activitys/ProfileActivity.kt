@@ -1,6 +1,5 @@
 package com.example.app_point.activitys
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -22,11 +21,8 @@ import com.example.app_point.model.AdapterPoints
 import com.example.app_point.model.ViewModelPoints
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -40,7 +36,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     private lateinit var mPhoto: ConverterPhoto
     private val handler: Handler = Handler()
     private lateinit var constraintLayout: ConstraintLayout
-    private lateinit var calculationHours: CalculationHours
+    private val calculationHours: CalculationHours by inject()
     private val binding by lazy { ActivityPerfilBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +45,6 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
         constraintLayout = findViewById(R.id.container_perfil)
         mPhoto = ConverterPhoto()
-        calculationHours = CalculationHours()
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -92,16 +87,16 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         }
     }
 
-    @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun calendar(){
         val nameEmployee = binding.textNameEmployee.text.toString()
         val date = Calendar.getInstance()
+        val local = Locale("pt", "BR")
 
         val dateTime = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             date.set(Calendar.MONTH, month)
             date.set(Calendar.YEAR, year)
-            val dateSelected = SimpleDateFormat("dd/MM/YYYY").format(date.time)
+            val dateSelected = SimpleDateFormat("dd/mm/yyyy", local).format(date.time)
             viewModelSelected(nameEmployee, dateSelected)
             binding.textDateSelected.text = dateSelected
         }
@@ -120,9 +115,9 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
         val points = mViewModelPoints.getFullPointsByName(name)
 
-        val hoursMake = 0
+        val hoursMake = 120
         var pStatus1 = 0
-        val hoursExtra = 0
+        val hoursExtra = 22
         var pStatus2 = 0
 
         CoroutineScope(Main).launch {
@@ -132,11 +127,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
                         binding.imageToolbarHrs.progress = pStatus1
                         binding.editHrsFeitas.text = pStatus1.toString()
                     }
-                    try {
-                        Thread.sleep(20)
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    }
+                    delay(20)
                     pStatus1++
                 }
             }
@@ -149,11 +140,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
                         binding.imageToolbar.progress = pStatus2
                         binding.editHrsExtras.text = pStatus2.toString()
                     }
-                    try {
-                        Thread.sleep(20)
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    }
+                    delay(20)
                     pStatus2++
                 }
             }

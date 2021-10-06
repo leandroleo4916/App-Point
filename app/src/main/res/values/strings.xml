@@ -70,4 +70,11 @@
     <string name="nao_foi_possivel_remover">Não foi possível remover!</string>
     <string name="deseja_remover_funcionario">Deseja remover este funcionário?</string>
     <string name="editado_sucesso">Funcionário editado com sucesso</string>
+    <string name="horario_obrigatorio">Horário Obrigatório</string>
+    <string name="digite_nome">Digite Nome</string>
+    <string name="digite_email">Digite Email</string>
+    <string name="digite_cargo">Digite Cargo</string>
+    <string name="digite_phone">Digite Telefone</string>
+    <string name="digite_admissao">Digite Admissão</string>
+    <string name="digite_aniversario">Digite Aniversário</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.app_point.di
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.business.BusinessUser
+import com.example.app_point.business.CalculationHours
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.interfaces.EmployeeApi
 import com.example.app_point.interfaces.RepositoryData
@@ -98,9 +99,13 @@ val converterPhotoModule = module {
     factory { ConverterPhoto() }
 }
 
+val calculationHoursModule = module {
+    factory { CalculationHours() }
+}
+
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelEmployeeModule, businessModule,
     pointsModule, userModule, adapterModule, viewModelPoints, viewModelMainModule,
     repositoryPointModule, dataBaseEmployeeModule, employeeAdapterModule, securityPreferencesModule,
-    pointsAdapterModule, converterPhotoModule
+    pointsAdapterModule, converterPhotoModule, calculationHoursModule
 )

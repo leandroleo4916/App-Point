@@ -43,7 +43,7 @@ class PointsAdapter(private val application: Application, private val mBusiness:
         photoConvert?.let { holder.bindPhoto(it) }
 
         val horarioEmployee = mBusiness.consultHours(fullEmployee.employee.toString())!!
-        holder.bindHora(fullEmployee, horarioEmployee)
+        holder.bindHora(fullEmployee)
     }
 
     override fun getItemCount(): Int {

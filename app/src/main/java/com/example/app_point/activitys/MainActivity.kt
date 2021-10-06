@@ -1,6 +1,5 @@
 package com.example.app_point.activitys
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
@@ -135,13 +134,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         dialog.show()
     }
 
-    @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun dialogPoint(){
         val date = Calendar.getInstance().time
-        val dateTime = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
+        val local = Locale("pt", "BR")
+        val dateTime = SimpleDateFormat("dd/mm/yyyy", local)
 
         // Captures current hour
-        val hora = SimpleDateFormat("HH:mm")
+        val hora = SimpleDateFormat("HH:mm", local)
         val hourCurrent = hora.format(date)
 
         // Captures current date
