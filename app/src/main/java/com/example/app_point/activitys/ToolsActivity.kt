@@ -35,7 +35,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val recycler = findViewById<RecyclerView>(R.id.recycler_employee)
+        val recycler = binding.recyclerEmployee
         recycler.layoutManager = LinearLayoutManager(this)
         mEmployeeAdapter = EmployeeAdapter(application, this)
         recycler.adapter = mEmployeeAdapter

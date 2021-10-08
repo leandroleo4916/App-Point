@@ -11,6 +11,7 @@ import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.database.DataBaseUser
 import com.example.app_point.interfaces.EmployeeApi
 import com.example.app_point.model.*
+import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryFirebase
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.repository.RepositoryUser
@@ -47,6 +48,22 @@ val retrofitModule = module {
     single<EmployeeApi> { get<Retrofit>().create(EmployeeApi::class.java) }
 }
 
+val repositoryUserModule = module {
+    single { RepositoryUser(get()) }
+}
+
+val repositoryEmployeeModule = module {
+    single { RepositoryEmployee(get()) }
+}
+
+val repositoryPointModule = module {
+    single { RepositoryPoint(get()) }
+}
+
+val repositoryModule = module {
+    single { RepositoryFirebase(get()) }
+}
+
 val businessModule = module {
     factory { BusinessEmployee(get()) }
 }
@@ -59,12 +76,8 @@ val userModule = module {
     factory { BusinessUser(get(), get()) }
 }
 
-val repositoryModule = module {
-    single { RepositoryFirebase(get()) }
-}
-
 val viewModelEmployeeModule = module {
-    viewModel { ViewModelEmployee(get()) }
+    viewModel { ViewModelEmployee(get(), get(), get()) }
 }
 
 val viewModelPoints = module {
@@ -91,14 +104,6 @@ val securityPreferencesModule = module {
     single { SecurityPreferences(get()) }
 }
 
-val repositoryUserModule = module {
-    single { RepositoryUser(get()) }
-}
-
-val repositoryPointModule = module {
-    single { RepositoryPoint(get()) }
-}
-
 val databaseUserModule = module {
     single { DataBaseUser(get()) }
 }
@@ -116,5 +121,5 @@ val appModules = listOf(
     pointsModule, userModule, adapterModule, viewModelPoints, repositoryPointModule,
     dataBaseEmployeeModule, employeeAdapterModule, securityPreferencesModule,
     pointsAdapterModule, converterPhotoModule, calculationHoursModule, repositoryUserModule,
-    databaseUserModule
+    databaseUserModule, repositoryEmployeeModule
 )

@@ -8,10 +8,10 @@ import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 
-class ViewModelEmployee (application: Application): AndroidViewModel(application) {
-
-    private var employee: RepositoryEmployee = RepositoryEmployee (application)
-    private var points: RepositoryPoint = RepositoryPoint (application)
+class ViewModelEmployee (application: Application,
+                         private var employee: RepositoryEmployee,
+                         private var points: RepositoryPoint)
+                         : AndroidViewModel(application) {
 
     private val mEmployeeFullList = MutableLiveData<ArrayList<EmployeeEntity>>()
     val employeeFullList: LiveData<ArrayList<EmployeeEntity>> = mEmployeeFullList
