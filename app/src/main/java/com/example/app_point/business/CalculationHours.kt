@@ -10,33 +10,34 @@ class CalculationHours {
     fun calculationHours(entity: PointsHours, hours: ArrayList<HoursEntity>): ArrayList<EntityExtra>{
 
         val ret: ArrayList<EntityExtra> = arrayListOf()
+        val schedule = scheduleWork(entity)
 
-        val horario1 = convertHoursInMinutes(entity.horario1)
-        val horario2 = convertHoursInMinutes(entity.horario2)
-        val horario3 = convertHoursInMinutes(entity.horario3)
-        val horario4 = convertHoursInMinutes(entity.horario4)
-        val horario  = (horario2 - horario1) + (horario4 - horario3)
-
+        val value = hours.size
         var position = 0
         var extra = 0
         var horas = 0
-        while (hours[position].hora1 != "" || hours[position].hora2 != "" ||
-               hours[position].hora3 != "" || hours[position].hora4 != "" ){
+        
+        while (value != position){
 
             val h1 = convertHoursInMinutes(hours[position].hora1!!)
             val h2 = convertHoursInMinutes(hours[position].hora2!!)
             val h3 = convertHoursInMinutes(hours[position].hora3!!)
             val h4 = convertHoursInMinutes(hours[position].hora4!!)
-            val total = (h2 - h1) + (h4 - h3)
 
-            if (total > horario){
-                val x = total - horario
-                extra += x
-                horas += horario
-                position++
+            if (h1 != null || h2 != null || h3 != null || h4 != null){
+                val total = (h2 - h1) + (h4 - h3)
+                if (total > schedule){
+                    val x = total - schedule
+                    extra += x
+                    horas += schedule
+                    position++
+                }
+                else{
+                    horas += total
+                    position++
+                }
             }
             else{
-                horas += total
                 position++
             }
         }
@@ -48,6 +49,14 @@ class CalculationHours {
         return ret
     }
 
+    private fun scheduleWork(entity: PointsHours): Int{
+        val h1 = convertHoursInMinutes(entity.horario1)
+        val h2 = convertHoursInMinutes(entity.horario2)
+        val h3 = convertHoursInMinutes(entity.horario3)
+        val h4 = convertHoursInMinutes(entity.horario4)
+        return (h2 - h1) + (h4 - h3)
+    }
+
     private fun convertHoursInMinutes(hora: String): Int{
         val minutes = hora.split(":")
         return (minutes[0].toInt() * 60) + minutes[1].toInt()
@@ -55,14 +64,12 @@ class CalculationHours {
 
     private fun convertMinutesInHours(minutes: Int): ArrayList<Int>{
         val array: ArrayList<Int> = arrayListOf()
-        var min = minutes
         var hour = 0
-        while (min >= 60){
-            min - 60
+        while (minutes >= 60){
+            minutes - 60
             hour++
         }
-        array.add(hour, min)
+        array.add(hour, minutes)
         return array
-
     }
 }

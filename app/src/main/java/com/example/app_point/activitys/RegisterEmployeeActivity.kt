@@ -63,7 +63,7 @@ class RegisterEmployeeActivity : AppCompatActivity() {
     private fun initDate(){
         val date = getInstance().time
         val local = Locale("pt", "BR")
-        val dateTime = SimpleDateFormat("dd/mm/yyyy", local)
+        val dateTime = SimpleDateFormat("dd/MM/yyyy", local)
         val dataCurrent = dateTime.format(date)
         binding.textAdmissao.text = dataCurrent
         binding.textAniversario.text = dataCurrent
@@ -79,9 +79,9 @@ class RegisterEmployeeActivity : AppCompatActivity() {
             date.set(YEAR, year)
             when (id) {
                 1 -> binding.textAdmissao.text =
-                    SimpleDateFormat("dd/mm/yyyy", local).format(date.time)
+                    SimpleDateFormat("dd/MM/yyyy", local).format(date.time)
                 2 -> binding.textAniversario.text =
-                    SimpleDateFormat("dd/mm/yyyy", local).format(date.time)
+                    SimpleDateFormat("dd/MM/yyyy", local).format(date.time)
             }
         }
         DatePickerDialog(

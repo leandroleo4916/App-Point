@@ -15,12 +15,12 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.databinding.ActivityMainBinding
-import com.example.app_point.model.PointsAdapter
-import com.example.app_point.model.ViewModel
+import com.example.app_point.adapters.PointsAdapter
+import com.example.app_point.model.ViewModelMain
+import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,8 +29,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val listEmployee: BusinessEmployee by inject()
     private val businessPoints: BusinessPoints by inject()
     private val pointAdapter: PointsAdapter by inject()
+    private val repositoryPoint: RepositoryPoint by inject()
     private val securityPreferences: SecurityPreferences by inject()
-    private val vViewModel by viewModel<ViewModel>()
+    private lateinit var viewModelMain: ViewModelMain
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setContentView(binding.root)
 
         animationIcons()
+        viewModelMain = ViewModelMain(application, repositoryPoint)
 
         val recycler = binding.recyclerPoints
         recycler.layoutManager = LinearLayoutManager(this)
@@ -89,12 +91,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun searchPoints(){
-        vViewModel.getFullEmployee("")
+        viewModelMain.getFullEmployee("")
         binding.progress.visibility = View.GONE
     }
 
     private fun observe(){
-        vViewModel.employeeFullList.observe(this, {
+        viewModelMain.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> showSnackBar(R.string.nenhum_ponto_registrado)
                 else -> { pointAdapter.updateFullEmployee(it) }
@@ -137,7 +139,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun dialogPoint(){
         val date = Calendar.getInstance().time
         val local = Locale("pt", "BR")
-        val dateTime = SimpleDateFormat("dd/mm/yyyy", local)
+        val dateTime = SimpleDateFormat("dd/MM/yyyy", local)
 
         // Captures current hour
         val hora = SimpleDateFormat("HH:mm", local)

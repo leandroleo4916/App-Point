@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -17,25 +16,25 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.CalculationHours
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityPerfilBinding
-import com.example.app_point.model.AdapterPoints
+import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.model.ViewModelPoints
+import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val mViewModelPoints by viewModel<ViewModelPoints>()
+    private lateinit var viewModelPoints: ViewModelPoints
     private val mAdapterPoints: AdapterPoints by inject()
     private val mBusinessEmployee: BusinessEmployee by inject()
+    private val repositoryPoint: RepositoryPoint by inject()
     private lateinit var mPhoto: ConverterPhoto
     private val handler: Handler = Handler()
-    private lateinit var constraintLayout: ConstraintLayout
     private val calculationHours: CalculationHours by inject()
     private val binding by lazy { ActivityPerfilBinding.inflate(layoutInflater) }
 
@@ -43,7 +42,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        constraintLayout = findViewById(R.id.container_perfil)
+        viewModelPoints = ViewModelPoints(application, repositoryPoint)
         mPhoto = ConverterPhoto()
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
@@ -96,7 +95,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
             date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             date.set(Calendar.MONTH, month)
             date.set(Calendar.YEAR, year)
-            val dateSelected = SimpleDateFormat("dd/mm/yyyy", local).format(date.time)
+            val dateSelected = SimpleDateFormat("dd/MM/yyyy", local).format(date.time)
             viewModelSelected(nameEmployee, dateSelected)
             binding.textDateSelected.text = dateSelected
         }
@@ -113,7 +112,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         val photoConverter = mPhoto.converterToBitmap(photo)
         binding.imagePhotoEmployee.setImageBitmap(photoConverter)
 
-        val points = mViewModelPoints.getFullPointsByName(name)
+        val points = viewModelPoints.getFullPointsByName(name)
 
         val hoursMake = 120
         var pStatus1 = 0
@@ -149,17 +148,17 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
     private fun viewModelSelected(name: String, date: String){
         binding.progressPoints.visibility = View.VISIBLE
-        mViewModelPoints.getFullEmployee(name, date)
+        viewModelPoints.getFullEmployee(name, date)
     }
 
     private fun viewModel(name: String){
-        mViewModelPoints.getFullEmployee(name, "")
+        viewModelPoints.getFullEmployee(name, "")
         binding.textDateSelected.text = getString(R.string.todos)
         binding.progressPoints.visibility = View.GONE
     }
 
     private fun observer(){
-        mViewModelPoints.employeeFullList.observe(this, {
+        viewModelPoints.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> {
                     showSnackBar(R.string.nenhum_ponto_registrado)

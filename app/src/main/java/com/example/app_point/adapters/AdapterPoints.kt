@@ -1,4 +1,4 @@
-package com.example.app_point.model
+package com.example.app_point.adapters
 
 import android.app.Application
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.PointsEntity
+import com.example.app_point.model.ViewHolderPoints
 
 class AdapterPoints(private val application: Application) : RecyclerView.Adapter<ViewHolderPoints>() {
 

@@ -29,32 +29,27 @@ class ActivityLoginUser : AppCompatActivity() {
         binding.textRegisterUser.setOnClickListener{
             startActivity(Intent(this, RegisterUser::class.java))
         }
-        binding.buttomLoginUser.setOnClickListener{
-            loginUser()
-        }
+        binding.buttomLoginUser.setOnClickListener{ loginUser() }
     }
 
-    // Login automatic
     private fun verifyLoggedUser(){
         val email = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
         val password = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
 
-        if (email.isNotBlank() && password.isNotBlank()){
+        if (email.isNotEmpty() && password.isNotEmpty()){
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
 
-    // Captures and valida User Admin
     private fun loginUser(){
         val userLogin = binding.edittextUser.text.toString()
         val userPassword = binding.edittextSenha.text.toString()
-        val editTextUser = binding.edittextUser
-        val editTextPassword = binding.edittextSenha
 
         when {
-            userLogin == "" -> { editTextUser.error = "Digite Login" }
-            userPassword == "" -> { editTextPassword.error = "Digite Senha" }
+            userLogin.isEmpty() -> { binding.edittextUser.error = "Digite Login" }
+            userPassword.isEmpty() -> { binding.edittextSenha.error = "Digite Senha" }
+
             mBusinessUser.storeUser(userLogin, userPassword) -> {
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()

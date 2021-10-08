@@ -7,11 +7,11 @@ import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
+import com.example.app_point.adapters.EmployeeAdapter
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityToolsBinding
@@ -27,16 +27,13 @@ import java.util.*
 class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private lateinit var mEmployeeAdapter: EmployeeAdapter
-    private val mViewModelEmployee  by viewModel<ViewModelEmployee>()
-    private lateinit var constraintLayout: ConstraintLayout
+    private val vViewModelEmployee  by viewModel<ViewModelEmployee>()
     private val businessEmployee: BusinessEmployee by inject()
     private val binding by lazy { ActivityToolsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        constraintLayout = findViewById(R.id.container_employee)
 
         val recycler = findViewById<RecyclerView>(R.id.recycler_employee)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -53,12 +50,12 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     }
 
     private fun viewModel(){
-        mViewModelEmployee.getFullEmployee()
+        vViewModelEmployee.getFullEmployee()
     }
 
     private fun observer(){
         val date = instanceCalendar()
-        mViewModelEmployee.employeeFullList.observe(this, {
+        vViewModelEmployee.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> {
                     showSnackBar(R.string.precisa_add_funcionarios)
@@ -76,13 +73,13 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private fun instanceCalendar(): String{
         val calendar = Calendar.getInstance().time
-        val dateCalendar = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
+        val dateCalendar = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
         return dateCalendar.format(calendar)
     }
 
     private fun removeEmployee(name: String){
-        if (mViewModelEmployee.removeEmployee(name)){
-            mViewModelEmployee.removePoints(name)
+        if (vViewModelEmployee.removeEmployee(name)){
+            vViewModelEmployee.removePoints(name)
             showSnackBar(R.string.removido_sucesso)
             viewModel()
         }else {
@@ -105,15 +102,13 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         alertDialog.setTitle("Deseja remover $name?")
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Sim") { _, _ -> removeEmployee(name) }
-        alertDialog.setNegativeButton("Não") { _, _ -> Snackbar.make(
-            constraintLayout, getString(R.string.cancelado), Snackbar.LENGTH_LONG).show()
-        }
+        alertDialog.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
         val dialog = alertDialog.create()
         dialog.show()
     }
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(constraintLayout,
+        Snackbar.make(binding.containerEmployee,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

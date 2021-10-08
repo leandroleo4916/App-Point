@@ -1,4 +1,4 @@
-package com.example.app_point.model
+package com.example.app_point.adapters
 
 import android.app.Application
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.PointsEntity
+import com.example.app_point.model.PointsViewHolder
 import com.example.app_point.utils.ConverterPhoto
 
 class PointsAdapter(private val application: Application, private val mBusiness: BusinessEmployee)
@@ -17,7 +18,6 @@ class PointsAdapter(private val application: Application, private val mBusiness:
     private var mListFullEmployee: ArrayList<PointsEntity> = arrayListOf()
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
-    // Create the list of the layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointsViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_points, parent, false)
@@ -50,7 +50,6 @@ class PointsAdapter(private val application: Application, private val mBusiness:
         return mListFullEmployee.count()
     }
 
-    // Function inverter list
     fun updateFullEmployee(list: ArrayList<PointsEntity>){
         mListFullEmployee = when {
             list.size > 1 -> { list.reversed() as ArrayList<PointsEntity> }

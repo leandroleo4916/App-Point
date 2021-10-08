@@ -10,22 +10,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.databinding.ActivityPontosBinding
-import com.example.app_point.model.PointsAdapter
-import com.example.app_point.model.ViewModel
+import com.example.app_point.adapters.PointsAdapter
+import com.example.app_point.model.ViewModelMain
+import com.example.app_point.repository.RepositoryPoint
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private val mPointsAdapter: PointsAdapter by inject()
     private val mListEmployee: BusinessEmployee by inject()
-    private val mViewModel: ViewModel by viewModel()
+    private val repositoryPoint: RepositoryPoint by inject()
+    private lateinit var viewModelMain: ViewModelMain
     private val binding by lazy { ActivityPontosBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        viewModelMain = ViewModelMain(application, repositoryPoint)
 
         val recycler = binding.recyclerActivityPontos
         recycler.layoutManager = LinearLayoutManager(this)
@@ -37,12 +40,12 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun searchPoints(){
-        mViewModel.getFullEmployee("")
+        viewModelMain.getFullEmployee("")
         binding.progressPonto.visibility = View.GONE
     }
 
     private fun observe(){
-        mViewModel.employeeFullList.observe(this, {
+        viewModelMain.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> showSnackBar(R.string.nenhum_ponto_registrado)
                 else -> { mPointsAdapter.updateFullEmployee(it) }
@@ -80,13 +83,13 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             // Capture item Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
-                else -> { mViewModel.getFullEmployee(itemSpinner.toString()) }
+                else -> { viewModelMain.getFullEmployee(itemSpinner.toString()) }
             }
         }
         alertDialog.setNegativeButton(getString(R.string.todos)) { _, _ ->
             when (listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
-                else -> { mViewModel.getFullEmployee("") }
+                else -> { viewModelMain.getFullEmployee("") }
             }
         }
         alertDialog.create().show()

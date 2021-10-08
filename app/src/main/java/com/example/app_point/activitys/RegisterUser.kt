@@ -33,16 +33,11 @@ class RegisterUser : AppCompatActivity() {
         val senha = binding.edittextSenha.text.toString()
         val confirmeSenha = binding.edittextConfirmeSenha.text.toString()
 
-        val editTextName = binding.edittextUsername
-        val editTextEmail = binding.edittextEmail
-        val editTextSenha = binding.edittextSenha
-        val editTextConfirma = binding.edittextConfirmeSenha
-
         when {
-            name == ""  -> editTextName.error = "Digite Nome"
-            email == "" -> editTextEmail.error = "Digite Email"
-            senha == "" -> editTextSenha.error == "Digite Senha"
-            confirmeSenha == "" -> editTextConfirma.error == "Confirme Senha"
+            name.isEmpty()  -> binding.edittextUsername.error = "Digite Nome"
+            email.isEmpty() -> binding.edittextEmail.error = "Digite Email"
+            senha.isEmpty() -> binding.edittextSenha.error == "Digite Senha"
+            confirmeSenha.isEmpty() -> binding.edittextConfirmeSenha.error == "Confirme Senha"
             senha != confirmeSenha -> Toast.makeText(this, getString(R.string.senhas_diferentes),
                 Toast.LENGTH_SHORT).show()
             else -> createEmailAndPassword(name, email, senha)
@@ -51,7 +46,7 @@ class RegisterUser : AppCompatActivity() {
 
     private fun createEmailAndPassword(name: String, email: String, password: String){
 
-        if (mBusinessUser.getUser(name, email, password)){
+        if (mBusinessUser.setUser(name, email, password)){
             startActivity(Intent(this, MainActivity::class.java))
             Toast.makeText(this, getString(R.string.bem_vindo),
                 Toast.LENGTH_SHORT).show()

@@ -1,4 +1,4 @@
-package com.example.app_point.activitys
+package com.example.app_point.di
 
 import android.app.Application
 import com.example.app_point.di.appModules

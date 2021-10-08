@@ -1,15 +1,19 @@
 package com.example.app_point.di
 
+import com.example.app_point.adapters.AdapterPoints
+import com.example.app_point.adapters.EmployeeAdapter
+import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.business.CalculationHours
 import com.example.app_point.database.DataBaseEmployee
+import com.example.app_point.database.DataBaseUser
 import com.example.app_point.interfaces.EmployeeApi
-import com.example.app_point.interfaces.RepositoryData
 import com.example.app_point.model.*
 import com.example.app_point.repository.RepositoryFirebase
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.repository.RepositoryUser
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.SecurityPreferences
 import com.google.firebase.database.DatabaseReference
@@ -51,12 +55,8 @@ val pointsModule = module {
     factory { BusinessPoints(get()) }
 }
 
-val repositoryPointModule = module {
-    single<RepositoryData> { RepositoryPoint(get()) }
-}
-
 val userModule = module {
-    factory { BusinessUser(get()) }
+    factory { BusinessUser(get(), get()) }
 }
 
 val repositoryModule = module {
@@ -65,10 +65,6 @@ val repositoryModule = module {
 
 val viewModelEmployeeModule = module {
     viewModel { ViewModelEmployee(get()) }
-}
-
-val viewModelMainModule = module {
-    viewModel { ViewModel(get(), get()) }
 }
 
 val viewModelPoints = module {
@@ -95,6 +91,18 @@ val securityPreferencesModule = module {
     single { SecurityPreferences(get()) }
 }
 
+val repositoryUserModule = module {
+    single { RepositoryUser(get()) }
+}
+
+val repositoryPointModule = module {
+    single { RepositoryPoint(get()) }
+}
+
+val databaseUserModule = module {
+    single { DataBaseUser(get()) }
+}
+
 val converterPhotoModule = module {
     factory { ConverterPhoto() }
 }
@@ -105,7 +113,8 @@ val calculationHoursModule = module {
 
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelEmployeeModule, businessModule,
-    pointsModule, userModule, adapterModule, viewModelPoints, viewModelMainModule,
-    repositoryPointModule, dataBaseEmployeeModule, employeeAdapterModule, securityPreferencesModule,
-    pointsAdapterModule, converterPhotoModule, calculationHoursModule
+    pointsModule, userModule, adapterModule, viewModelPoints, repositoryPointModule,
+    dataBaseEmployeeModule, employeeAdapterModule, securityPreferencesModule,
+    pointsAdapterModule, converterPhotoModule, calculationHoursModule, repositoryUserModule,
+    databaseUserModule
 )

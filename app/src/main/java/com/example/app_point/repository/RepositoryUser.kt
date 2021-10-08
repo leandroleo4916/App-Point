@@ -7,10 +7,9 @@ import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseUser
 import com.example.app_point.entity.UserEntity
 
-class RepositoryUser(context: Context) {
+class RepositoryUser(private val mDataBaseUser: DataBaseUser) {
 
-    private val mDataBaseUser: DataBaseUser = DataBaseUser(context)
-    fun getUser(name: String, email: String, password: String): Boolean {
+    fun setUser(name: String, email: String, password: String): Boolean {
 
         return try{
             val db = mDataBaseUser.writableDatabase
@@ -25,7 +24,7 @@ class RepositoryUser(context: Context) {
         } catch (e: Exception){ false }
     }
 
-    fun storeUser(email: String, senha: String): UserEntity? {
+    fun storeUser(email: String, password: String): UserEntity? {
 
         var user: UserEntity? = null
         try {
@@ -40,9 +39,9 @@ class RepositoryUser(context: Context) {
             )
 
             val selection = "${ConstantsUser.USER.COLUNAS.EMAIL} = ? AND " +
-                    "${ConstantsUser.USER.COLUNAS.PASSWORD} = ?"
+                            "${ConstantsUser.USER.COLUNAS.PASSWORD} = ?"
 
-            val selectionArgs = arrayOf(email, senha)
+            val selectionArgs = arrayOf(email, password)
 
             cursor = db.query(
                 ConstantsUser.USER.TABLE_NAME,
