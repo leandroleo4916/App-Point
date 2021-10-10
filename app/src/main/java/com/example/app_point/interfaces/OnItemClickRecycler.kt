@@ -1,6 +1,6 @@
 package com.example.app_point.interfaces
 
 interface OnItemClickRecycler {
-    fun clickEdit(position: Int)
-    fun clickRemove(position: Int)
+    fun clickEdit(id: Int)
+    fun clickRemove(id: Int, name: String)
 }

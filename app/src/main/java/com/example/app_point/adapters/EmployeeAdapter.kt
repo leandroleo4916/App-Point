@@ -1,7 +1,6 @@
 package com.example.app_point.adapters
 
 import android.app.Application
-import android.content.Context
 import android.graphics.Bitmap
 import android.icu.util.Calendar
 import android.view.LayoutInflater
@@ -40,22 +39,19 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
 
         val fullEmployee = mListFullEmployee[position]
         val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterToBitmap(it) }
+        val points = searchPoints.fullPointsToName(fullEmployee.nameEmployee, dateCurrent)
 
         holder.bind(fullEmployee.nameEmployee, fullEmployee.cargoEmployee, fullEmployee.admissaoEmployee)
         holder.bindPhoto(photoConvert)
-
-        val points = searchPoints.fullPointsToName(fullEmployee.nameEmployee, dateCurrent)
         holder.bindData(dateCurrent)
         holder.bindHora(points)
     }
 
     inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        //private val mAddHours: ConverterHours = ConverterHours()
-
         fun bind(employee: String, cargo: String, admission: String){
 
-            val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_employee)
+            val textEmployee = itemView.findViewById<TextView>(R.id.text_view_name_employee)
             textEmployee.text = employee
             val textCargo = itemView.findViewById<TextView>(R.id.text_cargo)
             textCargo.text = cargo
@@ -66,7 +62,8 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
         fun bindData(date: String){
 
             val calendar = Calendar.getInstance().time
-            val dateCalendar = SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH)
+            val local = Locale("pt", "BR")
+            val dateCalendar = SimpleDateFormat("dd/MM/yyyy", local)
             val vDate = dateCalendar.format(calendar)
             val textData = itemView.findViewById<TextView>(R.id.text_data)
 
@@ -107,19 +104,6 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
                     textHora4.text = points[0].hora4
                 }
             }
-            /*
-            when {
-                minutesCurrent < minutes -> {
-                    imageBack.setImageResource(R.color.colorGreen)
-                }
-                minutesCurrent > minutes + 15 -> {
-                    imageBack.setImageResource(R.color.colorRed)
-                }
-                else -> {
-                    imageBack.setImageResource(R.color.colorYellow)
-                }
-            }
-             */
         }
 
         fun bindPhoto(image: Bitmap){
@@ -134,9 +118,11 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
 
         override fun onClick(view: View?) {
             val position = bindingAdapterPosition
+            val id = mListFullEmployee[position].id
+            val name = mListFullEmployee[position].nameEmployee
             when(view){
-                itemView.remove_employee -> listener.clickRemove(position)
-                itemView.edit_employee -> listener.clickEdit(position)
+                itemView.remove_employee -> listener.clickRemove(id, name)
+                itemView.edit_employee -> listener.clickEdit(id)
                 itemView.back -> {}
                 itemView.next -> {}
             }
@@ -149,6 +135,7 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
 
     fun updateDateCurrent(date: String){
         dateCurrent = date
+        notifyDataSetChanged()
     }
 
     fun updateFullEmployee(list: ArrayList<EmployeeEntity>){

@@ -1,15 +1,12 @@
 package com.example.app_point.repository
 
 import android.content.ContentValues
-import android.content.Context
 import android.database.Cursor
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.EmployeeEntity
 
-class RepositoryEmployee(context: Context?) {
-
-    private val mDataBaseEmployee: DataBaseEmployee = DataBaseEmployee(context)
+class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
     fun conditionEmployee(employee: EmployeeEntity): String{
 
@@ -231,7 +228,7 @@ class RepositoryEmployee(context: Context?) {
 
     fun consultDadosEmployeeId(id: Int): EmployeeEntity? {
 
-        var listDados: EmployeeEntity? = null
+        var employee: EmployeeEntity? = null
         try {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
@@ -276,14 +273,14 @@ class RepositoryEmployee(context: Context?) {
                 val admissao = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
                 val niver = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                listDados = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, name, email, cargo, phone, admissao, niver)
+                employee = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, name, email, cargo, phone, admissao, niver)
 
             }
             cursor?.close()
-            return listDados!!
+            return employee!!
 
         } catch (e: Exception) {
-            return listDados!!
+            return employee!!
         }
     }
 
@@ -316,12 +313,12 @@ class RepositoryEmployee(context: Context?) {
         }
     }
 
-    fun removeEmployee(name: String): Boolean {
+    fun removeEmployee(id: Int): Boolean {
 
         return try{
             val db = mDataBaseEmployee.writableDatabase
-            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
-            val args = arrayOf(name)
+            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
+            val args = arrayOf(id.toString())
 
             db.delete(ConstantsEmployee.EMPLOYEE.TABLE_NAME, selection, args)
             true

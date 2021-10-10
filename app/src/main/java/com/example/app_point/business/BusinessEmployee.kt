@@ -4,9 +4,7 @@ import android.content.Context
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.entity.EmployeeEntity
 
-class BusinessEmployee(context: Context) {
-
-    private val mRepositoryEmployee: RepositoryEmployee = RepositoryEmployee(context)
+class BusinessEmployee(private val mRepositoryEmployee: RepositoryEmployee) {
 
     fun registerEmployee(employeeEntity: EmployeeEntity): String{
         return mRepositoryEmployee.conditionEmployee(employeeEntity)

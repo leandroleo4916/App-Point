@@ -7,19 +7,14 @@ import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
-import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityToolsBinding
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.*
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.recycler_employee.view.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,8 +22,7 @@ import java.util.*
 class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private lateinit var mEmployeeAdapter: EmployeeAdapter
-    private val vViewModelEmployee  by viewModel<ViewModelEmployee>()
-    private val businessEmployee: BusinessEmployee by inject()
+    private val viewModelEmployee by viewModel<ViewModelEmployee>()
     private val binding by lazy { ActivityToolsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +44,12 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     }
 
     private fun viewModel(){
-        vViewModelEmployee.getFullEmployee()
+        viewModelEmployee.getFullEmployee()
     }
 
     private fun observer(){
         val date = instanceCalendar()
-        vViewModelEmployee.employeeFullList.observe(this, {
+        viewModelEmployee.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> {
                     showSnackBar(R.string.precisa_add_funcionarios)
@@ -73,38 +67,36 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private fun instanceCalendar(): String{
         val calendar = Calendar.getInstance().time
-        val dateCalendar = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        val local = Locale("pt", "BR")
+        val dateCalendar = SimpleDateFormat("dd/MM/yyyy", local)
         return dateCalendar.format(calendar)
     }
 
-    private fun removeEmployee(name: String){
-        if (vViewModelEmployee.removeEmployee(name)){
-            vViewModelEmployee.removePoints(name)
-            showSnackBar(R.string.removido_sucesso)
-            viewModel()
-        }else {
-            showSnackBar(R.string.nao_foi_possivel_remover)
-        }
-    }
-
-    override fun clickEdit(position: Int) {
-        val name = binding.recyclerEmployee[position].text_nome_employee.text.toString()
-        val id = businessEmployee.consultIdEmployee(name)
+    override fun clickEdit(id: Int) {
         val intent = Intent(this, RegisterEmployeeActivity::class.java)
         intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
         startActivity(intent)
         finish()
     }
 
-    override fun clickRemove(position: Int) {
-        val name = binding.recyclerEmployee[position].text_nome_employee.text.toString()
+    override fun clickRemove(id: Int, name: String) {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Deseja remover $name?")
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Sim") { _, _ -> removeEmployee(name) }
+        alertDialog.setPositiveButton("Sim") { _, _ -> removeEmployee(id, name) }
         alertDialog.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
         val dialog = alertDialog.create()
         dialog.show()
+    }
+
+    private fun removeEmployee(id: Int, name: String){
+        if (viewModelEmployee.removeEmployee(id)){
+            viewModelEmployee.removePoints(name)
+            showSnackBar(R.string.removido_sucesso)
+            viewModel()
+        }else {
+            showSnackBar(R.string.nao_foi_possivel_remover)
+        }
     }
 
     private fun showSnackBar(message: Int) {

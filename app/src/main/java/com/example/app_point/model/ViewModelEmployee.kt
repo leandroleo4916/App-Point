@@ -8,10 +8,8 @@ import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 
-class ViewModelEmployee (application: Application,
-                         private var employee: RepositoryEmployee,
-                         private var points: RepositoryPoint)
-                         : AndroidViewModel(application) {
+class ViewModelEmployee (application: Application, private var employee: RepositoryEmployee,
+                         private var points: RepositoryPoint) : AndroidViewModel(application) {
 
     private val mEmployeeFullList = MutableLiveData<ArrayList<EmployeeEntity>>()
     val employeeFullList: LiveData<ArrayList<EmployeeEntity>> = mEmployeeFullList
@@ -20,8 +18,8 @@ class ViewModelEmployee (application: Application,
         mEmployeeFullList.value = employee.consultFullEmployee()
     }
 
-    fun removeEmployee(name: String): Boolean{
-        return employee.removeEmployee(name)
+    fun removeEmployee(id: Int): Boolean{
+        return employee.removeEmployee(id)
     }
 
     fun removePoints(name: String): Boolean{

@@ -14,7 +14,7 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val mAddHours: ConverterHours = ConverterHours()
 
     fun bind(employee: String){
-        val textEmployee = itemView.findViewById<TextView>(R.id.text_nome_employee)
+        val textEmployee = itemView.findViewById<TextView>(R.id.text_view_name_employee)
         textEmployee.text = employee
     }
 

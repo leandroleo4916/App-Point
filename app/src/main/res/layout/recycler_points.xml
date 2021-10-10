@@ -25,7 +25,7 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/text_nome_employee"
+        android:id="@+id/text_view_name_employee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -59,7 +59,7 @@
         android:layout_height="24dp"
         android:background="@drawable/back_fundo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_nome_employee"
+        app:layout_constraintStart_toStartOf="@+id/text_view_name_employee"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.714"
         tools:ignore="ContentDescription,MissingConstraints" />
@@ -104,7 +104,7 @@
         android:id="@+id/text_hora"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_employee"
+        android:layout_below="@+id/text_view_name_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -117,7 +117,7 @@
         android:id="@+id/text_hora2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_employee"
+        android:layout_below="@+id/text_view_name_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -131,7 +131,7 @@
         android:id="@+id/text_hora3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_employee"
+        android:layout_below="@+id/text_view_name_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
@@ -145,7 +145,7 @@
         android:id="@+id/text_hora4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_nome_employee"
+        android:layout_below="@+id/text_view_name_employee"
         android:text="@string/_00_00"
         android:textColor="@color/letras"
         android:textSize="14sp"
