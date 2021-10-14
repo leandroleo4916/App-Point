@@ -64,10 +64,11 @@
         android:id="@+id/back"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
         app:layout_constraintEnd_toStartOf="@+id/toolbar1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar1"
         tools:ignore="ContentDescription,MissingConstraints" />
 
@@ -75,9 +76,10 @@
         android:id="@+id/next"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:src="@drawable/ic_next"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/toolbar4"
         app:layout_constraintTop_toTopOf="@+id/toolbar4"
         tools:ignore="ContentDescription,MissingConstraints" />
@@ -126,50 +128,55 @@
         android:textColor="@color/letras"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar3"
-        app:layout_constraintStart_toEndOf="@+id/toolbar1" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
 
     <ImageView
         android:id="@+id/toolbar1"
         android:layout_width="50dp"
         android:layout_height="24dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="2dp"
         android:background="@drawable/back_fundo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.286"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintEnd_toStartOf="@+id/toolbar2"
+        app:layout_constraintTop_toTopOf="@+id/toolbar2"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <ImageView
         android:id="@+id/toolbar2"
         android:layout_width="50dp"
         android:layout_height="24dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/back_fundo"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
-        app:layout_constraintStart_toEndOf="@+id/toolbar1"
-        app:layout_constraintTop_toTopOf="@+id/toolbar1"
-        app:layout_constraintVertical_bias="0.516"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guide_start"
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <ImageView
         android:id="@+id/toolbar3"
         android:layout_width="50dp"
         android:layout_height="24dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/back_fundo"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintStart_toEndOf="@+id/toolbar2"
-        app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guide_start"
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <ImageView
         android:id="@+id/toolbar4"
         android:layout_width="50dp"
         android:layout_height="24dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="2dp"
         android:background="@drawable/back_fundo"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
         app:layout_constraintStart_toEndOf="@+id/toolbar3"

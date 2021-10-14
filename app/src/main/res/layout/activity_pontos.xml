@@ -25,10 +25,10 @@
             android:layout_marginEnd="20dp">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textView_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pontos Registrados"
+                android:text="@string/pontos_registrados"
                 android:textColor="@color/letras"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
 
     <ProgressBar
         android:id="@+id/progress_ponto"
-        android:layout_width="60dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="true"

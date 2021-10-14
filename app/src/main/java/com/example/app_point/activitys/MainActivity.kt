@@ -132,8 +132,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         alertDialog.setNegativeButton("Não") { _, _ ->
             showSnackBar(R.string.cancelado)
         }
-        val dialog = alertDialog.create()
-        dialog.show()
+        alertDialog.create().show()
     }
 
     private fun dialogPoint(){
@@ -176,8 +175,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ ->
             showSnackBar(R.string.cancelado)
         }
-        val dialog = alertDialog.create()
-        dialog.show()
+        alertDialog.create().show()
     }
 
     private fun savePoint(itemSpinner: String, dateCurrent: String, horaCurrent: String){
@@ -195,9 +193,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinnerGetFuncionario -> {
-                parent.getItemAtPosition(position).toString()
-            }
+            R.id.spinnerGetFuncionario -> { parent.getItemAtPosition(position).toString() }
         }
     }
 

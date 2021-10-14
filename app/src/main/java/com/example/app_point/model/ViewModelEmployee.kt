@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.PointsEntity
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 
@@ -13,6 +14,9 @@ class ViewModelEmployee (application: Application, private var employee: Reposit
 
     private val mEmployeeFullList = MutableLiveData<ArrayList<EmployeeEntity>>()
     val employeeFullList: LiveData<ArrayList<EmployeeEntity>> = mEmployeeFullList
+
+    private val pointsEmployee = MutableLiveData<PointsEntity>()
+    val point: LiveData<PointsEntity> = pointsEmployee
 
     fun getFullEmployee(){
         mEmployeeFullList.value = employee.consultFullEmployee()
@@ -24,6 +28,10 @@ class ViewModelEmployee (application: Application, private var employee: Reposit
 
     fun removePoints(name: String): Boolean{
         return points.removePoints(name)
+    }
+
+    fun consultPoints(name: String, data: String){
+        pointsEmployee.value = points.selectFullPoints(name, data)
     }
 
 }

@@ -2,7 +2,6 @@ package com.example.app_point.adapters
 
 import android.app.Application
 import android.graphics.Bitmap
-import android.icu.util.Calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,6 @@ import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.recycler_employee.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class EmployeeAdapter(application: Application, private val listener: OnItemClickRecycler):
@@ -37,13 +34,12 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
 
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
 
-        val fullEmployee = mListFullEmployee[position]
-        val photoConvert = fullEmployee.photo.let { mConverterPhoto.converterToBitmap(it) }
-        val points = searchPoints.fullPointsToName(fullEmployee.nameEmployee, dateCurrent)
+        val employee = mListFullEmployee[position]
+        val photoConvert = employee.photo.let { mConverterPhoto.converterToBitmap(it) }
+        val points = searchPoints.fullPointsToName(employee.nameEmployee, dateCurrent)
 
-        holder.bind(fullEmployee.nameEmployee, fullEmployee.cargoEmployee, fullEmployee.admissaoEmployee)
+        holder.bind(employee.nameEmployee, employee.cargoEmployee, employee.admissaoEmployee)
         holder.bindPhoto(photoConvert)
-        holder.bindData(dateCurrent)
         holder.bindHora(points)
     }
 
@@ -59,29 +55,12 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
             textAdmission.text = admission
         }
 
-        fun bindData(date: String){
-
-            val calendar = Calendar.getInstance().time
-            val local = Locale("pt", "BR")
-            val dateCalendar = SimpleDateFormat("dd/MM/yyyy", local)
-            val vDate = dateCalendar.format(calendar)
-            val textData = itemView.findViewById<TextView>(R.id.text_data)
-
-            when (date) {
-                vDate -> { }
-                else -> { textData.text = date }
-            }
-        }
-
         fun bindHora(points: ArrayList<PointsEntity>){
 
             val textHora1 = itemView.findViewById<TextView>(R.id.text_hora1)
             val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
             val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
             val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
-
-            //val minutesCurrent = mAddHours.converterHoursInMinutes(points[0].hora1!!)
-            //val minutes = mAddHours.converterHoursInMinutes(hora1)
 
             when {
                 points.size == 0 -> { }
@@ -114,17 +93,20 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
         init {
             itemView.edit_employee.setOnClickListener(this)
             itemView.remove_employee.setOnClickListener(this)
+            itemView.next.setOnClickListener(this)
+            itemView.back.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {
             val position = bindingAdapterPosition
             val id = mListFullEmployee[position].id
             val name = mListFullEmployee[position].nameEmployee
+
             when(view){
                 itemView.remove_employee -> listener.clickRemove(id, name)
                 itemView.edit_employee -> listener.clickEdit(id)
-                itemView.back -> {}
-                itemView.next -> {}
+                itemView.back -> listener.clickBack(name, position)
+                itemView.next -> listener.clickNext(name, position)
             }
         }
     }
@@ -133,13 +115,9 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
         return mListFullEmployee.count()
     }
 
-    fun updateDateCurrent(date: String){
-        dateCurrent = date
-        notifyDataSetChanged()
-    }
-
-    fun updateFullEmployee(list: ArrayList<EmployeeEntity>){
+    fun updateFullEmployee(list: ArrayList<EmployeeEntity>, date: String){
         mListFullEmployee = list
+        dateCurrent = date
         notifyDataSetChanged()
     }
 }

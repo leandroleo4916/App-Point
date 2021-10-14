@@ -4,8 +4,8 @@ data class PointsEntity(
     val id: Int?,
     var employee: String?,
     var data: String?,
-    val hora1: String?,
-    val hora2: String?,
-    val hora3: String?,
-    val hora4: String?
+    var hora1: String?,
+    var hora2: String?,
+    var hora3: String?,
+    var hora4: String?
 )

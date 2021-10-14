@@ -47,7 +47,10 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun observe(){
         viewModelMain.employeeFullList.observe(this, {
             when (it.size) {
-                0 -> showSnackBar(R.string.nenhum_ponto_registrado)
+                0 -> {
+                    mPointsAdapter.updateFullEmployee(it)
+                    showSnackBar(R.string.nenhum_ponto_registrado)
+                }
                 else -> { mPointsAdapter.updateFullEmployee(it) }
             }
         })
@@ -63,10 +66,7 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun dialogPoint(){
-        val inflater = layoutInflater
-        val inflateView = inflater.inflate(R.layout.dialog_list_employee, null)
-
-        // Capture List employee and add spinner
+        val inflateView = layoutInflater.inflate(R.layout.dialog_list_employee, null)
         val list = mListEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinner_employee) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
@@ -83,13 +83,19 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             // Capture item Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
-                else -> { viewModelMain.getFullEmployee(itemSpinner.toString()) }
+                else -> {
+                    viewModelMain.getFullEmployee(itemSpinner.toString())
+                    binding.textViewToolbar.text = itemSpinner.toString()
+                }
             }
         }
         alertDialog.setNegativeButton(getString(R.string.todos)) { _, _ ->
             when (listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
-                else -> { viewModelMain.getFullEmployee("") }
+                else -> {
+                    viewModelMain.getFullEmployee("")
+                    binding.textViewToolbar.setText(R.string.pontos_registrados)
+                }
             }
         }
         alertDialog.create().show()

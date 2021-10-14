@@ -106,13 +106,11 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
     private fun searchByNameEmployee(name: String){
         val dataEmployee = mBusinessEmployee.consultDataEmployee(name)
-        binding.textNameEmployee.text = dataEmployee!!.nameEmployee
-        binding.textCargoEmployee.text = dataEmployee.cargoEmployee
-        val photo = dataEmployee.photo
+        val photo = dataEmployee!!.photo
         val photoConverter = mPhoto.converterToBitmap(photo)
+        binding.textNameEmployee.text = dataEmployee.nameEmployee
+        binding.textCargoEmployee.text = dataEmployee.cargoEmployee
         binding.imagePhotoEmployee.setImageBitmap(photoConverter)
-
-        val points = viewModelPoints.getFullPointsByName(name)
 
         val hoursMake = 120
         var pStatus1 = 0
