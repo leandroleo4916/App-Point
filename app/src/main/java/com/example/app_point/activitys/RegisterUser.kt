@@ -30,17 +30,17 @@ class RegisterUser : AppCompatActivity() {
     private fun registerUser(){
         val name = binding.edittextUsername.text.toString()
         val email = binding.edittextEmail.text.toString()
-        val senha = binding.edittextSenha.text.toString()
-        val confirmeSenha = binding.edittextConfirmeSenha.text.toString()
+        val password = binding.edittextSenha.text.toString()
+        val confirmPassword = binding.edittextConfirmeSenha.text.toString()
 
         when {
             name.isEmpty()  -> binding.edittextUsername.error = "Digite Nome"
             email.isEmpty() -> binding.edittextEmail.error = "Digite Email"
-            senha.isEmpty() -> binding.edittextSenha.error == "Digite Senha"
-            confirmeSenha.isEmpty() -> binding.edittextConfirmeSenha.error == "Confirme Senha"
-            senha != confirmeSenha -> Toast.makeText(this, getString(R.string.senhas_diferentes),
+            password.isEmpty() -> binding.edittextSenha.error == "Digite Senha"
+            confirmPassword.isEmpty() -> binding.edittextConfirmeSenha.error == "Confirme Senha"
+            password != confirmPassword -> Toast.makeText(this, getString(R.string.senhas_diferentes),
                 Toast.LENGTH_SHORT).show()
-            else -> createEmailAndPassword(name, email, senha)
+            else -> createEmailAndPassword(name, email, password)
         }
     }
 

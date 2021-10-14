@@ -15,6 +15,7 @@ import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryFirebase
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.repository.RepositoryUser
+import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.SecurityPreferences
 import com.google.firebase.database.DatabaseReference
@@ -69,7 +70,7 @@ val businessModule = module {
 }
 
 val pointsModule = module {
-    factory { BusinessPoints(get()) }
+    single { BusinessPoints(get()) }
 }
 
 val userModule = module {
@@ -116,10 +117,14 @@ val calculationHoursModule = module {
     factory { CalculationHours() }
 }
 
+val captureDateModule = module {
+    factory { CaptureDateCurrent() }
+}
+
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelEmployeeModule, businessModule,
     pointsModule, userModule, adapterModule, viewModelPoints, repositoryPointModule,
     dataBaseEmployeeModule, employeeAdapterModule, securityPreferencesModule,
     pointsAdapterModule, converterPhotoModule, calculationHoursModule, repositoryUserModule,
-    databaseUserModule, repositoryEmployeeModule
+    databaseUserModule, repositoryEmployeeModule, captureDateModule
 )

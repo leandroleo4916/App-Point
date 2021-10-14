@@ -1,10 +1,10 @@
 package com.example.app_point.business
 
-import com.example.app_point.interfaces.RepositoryData
+import com.example.app_point.repository.RepositoryPoint
 
-class BusinessPoints(private val mRepositoryPoint: RepositoryData) {
+class BusinessPoints(private val mRepositoryPoint: RepositoryPoint) {
 
-    fun getPoints(name: String, date: String, hour: String): Boolean{
+    fun setPoints(name: String, date: String, hour: String): Boolean{
         return mRepositoryPoint.setPoint(name, date, hour)
     }
 }

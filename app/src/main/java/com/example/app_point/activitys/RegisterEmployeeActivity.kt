@@ -23,6 +23,7 @@ import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityRegisterEmployeeBinding
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.utils.CaptureDateCurrent
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +33,7 @@ class RegisterEmployeeActivity : AppCompatActivity() {
 
     private val mBusinessEmployee: BusinessEmployee by inject()
     private val mToByteArray: ConverterPhoto by inject()
+    private val captureDateCurrent: CaptureDateCurrent by inject()
     private val binding by lazy { ActivityRegisterEmployeeBinding.inflate(layoutInflater) }
 
     private val permissionCode = 1000
@@ -61,10 +63,7 @@ class RegisterEmployeeActivity : AppCompatActivity() {
 
     // Captures date and show in the EditText date and hour
     private fun initDate(){
-        val date = getInstance().time
-        val local = Locale("pt", "BR")
-        val dateTime = SimpleDateFormat("dd/MM/yyyy", local)
-        val dataCurrent = dateTime.format(date)
+        val dataCurrent = captureDateCurrent.captureDateCurrent()
         binding.textAdmissao.text = dataCurrent
         binding.textAniversario.text = dataCurrent
     }

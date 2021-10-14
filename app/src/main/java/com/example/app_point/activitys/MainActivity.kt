@@ -18,6 +18,7 @@ import com.example.app_point.databinding.ActivityMainBinding
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.model.ViewModelMain
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
@@ -27,7 +28,8 @@ import java.util.*
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private val listEmployee: BusinessEmployee by inject()
-    private val businessPoints: BusinessPoints by inject()
+    private val captureDateCurrent: CaptureDateCurrent by inject()
+    private lateinit var businessPoints: BusinessPoints
     private val pointAdapter: PointsAdapter by inject()
     private val repositoryPoint: RepositoryPoint by inject()
     private val securityPreferences: SecurityPreferences by inject()
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setContentView(binding.root)
 
         animationIcons()
+        businessPoints = BusinessPoints(repositoryPoint)
         viewModelMain = ViewModelMain(application, repositoryPoint)
 
         val recycler = binding.recyclerPoints
@@ -67,15 +70,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun salutation(){
 
         val extras = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
-        if (extras.isNotBlank()) {
-            binding.textNameUser.text = extras
-        }
+        if (extras.isNotBlank()) { binding.textNameUser.text = extras }
 
-        val date = Calendar.getInstance().time
-        val local = Locale("pt", "BR")
-        val hora = SimpleDateFormat("HH:mm", local)
-        val horaCurrent = hora.format(date)
-
+        val horaCurrent = captureDateCurrent.captureHoraCurrent()
         val clockSixMorning = "06:00"
         val clockTwelveMorning = "12:00"
         val clockSixEvening = "18:00"
@@ -129,23 +126,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             securityPreferences.removeString()
             finish()
         }
-        alertDialog.setNegativeButton("Não") { _, _ ->
-            showSnackBar(R.string.cancelado)
-        }
+        alertDialog.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
         alertDialog.create().show()
     }
 
     private fun dialogPoint(){
-        val date = Calendar.getInstance().time
-        val local = Locale("pt", "BR")
-        val dateTime = SimpleDateFormat("dd/MM/yyyy", local)
 
-        // Captures current hour
-        val hora = SimpleDateFormat("HH:mm", local)
-        val hourCurrent = hora.format(date)
-
-        // Captures current date
-        val dateCurrent = dateTime.format(date)
+        val hourCurrent = captureDateCurrent.captureHoraCurrent()
+        val dateCurrent = captureDateCurrent.captureDateCurrent()
 
         val inflater = layoutInflater
         val inflateView = inflater.inflate(R.layout.dialog_bater_ponto, null)
@@ -166,22 +154,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Registrar") { _, _ ->
 
-            // Captures item do Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> { savePoint(itemSpinner.toString(), dateCurrent, hourCurrent) }
             }
         }
-        alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ ->
-            showSnackBar(R.string.cancelado)
-        }
+        alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> showSnackBar(R.string.cancelado) }
         alertDialog.create().show()
     }
 
     private fun savePoint(itemSpinner: String, dateCurrent: String, horaCurrent: String){
 
         when{
-            businessPoints.getPoints(itemSpinner, dateCurrent, horaCurrent) -> {
+            businessPoints.setPoints(itemSpinner, dateCurrent, horaCurrent) -> {
                 showSnackBar(R.string.adicionado_sucesso)
                 searchPoints()
             }

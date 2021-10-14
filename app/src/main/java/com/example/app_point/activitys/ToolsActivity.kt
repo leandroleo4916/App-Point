@@ -15,8 +15,10 @@ import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityToolsBinding
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.ViewModelEmployee
+import com.example.app_point.utils.CaptureDateCurrent
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.recycler_employee.view.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +26,7 @@ import java.util.*
 class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private lateinit var mEmployeeAdapter: EmployeeAdapter
+    private val captureDateCurrent: CaptureDateCurrent by inject()
     private val viewModelEmployee by viewModel<ViewModelEmployee>()
     private val binding by lazy { ActivityToolsBinding.inflate(layoutInflater) }
 
@@ -41,16 +44,12 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         observer()
     }
 
-    private fun listener(){
-        binding.imageBackTools.setOnClickListener { finish() }
-    }
+    private fun listener(){ binding.imageBackTools.setOnClickListener { finish() } }
 
-    private fun viewModel(){
-        viewModelEmployee.getFullEmployee()
-    }
+    private fun viewModel(){ viewModelEmployee.getFullEmployee() }
 
     private fun observer(){
-        val date = captureDateCurrent()
+        val date = captureDateCurrent.captureDateCurrent()
         viewModelEmployee.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> {
@@ -64,13 +63,6 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
                 }
             }
         })
-    }
-
-    private fun captureDateCurrent(): String{
-        val calendar = Calendar.getInstance().time
-        val local = Locale("pt", "BR")
-        val dateCalendar = SimpleDateFormat("dd/MM/yyyy", local)
-        return dateCalendar.format(calendar)
     }
 
     override fun clickEdit(id: Int) {
@@ -90,20 +82,16 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         dialog.show()
     }
 
-    override fun clickNext(name: String, position: Int) {
-        reactBackAndNext(name, position, 1)
-    }
+    override fun clickNext(name: String, position: Int) { reactBackAndNext(name, position, 1) }
 
-    override fun clickBack(name: String, position: Int) {
-        reactBackAndNext(name, position, -1)
-    }
+    override fun clickBack(name: String, position: Int) { reactBackAndNext(name, position, -1) }
 
     private fun reactBackAndNext(name: String, position: Int, pos: Int){
 
         val dateCaptured = binding.recyclerEmployee[position].text_data_ponto.text.toString()
         val dateFinal =
             if (dateCaptured == "Hoje") {
-                val dateToday = captureDateCurrent()
+                val dateToday = captureDateCurrent.captureDateCurrent()
                 addOrRemoveDate(dateToday, pos)
             } else{ addOrRemoveDate(dateCaptured, pos) }
 

@@ -57,12 +57,8 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun listener(){
-        binding.imageBackPontos.setOnClickListener{
-            finish()
-        }
-        binding.imageFilter.setOnClickListener{
-            dialogPoint()
-        }
+        binding.imageBackPontos.setOnClickListener { finish() }
+        binding.imageFilter.setOnClickListener { dialogPoint() }
     }
 
     private fun dialogPoint(){
@@ -80,7 +76,6 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton(getString(R.string.filtrar)) { _, _ ->
 
-            // Capture item Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
