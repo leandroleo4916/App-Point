@@ -15,9 +15,6 @@ class ViewModelEmployee (application: Application, private var employee: Reposit
     private val mEmployeeFullList = MutableLiveData<ArrayList<EmployeeEntity>>()
     val employeeFullList: LiveData<ArrayList<EmployeeEntity>> = mEmployeeFullList
 
-    private val pointsEmployee = MutableLiveData<PointsEntity>()
-    val point: LiveData<PointsEntity> = pointsEmployee
-
     fun getFullEmployee(){
         mEmployeeFullList.value = employee.consultFullEmployee()
     }
@@ -30,8 +27,8 @@ class ViewModelEmployee (application: Application, private var employee: Reposit
         return points.removePoints(name)
     }
 
-    fun consultPoints(name: String, data: String){
-        pointsEmployee.value = points.selectFullPoints(name, data)
+    fun consultPoints(name: String, data: String): PointsEntity?{
+        return points.selectFullPoints(name, data)
     }
 
 }

@@ -99,48 +99,42 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     }
 
     private fun reactBackAndNext(name: String, position: Int, pos: Int){
+
         val dateCaptured = binding.recyclerEmployee[position].text_data_ponto.text.toString()
-        val local = Locale("pt", "BR")
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", local)
-        val dateFinal: String?
+        val dateFinal =
+            if (dateCaptured == "Hoje") {
+                val dateToday = captureDateCurrent()
+                addOrRemoveDate(dateToday, pos)
+            } else{ addOrRemoveDate(dateCaptured, pos) }
 
-        if (dateCaptured == "Hoje") {
-            val dateToday = captureDateCurrent()
-            val divDate = dateToday.split("/")
-            val cal = Calendar.getInstance()
-            cal.set(divDate[2].toInt(), divDate[1].toInt(), divDate[0].toInt())
-            cal.add(Calendar.DAY_OF_MONTH, pos)
-            val date = cal.time
-            dateFinal = dateFormat.format(date)
+        addItemToView(name, dateFinal, position)
+    }
+
+    private fun addItemToView(name: String, dateFinal: String, position: Int){
+        val point = viewModelEmployee.consultPoints(name, dateFinal)
+        binding.recyclerEmployee[position].text_data_ponto.text = dateFinal
+
+        if (point != null) {
+            binding.recyclerEmployee[position].text_hora1.text = point.hora1
+            binding.recyclerEmployee[position].text_hora2.text = point.hora2
+            binding.recyclerEmployee[position].text_hora3.text = point.hora3
+            binding.recyclerEmployee[position].text_hora4.text = point.hora4
+        }else{
+            binding.recyclerEmployee[position].text_hora1.text = "--:--"
+            binding.recyclerEmployee[position].text_hora2.text = "--:--"
+            binding.recyclerEmployee[position].text_hora3.text = "--:--"
+            binding.recyclerEmployee[position].text_hora4.text = "--:--"
         }
-        else{
-            val divDate = dateCaptured.split("/")
-            val cal = Calendar.getInstance()
-            cal.set(divDate[2].toInt(), divDate[1].toInt(), divDate[0].toInt())
-            cal.add(Calendar.DAY_OF_MONTH, pos)
-            val date = cal.time
-            dateFinal = dateFormat.format(date)
-        }
-        viewModelEmployee.consultPoints(name, dateFinal)
-
-        viewModelEmployee.point.observe(this, {
-            binding.recyclerEmployee[position].text_data_ponto.text = dateFinal
-
-            if (it != null) {
-                binding.recyclerEmployee[position].text_hora1.text = it.hora1
-                binding.recyclerEmployee[position].text_hora2.text = it.hora2
-                binding.recyclerEmployee[position].text_hora3.text = it.hora3
-                binding.recyclerEmployee[position].text_hora4.text = it.hora4
-            }
-        })
     }
 
     private fun addOrRemoveDate(dateCaptured: String, pos: Int): String{
-        val local = Locale("pt", "BR")
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", local)
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
         val divDate = dateCaptured.split("/")
+        val a = divDate[2].toInt()
+        val m = divDate[1].toInt() - 1
+        val d = divDate[0].toInt()
         val cal = Calendar.getInstance()
-        cal.set(divDate[2].toInt(), divDate[1].toInt(), divDate[0].toInt())
+        cal.set(a, m, d)
         cal.add(Calendar.DAY_OF_MONTH, pos)
         val date = cal.time
         return dateFormat.format(date)
@@ -151,9 +145,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
             viewModelEmployee.removePoints(name)
             showSnackBar(R.string.removido_sucesso)
             viewModel()
-        }else {
-            showSnackBar(R.string.nao_foi_possivel_remover)
-        }
+        }else { showSnackBar(R.string.nao_foi_possivel_remover) }
     }
 
     private fun showSnackBar(message: Int) {
