@@ -22,8 +22,6 @@ import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -54,9 +52,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         salutation()
     }
 
-    // Animation to imageView
     private fun animationIcons(){
-        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
+        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.animation_down)
         binding.imageRegisterEmployee.startAnimation(animation)
         binding.imagePerfilEmployee.startAnimation(animation)
         binding.imageHistoricosPontos.startAnimation(animation)

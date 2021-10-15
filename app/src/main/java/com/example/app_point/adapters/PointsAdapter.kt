@@ -22,27 +22,21 @@ class PointsAdapter(private val application: Application, private val mBusiness:
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_points, parent, false)
 
-        // Add animation to item RecyclerView
-        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
+        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.animation_left)
         item.startAnimation(animation)
 
         return PointsViewHolder(item)
     }
 
-    // Send to ViewHolder item of List
     override fun onBindViewHolder(holder: PointsViewHolder, position: Int) {
-        //val employee = mListEmployee[position]
+
         val fullEmployee = mListFullEmployee[position]
-
-        holder.bind(fullEmployee.employee.toString())
-        holder.bindData(fullEmployee.data.toString())
-
-        // Captures name employee and search photo
         val photo = mBusiness.consultPhoto(fullEmployee.employee.toString())
         val photoConvert = photo?.let { mConverterPhoto.converterToBitmap(it) }
         photoConvert?.let { holder.bindPhoto(it) }
 
-        val horarioEmployee = mBusiness.consultHours(fullEmployee.employee.toString())!!
+        holder.bind(fullEmployee.employee.toString())
+        holder.bindData(fullEmployee.data.toString())
         holder.bindHora(fullEmployee)
     }
 

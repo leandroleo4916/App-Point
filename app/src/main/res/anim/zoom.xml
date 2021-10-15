@@ -6,11 +6,11 @@
     >
 
     <scale
-        android:pivotX="1"
-        android:pivotY="1"
+        android:pivotX="0"
+        android:pivotY="0"
         android:toYScale="1"
         android:toXScale="1"
-        android:duration="400"
+        android:duration="1000"
         />
 
 </set>

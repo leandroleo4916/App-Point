@@ -100,32 +100,27 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private fun addItemToView(name: String, dateFinal: String, position: Int){
         val point = viewModelEmployee.consultPoints(name, dateFinal)
-        binding.recyclerEmployee[position].text_data_ponto.text = dateFinal
+        val date = captureDateCurrent.captureDateCurrent()
 
-        if (point != null) {
-            binding.recyclerEmployee[position].text_hora1.text = point.hora1
-            binding.recyclerEmployee[position].text_hora2.text = point.hora2
-            binding.recyclerEmployee[position].text_hora3.text = point.hora3
-            binding.recyclerEmployee[position].text_hora4.text = point.hora4
-        }else{
-            binding.recyclerEmployee[position].text_hora1.text = "--:--"
-            binding.recyclerEmployee[position].text_hora2.text = "--:--"
-            binding.recyclerEmployee[position].text_hora3.text = "--:--"
-            binding.recyclerEmployee[position].text_hora4.text = "--:--"
+        when {
+            dateFinal != date -> { binding.recyclerEmployee[position].text_data_ponto.text = dateFinal }
+            else -> { binding.recyclerEmployee[position].text_data_ponto.text = "Hoje" }
         }
+        binding.recyclerEmployee[position].text_hora1.text = point?.hora1 ?: "--:--"
+        binding.recyclerEmployee[position].text_hora2.text = point?.hora2 ?: "--:--"
+        binding.recyclerEmployee[position].text_hora3.text = point?.hora3 ?: "--:--"
+        binding.recyclerEmployee[position].text_hora4.text = point?.hora4 ?: "--:--"
     }
 
-    private fun addOrRemoveDate(dateCaptured: String, pos: Int): String{
+    private fun addOrRemoveDate(date: String, pos: Int): String{
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
-        val divDate = dateCaptured.split("/")
-        val a = divDate[2].toInt()
-        val m = divDate[1].toInt() - 1
-        val d = divDate[0].toInt()
+        val divDate = date.split("/")
+
         val cal = Calendar.getInstance()
-        cal.set(a, m, d)
+        cal.set(divDate[2].toInt(), divDate[1].toInt()-1, divDate[0].toInt())
         cal.add(Calendar.DAY_OF_MONTH, pos)
-        val date = cal.time
-        return dateFormat.format(date)
+
+        return dateFormat.format(cal.time)
     }
 
     private fun removeEmployee(id: Int, name: String){
