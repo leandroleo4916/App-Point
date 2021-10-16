@@ -11,15 +11,11 @@ import com.example.app_point.interfaces.RepositoryData
 class ViewModelPoints (application: Application, private val searchRecycler: RepositoryData):
     AndroidViewModel(application) {
 
-    private val mEmployeeFullList = MutableLiveData<ArrayList<PointsEntity>>()
-    val employeeFullList: LiveData<ArrayList<PointsEntity>> = mEmployeeFullList
+    private val mEmployeeFullList = MutableLiveData<ArrayList<PointsEntity?>>()
+    val employeeFullList: LiveData<ArrayList<PointsEntity?>> = mEmployeeFullList
 
     fun getFullEmployee(employee: String, date: String){
         if (employee == ""){ mEmployeeFullList.value = searchRecycler.fullPoints() }
         else { mEmployeeFullList.value = searchRecycler.fullPointsToName(employee, date) }
-    }
-
-    fun getFullPointsByName(employee: String): ArrayList<HoursEntity>{
-        return searchRecycler.fullPointsByName(employee)
     }
 }

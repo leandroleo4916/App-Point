@@ -14,9 +14,11 @@ class RepositoryUser(private val mDataBaseUser: DataBaseUser) {
         return try{
             val db = mDataBaseUser.writableDatabase
             val insertValues = ContentValues()
-            insertValues.put(ConstantsUser.USER.COLUNAS.NAME, name)
-            insertValues.put(ConstantsUser.USER.COLUNAS.EMAIL, email)
-            insertValues.put(ConstantsUser.USER.COLUNAS.PASSWORD, password)
+            insertValues.run {
+                put(ConstantsUser.USER.COLUNAS.NAME, name)
+                put(ConstantsUser.USER.COLUNAS.EMAIL, email)
+                put(ConstantsUser.USER.COLUNAS.PASSWORD, password)
+            }
 
             db.insert(ConstantsUser.USER.TABLE_NAME, null, insertValues)
             true

@@ -9,31 +9,28 @@ import com.example.app_point.entity.EmployeeEntity
 class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
     fun conditionEmployee(employee: EmployeeEntity): String{
-
-        return if (employee.id == 0){
-            setEmployee(employee)
-        }else{
-            editEmployee(employee)
-        }
-
+        return if (employee.id == 0){ getEmployee(employee) }
+        else{ editEmployee(employee) }
     }
 
-    private fun setEmployee(employee: EmployeeEntity): String {
+    private fun getEmployee(employee: EmployeeEntity): String {
 
         return try{
             val db = mDataBaseEmployee.writableDatabase
             val insertValues = ContentValues()
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, employee.horario1)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, employee.horario2)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, employee.horario3)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, employee.horario4)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
-            insertValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
+            insertValues.run {
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, employee.horario1)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, employee.horario2)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, employee.horario3)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, employee.horario4)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
+            }
 
             db.insert(ConstantsEmployee.EMPLOYEE.TABLE_NAME, null, insertValues)
             "salvo"
@@ -109,21 +106,34 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val id = cursor.getInt(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
-                    val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
-                    val hora1 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
-                    val hora2 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
-                    val hora3 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
-                    val hora4 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
-                    val name = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
-                    val email = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
-                    val cargo = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
-                    val phone = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
-                    val admissao = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
-                    val niver = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
+                    val id = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                    val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+                    val hora1 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
+                    val hora2 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
+                    val hora3 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
+                    val hora4 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
+                    val name = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
+                    val email = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
+                    val cargo = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
+                    val phone = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
+                    val admissao = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
+                    val niver = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
                     listData.add(
-                        EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, name, email, cargo, phone, admissao, niver)
+                        EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, name, email,
+                            cargo, phone, admissao, niver)
                     )
                 }
             }
@@ -169,20 +179,33 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
-                    val idEmployee = cursor.getInt(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
-                    val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
-                    val hora1 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
-                    val hora2 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
-                    val hora3 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
-                    val hora4 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
-                    val name = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
-                    val email = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
-                    val cargo = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
-                    val phone = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
-                    val admissao = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
-                    val niver = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
+                    val idEmployee = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                    val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+                    val hora1 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
+                    val hora2 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
+                    val hora3 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
+                    val hora4 = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
+                    val name = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
+                    val email = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
+                    val cargo = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
+                    val phone = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
+                    val admissao = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
+                    val niver = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                    listData = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, name, email, cargo, phone, admissao, niver)
+                    listData = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4,
+                        name, email, cargo, phone, admissao, niver)
 
             }
             cursor?.close()
@@ -260,20 +283,33 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
-                val idEmployee = cursor.getInt(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
-                val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
-                val hora1 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
-                val hora2 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
-                val hora3 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
-                val hora4 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
-                val name = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
-                val email = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
-                val cargo = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
-                val phone = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
-                val admissao = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
-                val niver = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
+                val idEmployee = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+                val hora1 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
+                val hora2 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
+                val hora3 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
+                val hora4 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
+                val name = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
+                val email = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
+                val cargo = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
+                val phone = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
+                val admissao = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
+                val niver = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                employee = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, name, email, cargo, phone, admissao, niver)
+                employee = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4,
+                    name, email, cargo, phone, admissao, niver)
 
             }
             cursor?.close()
@@ -292,18 +328,20 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             val args = arrayOf(employee.id.toString())
 
             val contentValues = ContentValues()
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, employee.id)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, employee.horario1)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, employee.horario2)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, employee.horario3)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, employee.horario4)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
-            contentValues.put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
+            contentValues.run {
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, employee.id)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1, employee.horario1)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2, employee.horario2)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3, employee.horario3)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4, employee.horario4)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
+            }
 
             db.update(ConstantsEmployee.EMPLOYEE.TABLE_NAME, contentValues, projection, args)
             "editado"
@@ -348,7 +386,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
 
-                return cursor.getBlob(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+                return cursor.getBlob(
+                    cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
 
             }
             cursor?.close()
@@ -379,10 +418,14 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             )
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
-                val hora1 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
-                val hora2 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
-                val hora3 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
-                val hora4 = cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
+                val hora1 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO1))
+                val hora2 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO2))
+                val hora3 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO3))
+                val hora4 = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HOURARIO4))
 
                 list = arrayListOf(hora1, hora2, hora3, hora4)
 

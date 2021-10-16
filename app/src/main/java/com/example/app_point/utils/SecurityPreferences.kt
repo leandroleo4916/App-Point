@@ -18,8 +18,11 @@ class SecurityPreferences(context: Context) {
     }
 
     fun removeString(){
-        mSharedPreferences.edit().remove(ConstantsUser.USER.COLUNAS.NAME).apply()
-        mSharedPreferences.edit().remove(ConstantsUser.USER.COLUNAS.EMAIL).apply()
-        mSharedPreferences.edit().remove(ConstantsUser.USER.COLUNAS.PASSWORD).apply()
+        mSharedPreferences.edit().run {
+            remove(ConstantsUser.USER.COLUNAS.NAME).apply()
+            remove(ConstantsUser.USER.COLUNAS.EMAIL).apply()
+            remove(ConstantsUser.USER.COLUNAS.PASSWORD).apply()
+        }
+
     }
 }

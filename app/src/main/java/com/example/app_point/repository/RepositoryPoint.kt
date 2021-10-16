@@ -55,9 +55,7 @@ class RepositoryPoint(context: Context): RepositoryData {
             }
             true
 
-        } catch (e: Exception) {
-            false
-        }
+        } catch (e: Exception) { false }
     }
 
     override fun selectFullPoints(nome: String, date: String): PointsEntity? {
@@ -106,14 +104,12 @@ class RepositoryPoint(context: Context): RepositoryData {
             cursor?.close()
             return list
 
-        } catch (e: Exception) {
-            return list
-        }
+        } catch (e: Exception) { return list }
     }
 
-    override fun fullPoints(): ArrayList<PointsEntity> {
+    override fun fullPoints(): ArrayList<PointsEntity?> {
 
-        val list: ArrayList<PointsEntity> = arrayListOf()
+        val list: ArrayList<PointsEntity?> = arrayListOf()
         try {
             val cursor: Cursor
             val db = mDataBasePoint.readableDatabase
@@ -154,16 +150,14 @@ class RepositoryPoint(context: Context): RepositoryData {
             cursor?.close()
             return list
 
-        } catch (e: Exception) {
-            return list
-        }
+        } catch (e: Exception) { return list }
     }
 
-    override fun fullPointsToName(nome: String, date: String): ArrayList<PointsEntity> {
+    override fun fullPointsToName(nome: String, date: String): ArrayList<PointsEntity?> {
 
-        val list: ArrayList<PointsEntity> = arrayListOf()
+        val list: ArrayList<PointsEntity?> = arrayListOf()
 
-        if (date == "") {
+        if (date.isEmpty()) {
             try {
                 val cursor: Cursor
                 val db = mDataBasePoint.readableDatabase
@@ -207,9 +201,8 @@ class RepositoryPoint(context: Context): RepositoryData {
                 cursor?.close()
                 return list
 
-            } catch (e: Exception) {
-                return list
-            }
+            } catch (e: Exception) { return list }
+
         } else {
             try {
                 val cursor: Cursor
@@ -255,9 +248,7 @@ class RepositoryPoint(context: Context): RepositoryData {
                 cursor?.close()
                 return list
 
-            } catch (e: Exception) {
-                return list
-            }
+            } catch (e: Exception) { return list }
         }
     }
 
@@ -299,9 +290,7 @@ class RepositoryPoint(context: Context): RepositoryData {
             cursor?.close()
             return list
 
-        } catch (e: Exception) {
-            return list
-        }
+        } catch (e: Exception) { return list }
     }
 
     override fun removePoints(name: String): Boolean {
@@ -314,8 +303,6 @@ class RepositoryPoint(context: Context): RepositoryData {
             db.delete(ConstantsPoint.POINT.TABLE_NAME, selection, args)
             true
 
-        } catch (e: Exception) {
-            false
-        }
+        } catch (e: Exception) { false }
     }
 }

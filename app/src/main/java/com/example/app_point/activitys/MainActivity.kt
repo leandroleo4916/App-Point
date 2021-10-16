@@ -53,15 +53,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun animationIcons(){
-        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.animation_down)
-        binding.imageRegisterEmployee.startAnimation(animation)
-        binding.imagePerfilEmployee.startAnimation(animation)
-        binding.imageHistoricosPontos.startAnimation(animation)
-        binding.imageOpcoes.startAnimation(animation)
-        binding.imageInRegister.startAnimation(animation)
-        binding.imageInPerfil.startAnimation(animation)
-        binding.imageInClock.startAnimation(animation)
-        binding.imageInOpcoes.startAnimation(animation)
+        val animation: Animation = AnimationUtils.loadAnimation (application, R.anim.animation_down)
+        binding.run {
+            imageRegisterEmployee.startAnimation(animation)
+            imagePerfilEmployee.startAnimation(animation)
+            imageHistoricosPontos.startAnimation(animation)
+            imageOpcoes.startAnimation(animation)
+            imageInRegister.startAnimation(animation)
+            imageInPerfil.startAnimation(animation)
+            imageInClock.startAnimation(animation)
+            imageInOpcoes.startAnimation(animation)
+        }
     }
 
     private fun salutation(){

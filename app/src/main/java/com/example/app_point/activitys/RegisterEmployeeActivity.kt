@@ -50,15 +50,17 @@ class RegisterEmployeeActivity : AppCompatActivity() {
     }
 
     private fun listener() {
-        binding.imageBack.setOnClickListener { finish() }
-        binding.photoEmployee.setOnClickListener { openPopUp() }
-        binding.buttomRegisterEmployee.setOnClickListener { extrasId() }
-        binding.horario1.setOnClickListener { timePicker(1) }
-        binding.horario2.setOnClickListener { timePicker(2) }
-        binding.horario3.setOnClickListener { timePicker(3) }
-        binding.horario4.setOnClickListener { timePicker(4) }
-        binding.textAdmissao.setOnClickListener { calendar(1) }
-        binding.textAniversario.setOnClickListener { calendar(2) }
+        binding.run {
+            imageBack.setOnClickListener { finish() }
+            photoEmployee.setOnClickListener { openPopUp() }
+            buttomRegisterEmployee.setOnClickListener { extrasId() }
+            horario1.setOnClickListener { timePicker(1) }
+            horario2.setOnClickListener { timePicker(2) }
+            horario3.setOnClickListener { timePicker(3) }
+            horario4.setOnClickListener { timePicker(4) }
+            textAdmissao.setOnClickListener { calendar(1) }
+            textAniversario.setOnClickListener { calendar(2) }
+        }
     }
 
     // Captures date and show in the EditText date and hour
@@ -120,7 +122,6 @@ class RegisterEmployeeActivity : AppCompatActivity() {
         }
     }
 
-    // Receive data to edition
     private fun infoEmployee() {
 
         val extras = intent.extras
@@ -129,19 +130,21 @@ class RegisterEmployeeActivity : AppCompatActivity() {
             val id = extras.getInt(ConstantsEmployee.EMPLOYEE.COLUMNS.ID)
             val infoEmployee: EmployeeEntity = mBusinessEmployee.consultEmployeeWithId(id)!!
             val photo = mToByteArray.converterToBitmap(infoEmployee.photo)
-            binding.photoEmployee.setImageBitmap(photo)
-            binding.horario1.text = infoEmployee.horario1
-            binding.horario2.text = infoEmployee.horario2
-            binding.horario3.text = infoEmployee.horario3
-            binding.horario4.text = infoEmployee.horario4
-            binding.edittextUsername.setText(infoEmployee.nameEmployee)
-            binding.edittextEmail.setText(infoEmployee.emailEmployee)
-            binding.edittextCargo.setText(infoEmployee.cargoEmployee)
-            binding.edittextPhone.setText(infoEmployee.phoneEmployee)
-            binding.textAdmissao.text = infoEmployee.admissaoEmployee
-            binding.textAniversario.text = infoEmployee.aniversarioEmployee
-            binding.textViewHome.text = getString(R.string.editar_funcionario)
-            binding.buttomRegisterEmployee.text = getString(R.string.editar)
+            binding.run {
+                photoEmployee.setImageBitmap(photo)
+                horario1.text = infoEmployee.horario1
+                horario2.text = infoEmployee.horario2
+                horario3.text = infoEmployee.horario3
+                horario4.text = infoEmployee.horario4
+                edittextUsername.setText(infoEmployee.nameEmployee)
+                edittextEmail.setText(infoEmployee.emailEmployee)
+                edittextCargo.setText(infoEmployee.cargoEmployee)
+                edittextPhone.setText(infoEmployee.phoneEmployee)
+                textAdmissao.text = infoEmployee.admissaoEmployee
+                textAniversario.text = infoEmployee.aniversarioEmployee
+                textViewHome.text = getString(R.string.editar_funcionario)
+                buttomRegisterEmployee.text = getString(R.string.editar)
+            }
         }
     }
 
@@ -242,16 +245,16 @@ class RegisterEmployeeActivity : AppCompatActivity() {
         val birth = binding.textAniversario.text.toString()
 
         when {
-            hora1 == "" -> binding.horario1.error = getString(R.string.horario_obrigatorio)
-            hora2 == "" -> binding.horario2.error = getString(R.string.horario_obrigatorio)
-            hora3 == "" -> binding.horario3.error = getString(R.string.horario_obrigatorio)
-            hora4 == "" -> binding.horario4.error = getString(R.string.horario_obrigatorio)
-            name == "" -> binding.edittextUsername.error = getString(R.string.digite_nome)
-            email == "" -> binding.edittextEmail.error = getString(R.string.digite_email)
-            cargo == "" -> binding.edittextCargo.error = getString(R.string.digite_cargo)
-            phone == "" -> binding.edittextPhone.error = getString(R.string.digite_phone)
-            admission == "" -> binding.textAdmissao.error = getString(R.string.digite_admissao)
-            birth == "" -> binding.textAniversario.error = getString(R.string.digite_aniversario)
+            hora1.isEmpty() -> binding.horario1.error = getString(R.string.horario_obrigatorio)
+            hora2.isEmpty() -> binding.horario2.error = getString(R.string.horario_obrigatorio)
+            hora3.isEmpty() -> binding.horario3.error = getString(R.string.horario_obrigatorio)
+            hora4.isEmpty() -> binding.horario4.error = getString(R.string.horario_obrigatorio)
+            name.isEmpty() -> binding.edittextUsername.error = getString(R.string.digite_nome)
+            email.isEmpty() -> binding.edittextEmail.error = getString(R.string.digite_email)
+            cargo.isEmpty() -> binding.edittextCargo.error = getString(R.string.digite_cargo)
+            phone.isEmpty() -> binding.edittextPhone.error = getString(R.string.digite_phone)
+            admission.isEmpty() -> binding.textAdmissao.error = getString(R.string.digite_admissao)
+            birth.isEmpty() -> binding.textAniversario.error = getString(R.string.digite_aniversario)
 
             else -> setEmployee(EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, name, cargo,
                 email, phone, admission, birth))

@@ -15,7 +15,7 @@ import com.example.app_point.utils.ConverterPhoto
 class PointsAdapter(private val application: Application, private val mBusiness: BusinessEmployee)
     : RecyclerView.Adapter<PointsViewHolder>() {
 
-    private var mListFullEmployee: ArrayList<PointsEntity> = arrayListOf()
+    private var mListFullEmployee: ArrayList<PointsEntity?> = arrayListOf()
     private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointsViewHolder {
@@ -31,12 +31,12 @@ class PointsAdapter(private val application: Application, private val mBusiness:
     override fun onBindViewHolder(holder: PointsViewHolder, position: Int) {
 
         val fullEmployee = mListFullEmployee[position]
-        val photo = mBusiness.consultPhoto(fullEmployee.employee.toString())
+        val photo = mBusiness.consultPhoto(fullEmployee?.employee.toString())
         val photoConvert = photo?.let { mConverterPhoto.converterToBitmap(it) }
         photoConvert?.let { holder.bindPhoto(it) }
 
-        holder.bind(fullEmployee.employee.toString())
-        holder.bindData(fullEmployee.data.toString())
+        holder.bind(fullEmployee?.employee.toString())
+        holder.bindData(fullEmployee?.data.toString())
         holder.bindHora(fullEmployee)
     }
 
@@ -44,9 +44,9 @@ class PointsAdapter(private val application: Application, private val mBusiness:
         return mListFullEmployee.count()
     }
 
-    fun updateFullEmployee(list: ArrayList<PointsEntity>){
+    fun updateFullEmployee(list: ArrayList<PointsEntity?>){
         mListFullEmployee = when {
-            list.size > 1 -> { list.reversed() as ArrayList<PointsEntity> }
+            list.size > 1 -> { list.reversed() as ArrayList<PointsEntity?> }
             else -> { list }
         }
         notifyDataSetChanged()

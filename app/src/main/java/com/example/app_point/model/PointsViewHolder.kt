@@ -11,78 +11,26 @@ import com.example.app_point.utils.ConverterHours
 
 class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val mAddHours: ConverterHours = ConverterHours()
-
     fun bind(employee: String){
-        val textEmployee = itemView.findViewById<TextView>(R.id.text_view_name_employee)
-        textEmployee.text = employee
+        itemView.findViewById<TextView>(R.id.text_view_name_employee).text = employee
     }
 
-    fun bindData(data: String){
-        val textData = itemView.findViewById<TextView>(R.id.text_data)
-        textData.text = data
-    }
+    fun bindData (data: String){ itemView.findViewById<TextView>(R.id.text_data).text = data }
 
-    fun bindHora(fullEmployee: PointsEntity){
+    fun bindHora(fullEmployee: PointsEntity?){
 
-        val textHora = itemView.findViewById<TextView>(R.id.text_hora)
+        val textHora1 = itemView.findViewById<TextView>(R.id.text_hora)
         val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
         val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
         val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
-        val imageBack = itemView.findViewById<ImageView>(R.id.icon_image_back)
 
-        //val minutesCurrent = mAddHours.converterHoursInMinutes(hoursCurrent)
-        //val minutes = mAddHours.converterHoursInMinutes(hours)
-
-        when {
-            fullEmployee.hora1 == null -> {
-                textHora.text = "--:--"
-                textHora2.text = "--:--"
-                textHora3.text = "--:--"
-                textHora4.text = "--:--"
-            }
-            fullEmployee.hora2 == null -> {
-                textHora.text = fullEmployee.hora1
-                textHora2.text = "--:--"
-                textHora3.text = "--:--"
-                textHora4.text = "--:--"
-            }
-            fullEmployee.hora3 == null -> {
-                textHora.text = fullEmployee.hora1
-                textHora2.text = fullEmployee.hora2
-                textHora3.text = "--:--"
-                textHora4.text = "--:--"
-            }
-            fullEmployee.hora4 == null -> {
-                textHora.text = fullEmployee.hora1
-                textHora2.text = fullEmployee.hora2
-                textHora3.text = fullEmployee.hora3
-                textHora4.text = "--:--"
-            }
-            else -> {
-                textHora.text = fullEmployee.hora1
-                textHora2.text = fullEmployee.hora2
-                textHora3.text = fullEmployee.hora3
-                textHora4.text = fullEmployee.hora4
-            }
-        }
-
-        /*when {
-            minutesCurrent < minutes -> {
-                imageBack.setImageResource(R.color.colorGreen)
-            }
-            minutesCurrent > minutes + 15 -> {
-                imageBack.setImageResource(R.color.colorRed)
-            }
-            else -> {
-                imageBack.setImageResource(R.color.colorYellow)
-            }
-        }*/
+        textHora1.text = fullEmployee?.hora1
+        textHora2.text = fullEmployee?.hora2
+        textHora3.text = fullEmployee?.hora3
+        textHora4.text = fullEmployee?.hora4
     }
 
     fun bindPhoto(image: Bitmap){
-        val imageView = itemView.findViewById<ImageView>(R.id.icon_image_perfil)
-        imageView.setImageBitmap(image)
-
+        itemView.findViewById<ImageView>(R.id.icon_image_perfil).setImageBitmap(image)
     }
 }

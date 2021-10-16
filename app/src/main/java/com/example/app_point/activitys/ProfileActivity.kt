@@ -185,25 +185,22 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     }
 
     private fun dialogListEmployee(){
-        // Inflater the layout
+
         val inflater = layoutInflater
         val inflateView = inflater.inflate(R.layout.dialog_list_employee, null)
 
-        // Captures a list employee and add to spinner
         val list = mBusinessEmployee.consultEmployee()
         val listSpinner= inflateView.findViewById(R.id.spinner_employee) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        // Create the Dialog
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle(getString(R.string.selecione_funcionario))
         alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Ok") { _, _ ->
 
-            // Captures item of Spinner
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {

@@ -11,10 +11,11 @@ class BusinessUser(private val securityPreferences: SecurityPreferences,
     fun setUser(name: String, email: String, password: String): Boolean {
         return when {
             repositoryUser.setUser(name, email, password) -> {
-                securityPreferences.storeString(ConstantsUser.USER.COLUNAS.NAME, name)
-                securityPreferences.storeString(ConstantsUser.USER.COLUNAS.EMAIL, email)
-                securityPreferences.storeString(ConstantsUser.USER.COLUNAS.PASSWORD, password)
-
+                securityPreferences.run {
+                    storeString(ConstantsUser.USER.COLUNAS.NAME, name)
+                    storeString(ConstantsUser.USER.COLUNAS.EMAIL, email)
+                    storeString(ConstantsUser.USER.COLUNAS.PASSWORD, password)
+                }
                 true
             }
             else -> false
@@ -26,10 +27,11 @@ class BusinessUser(private val securityPreferences: SecurityPreferences,
         val user: UserEntity? = repositoryUser.storeUser(name, password)
         return when {
             user != null -> {
-                securityPreferences.storeString(ConstantsUser.USER.COLUNAS.NAME, user.nome)
-                securityPreferences.storeString(ConstantsUser.USER.COLUNAS.EMAIL, user.email)
-                securityPreferences.storeString(ConstantsUser.USER.COLUNAS.PASSWORD, user.senha)
-
+                securityPreferences.run {
+                    storeString(ConstantsUser.USER.COLUNAS.NAME, user.nome)
+                    storeString(ConstantsUser.USER.COLUNAS.EMAIL, user.email)
+                    storeString(ConstantsUser.USER.COLUNAS.PASSWORD, user.senha)
+                }
                 true
             }
             else -> false

@@ -104,12 +104,15 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
         when {
             dateFinal != date -> { binding.recyclerEmployee[position].text_data_ponto.text = dateFinal }
-            else -> { binding.recyclerEmployee[position].text_data_ponto.text = "Hoje" }
+            else -> { binding.recyclerEmployee[position].text_data_ponto.text = getString(R.string.hoje) }
         }
-        binding.recyclerEmployee[position].text_hora1.text = point?.hora1 ?: "--:--"
-        binding.recyclerEmployee[position].text_hora2.text = point?.hora2 ?: "--:--"
-        binding.recyclerEmployee[position].text_hora3.text = point?.hora3 ?: "--:--"
-        binding.recyclerEmployee[position].text_hora4.text = point?.hora4 ?: "--:--"
+
+        binding.run {
+            recyclerEmployee[position].text_hora1.text = point?.hora1 ?: "--:--"
+            recyclerEmployee[position].text_hora2.text = point?.hora2 ?: "--:--"
+            recyclerEmployee[position].text_hora3.text = point?.hora3 ?: "--:--"
+            recyclerEmployee[position].text_hora4.text = point?.hora4 ?: "--:--"
+        }
     }
 
     private fun addOrRemoveDate(date: String, pos: Int): String{

@@ -22,9 +22,11 @@ class RegisterUser : AppCompatActivity() {
     }
 
     private fun listener(){
-        binding.imageBack.setOnClickListener { finish() }
-        binding.textInicio.setOnClickListener { finish() }
-        binding.buttomRegisterUser.setOnClickListener { registerUser() }
+        binding.run {
+            imageBack.setOnClickListener { finish() }
+            textInicio.setOnClickListener { finish() }
+            buttomRegisterUser.setOnClickListener { registerUser() }
+        }
     }
 
     private fun registerUser(){
@@ -38,8 +40,7 @@ class RegisterUser : AppCompatActivity() {
             email.isEmpty() -> binding.edittextEmail.error = "Digite Email"
             password.isEmpty() -> binding.edittextSenha.error == "Digite Senha"
             confirmPassword.isEmpty() -> binding.edittextConfirmeSenha.error == "Confirme Senha"
-            password != confirmPassword -> Toast.makeText(this, getString(R.string.senhas_diferentes),
-                Toast.LENGTH_SHORT).show()
+            password != confirmPassword -> toast(R.string.senhas_diferentes)
             else -> createEmailAndPassword(name, email, password)
         }
     }
@@ -48,13 +49,13 @@ class RegisterUser : AppCompatActivity() {
 
         if (mBusinessUser.setUser(name, email, password)){
             startActivity(Intent(this, MainActivity::class.java))
-            Toast.makeText(this, getString(R.string.bem_vindo),
-                Toast.LENGTH_SHORT).show()
+            toast(R.string.bem_vindo)
             finish()
         }
-        else {
-            Toast.makeText(this, getString(R.string.nao_foi_possivel_cadastrar),
-                Toast.LENGTH_SHORT).show()
-        }
+        else { toast(R.string.nao_foi_possivel_cadastrar) }
+    }
+
+    private fun toast(message: Int){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
