@@ -18,7 +18,7 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_time_line, parent, false)
 
-        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.zoom)
+        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.animation_left)
         item.startAnimation(animation)
 
         return ViewHolderPoints(item)

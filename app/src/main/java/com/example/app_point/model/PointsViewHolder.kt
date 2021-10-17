@@ -24,10 +24,10 @@ class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
         val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
 
-        textHora1.text = fullEmployee?.hora1
-        textHora2.text = fullEmployee?.hora2
-        textHora3.text = fullEmployee?.hora3
-        textHora4.text = fullEmployee?.hora4
+        textHora1.text = fullEmployee?.hora1 ?: "--:--"
+        textHora2.text = fullEmployee?.hora2 ?: "--:--"
+        textHora3.text = fullEmployee?.hora3 ?: "--:--"
+        textHora4.text = fullEmployee?.hora4 ?: "--:--"
     }
 
     fun bindPhoto(image: Bitmap){

@@ -15,7 +15,9 @@ import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityToolsBinding
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.ViewModelEmployee
+import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
+import com.example.app_point.utils.createDialog
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.recycler_employee.view.*
 import org.koin.android.ext.android.inject
@@ -26,6 +28,7 @@ import java.util.*
 class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     private lateinit var mEmployeeAdapter: EmployeeAdapter
+    private val repositoryPoint: RepositoryPoint by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val viewModelEmployee by viewModel<ViewModelEmployee>()
     private val binding by lazy { ActivityToolsBinding.inflate(layoutInflater) }
@@ -36,7 +39,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
         val recycler = binding.recyclerEmployee
         recycler.layoutManager = LinearLayoutManager(this)
-        mEmployeeAdapter = EmployeeAdapter(application, this)
+        mEmployeeAdapter = EmployeeAdapter(repositoryPoint, this)
         recycler.adapter = mEmployeeAdapter
 
         listener()
@@ -73,13 +76,10 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     }
 
     override fun clickRemove(id: Int, name: String) {
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Deseja remover $name?")
-        alertDialog.setCancelable(false)
+        val alertDialog = createDialog("Deseja remover $name?")
         alertDialog.setPositiveButton("Sim") { _, _ -> removeEmployee(id, name) }
         alertDialog.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
-        val dialog = alertDialog.create()
-        dialog.show()
+        alertDialog.create().show()
     }
 
     override fun clickNext(name: String, position: Int) { reactBackAndNext(name, position, 1) }

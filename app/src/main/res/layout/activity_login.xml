@@ -9,7 +9,7 @@
     android:fillAfter="true"
     android:interpolator="@android:anim/linear_interpolator"
     android:padding="16dp"
-    tools:context=".activitys.ActivityLoginUser">
+    tools:context=".activitys.LoginActivity">
 
     <ImageView
         android:id="@+id/logo_digital"

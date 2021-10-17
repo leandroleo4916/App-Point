@@ -9,7 +9,7 @@ import com.example.app_point.business.BusinessUser
 import com.example.app_point.databinding.RegisterUserBinding
 import org.koin.android.ext.android.inject
 
-class RegisterUser : AppCompatActivity() {
+class RegisterUserActivity : AppCompatActivity() {
 
     private val mBusinessUser: BusinessUser by inject()
     private val binding by lazy { RegisterUserBinding.inflate(layoutInflater) }

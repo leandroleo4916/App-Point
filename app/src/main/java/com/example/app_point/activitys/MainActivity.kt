@@ -1,6 +1,5 @@
 package com.example.app_point.activitys
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -20,6 +19,7 @@ import com.example.app_point.model.ViewModelMain
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.SecurityPreferences
+import com.example.app_point.utils.createDialog
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private val listEmployee: BusinessEmployee by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
-    private lateinit var businessPoints: BusinessPoints
+    private val businessPoints: BusinessPoints by inject()
     private val pointAdapter: PointsAdapter by inject()
     private val repositoryPoint: RepositoryPoint by inject()
     private val securityPreferences: SecurityPreferences by inject()
@@ -39,17 +39,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setContentView(binding.root)
 
         animationIcons()
-        businessPoints = BusinessPoints(repositoryPoint)
         viewModelMain = ViewModelMain(application, repositoryPoint)
 
-        val recycler = binding.recyclerPoints
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = pointAdapter
-
+        recycler()
         searchPoints()
         listener()
         observe()
         salutation()
+    }
+
+    private fun recycler(){
+        val recycler = binding.recyclerPoints
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = pointAdapter
     }
 
     private fun animationIcons(){
@@ -118,14 +120,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun dialogLogout(){
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle(getString(R.string.deseja_sair))
-        alertDialog.setCancelable(false)
+        val alertDialog = createDialog(R.string.deseja_sair.toString())
         alertDialog.setPositiveButton("Sim") { _, _ ->
             securityPreferences.removeString()
             finish()
         }
-        alertDialog.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
+        alertDialog.setNegativeButton("Não") { _, _ ->
+            showSnackBar(R.string.cancelado) }
         alertDialog.create().show()
     }
 
@@ -139,18 +140,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val textData = inflateView.findViewById(R.id.dataPonto) as TextView
         textData.text = dateCurrent
 
-        // Captures employee list and add to spinner
         val list = listEmployee.consultEmployee()
         val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        // Create the Dialog
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Bater Ponto")
+        val alertDialog = createDialog("Bater Ponto")
         alertDialog.setView(inflateView)
-        alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Registrar") { _, _ ->
 
             when (val itemSpinner = listSpinner.selectedItem) {

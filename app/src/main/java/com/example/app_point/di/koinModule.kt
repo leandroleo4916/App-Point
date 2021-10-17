@@ -70,7 +70,7 @@ val businessModule = module {
 }
 
 val pointsModule = module {
-    single { BusinessPoints(get()) }
+    factory { BusinessPoints(get()) }
 }
 
 val userModule = module {
@@ -94,7 +94,7 @@ val pointsAdapterModule = module {
 }
 
 val dataBaseEmployeeModule = module {
-    factory { DataBaseEmployee(get()) }
+    single { DataBaseEmployee(get()) }
 }
 
 val employeeAdapterModule = module {

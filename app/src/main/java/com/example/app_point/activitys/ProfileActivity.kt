@@ -6,14 +6,12 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.business.CalculationHours
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.databinding.ActivityPerfilBinding
 import com.example.app_point.adapters.AdapterPoints
@@ -33,9 +31,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     private val mAdapterPoints: AdapterPoints by inject()
     private val mBusinessEmployee: BusinessEmployee by inject()
     private val repositoryPoint: RepositoryPoint by inject()
-    private lateinit var mPhoto: ConverterPhoto
-    private val handler: Handler = Handler()
-    private val calculationHours: CalculationHours by inject()
+    private val mPhoto: ConverterPhoto by inject()
     private val binding by lazy { ActivityPerfilBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +39,6 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         setContentView(binding.root)
 
         viewModelPoints = ViewModelPoints(application, repositoryPoint)
-        mPhoto = ConverterPhoto()
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -108,9 +103,12 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         val dataEmployee = mBusinessEmployee.consultDataEmployee(name)
         val photo = dataEmployee!!.photo
         val photoConverter = mPhoto.converterToBitmap(photo)
-        binding.textNameEmployee.text = dataEmployee.nameEmployee
-        binding.textCargoEmployee.text = dataEmployee.cargoEmployee
-        binding.imagePhotoEmployee.setImageBitmap(photoConverter)
+
+        binding.run {
+            textNameEmployee.text = dataEmployee.nameEmployee
+            textCargoEmployee.text = dataEmployee.cargoEmployee
+            imagePhotoEmployee.setImageBitmap(photoConverter)
+        }
 
         val hoursMake = 120
         var pStatus1 = 0
@@ -120,7 +118,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         CoroutineScope(Main).launch {
             withContext(Dispatchers.Default) {
                 while (pStatus1 <= hoursMake) {
-                    handler.post {
+                    withContext(Main) {
                         binding.imageToolbarHrs.progress = pStatus1
                         binding.editHrsFeitas.text = pStatus1.toString()
                     }
@@ -133,7 +131,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
         CoroutineScope(Main).launch {
             withContext(Dispatchers.Default) {
                 while (pStatus2 <= hoursExtra) {
-                    handler.post {
+                    withContext(Main) {
                         binding.imageToolbar.progress = pStatus2
                         binding.editHrsExtras.text = pStatus2.toString()
                     }

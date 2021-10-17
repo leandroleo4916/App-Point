@@ -11,7 +11,7 @@ import com.example.app_point.databinding.ActivityLoginBinding
 import com.example.app_point.utils.SecurityPreferences
 import org.koin.android.ext.android.inject
 
-class ActivityLoginUser : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private val mBusinessUser: BusinessUser by inject()
     private val mSecurityPreferences: SecurityPreferences by inject()
@@ -27,7 +27,7 @@ class ActivityLoginUser : AppCompatActivity() {
 
     private fun listener(){
         binding.textRegisterUser.setOnClickListener{
-            startActivity(Intent(this, RegisterUser::class.java))
+            startActivity(Intent(this, RegisterUserActivity::class.java))
         }
         binding.buttomLoginUser.setOnClickListener{ loginUser() }
     }

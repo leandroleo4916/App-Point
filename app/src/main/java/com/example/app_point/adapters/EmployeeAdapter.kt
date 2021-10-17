@@ -1,6 +1,5 @@
 package com.example.app_point.adapters
 
-import android.app.Application
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +16,12 @@ import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.recycler_employee.view.*
 import kotlin.collections.ArrayList
 
-class EmployeeAdapter(application: Application, private val listener: OnItemClickRecycler):
+class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val listener: OnItemClickRecycler):
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
 
     private var listEmployee: ArrayList<EmployeeEntity> = arrayListOf()
     private var dateCurrent: String = ""
     private val converterPhoto: ConverterPhoto = ConverterPhoto()
-    private var searchPoints: RepositoryPoint = RepositoryPoint (application)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
@@ -38,9 +36,11 @@ class EmployeeAdapter(application: Application, private val listener: OnItemClic
         val photoConvert = employee.photo.let { converterPhoto.converterToBitmap(it) }
         val points = searchPoints.fullPointsToName(employee.nameEmployee, dateCurrent)
 
-        holder.bind(employee.nameEmployee, employee.cargoEmployee, employee.admissaoEmployee)
-        holder.bindPhoto(photoConvert)
-        holder.bindHora(points)
+        holder.run {
+            bind(employee.nameEmployee, employee.cargoEmployee, employee.admissaoEmployee)
+            bindPhoto(photoConvert)
+            bindHora(points)
+        }
     }
 
     inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {

@@ -9,9 +9,7 @@ import com.example.app_point.entity.HoursEntity
 import com.example.app_point.entity.PointsEntity
 import com.example.app_point.interfaces.RepositoryData
 
-class RepositoryPoint(context: Context): RepositoryData {
-
-    private val mDataBasePoint: DataBaseEmployee = DataBaseEmployee(context)
+class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryData {
 
     override fun setPoint(employee: String, date: String, hour: String): Boolean {
 

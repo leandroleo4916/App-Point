@@ -40,9 +40,7 @@ class PointsAdapter(private val application: Application, private val mBusiness:
         holder.bindHora(fullEmployee)
     }
 
-    override fun getItemCount(): Int {
-        return mListFullEmployee.count()
-    }
+    override fun getItemCount(): Int { return mListFullEmployee.count() }
 
     fun updateFullEmployee(list: ArrayList<PointsEntity?>){
         mListFullEmployee = when {
