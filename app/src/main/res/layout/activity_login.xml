@@ -8,7 +8,7 @@
     android:background="@color/back"
     android:fillAfter="true"
     android:interpolator="@android:anim/linear_interpolator"
-    android:padding="16dp"
+    android:padding="12dp"
     tools:context=".activitys.LoginActivity">
 
     <ImageView
@@ -27,9 +27,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_profile"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginTop="22dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
@@ -67,9 +69,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_senha"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginTop="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
@@ -163,9 +167,11 @@
 
     <Button
         android:id="@+id/buttom_login_user"
-        android:layout_width="235dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/back_fundo"
         android:text="@string/entrar"
         android:elevation="8dp"

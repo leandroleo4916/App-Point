@@ -40,13 +40,16 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
 
         viewModelPoints = ViewModelPoints(application, repositoryPoint)
 
-        val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = mAdapterPoints
-
+        recycler()
         searchEmployee()
         listener()
         observer()
+    }
+
+    private fun recycler() {
+        val recycler = findViewById<RecyclerView>(R.id.recyclerViewProfile)
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = mAdapterPoints
     }
 
     private fun searchEmployee() {

@@ -1,6 +1,5 @@
 package com.example.app_point.activitys
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.icu.util.Calendar
@@ -37,14 +36,17 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        recycler()
+        listener()
+        viewModel()
+        observer()
+    }
+
+    private fun recycler(){
         val recycler = binding.recyclerEmployee
         recycler.layoutManager = LinearLayoutManager(this)
         mEmployeeAdapter = EmployeeAdapter(repositoryPoint, this)
         recycler.adapter = mEmployeeAdapter
-
-        listener()
-        viewModel()
-        observer()
     }
 
     private fun listener(){ binding.imageBackTools.setOnClickListener { finish() } }

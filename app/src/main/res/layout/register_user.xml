@@ -49,9 +49,11 @@
 
     <Button
         android:id="@+id/buttom_register_user"
-        android:layout_width="235dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/back_fundo"
         android:text="@string/criar_conta"
         android:textColor="@color/back"
@@ -63,9 +65,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_name"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="65dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
@@ -75,9 +79,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_email"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
@@ -87,9 +93,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_senha"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
@@ -99,9 +107,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_confirme_senha"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/back_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"

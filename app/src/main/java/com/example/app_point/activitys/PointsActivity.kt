@@ -30,13 +30,16 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         viewModelMain = ViewModelMain(application, repositoryPoint)
 
-        val recycler = binding.recyclerActivityPontos
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = mPointsAdapter
-
+        recycler()
         searchPoints()
         listener()
         observe()
+    }
+
+    private fun recycler(){
+        val recycler = binding.recyclerActivityPontos
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = mPointsAdapter
     }
 
     private fun searchPoints(){
@@ -69,7 +72,6 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        // Add Dialog
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle(getString(R.string.filtrar_funcionario))
         alertDialog.setView(inflateView)
@@ -98,7 +100,7 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinnerGetFuncionario -> {
+            R.id.spinnerGetEmployee -> {
                 parent.getItemAtPosition(position).toString()
             }
         }

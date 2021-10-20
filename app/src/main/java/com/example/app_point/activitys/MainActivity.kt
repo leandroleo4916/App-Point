@@ -125,8 +125,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             securityPreferences.removeString()
             finish()
         }
-        alertDialog.setNegativeButton("Não") { _, _ ->
-            showSnackBar(R.string.cancelado) }
+        alertDialog.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
         alertDialog.create().show()
     }
 
@@ -134,25 +133,24 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         val hourCurrent = captureDateCurrent.captureHoraCurrent()
         val dateCurrent = captureDateCurrent.captureDateCurrent()
+        val list = listEmployee.consultEmployee()
 
-        val inflater = layoutInflater
-        val inflateView = inflater.inflate(R.layout.dialog_bater_ponto, null)
-        val textData = inflateView.findViewById(R.id.dataPonto) as TextView
+        val inflate = layoutInflater.inflate(R.layout.dialog_bater_ponto, null)
+        val textData = inflate.findViewById(R.id.dataPonto) as TextView
         textData.text = dateCurrent
 
-        val list = listEmployee.consultEmployee()
-        val listSpinner = inflateView.findViewById(R.id.spinnerGetFuncionario) as Spinner
+        val listSpinner = inflate.findViewById(R.id.spinnerGetEmployee) as Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
         val alertDialog = createDialog("Bater Ponto")
-        alertDialog.setView(inflateView)
+        alertDialog.setView(inflate)
         alertDialog.setPositiveButton("Registrar") { _, _ ->
 
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
-                else -> { savePoint(itemSpinner.toString(), dateCurrent, hourCurrent) }
+                else -> savePoint(itemSpinner.toString(), dateCurrent, hourCurrent)
             }
         }
         alertDialog.setNegativeButton(getString(R.string.cancelar)) { _, _ -> showSnackBar(R.string.cancelado) }
@@ -174,7 +172,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinnerGetFuncionario -> { parent.getItemAtPosition(position).toString() }
+            R.id.spinnerGetEmployee -> { parent.getItemAtPosition(position).toString() }
         }
     }
 
