@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
+import com.example.app_point.entity.Employee
 import com.example.app_point.entity.EmployeeEntity
 
 class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
@@ -143,6 +144,50 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         } catch (e: Exception) {
             return listData
         }
+    }
+
+    fun consultDataEmployee(): ArrayList<Employee> {
+
+        val listData: ArrayList<Employee> = arrayListOf()
+        try {
+            val db = mDataBaseEmployee.readableDatabase
+            val projection = arrayOf(
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.NAME,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION)
+
+            val cursor = db.query(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val id = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                    val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+                    val name = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
+                    val cargo = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
+                    val admission = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
+
+                    listData.add(Employee(id, photo, name, cargo, admission))
+                }
+            }
+            cursor?.close()
+            return listData
+
+        } catch (e: Exception) { return listData }
     }
 
     fun consultDataEmployee(nome: String): EmployeeEntity? {

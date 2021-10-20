@@ -50,10 +50,10 @@ class CalculationHours {
     }
 
     private fun scheduleWork(entity: PointsHours): Int{
-        val h1 = convertHoursInMinutes(entity.horario1)
-        val h2 = convertHoursInMinutes(entity.horario2)
-        val h3 = convertHoursInMinutes(entity.horario3)
-        val h4 = convertHoursInMinutes(entity.horario4)
+        val h1 = convertHoursInMinutes(entity.horario1!!)
+        val h2 = convertHoursInMinutes(entity.horario2!!)
+        val h3 = convertHoursInMinutes(entity.horario3!!)
+        val h4 = convertHoursInMinutes(entity.horario4!!)
         return (h2 - h1) + (h4 - h3)
     }
 

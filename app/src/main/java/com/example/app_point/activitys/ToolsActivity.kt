@@ -6,7 +6,6 @@ import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
@@ -18,7 +17,6 @@ import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.createDialog
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.recycler_employee.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -84,37 +82,30 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         alertDialog.create().show()
     }
 
-    override fun clickNext(name: String, position: Int) { reactBackAndNext(name, position, 1) }
+    override fun clickNext(name: String, date: String, position: Int) {
+        reactBackAndNext(name, date, position, 1)
+    }
 
-    override fun clickBack(name: String, position: Int) { reactBackAndNext(name, position, -1) }
+    override fun clickBack(name: String, date: String, position: Int) {
+        reactBackAndNext(name, date, position, -1)
+    }
 
-    private fun reactBackAndNext(name: String, position: Int, pos: Int){
+    private fun reactBackAndNext(name: String, dateCaptured: String, position: Int, pos: Int){
 
-        val dateCaptured = binding.recyclerEmployee[position].text_data_ponto.text.toString()
-        val dateFinal =
+        val date =
             if (dateCaptured == "Hoje") {
                 val dateToday = captureDateCurrent.captureDateCurrent()
                 addOrRemoveDate(dateToday, pos)
             } else{ addOrRemoveDate(dateCaptured, pos) }
 
-        addItemToView(name, dateFinal, position)
+        addItemToView(name, date, position)
     }
 
     private fun addItemToView(name: String, dateFinal: String, position: Int){
-        val point = viewModelEmployee.consultPoints(name, dateFinal)
-        val date = captureDateCurrent.captureDateCurrent()
+        val point = viewModelEmployee.consultPoint(name, dateFinal)
+        val dateCurrent = captureDateCurrent.captureDateCurrent()
 
-        when {
-            dateFinal != date -> { binding.recyclerEmployee[position].text_data_ponto.text = dateFinal }
-            else -> { binding.recyclerEmployee[position].text_data_ponto.text = getString(R.string.hoje) }
-        }
-
-        binding.run {
-            recyclerEmployee[position].text_hora1.text = point?.hora1 ?: "--:--"
-            recyclerEmployee[position].text_hora2.text = point?.hora2 ?: "--:--"
-            recyclerEmployee[position].text_hora3.text = point?.hora3 ?: "--:--"
-            recyclerEmployee[position].text_hora4.text = point?.hora4 ?: "--:--"
-        }
+        mEmployeeAdapter.updateDate(point, dateCurrent, dateFinal, position)
     }
 
     private fun addOrRemoveDate(date: String, pos: Int): String{

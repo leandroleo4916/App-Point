@@ -8,19 +8,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.entity.EmployeeEntity
-import com.example.app_point.entity.PointsEntity
+import com.example.app_point.entity.Employee
+import com.example.app_point.entity.PointsHours
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.recycler_employee.view.*
-import kotlin.collections.ArrayList
 
 class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val listener: OnItemClickRecycler):
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
 
-    private var listEmployee: ArrayList<EmployeeEntity> = arrayListOf()
-    private var dateCurrent: String = ""
+    private var listEmployee: ArrayList<Employee> = arrayListOf()
     private val converterPhoto: ConverterPhoto = ConverterPhoto()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
@@ -34,12 +32,11 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
 
         val employee = listEmployee[position]
         val photoConvert = employee.photo.let { converterPhoto.converterToBitmap(it) }
-        val points = searchPoints.fullPointsToName(employee.nameEmployee, dateCurrent)
 
         holder.run {
-            bind(employee.nameEmployee, employee.cargoEmployee, employee.admissaoEmployee)
+            bind(employee.name, employee.cargo, employee.admission)
             bindPhoto(photoConvert)
-            bindHora(points)
+            bindHora(employee)
         }
     }
 
@@ -55,13 +52,14 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
         override fun onClick(view: View?) {
             val position = bindingAdapterPosition
             val id = listEmployee[position].id
-            val name = listEmployee[position].nameEmployee
+            val name = listEmployee[position].name
+            val date = listEmployee[position].date
 
             when(view){
                 itemView.remove_employee -> listener.clickRemove(id, name)
                 itemView.edit_employee -> listener.clickEdit(id)
-                itemView.back -> listener.clickBack(name, position)
-                itemView.next -> listener.clickNext(name, position)
+                itemView.back -> listener.clickBack(name, date, position)
+                itemView.next -> listener.clickNext(name, date, position)
             }
         }
 
@@ -73,22 +71,19 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
             }
         }
 
-        fun bindHora(points: ArrayList<PointsEntity?>){
+        fun bindHora(employee: Employee){
 
             val textHora1 = itemView.findViewById<TextView>(R.id.text_hora1)
             val textHora2 = itemView.findViewById<TextView>(R.id.text_hora2)
             val textHora3 = itemView.findViewById<TextView>(R.id.text_hora3)
             val textHora4 = itemView.findViewById<TextView>(R.id.text_hora4)
+            val textDate = itemView.findViewById<TextView>(R.id.text_data_ponto)
 
-            when (points.size) {
-                0 -> {}
-                else -> {
-                    textHora1.text = points[0]?.hora1 ?: "--:--"
-                    textHora2.text = points[0]?.hora2 ?: "--:--"
-                    textHora3.text = points[0]?.hora3 ?: "--:--"
-                    textHora4.text = points[0]?.hora4 ?: "--:--"
-                }
-            }
+            textHora1.text = employee.hour1
+            textHora2.text = employee.hour2
+            textHora3.text = employee.hour3
+            textHora4.text = employee.hour4
+            textDate.text = employee.date
         }
 
         fun bindPhoto(image: Bitmap){
@@ -98,9 +93,31 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
 
     override fun getItemCount(): Int { return listEmployee.count() }
 
-    fun updateFullEmployee(list: ArrayList<EmployeeEntity>, date: String){
+    fun updateFullEmployee(list: ArrayList<Employee>, date: String){
+
+        for (position in 0 until list.size){
+            val points = searchPoints.selectFullPoints(list[position].name, date)
+            list[position].date = "Hoje"
+            list[position].hour1 = points?.hora1 ?: "--:--"
+            list[position].hour2 = points?.hora2 ?: "--:--"
+            list[position].hour3 = points?.hora3 ?: "--:--"
+            list[position].hour4 = points?.hora4 ?: "--:--"
+        }
         listEmployee = list
-        dateCurrent = date
+        notifyDataSetChanged()
+    }
+
+    fun updateDate(list: PointsHours?, dateCurrent: String, dateFinal: String, position: Int){
+
+        when {
+            dateFinal != dateCurrent -> { listEmployee[position].date = dateFinal }
+            else -> { listEmployee[position].date = "Hoje" }
+        }
+
+        listEmployee[position].hour1 = list?.horario1 ?: "--:--"
+        listEmployee[position].hour2 = list?.horario2 ?: "--:--"
+        listEmployee[position].hour3 = list?.horario3 ?: "--:--"
+        listEmployee[position].hour4 = list?.horario4 ?: "--:--"
         notifyDataSetChanged()
     }
 }
