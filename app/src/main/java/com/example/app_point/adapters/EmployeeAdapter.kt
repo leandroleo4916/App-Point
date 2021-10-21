@@ -17,7 +17,8 @@ import kotlinx.android.synthetic.main.recycler_employee.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val listener: OnItemClickRecycler):
+class EmployeeAdapter(private var searchPoints: RepositoryPoint,
+                      private val listener: OnItemClickRecycler):
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
 
     private var listEmployee: ArrayList<Employee> = arrayListOf()
@@ -59,7 +60,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
             val date = listEmployee[position].date
 
             when(view){
-                itemView.remove_employee -> listener.clickRemove(id, name)
+                itemView.remove_employee -> listener.clickRemove(id, name, position)
                 itemView.edit_employee -> listener.clickEdit(id)
                 itemView.back -> listener.clickBack(name, date, position)
                 itemView.next -> listener.clickNext(name, date, position)
@@ -127,5 +128,8 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
     fun swap(source: Int, destination: Int) {
         Collections.swap(listEmployee, source, destination)
         notifyItemMoved(source, destination)
+    }
+    fun removeEmployee(position: Int){
+        listener.clickRemove(listEmployee[position].id, listEmployee[position].name, position)
     }
 }

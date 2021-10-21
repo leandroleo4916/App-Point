@@ -78,10 +78,17 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         finish()
     }
 
-    override fun clickRemove(id: Int, name: String) {
+    override fun clickRemove(id: Int, name: String, position: Int) {
+
         val alertDialog = createDialog("Deseja remover $name?")
-        alertDialog.setPositiveButton("Sim") { _, _ -> removeEmployee(id, name) }
-        alertDialog.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
+        alertDialog.setPositiveButton("Sim") { _, _ ->
+            removeEmployee(id, name)
+            mEmployeeAdapter.notifyItemRemoved(position)
+        }
+        alertDialog.setNegativeButton("Não") { _, _ ->
+            showSnackBar(R.string.cancelado)
+            mEmployeeAdapter.notifyDataSetChanged()
+        }
         alertDialog.create().show()
     }
 
@@ -147,12 +154,15 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder): Boolean {
-                val source = viewHolder.adapterPosition
-                val destination = target.adapterPosition
+                val source = viewHolder.bindingAdapterPosition
+                val destination = target.bindingAdapterPosition
                 mEmployeeAdapter.swap(source, destination)
                 return true
             }
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.bindingAdapterPosition
+                mEmployeeAdapter.removeEmployee(position)
+            }
         }
 
         val recycler = binding.recyclerEmployee
