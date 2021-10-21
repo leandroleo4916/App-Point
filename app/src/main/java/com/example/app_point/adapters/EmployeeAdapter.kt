@@ -14,6 +14,8 @@ import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.recycler_employee.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val listener: OnItemClickRecycler):
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
@@ -40,7 +42,8 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
         }
     }
 
-    inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
         init {
             itemView.edit_employee.setOnClickListener(this)
@@ -119,5 +122,10 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint, private val lis
         listEmployee[position].hour3 = list?.horario3 ?: "--:--"
         listEmployee[position].hour4 = list?.horario4 ?: "--:--"
         notifyDataSetChanged()
+    }
+
+    fun swap(source: Int, destination: Int) {
+        Collections.swap(listEmployee, source, destination)
+        notifyItemMoved(source, destination)
     }
 }

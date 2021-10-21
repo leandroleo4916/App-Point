@@ -6,7 +6,9 @@ import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
 import com.example.app_point.constants.ConstantsEmployee
@@ -38,6 +40,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         listener()
         viewModel()
         observer()
+        touchHelper()
     }
 
     private fun recycler(){
@@ -135,5 +138,25 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
             .setBackgroundTint(Color.BLACK)
             .setAction("Ok") {}
             .show()
+    }
+
+    private fun touchHelper() {
+        val swipeHandler = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.START or ItemTouchHelper.END) {
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder): Boolean {
+                val source = viewHolder.adapterPosition
+                val destination = target.adapterPosition
+                mEmployeeAdapter.swap(source, destination)
+                return true
+            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+        }
+
+        val recycler = binding.recyclerEmployee
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recycler)
     }
 }
