@@ -1,10 +1,12 @@
 package com.example.app_point.activitys
 
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,13 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
 import com.example.app_point.constants.ConstantsEmployee
+import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.databinding.ActivityToolsBinding
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.ViewModelEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
+import com.example.app_point.utils.SecurityPreferences
 import com.example.app_point.utils.createDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -26,10 +31,11 @@ import java.util.*
 
 class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
-    private lateinit var mEmployeeAdapter: EmployeeAdapter
+    private lateinit var employeeAdapter: EmployeeAdapter
     private val repositoryPoint: RepositoryPoint by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val viewModelEmployee by viewModel<ViewModelEmployee>()
+    private val securityPreferences: SecurityPreferences by inject()
     private val binding by lazy { ActivityToolsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +52,8 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
     private fun recycler(){
         val recycler = binding.recyclerEmployee
         recycler.layoutManager = LinearLayoutManager(this)
-        mEmployeeAdapter = EmployeeAdapter(repositoryPoint, this)
-        recycler.adapter = mEmployeeAdapter
+        employeeAdapter = EmployeeAdapter(repositoryPoint, this)
+        recycler.adapter = employeeAdapter
     }
 
     private fun listener(){ binding.imageBackTools.setOnClickListener { finish() } }
@@ -60,11 +66,11 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
             when (it.size) {
                 0 -> {
                     showSnackBar(R.string.precisa_add_funcionarios)
-                    mEmployeeAdapter.updateFullEmployee(it, date)
+                    employeeAdapter.updateFullEmployee(it, date)
                     binding.progressEmployee.visibility = View.GONE
                 }
                 else -> {
-                    mEmployeeAdapter.updateFullEmployee(it, date)
+                    employeeAdapter.updateFullEmployee(it, date)
                     binding.progressEmployee.visibility = View.GONE
                 }
             }
@@ -78,18 +84,26 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         finish()
     }
 
-    override fun clickRemove(id: Int, name: String, position: Int) {
+    override fun clickRemove(id: Int, name: String, position: Int){
 
-        val alertDialog = createDialog("Deseja remover $name?")
-        alertDialog.setPositiveButton("Sim") { _, _ ->
-            removeEmployee(id, name)
-            mEmployeeAdapter.notifyItemRemoved(position)
+        val inflate = layoutInflater.inflate(R.layout.dialog_confim_password, null)
+        val textPassword = inflate.findViewById(R.id.text_password) as TextInputEditText
+
+        val dialog = createDialog("Deseja remover $name? Confirme a senha!")
+        dialog.setView(inflate)
+        dialog.setPositiveButton("Confirmar") { _, _ ->
+            val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
+            if (password == textPassword.text.toString()){
+                removeEmployee(id, name)
+                employeeAdapter.notifyItemRemoved(position)
+            }
+            else{ showSnackBar(R.string.erro_senha) }
         }
-        alertDialog.setNegativeButton("Não") { _, _ ->
+        dialog.setNegativeButton("Cancelar") { _, _ ->
             showSnackBar(R.string.cancelado)
-            mEmployeeAdapter.notifyDataSetChanged()
+            employeeAdapter.notifyDataSetChanged()
         }
-        alertDialog.create().show()
+        dialog.create().show()
     }
 
     override fun clickNext(name: String, date: String, position: Int) {
@@ -98,6 +112,51 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
 
     override fun clickBack(name: String, date: String, position: Int) {
         reactBackAndNext(name, date, position, -1)
+    }
+
+    override fun clickHour(name:String, date:String, positionHour:Int, hour:String, position:Int) {
+
+        val inflate = layoutInflater.inflate(R.layout.dialog_add_hour_manual, null)
+        val clock = inflate.findViewById<TextView>(R.id.textView_hour)
+
+        if (hour == "--:--"){ clock.text = captureDateCurrent.captureHoraCurrent() }
+        else { clock.text = hour }
+
+        val dialog = createDialog("Clique na hora para editar!")
+        dialog.setView(inflate)
+        dialog.setPositiveButton("Editar") { _, _ ->
+
+            if (date == "Hoje") {
+                val dateToday = captureDateCurrent.captureDateCurrent()
+                editPoint(name, dateToday, positionHour, clock.text.toString(), position)
+            } else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
+        }
+        dialog.setNegativeButton("Cancelar") { _, _ ->
+            showSnackBar(R.string.cancelado)
+        }
+        dialog.create().show()
+
+        clock.setOnClickListener {
+            val cal = java.util.Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                cal.set(java.util.Calendar.HOUR_OF_DAY, hour)
+                cal.set(java.util.Calendar.MINUTE, minute)
+
+                clock.text = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(cal.time)
+            }
+            TimePickerDialog(this, timeSetListener, cal.get(java.util.Calendar.HOUR_OF_DAY),
+                cal.get(java.util.Calendar.MINUTE), true).show()
+        }
+    }
+
+    private fun editPoint(name:String, date:String, positionHour:Int, hour:String, position: Int){
+        when (viewModelEmployee.editPoint(name, date, positionHour, hour)){
+            true -> {
+                showSnackBar(R.string.pontos_editado)
+                employeeAdapter.updateHour(positionHour, hour, position)
+            }
+            else -> showSnackBar(R.string.nao_foi_possivel_editar)
+        }
     }
 
     private fun reactBackAndNext(name: String, dateCaptured: String, position: Int, pos: Int){
@@ -115,7 +174,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         val point = viewModelEmployee.consultPoint(name, dateFinal)
         val dateCurrent = captureDateCurrent.captureDateCurrent()
 
-        mEmployeeAdapter.updateDate(point, dateCurrent, dateFinal, position)
+        employeeAdapter.updateDate(point, dateCurrent, dateFinal, position)
     }
 
     private fun addOrRemoveDate(date: String, pos: Int): String{
@@ -156,12 +215,12 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
                 target: RecyclerView.ViewHolder): Boolean {
                 val source = viewHolder.bindingAdapterPosition
                 val destination = target.bindingAdapterPosition
-                mEmployeeAdapter.swap(source, destination)
+                employeeAdapter.swapPosition(source, destination)
                 return true
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                mEmployeeAdapter.removeEmployee(position)
+                employeeAdapter.removeEmployee(position)
             }
         }
 

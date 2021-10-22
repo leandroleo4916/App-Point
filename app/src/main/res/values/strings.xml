@@ -7,6 +7,7 @@
     <string name="title_cadastro">Cadastro</string>
     <string name="preencha_campos">Preencha todos os campos!</string>
     <string name="erro_usuario">Erro de usuario e/ou senha!</string>
+    <string name="erro_senha">Senha está errada!</string>
     <string name="cadastro_feito">Cadastro efetuado com sucesso!</string>
     <string name="erro_inesperado">Erro inesperado aconteceu!</string>
     <string name="buttom_back">Buttom Back</string>
@@ -78,5 +79,6 @@
     <string name="digite_admissao">Digite Admissão</string>
     <string name="digite_aniversario">Digite Aniversário</string>
     <string name="pontos_registrados">Pontos Registrados</string>
+    <string name="pontos_editado">Ponto editado com sucesso!</string>
     <string name="hoje">Hoje</string>
 </resources>

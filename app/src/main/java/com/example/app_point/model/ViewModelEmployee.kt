@@ -32,4 +32,8 @@ class ViewModelEmployee (application: Application, private var employee: Reposit
     fun consultPoint(name: String, data: String): PointsHours?{
         return points.selectPoint(name, data)
     }
+
+    fun editPoint(name: String, data: String, positionHour: Int, hour: String): Boolean{
+        return points.setPointByDate(name, data, positionHour, hour)
+    }
 }

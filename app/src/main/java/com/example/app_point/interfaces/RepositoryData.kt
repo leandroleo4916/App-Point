@@ -12,4 +12,5 @@ interface RepositoryData {
     fun fullPointsByName(nome: String): ArrayList<HoursEntity>
     fun removePoints(name: String): Boolean
     fun selectPoint(nome: String, date: String): PointsHours?
+    fun setPointByDate(employee: String, date: String, positionHour: Int, hour: String): Boolean
 }

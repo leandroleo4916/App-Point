@@ -51,6 +51,10 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             itemView.remove_employee.setOnClickListener(this)
             itemView.next.setOnClickListener(this)
             itemView.back.setOnClickListener(this)
+            itemView.toolbar1.setOnClickListener(this)
+            itemView.toolbar2.setOnClickListener(this)
+            itemView.toolbar3.setOnClickListener(this)
+            itemView.toolbar4.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {
@@ -58,12 +62,20 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             val id = listEmployee[position].id
             val name = listEmployee[position].name
             val date = listEmployee[position].date
+            val hour1 = listEmployee[position].hour1
+            val hour2 = listEmployee[position].hour2
+            val hour3 = listEmployee[position].hour3
+            val hour4 = listEmployee[position].hour4
 
             when(view){
                 itemView.remove_employee -> listener.clickRemove(id, name, position)
                 itemView.edit_employee -> listener.clickEdit(id)
                 itemView.back -> listener.clickBack(name, date, position)
                 itemView.next -> listener.clickNext(name, date, position)
+                itemView.toolbar1 -> listener.clickHour(name, date, 1, hour1, position)
+                itemView.toolbar2 -> listener.clickHour(name, date, 2, hour2, position)
+                itemView.toolbar3 -> listener.clickHour(name, date, 3, hour3, position)
+                itemView.toolbar4 -> listener.clickHour(name, date, 4, hour4, position)
             }
         }
 
@@ -125,7 +137,18 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         notifyDataSetChanged()
     }
 
-    fun swap(source: Int, destination: Int) {
+    fun updateHour(positionHour: Int, hour: String, position: Int){
+
+        when(positionHour) {
+            1 -> listEmployee[position].hour1 = hour
+            2 -> listEmployee[position].hour2 = hour
+            3 -> listEmployee[position].hour3 = hour
+            else -> listEmployee[position].hour4 = hour
+        }
+        notifyDataSetChanged()
+    }
+
+    fun swapPosition(source: Int, destination: Int) {
         Collections.swap(listEmployee, source, destination)
         notifyItemMoved(source, destination)
     }

@@ -9,46 +9,88 @@ import com.example.app_point.entity.PointsEntity
 import com.example.app_point.entity.PointsHours
 import com.example.app_point.interfaces.RepositoryData
 
-class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryData {
+class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryData {
 
     override fun setPoint(employee: String, date: String, hour: String): Boolean {
 
-        val mSearchPoint = selectFullPoints(employee, date)
+        val searchPoint = selectFullPoints(employee, date)
 
         return try {
-            val db = mDataBasePoint.writableDatabase
+            val db = dataBasePoint.writableDatabase
             val projection =
                 ConstantsPoint.POINT.COLUMNS.EMPLOYEE + " = ? AND " + ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
             val args = arrayOf(employee, date)
             val insertValues = ContentValues()
 
             when {
-                mSearchPoint?.employee == null -> {
+                searchPoint?.employee == null -> {
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.EMPLOYEE, employee)
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.DATE, date)
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUR1, hour)
                     db.insert(ConstantsPoint.POINT.TABLE_NAME, null, insertValues)
                 }
-                mSearchPoint.data != null && mSearchPoint.hora1 == null -> {
+                searchPoint.data != null && searchPoint.hora1 == null -> {
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUR1, hour)
                     db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
                 }
-                mSearchPoint.data != null && mSearchPoint.hora1 != null && mSearchPoint.hora2 == null -> {
+                searchPoint.data != null && searchPoint.hora1 != null && searchPoint.hora2 == null -> {
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUR2, hour)
                     db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
                 }
-                mSearchPoint.data != null && mSearchPoint.hora1 != null && mSearchPoint.hora2 != null
-                        && mSearchPoint.hora3 == null -> {
+                searchPoint.data != null && searchPoint.hora1 != null && searchPoint.hora2 != null
+                        && searchPoint.hora3 == null -> {
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUR3, hour)
                     db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
                 }
-                mSearchPoint.data != null && mSearchPoint.hora1 != null && mSearchPoint.hora2 != null
-                        && mSearchPoint.hora3 != null && mSearchPoint.hora4 == null -> {
+                searchPoint.data != null && searchPoint.hora1 != null && searchPoint.hora2 != null
+                        && searchPoint.hora3 != null && searchPoint.hora4 == null -> {
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUR4, hour)
                     db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
                 }
-                mSearchPoint.hora4 != null -> {
+                searchPoint.hora4 != null -> {
                     return false
+                }
+            }
+            true
+
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override fun setPointByDate(employee: String, date: String, positionHour: Int, hour: String): Boolean {
+
+        val searchPoint = selectFullPoints(employee, date)
+
+        return try {
+            val db = dataBasePoint.writableDatabase
+            val projection = ConstantsPoint.POINT.COLUMNS.EMPLOYEE + " = ? AND " +
+                    ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
+            val args = arrayOf(employee, date)
+            val insertValues = ContentValues()
+
+            when (searchPoint?.employee) {
+                null -> {
+                    insertValues.put(ConstantsPoint.POINT.COLUMNS.EMPLOYEE, employee)
+                    insertValues.put(ConstantsPoint.POINT.COLUMNS.DATE, date)
+                    val value = when (positionHour) {
+                        1 -> { ConstantsPoint.POINT.COLUMNS.HOUR1 }
+                        2 -> { ConstantsPoint.POINT.COLUMNS.HOUR2 }
+                        3 -> { ConstantsPoint.POINT.COLUMNS.HOUR3 }
+                        else -> { ConstantsPoint.POINT.COLUMNS.HOUR4 }
+                    }
+                    insertValues.put(value, hour)
+                    db.insert(ConstantsPoint.POINT.TABLE_NAME, null, insertValues)
+                }
+                else -> {
+                    val value = when(positionHour){
+                        1 -> { ConstantsPoint.POINT.COLUMNS.HOUR1 }
+                        2 -> { ConstantsPoint.POINT.COLUMNS.HOUR2 }
+                        3 -> { ConstantsPoint.POINT.COLUMNS.HOUR3 }
+                        else -> { ConstantsPoint.POINT.COLUMNS.HOUR4 }
+                    }
+                    insertValues.put(value, hour)
+                    db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
                 }
             }
             true
@@ -61,7 +103,7 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
         var list: PointsEntity? = null
         try {
             val cursor: Cursor
-            val db = mDataBasePoint.readableDatabase
+            val db = dataBasePoint.readableDatabase
             val projection = arrayOf(
                 ConstantsPoint.POINT.COLUMNS.ID,
                 ConstantsPoint.POINT.COLUMNS.EMPLOYEE,
@@ -102,7 +144,9 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
             cursor?.close()
             return list
 
-        } catch (e: Exception) { return list }
+        } catch (e: Exception) {
+            return list
+        }
     }
 
     override fun selectPoint(nome: String, date: String): PointsHours? {
@@ -110,7 +154,7 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
         var list: PointsHours? = null
         try {
             val cursor: Cursor
-            val db = mDataBasePoint.readableDatabase
+            val db = dataBasePoint.readableDatabase
             val projection = arrayOf(
                 ConstantsPoint.POINT.COLUMNS.DATE,
                 ConstantsPoint.POINT.COLUMNS.HOUR1,
@@ -146,7 +190,9 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
             cursor?.close()
             return list
 
-        } catch (e: Exception) { return list }
+        } catch (e: Exception) {
+            return list
+        }
     }
 
     override fun fullPoints(): ArrayList<PointsEntity?> {
@@ -154,7 +200,7 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
         val list: ArrayList<PointsEntity?> = arrayListOf()
         try {
             val cursor: Cursor
-            val db = mDataBasePoint.readableDatabase
+            val db = dataBasePoint.readableDatabase
             val projection = arrayOf(
                 ConstantsPoint.POINT.COLUMNS.ID,
                 ConstantsPoint.POINT.COLUMNS.EMPLOYEE,
@@ -192,7 +238,9 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
             cursor?.close()
             return list
 
-        } catch (e: Exception) { return list }
+        } catch (e: Exception) {
+            return list
+        }
     }
 
     override fun fullPointsToName(nome: String, date: String): ArrayList<PointsEntity?> {
@@ -202,7 +250,7 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
         if (date.isEmpty()) {
             try {
                 val cursor: Cursor
-                val db = mDataBasePoint.readableDatabase
+                val db = dataBasePoint.readableDatabase
                 val projection = arrayOf(
                     ConstantsPoint.POINT.COLUMNS.ID,
                     ConstantsPoint.POINT.COLUMNS.EMPLOYEE,
@@ -243,12 +291,14 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
                 cursor?.close()
                 return list
 
-            } catch (e: Exception) { return list }
+            } catch (e: Exception) {
+                return list
+            }
 
         } else {
             try {
                 val cursor: Cursor
-                val db = mDataBasePoint.readableDatabase
+                val db = dataBasePoint.readableDatabase
                 val projection = arrayOf(
                     ConstantsPoint.POINT.COLUMNS.ID,
                     ConstantsPoint.POINT.COLUMNS.EMPLOYEE,
@@ -290,7 +340,9 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
                 cursor?.close()
                 return list
 
-            } catch (e: Exception) { return list }
+            } catch (e: Exception) {
+                return list
+            }
         }
     }
 
@@ -299,7 +351,7 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
         val list: ArrayList<HoursEntity> = arrayListOf()
         try {
             val cursor: Cursor
-            val db = mDataBasePoint.readableDatabase
+            val db = dataBasePoint.readableDatabase
             val projection = arrayOf(
                 ConstantsPoint.POINT.COLUMNS.HOUR1,
                 ConstantsPoint.POINT.COLUMNS.HOUR2,
@@ -332,19 +384,23 @@ class RepositoryPoint(private val mDataBasePoint: DataBaseEmployee): RepositoryD
             cursor?.close()
             return list
 
-        } catch (e: Exception) { return list }
+        } catch (e: Exception) {
+            return list
+        }
     }
 
     override fun removePoints(name: String): Boolean {
 
         return try {
-            val db = mDataBasePoint.writableDatabase
+            val db = dataBasePoint.writableDatabase
             val selection = ConstantsPoint.POINT.COLUMNS.EMPLOYEE + " = ?"
             val args = arrayOf(name)
 
             db.delete(ConstantsPoint.POINT.TABLE_NAME, selection, args)
             true
 
-        } catch (e: Exception) { false }
+        } catch (e: Exception) {
+            false
+        }
     }
 }

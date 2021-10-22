@@ -13,8 +13,8 @@ import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
 
-    private val mBusinessUser: BusinessUser by inject()
-    private val mSecurityPreferences: SecurityPreferences by inject()
+    private val businessUser: BusinessUser by inject()
+    private val securityPreferences: SecurityPreferences by inject()
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +33,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun verifyLoggedUser(){
-        val email = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
-        val password = mSecurityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
+        val email = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.EMAIL)
+        val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
 
         if (email.isNotEmpty() && password.isNotEmpty()){
             startActivity(Intent(this, MainActivity::class.java))
@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             userLogin.isEmpty() -> { binding.edittextUser.error = "Digite Login" }
             userPassword.isEmpty() -> { binding.edittextSenha.error = "Digite Senha" }
 
-            mBusinessUser.storeUser(userLogin, userPassword) -> {
+            businessUser.storeUser(userLogin, userPassword) -> {
                 startActivity(Intent(this, MainActivity::class.java))
                 Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()
                 finish()
