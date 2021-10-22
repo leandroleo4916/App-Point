@@ -40,6 +40,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             bind(employee.name, employee.cargo, employee.admission)
             bindPhoto(photoConvert)
             bindHora(employee)
+            bindButtom(employee.date)
         }
     }
 
@@ -105,6 +106,22 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         fun bindPhoto(image: Bitmap){
             itemView.findViewById<ImageView>(R.id.icon_image_perfil).setImageBitmap(image)
         }
+
+        fun bindButtom(date: String){
+
+            if (date == "Hoje"){
+                itemView.next.run {
+                    isEnabled = false
+                    setImageResource(R.drawable.ic_next_gray)
+                }
+            }
+            else {
+                itemView.next.run {
+                    isEnabled = true
+                    setImageResource(R.drawable.ic_next_write)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int { return listEmployee.count() }
@@ -152,6 +169,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         Collections.swap(listEmployee, source, destination)
         notifyItemMoved(source, destination)
     }
+
     fun removeEmployee(position: Int){
         listener.clickRemove(listEmployee[position].id, listEmployee[position].name, position)
     }

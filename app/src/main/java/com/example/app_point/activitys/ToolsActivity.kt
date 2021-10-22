@@ -97,7 +97,10 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
                 removeEmployee(id, name)
                 employeeAdapter.notifyItemRemoved(position)
             }
-            else{ showSnackBar(R.string.erro_senha) }
+            else{
+                showSnackBar(R.string.erro_senha)
+                employeeAdapter.notifyDataSetChanged()
+            }
         }
         dialog.setNegativeButton("Cancelar") { _, _ ->
             showSnackBar(R.string.cancelado)
@@ -129,7 +132,8 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
             if (date == "Hoje") {
                 val dateToday = captureDateCurrent.captureDateCurrent()
                 editPoint(name, dateToday, positionHour, clock.text.toString(), position)
-            } else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
+            }
+            else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
         }
         dialog.setNegativeButton("Cancelar") { _, _ ->
             showSnackBar(R.string.cancelado)
