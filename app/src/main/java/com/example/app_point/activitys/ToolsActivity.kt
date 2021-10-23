@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import com.example.app_point.adapters.EmployeeAdapter
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.databinding.ActivityToolsBinding
+import com.example.app_point.interfaces.INotification
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.model.ViewModelEmployee
 import com.example.app_point.repository.RepositoryPoint
@@ -29,7 +31,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
+
+class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
 
     private lateinit var employeeAdapter: EmployeeAdapter
     private val repositoryPoint: RepositoryPoint by inject()
@@ -47,12 +50,13 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         viewModel()
         observer()
         touchHelper()
+        searchEmployeeToolbar()
     }
 
     private fun recycler(){
         val recycler = binding.recyclerEmployee
         recycler.layoutManager = LinearLayoutManager(this)
-        employeeAdapter = EmployeeAdapter(repositoryPoint, this)
+        employeeAdapter = EmployeeAdapter(repositoryPoint, this, this)
         recycler.adapter = employeeAdapter
     }
 
@@ -73,6 +77,37 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
                     employeeAdapter.updateFullEmployee(it, date)
                     binding.progressEmployee.visibility = View.GONE
                 }
+            }
+        })
+    }
+
+    private fun searchEmployeeToolbar() {
+
+        binding.toolbarFerramentas.inflateMenu(R.menu.menu_search)
+        val searchItem = binding.toolbarFerramentas.menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
+        searchView.queryHint.run {
+            Html.fromHtml("<font color = #e6e1e4>" + resources.getString(R.string.pesquisar),
+            resources.getColor(R.color.letras))
+        }
+
+        searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+
+                binding.toolbarFerramentas.menu.findItem(R.id.action_search).collapseActionView()
+                employeeAdapter.filter.filter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.length >= 3) {
+                    employeeAdapter.filter.filter(newText)
+                } else if (newText.isEmpty()) {
+                    employeeAdapter.filter.filter(newText)
+                    return true
+                }
+                return true
             }
         })
     }
@@ -117,7 +152,13 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         reactBackAndNext(name, date, position, -1)
     }
 
-    override fun clickHour(name:String, date:String, positionHour:Int, hour:String, position:Int) {
+    override fun clickHour(
+        name: String,
+        date: String,
+        positionHour: Int,
+        hour: String,
+        position: Int
+    ) {
 
         val inflate = layoutInflater.inflate(R.layout.dialog_add_hour_manual, null)
         val clock = inflate.findViewById<TextView>(R.id.textView_hour)
@@ -153,7 +194,13 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         }
     }
 
-    private fun editPoint(name:String, date:String, positionHour:Int, hour:String, position: Int){
+    private fun editPoint(
+        name: String,
+        date: String,
+        positionHour: Int,
+        hour: String,
+        position: Int
+    ){
         when (viewModelEmployee.editPoint(name, date, positionHour, hour)){
             true -> {
                 showSnackBar(R.string.pontos_editado)
@@ -186,7 +233,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         val divDate = date.split("/")
 
         val cal = Calendar.getInstance()
-        cal.set(divDate[2].toInt(), divDate[1].toInt()-1, divDate[0].toInt())
+        cal.set(divDate[2].toInt(), divDate[1].toInt() - 1, divDate[0].toInt())
         cal.add(Calendar.DAY_OF_MONTH, pos)
 
         return dateFormat.format(cal.time)
@@ -215,8 +262,10 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.START or ItemTouchHelper.END) {
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder): Boolean {
+            override fun onMove(
+                recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
                 val source = viewHolder.bindingAdapterPosition
                 val destination = target.bindingAdapterPosition
                 employeeAdapter.swapPosition(source, destination)
@@ -232,4 +281,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler {
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(recycler)
     }
+
+    override fun notification() { showSnackBar(R.string.nenhum_funcionario_encontrado) }
+
 }

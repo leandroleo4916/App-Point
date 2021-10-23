@@ -81,4 +81,6 @@
     <string name="pontos_registrados">Pontos Registrados</string>
     <string name="pontos_editado">Ponto editado com sucesso!</string>
     <string name="hoje">Hoje</string>
+    <string name="pesquisar">Pesquisar funcionário</string>
+    <string name="nenhum_funcionario_encontrado">Nenhum funcionário econtrado!</string>
 </resources>

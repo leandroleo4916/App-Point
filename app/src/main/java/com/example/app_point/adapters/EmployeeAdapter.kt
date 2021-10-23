@@ -4,12 +4,15 @@ import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.Employee
 import com.example.app_point.entity.PointsHours
+import com.example.app_point.interfaces.INotification
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
@@ -18,15 +21,19 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class EmployeeAdapter(private var searchPoints: RepositoryPoint,
-                      private val listener: OnItemClickRecycler):
-    RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
+                      private val listener: OnItemClickRecycler,
+                      private val notification: INotification):
+    RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>(), Filterable {
 
-    private var listEmployee: ArrayList<Employee> = arrayListOf()
+    private var data = mutableListOf<Employee>()
+    private var listEmployee = mutableListOf<Employee>()
     private val converterPhoto: ConverterPhoto = ConverterPhoto()
+    private var filter: ListItemFilter = ListItemFilter()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
-        val item = LayoutInflater.from(parent.context).inflate(
-            R.layout.recycler_employee, parent, false)
+        val item = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.recycler_employee, parent, false)
 
         return EmployeeViewHolder(item)
     }
@@ -42,6 +49,12 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             bindHora(employee)
             bindButtom(employee.date)
         }
+    }
+
+    override fun getItemCount(): Int { return listEmployee.size }
+
+    override fun getFilter(): Filter {
+        return filter
     }
 
     inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
@@ -124,8 +137,6 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         }
     }
 
-    override fun getItemCount(): Int { return listEmployee.count() }
-
     fun updateFullEmployee(list: ArrayList<Employee>, date: String){
 
         for (position in 0 until list.size){
@@ -136,7 +147,9 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             list[position].hour3 = points?.hora3 ?: "--:--"
             list[position].hour4 = points?.hora4 ?: "--:--"
         }
-        listEmployee = list
+        data.addAll(list)
+        listEmployee.addAll(list)
+        getFilter()
         notifyDataSetChanged()
     }
 
@@ -172,5 +185,41 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
 
     fun removeEmployee(position: Int){
         listener.clickRemove(listEmployee[position].id, listEmployee[position].name, position)
+    }
+
+    private inner class ListItemFilter : Filter() {
+
+        override fun performFiltering(constraint: CharSequence?): Filter.FilterResults {
+
+            val filterResults = FilterResults()
+            if (constraint != null) {
+                val list = ArrayList<Employee>()
+
+                for (employee in data) {
+                    if (employee.name.toLowerCase(Locale.ROOT)
+                            .contains(constraint.toString().toLowerCase(Locale.ROOT))
+                    ) {
+                        list.add(employee)
+                    }
+                }
+                filterResults.count = list.size
+                filterResults.values = list
+
+            } else {
+                filterResults.count = data.size
+                filterResults.values = data
+            }
+            return filterResults
+        }
+
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            if (results.values is ArrayList<*>) {
+                listEmployee = results.values as MutableList<Employee>
+                when {
+                    listEmployee.isEmpty() -> notification.notification()
+                }
+            }
+            notifyDataSetChanged()
+        }
     }
 }

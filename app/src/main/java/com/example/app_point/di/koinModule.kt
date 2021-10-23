@@ -97,10 +97,6 @@ val dataBaseEmployeeModule = module {
     single { DataBaseEmployee(get()) }
 }
 
-val employeeAdapterModule = module {
-    factory { EmployeeAdapter(get(), get()) }
-}
-
 val securityPreferencesModule = module {
     single { SecurityPreferences(get()) }
 }
@@ -124,7 +120,7 @@ val captureDateModule = module {
 val appModules = listOf(
     retrofitModule, repositoryModule, viewModelEmployeeModule, businessModule,
     pointsModule, userModule, adapterModule, viewModelPoints, repositoryPointModule,
-    dataBaseEmployeeModule, employeeAdapterModule, securityPreferencesModule,
-    pointsAdapterModule, converterPhotoModule, calculationHoursModule, repositoryUserModule,
+    dataBaseEmployeeModule, securityPreferencesModule, pointsAdapterModule,
+    converterPhotoModule, calculationHoursModule, repositoryUserModule,
     databaseUserModule, repositoryEmployeeModule, captureDateModule
 )
