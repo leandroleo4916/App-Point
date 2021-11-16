@@ -1,10 +1,11 @@
-package com.example.app_point.activitys
+package com.example.app_point.activitys.ui.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.app_point.R
+import com.example.app_point.activitys.InicialActivity
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.databinding.RegisterUserBinding
 import org.koin.android.ext.android.inject
@@ -48,7 +49,7 @@ class RegisterUserActivity : AppCompatActivity() {
     private fun createEmailAndPassword(name: String, email: String, password: String){
 
         if (mBusinessUser.setUser(name, email, password)){
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, InicialActivity::class.java))
             toast(R.string.bem_vindo)
             finish()
         }

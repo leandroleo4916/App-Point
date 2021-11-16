@@ -146,7 +146,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         }
     }
 
-    fun consultDataEmployee(): ArrayList<Employee> {
+    fun consultEmployee(): ArrayList<Employee> {
 
         val listData: ArrayList<Employee> = arrayListOf()
         try {
@@ -190,7 +190,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         } catch (e: Exception) { return listData }
     }
 
-    fun consultDataEmployee(nome: String): EmployeeEntity? {
+    fun consultEmployee(nome: String): EmployeeEntity {
 
         var listData: EmployeeEntity? = null
         try {

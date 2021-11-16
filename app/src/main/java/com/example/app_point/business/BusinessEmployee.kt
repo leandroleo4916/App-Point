@@ -13,8 +13,8 @@ class BusinessEmployee(private val mRepositoryEmployee: RepositoryEmployee) {
         return mRepositoryEmployee.employeeList()
     }
 
-    fun consultDataEmployee(nome: String): EmployeeEntity?{
-        return mRepositoryEmployee.consultDataEmployee(nome)
+    fun consultEmployeeByName(nome: String): EmployeeEntity{
+        return mRepositoryEmployee.consultEmployee(nome)
     }
 
     fun consultIdEmployee(nome: String): Int{

@@ -1,101 +1,108 @@
-package com.example.app_point.activitys
+package com.example.app_point.activitys.ui.employee
 
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Html
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
-import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.databinding.ActivityToolsBinding
+import com.example.app_point.databinding.FragmentEmployeeBinding
 import com.example.app_point.interfaces.INotification
 import com.example.app_point.interfaces.OnItemClickRecycler
-import com.example.app_point.model.ViewModelEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.SecurityPreferences
-import com.example.app_point.utils.createDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.fragment_employee.*
+import kotlinx.android.synthetic.main.fragment_employee.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
+class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
 
     private lateinit var employeeAdapter: EmployeeAdapter
     private val repositoryPoint: RepositoryPoint by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
-    private val viewModelEmployee by viewModel<ViewModelEmployee>()
+    private val viewModelEmployee by viewModel<EmployeeViewModel>()
     private val securityPreferences: SecurityPreferences by inject()
-    private val binding by lazy { ActivityToolsBinding.inflate(layoutInflater) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+    companion object { fun newInstance() = EmployeeFragment() }
 
-        recycler()
-        listener()
+    override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
+                               savedInstanceState: Bundle?): View {
+        val binding = inflater.inflate(R.layout.fragment_employee, container, false)
+
+        recycler(binding)
+        listener(binding)
         viewModel()
-        observer()
-        touchHelper()
-        searchEmployeeToolbar()
+        observer(binding)
+        touchHelper(binding)
+        searchEmployeeToolbar(binding)
+
+        return binding
     }
 
-    private fun recycler(){
-        val recycler = binding.recyclerEmployee
-        recycler.layoutManager = LinearLayoutManager(this)
-        employeeAdapter = EmployeeAdapter(repositoryPoint, this, this, application)
+    private fun recycler(binding: View) {
+        val recycler = binding.recycler_employee
+        recycler.layoutManager = LinearLayoutManager(context)
+        employeeAdapter = EmployeeAdapter(repositoryPoint, this, this, context)
         recycler.adapter = employeeAdapter
     }
 
-    private fun listener(){ binding.imageBackTools.setOnClickListener { finish() } }
+    private fun listener(binding: View) {
+        binding.image_back_tools.setOnClickListener { activity?.onBackPressed() }
+    }
 
     private fun viewModel(){ viewModelEmployee.getFullEmployee() }
 
-    private fun observer(){
+    private fun observer(binding: View) {
         val date = captureDateCurrent.captureDateCurrent()
-        viewModelEmployee.employeeFullList.observe(this, {
+        viewModelEmployee.employeeFullList.observe(viewLifecycleOwner, {
             when (it.size) {
                 0 -> {
                     showSnackBar(R.string.precisa_add_funcionarios)
                     employeeAdapter.updateFullEmployee(it, date)
-                    binding.progressEmployee.visibility = View.GONE
+                    binding.progress_employee.visibility = View.GONE
                 }
                 else -> {
                     employeeAdapter.updateFullEmployee(it, date)
-                    binding.progressEmployee.visibility = View.GONE
+                    binding.progress_employee.visibility = View.GONE
                 }
             }
         })
     }
 
-    private fun searchEmployeeToolbar() {
+    private fun searchEmployeeToolbar(binding: View) {
 
-        binding.toolbarFerramentas.inflateMenu(R.menu.menu_search)
-        val searchItem = binding.toolbarFerramentas.menu.findItem(R.id.action_search)
+        binding.toolbar_ferramentas.inflateMenu(R.menu.menu_search)
+        val searchItem = binding.toolbar_ferramentas.menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
         searchView.queryHint.run {
             Html.fromHtml("<font color = #e6e1e4>" + resources.getString(R.string.pesquisar),
-            resources.getColor(R.color.letras))
+                resources.getColor(R.color.letras))
         }
 
         searchView.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                binding.toolbarFerramentas.menu.findItem(R.id.action_search).collapseActionView()
+                binding.toolbar_ferramentas.menu.findItem(R.id.action_search).collapseActionView()
                 employeeAdapter.filter.filter(query)
                 return true
             }
@@ -108,10 +115,16 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
     }
 
     override fun clickEdit(id: Int) {
-        val intent = Intent(this, RegisterEmployeeActivity::class.java)
-        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
-        startActivity(intent)
-        finish()
+        //val intent = Intent(this, RegisterEmployeeActivity::class.java)
+        //intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
+        //startActivity(intent)
+    }
+
+    private fun createDialog(message: String): AlertDialog.Builder? {
+        val builder = context?.let { AlertDialog.Builder(it) }
+        builder?.setTitle(message)
+        builder?.setCancelable(false)
+        return builder
     }
 
     override fun clickRemove(id: Int, name: String, position: Int){
@@ -120,8 +133,8 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
         val textPassword = inflate.findViewById(R.id.text_password) as TextInputEditText
 
         val dialog = createDialog("Deseja remover $name? Confirme a senha!")
-        dialog.setView(inflate)
-        dialog.setPositiveButton("Confirmar") { _, _ ->
+        dialog?.setView(inflate)
+        dialog?.setPositiveButton("Confirmar") { _, _ ->
             val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
             if (password == textPassword.text.toString()){
                 removeEmployee(id, name)
@@ -132,11 +145,11 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
                 employeeAdapter.notifyDataSetChanged()
             }
         }
-        dialog.setNegativeButton("Cancelar") { _, _ ->
+        dialog?.setNegativeButton("Cancelar") { _, _ ->
             showSnackBar(R.string.cancelado)
             employeeAdapter.notifyDataSetChanged()
         }
-        dialog.create().show()
+        dialog?.create()?.show()
     }
 
     override fun clickNext(name: String, date: String, position: Int) {
@@ -162,8 +175,8 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
         else { clock.text = hour }
 
         val dialog = createDialog("Clique na hora para editar!")
-        dialog.setView(inflate)
-        dialog.setPositiveButton("Editar") { _, _ ->
+        dialog?.setView(inflate)
+        dialog?.setPositiveButton("Editar") { _, _ ->
 
             if (date == "Hoje") {
                 val dateToday = captureDateCurrent.captureDateCurrent()
@@ -171,10 +184,10 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
             }
             else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
         }
-        dialog.setNegativeButton("Cancelar") { _, _ ->
+        dialog?.setNegativeButton("Cancelar") { _, _ ->
             showSnackBar(R.string.cancelado)
         }
-        dialog.create().show()
+        dialog?.create()?.show()
 
         clock.setOnClickListener {
             val cal = java.util.Calendar.getInstance()
@@ -184,7 +197,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
 
                 clock.text = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(cal.time)
             }
-            TimePickerDialog(this, timeSetListener, cal.get(java.util.Calendar.HOUR_OF_DAY),
+            TimePickerDialog(context, timeSetListener, cal.get(java.util.Calendar.HOUR_OF_DAY),
                 cal.get(java.util.Calendar.MINUTE), true).show()
         }
     }
@@ -195,9 +208,9 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
         val photoConverter = ConverterPhoto().converterToBitmap(image)
         photo.setImageBitmap(photoConverter)
         val dialog = createDialog(name)
-        dialog.setView(inflate)
-        dialog.setPositiveButton(R.string.sair){ _, _ -> }
-        dialog.create().show()
+        dialog?.setView(inflate)
+        dialog?.setPositiveButton(R.string.sair){ _, _ -> }
+        dialog?.create()?.show()
     }
 
     private fun editPoint(name:String, date:String, positionHour:Int, hour:String, position:Int){
@@ -248,17 +261,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
         }else { showSnackBar(R.string.nao_foi_possivel_remover) }
     }
 
-    private fun showSnackBar(message: Int) {
-        Snackbar.make(binding.containerEmployee,
-            message, Snackbar.LENGTH_LONG)
-            .setTextColor(Color.WHITE)
-            .setActionTextColor(Color.WHITE)
-            .setBackgroundTint(Color.BLACK)
-            .setAction("Ok") {}
-            .show()
-    }
-
-    private fun touchHelper() {
+    private fun touchHelper(binding: View) {
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.START or ItemTouchHelper.END) {
@@ -278,11 +281,20 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
             }
         }
 
-        val recycler = binding.recyclerEmployee
+        val recycler = binding.recycler_employee
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(recycler)
     }
 
     override fun notification() { showSnackBar(R.string.nenhum_funcionario_encontrado) }
 
+    private fun showSnackBar(message: Int) {
+        Snackbar.make(container_employee,
+            message, Snackbar.LENGTH_LONG)
+            .setTextColor(Color.WHITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(Color.BLACK)
+            .setAction("Ok") {}
+            .show()
+    }
 }

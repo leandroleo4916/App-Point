@@ -10,11 +10,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
+import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.constants.ConstantsUser
-import com.example.app_point.databinding.ActivityMainBinding
-import com.example.app_point.adapters.PointsAdapter
+import com.example.app_point.databinding.ActivityInicialBinding
 import com.example.app_point.model.ViewModelMain
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
@@ -23,7 +23,7 @@ import com.example.app_point.utils.createDialog
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class InicialActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private val listEmployee: BusinessEmployee by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val repositoryPoint: RepositoryPoint by inject()
     private val securityPreferences: SecurityPreferences by inject()
     private lateinit var viewModelMain: ViewModelMain
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityInicialBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +55,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun animationIcons(){
-        val animation: Animation = AnimationUtils.loadAnimation (application, R.anim.animation_down)
+        val animation: Animation = AnimationUtils.loadAnimation(application, R.anim.animation_down)
         binding.run {
-            imageRegisterEmployee.startAnimation(animation)
             imagePerfilEmployee.startAnimation(animation)
             imageHistoricosPontos.startAnimation(animation)
             imageOpcoes.startAnimation(animation)
@@ -74,14 +73,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         if (extras.isNotBlank()) { binding.textNameUser.text = extras }
 
         val horaCurrent = captureDateCurrent.captureHoraCurrent()
-        val clockSixMorning = "06:00"
-        val clockTwelveMorning = "12:00"
-        val clockSixEvening = "18:00"
+        val clockSix = "06:00"
+        val clockTwelve = "12:00"
+        val clockSix2 = "18:00"
 
         when {
-            horaCurrent > clockSixMorning && horaCurrent < clockTwelveMorning -> {
+            horaCurrent > clockSix && horaCurrent < clockTwelve -> {
                 binding.textOla.text = getString(R.string.bom_dia) }
-            horaCurrent > clockTwelveMorning && horaCurrent < clockSixEvening -> {
+            horaCurrent > clockTwelve && horaCurrent < clockSix2 -> {
                 binding.textOla.text = getString(R.string.boa_tarde) }
             else ->
                 binding.textOla.text = getString(R.string.boa_noite)
@@ -97,7 +96,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         viewModelMain.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> showSnackBar(R.string.nenhum_ponto_registrado)
-                else -> { pointAdapter.updateFullEmployee(it) }
+                else -> {
+                    pointAdapter.updateFullPoints(it)
+                }
             }
         })
     }
@@ -109,9 +110,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding.imageInPerfil.setOnClickListener{
             startActivity(Intent(this, ProfileActivity::class.java))
         }
-        binding.imageInClock.setOnClickListener{
-            startActivity(Intent(this, PointsActivity::class.java))
-        }
+        binding.imageInClock.setOnClickListener{  }
         binding.imageInOpcoes.setOnClickListener{
             startActivity(Intent(this, ToolsActivity::class.java))
         }
@@ -172,7 +171,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinnerGetEmployee -> { parent.getItemAtPosition(position).toString() }
+            R.id.spinnerGetEmployee -> {
+                parent.getItemAtPosition(position).toString()
+            }
         }
     }
 

@@ -1,16 +1,16 @@
-package com.example.app_point.model
+package com.example.app_point.activitys.ui.employee
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.app_point.entity.Employee
 import com.example.app_point.entity.PointsHours
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 
-class ViewModelEmployee (application: Application, private var employee: RepositoryEmployee,
-                         private var points: RepositoryPoint) : AndroidViewModel(application) {
+class EmployeeViewModel(application: Application, private var employee: RepositoryEmployee,
+                        private var points: RepositoryPoint) : ViewModel() {
 
     private val mEmployeeFullList = MutableLiveData<ArrayList<Employee>>()
     val employeeFullList: LiveData<ArrayList<Employee>> = mEmployeeFullList

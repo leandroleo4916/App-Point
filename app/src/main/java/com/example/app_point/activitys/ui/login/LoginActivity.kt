@@ -1,10 +1,12 @@
-package com.example.app_point.activitys
+package com.example.app_point.activitys.ui.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.app_point.R
+import com.example.app_point.activitys.InicialActivity
+import com.example.app_point.activitys.MainActivityController
 import com.example.app_point.business.BusinessUser
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.databinding.ActivityLoginBinding
@@ -37,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
 
         if (email.isNotEmpty() && password.isNotEmpty()){
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainActivityController::class.java))
             finish()
         }
     }
@@ -51,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
             userPassword.isEmpty() -> { binding.edittextSenha.error = "Digite Senha" }
 
             businessUser.storeUser(userLogin, userPassword) -> {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, InicialActivity::class.java))
                 Toast.makeText(this, getString(R.string.bem_vindo), Toast.LENGTH_SHORT).show()
                 finish()
             }

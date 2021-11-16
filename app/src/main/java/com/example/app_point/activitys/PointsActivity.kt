@@ -51,10 +51,10 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         viewModelMain.employeeFullList.observe(this, {
             when (it.size) {
                 0 -> {
-                    mPointsAdapter.updateFullEmployee(it)
+                    mPointsAdapter.updateFullPoints(it)
                     showSnackBar(R.string.nenhum_ponto_registrado)
                 }
-                else -> { mPointsAdapter.updateFullEmployee(it) }
+                else -> { mPointsAdapter.updateFullPoints(it) }
             }
         })
     }
@@ -100,16 +100,14 @@ class PointsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinnerGetEmployee -> {
-                parent.getItemAtPosition(position).toString()
-            }
+            R.id.spinner_employee -> parent.getItemAtPosition(position).toString()
         }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(binding.containerPontos,
+        Snackbar.make(binding.containerPoints,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

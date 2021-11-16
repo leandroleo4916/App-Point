@@ -1,9 +1,13 @@
 package com.example.app_point.adapters
 
+import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
@@ -16,13 +20,15 @@ import com.example.app_point.interfaces.INotification
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
-import kotlinx.android.synthetic.main.recycler_employee.view.*
+import kotlinx.android.synthetic.main.activity_perfil.view.edit_employee
+import kotlinx.android.synthetic.main.recycler_employee_detail.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class EmployeeAdapter(private var searchPoints: RepositoryPoint,
                       private val listener: OnItemClickRecycler,
-                      private val notification: INotification):
+                      private val notification: INotification,
+                      private val application: Context?):
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>(), Filterable {
 
     private var data = mutableListOf<Employee>()
@@ -33,7 +39,10 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
         val item = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.recycler_employee, parent, false)
+            .inflate(R.layout.recycler_employee_detail, parent, false)
+
+        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.animation_left)
+        item.startAnimation(animation)
 
         return EmployeeViewHolder(item)
     }
@@ -57,7 +66,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         return filter
     }
 
-    inner class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class EmployeeViewHolder (itemView: View): RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
         init {
@@ -69,6 +78,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             itemView.toolbar2.setOnClickListener(this)
             itemView.toolbar3.setOnClickListener(this)
             itemView.toolbar4.setOnClickListener(this)
+            itemView.icon_image_perfil.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {
@@ -80,6 +90,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             val hour2 = listEmployee[position].hour2
             val hour3 = listEmployee[position].hour3
             val hour4 = listEmployee[position].hour4
+            val image = listEmployee[position].photo
 
             when(view){
                 itemView.remove_employee -> listener.clickRemove(id, name, position)
@@ -90,6 +101,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
                 itemView.toolbar2 -> listener.clickHour(name, date, 2, hour2, position)
                 itemView.toolbar3 -> listener.clickHour(name, date, 3, hour3, position)
                 itemView.toolbar4 -> listener.clickHour(name, date, 4, hour4, position)
+                itemView.icon_image_perfil -> listener.clickImage(image, name)
             }
         }
 
@@ -214,10 +226,9 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
 
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
             if (results.values is ArrayList<*>) {
+
                 listEmployee = results.values as MutableList<Employee>
-                when {
-                    listEmployee.isEmpty() -> notification.notification()
-                }
+                when {listEmployee.isEmpty() -> notification.notification() }
             }
             notifyDataSetChanged()
         }

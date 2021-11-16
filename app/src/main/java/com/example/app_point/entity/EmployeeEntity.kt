@@ -1,5 +1,7 @@
 package com.example.app_point.entity
 
+import java.io.Serializable
+
 data class EmployeeEntity(
     val id: Int,
     val photo: ByteArray,
@@ -13,4 +15,4 @@ data class EmployeeEntity(
     val phoneEmployee: String,
     val admissaoEmployee: String,
     val aniversarioEmployee: String
-)
+): Serializable

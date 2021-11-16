@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/back"
     android:id="@+id/container_points"
-    tools:context=".activitys.PointsActivity">
+    tools:context="activitys.ui.points.PointsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_registrados"
@@ -40,7 +40,6 @@
                 android:id="@+id/image_back_pontos"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:contentDescription="@string/buttom_back"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +50,6 @@
                 android:id="@+id/image_filter"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
-                android:contentDescription="@string/buttom_back"
                 android:src="@drawable/ic_filter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +78,7 @@
         android:layout_height="wrap_content"
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="true"
-        android:indeterminateTint="@color/fundoBlue"
+        android:indeterminateTint="@color/colorAccent"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

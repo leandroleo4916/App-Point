@@ -4,7 +4,6 @@
     <string name="title_activity_principal">MainActivity</string>
     <string name="title_pontos">Pontos</string>
     <string name="title_perfil">Perfil</string>
-    <string name="title_cadastro">Cadastro</string>
     <string name="preencha_campos">Preencha todos os campos!</string>
     <string name="erro_usuario">Erro de usuario e/ou senha!</string>
     <string name="erro_senha">Senha está errada!</string>
@@ -14,7 +13,6 @@
     <string name="entre_aqui">Entre aqui!</string>
     <string name="se_voc_j_tiver_conta">Você já tem conta?</string>
     <string name="criar_conta">criar conta</string>
-    <string name="email">Email</string>
     <string name="senha">Senha</string>
     <string name="confirmar_senha">Confirmar Senha</string>
     <string name="image_email">Image Email</string>
@@ -34,10 +32,12 @@
     <string name="bem_vindo">Seja bem-vindo</string>
     <string name="bem_vindo_de_volta">Bem-vindo de volta</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="email">Email</string>
     <string name="nome">Nome</string>
     <string name="cargo">Cargo</string>
     <string name="cadastro">Cadastro</string>
     <string name="funcionario">Funcionário</string>
+    <string name="funcionarios">Funcionarios</string>
     <string name="_10_fev">10 Fev</string>
     <string name="_00_00">--:--</string>
     <string name="ola">Olá,</string>
@@ -63,6 +63,7 @@
     <string name="nao_foi_possivel_editar">Não foi possível fazer o cadastro!</string>
     <string name="precisa_add_funcionarios">Você precisa adicionar funcionários!</string>
     <string name="adicionado_sucesso">Adicionado com sucesso!</string>
+    <string name="ponto_adicionado_sucesso">Ponto adicionado com sucesso!</string>
     <string name="nao_possivel_add_ponto">Atingido limite de batidas diário!</string>
     <string name="filtrar">Filtrar</string>
     <string name="todos">Todos</string>
@@ -83,4 +84,7 @@
     <string name="hoje">Hoje</string>
     <string name="pesquisar">Pesquisar funcionário</string>
     <string name="nenhum_funcionario_encontrado">Nenhum funcionário econtrado!</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_cadastro">Cadastro</string>
 </resources>

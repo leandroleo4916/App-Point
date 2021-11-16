@@ -7,13 +7,12 @@
     android:layout_height="match_parent"
     android:background="@color/back"
     android:id="@+id/container_employee"
-    tools:context=".activitys.ToolsActivity">
+    tools:context=".activitys.ui.profile.ProfileFragment">
 
     <ProgressBar
         android:id="@+id/progress_employee"
-        android:layout_width="60dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/fundoBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="true"
@@ -34,28 +33,27 @@
         android:paddingEnd="15dp"
         tools:ignore="MissingConstraints" >
 
-            <ImageView
-                android:id="@+id/image_back_tools"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@string/buttom_back"
-                android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+        <ImageView
+            android:id="@+id/image_back_tools"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Funcionários"
-                android:textColor="@color/letras"
-                android:textSize="20sp"
-                android:gravity="top"
-                android:layout_marginStart="35dp"
-                app:layout_constraintStart_toStartOf="@+id/image_back_tools"
-                tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Funcionários"
+            android:textColor="@color/letras"
+            android:textSize="20sp"
+            android:gravity="top"
+            android:layout_marginStart="35dp"
+            app:layout_constraintStart_toStartOf="@+id/image_back_tools"
+            tools:ignore="MissingConstraints" />
 
     </androidx.appcompat.widget.Toolbar>
 

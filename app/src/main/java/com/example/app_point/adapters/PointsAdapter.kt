@@ -12,17 +12,18 @@ import com.example.app_point.entity.PointsEntity
 import com.example.app_point.model.PointsViewHolder
 import com.example.app_point.utils.ConverterPhoto
 
-class PointsAdapter(private val application: Application, private val mBusiness: BusinessEmployee)
-    : RecyclerView.Adapter<PointsViewHolder>() {
+class PointsAdapter(private val application: Application, private val mBusiness: BusinessEmployee) :
+    RecyclerView.Adapter<PointsViewHolder>() {
 
-    private var mListFullEmployee: ArrayList<PointsEntity?> = arrayListOf()
-    private val mConverterPhoto: ConverterPhoto = ConverterPhoto()
+    private var listFullEmployee: ArrayList<PointsEntity?> = arrayListOf()
+    private var listNameEmployee: ArrayList<PointsEntity?> = arrayListOf()
+    private val converterPhoto: ConverterPhoto = ConverterPhoto()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointsViewHolder {
         val item = LayoutInflater.from(parent.context).inflate(
             R.layout.recycler_points, parent, false)
 
-        val animation: Animation = AnimationUtils.loadAnimation( application, R.anim.animation_left)
+        val animation: Animation = AnimationUtils.loadAnimation(application, R.anim.animation_left)
         item.startAnimation(animation)
 
         return PointsViewHolder(item)
@@ -30,9 +31,9 @@ class PointsAdapter(private val application: Application, private val mBusiness:
 
     override fun onBindViewHolder(holder: PointsViewHolder, position: Int) {
 
-        val fullEmployee = mListFullEmployee[position]
+        val fullEmployee = listFullEmployee[position]
         val photo = mBusiness.consultPhoto(fullEmployee?.employee.toString())
-        val photoConvert = photo?.let { mConverterPhoto.converterToBitmap(it) }
+        val photoConvert = photo?.let { converterPhoto.converterToBitmap(it) }
         photoConvert?.let { holder.bindPhoto(it) }
 
         holder.bind(fullEmployee?.employee.toString())
@@ -40,12 +41,26 @@ class PointsAdapter(private val application: Application, private val mBusiness:
         holder.bindHora(fullEmployee)
     }
 
-    override fun getItemCount(): Int { return mListFullEmployee.count() }
+    override fun getItemCount(): Int {
+        return listFullEmployee.count()
+    }
 
-    fun updateFullEmployee(list: ArrayList<PointsEntity?>){
-        mListFullEmployee = when {
-            list.size > 1 -> { list.reversed() as ArrayList<PointsEntity?> }
-            else -> { list }
+    fun updateFullPoints(list: ArrayList<PointsEntity?>) {
+        val listReverse = list.reversed()
+        listFullEmployee = when {
+            listReverse.size > 1 -> listReverse as ArrayList<PointsEntity?>
+            else -> list
+        }
+        notifyDataSetChanged()
+    }
+
+    fun updateNameEmployee(name: String) {
+
+        for (employee in listFullEmployee) {
+            if (employee!!.employee!!.contains(name)) {
+                listNameEmployee.add(employee)
+                listFullEmployee = listNameEmployee
+            }
         }
         notifyDataSetChanged()
     }

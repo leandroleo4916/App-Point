@@ -103,7 +103,7 @@ class ProfileActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     }
 
     private fun searchByNameEmployee(name: String){
-        val dataEmployee = mBusinessEmployee.consultDataEmployee(name)
+        val dataEmployee = mBusinessEmployee.consultEmployeeByName(name)
         val photo = dataEmployee!!.photo
         val photoConverter = mPhoto.converterToBitmap(photo)
 
