@@ -354,7 +354,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                     ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
                 employee = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4,
-                    name, email, cargo, phone, admissao, niver)
+                    name, cargo, email, phone, admissao, niver)
 
             }
             cursor?.close()

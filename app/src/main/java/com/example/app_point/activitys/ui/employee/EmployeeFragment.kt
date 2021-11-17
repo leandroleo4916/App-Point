@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
+import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsUser
-import com.example.app_point.databinding.ActivityToolsBinding
-import com.example.app_point.databinding.FragmentEmployeeBinding
 import com.example.app_point.interfaces.INotification
+import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
@@ -38,12 +38,11 @@ import java.util.*
 class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
 
     private lateinit var employeeAdapter: EmployeeAdapter
+    private lateinit var itemEmployee: ItemEmployee
     private val repositoryPoint: RepositoryPoint by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val viewModelEmployee by viewModel<EmployeeViewModel>()
     private val securityPreferences: SecurityPreferences by inject()
-
-    companion object { fun newInstance() = EmployeeFragment() }
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
@@ -62,7 +61,11 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     private fun recycler(binding: View) {
         val recycler = binding.recycler_employee
         recycler.layoutManager = LinearLayoutManager(context)
-        employeeAdapter = EmployeeAdapter(repositoryPoint, this, this, context)
+
+        if (context is ItemEmployee) { itemEmployee = context as ItemEmployee
+        } else { throw ClassCastException("$context must implemented") }
+
+        employeeAdapter = EmployeeAdapter(repositoryPoint, this, itemEmployee, this, context)
         recycler.adapter = employeeAdapter
     }
 
@@ -112,12 +115,6 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
                 return true
             }
         })
-    }
-
-    override fun clickEdit(id: Int) {
-        //val intent = Intent(this, RegisterEmployeeActivity::class.java)
-        //intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
-        //startActivity(intent)
     }
 
     private fun createDialog(message: String): AlertDialog.Builder? {

@@ -1,6 +1,5 @@
 package com.example.app_point.adapters
 
-import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ import com.example.app_point.R
 import com.example.app_point.entity.Employee
 import com.example.app_point.entity.PointsHours
 import com.example.app_point.interfaces.INotification
+import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
@@ -27,6 +27,7 @@ import kotlin.collections.ArrayList
 
 class EmployeeAdapter(private var searchPoints: RepositoryPoint,
                       private val listener: OnItemClickRecycler,
+                      private val listenerFragment: ItemEmployee,
                       private val notification: INotification,
                       private val application: Context?):
     RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>(), Filterable {
@@ -94,7 +95,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
 
             when(view){
                 itemView.remove_employee -> listener.clickRemove(id, name, position)
-                itemView.edit_employee -> listener.clickEdit(id)
+                itemView.edit_employee -> listenerFragment.openFragmentRegister(id)
                 itemView.back -> listener.clickBack(name, date, position)
                 itemView.next -> listener.clickNext(name, date, position)
                 itemView.toolbar1 -> listener.clickHour(name, date, 1, hour1, position)

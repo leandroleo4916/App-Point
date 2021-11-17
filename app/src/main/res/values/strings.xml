@@ -87,4 +87,5 @@
     <string name="title_activity_main2">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_cadastro">Cadastro</string>
+    <string name="permissao_negada">Permissão negada!</string>
 </resources>

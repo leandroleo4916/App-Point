@@ -1,6 +1,5 @@
 package com.example.app_point.activitys.ui.inicio
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,12 +24,9 @@ import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_employee.*
-import kotlinx.android.synthetic.main.fragment_employee.container_employee
 import kotlinx.android.synthetic.main.fragment_inicio.*
 import kotlinx.android.synthetic.main.fragment_inicio.view.*
 import org.koin.android.ext.android.inject
-import java.lang.ClassCastException
 
 class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEmployeeHome {
 
@@ -208,7 +204,7 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
 
         if (context is ItemEmployee) { listener = context as ItemEmployee
         } else { throw ClassCastException("$context must implemented") }
-        listener.openFragment(employee)
+        listener.openFragmentProfile(employee)
     }
 
     private fun showSnackBar(message: Int) {

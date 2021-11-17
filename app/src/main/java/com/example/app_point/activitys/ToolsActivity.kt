@@ -57,7 +57,7 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
     private fun recycler(){
         val recycler = binding.recyclerEmployee
         recycler.layoutManager = LinearLayoutManager(this)
-        employeeAdapter = EmployeeAdapter(repositoryPoint, this, this, application)
+        //employeeAdapter = EmployeeAdapter(repositoryPoint, this, this, this, application)
         recycler.adapter = employeeAdapter
     }
 
@@ -105,13 +105,6 @@ class ToolsActivity : AppCompatActivity(), OnItemClickRecycler, INotification {
                 return true
             }
         })
-    }
-
-    override fun clickEdit(id: Int) {
-        val intent = Intent(this, RegisterEmployeeActivity::class.java)
-        intent.putExtra(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, id)
-        startActivity(intent)
-        finish()
     }
 
     override fun clickRemove(id: Int, name: String, position: Int){

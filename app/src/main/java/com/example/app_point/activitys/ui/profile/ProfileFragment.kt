@@ -11,7 +11,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
 import com.example.app_point.adapters.AdapterPoints
@@ -21,7 +20,6 @@ import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_employee.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.coroutines.*
@@ -262,7 +260,7 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun resumeFragment(employee: EmployeeEntity) {
         if (context is ItemEmployee) { listener = context as ItemEmployee
         } else { throw ClassCastException("$context must implemented") }
-        listener.openFragment(employee)
+        listener.openFragmentProfile(employee)
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

@@ -49,7 +49,7 @@ val userModule = module {
 }
 
 val EmployeeViewModelModule = module {
-    viewModel { EmployeeViewModel(get(), get(), get()) }
+    viewModel { EmployeeViewModel(get(), get()) }
 }
 
 val viewModelPoints = module {

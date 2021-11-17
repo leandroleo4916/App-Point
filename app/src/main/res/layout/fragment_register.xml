@@ -83,7 +83,7 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -192,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/back_toolbar"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -582,7 +582,7 @@
                     android:id="@+id/photo_employee"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/man"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
