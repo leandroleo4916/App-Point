@@ -1,6 +1,7 @@
 package com.example.app_point.di
 
 import com.example.app_point.activitys.ui.employee.EmployeeViewModel
+import com.example.app_point.activitys.ui.points.PointsViewModel
 import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
@@ -48,7 +49,7 @@ val userModule = module {
     factory { BusinessUser(get(), get()) }
 }
 
-val EmployeeViewModelModule = module {
+val employeeViewModelModule = module {
     viewModel { EmployeeViewModel(get(), get()) }
 }
 
@@ -89,7 +90,7 @@ val captureDateModule = module {
 }
 
 val appModules = listOf(
-    repositoryModule, EmployeeViewModelModule, businessModule,
+    repositoryModule, employeeViewModelModule, businessModule,
     pointsModule, userModule, adapterModule, viewModelPoints, repositoryPointModule,
     dataBaseEmployeeModule, securityPreferencesModule, pointsAdapterModule,
     converterPhotoModule, calculationHoursModule, repositoryUserModule,

@@ -20,11 +20,9 @@ import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
-import java.lang.ClassCastException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,52 +34,52 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val photo: ConverterPhoto by inject()
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var listener: ItemEmployee
+    private lateinit var binding: View
 
     companion object { fun newInstance() = ProfileFragment() }
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
 
-        val binding = inflater.inflate(R.layout.fragment_profile, container, false)
-
+        binding = inflater.inflate(R.layout.fragment_profile, container, false)
         profileViewModel = ProfileViewModel(repositoryPoint)
 
         if (arguments == null){
-            recycler(binding)
-            searchEmployee(binding, profileViewModel)
-            listener(binding, profileViewModel)
-            observer(binding, profileViewModel)
+            recycler()
+            searchEmployee()
+            listener()
+            observer()
         }
         else {
             val args = arguments?.let { it.getSerializable("employee") as EmployeeEntity }
-            recycler(binding)
-            setInfoEmployee(args!!, binding)
-            searchPointsEmployee(args.nameEmployee, binding, profileViewModel)
-            listener(binding, profileViewModel)
-            observer(binding, profileViewModel)
+            recycler()
+            setInfoEmployee(args!!)
+            searchPointsEmployee(args.nameEmployee)
+            listener()
+            observer()
         }
 
         return binding
     }
 
-    private fun recycler (binding: View) {
+    private fun recycler() {
         val recycler = binding.recyclerViewProfile
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = adapterPoints
     }
 
-    private fun searchEmployee (binding: View, viewModelProfile: ProfileViewModel) {
+    private fun searchEmployee() {
 
         val listEmployee = businessEmployee.consultEmployee()
 
         if (listEmployee.isNotEmpty()) {
-            searchByNameEmployee(listEmployee[0], binding, businessEmployee, photo)
-            searchPointsEmployee(listEmployee[0], binding, viewModelProfile)
+            searchByNameEmployee(listEmployee[0])
+            searchPointsEmployee(listEmployee[0])
         }
         else { binding.progress_points.visibility = View.GONE }
     }
 
-    private fun listener (binding: View, viewModelProfile: ProfileViewModel) {
+    private fun listener() {
 
         binding.image_back_perfil.setOnClickListener {
             activity?.onBackPressed()
@@ -89,21 +87,21 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.edit_employee.setOnClickListener{
             editEmployee(binding.text_name_employee.text.toString())
         }
-        binding.search.setOnClickListener{ dialogListEmployee(businessEmployee, binding,
-            viewModelProfile, photo)
+        binding.search.setOnClickListener{
+            dialogListEmployee()
         }
         binding.text_name_employee.setOnClickListener{
             editEmployee(binding.text_name_employee.text.toString())
         }
         binding.search_date.setOnClickListener{
-            calendar(binding, viewModelProfile)
+            calendar()
         }
         binding.image_photo_employee.setOnClickListener{
             editEmployee(binding.text_name_employee.text.toString())
         }
     }
 
-    private fun calendar(binding: View, viewModelProfile: ProfileViewModel) {
+    private fun calendar() {
         val nameEmployee = binding.text_name_employee.text.toString()
         val date = Calendar.getInstance()
         val local = Locale("pt", "BR")
@@ -113,7 +111,7 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
             date.set(Calendar.MONTH, month)
             date.set(Calendar.YEAR, year)
             val dateSelected = SimpleDateFormat("dd/MM/yyyy", local).format(date.time)
-            viewModelSelected(nameEmployee, dateSelected, binding, viewModelProfile)
+            viewModelSelected(nameEmployee, dateSelected)
             binding.text_date_selected.text = dateSelected
         }
         context?.let {
@@ -123,7 +121,7 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun setInfoEmployee (args: EmployeeEntity, binding: View){
+    private fun setInfoEmployee (args: EmployeeEntity){
 
         val photoConverter = photo.converterToBitmap(args.photo)
 
@@ -135,10 +133,9 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setProgressHours(binding)
     }
 
-    private fun searchByNameEmployee(name: String, binding: View, business: BusinessEmployee,
-                                     photo: ConverterPhoto){
+    private fun searchByNameEmployee(name: String){
 
-        val dataEmployee = business.consultEmployeeByName(name)
+        val dataEmployee = businessEmployee.consultEmployeeByName(name)
         val image = dataEmployee.photo
         val photoConverter = photo.converterToBitmap(image)
 
@@ -183,26 +180,24 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun viewModelSelected (name: String, date: String, binding: View,
-                                   viewModelProfile: ProfileViewModel){
+    private fun viewModelSelected (name: String, date: String){
 
         binding.progress_points.visibility = View.VISIBLE
-        viewModelProfile.getFullPoints(name, date)
+        profileViewModel.getFullPoints(name, date)
     }
 
-    private fun searchPointsEmployee (name: String?, binding: View,
-                                      viewModelProfile: ProfileViewModel){
+    private fun searchPointsEmployee (name: String?){
 
         if (name != null) {
-            viewModelProfile.getFullPoints(name, "")
+            profileViewModel.getFullPoints(name, "")
         }
         binding.text_date_selected.text = getString(R.string.todos)
         binding.progress_points.visibility = View.GONE
     }
 
-    private fun observer (binding: View, viewModelProfile: ProfileViewModel) {
+    private fun observer() {
 
-        viewModelProfile.pointsList.observe(viewLifecycleOwner, {
+        profileViewModel.pointsList.observe(viewLifecycleOwner, {
             when (it.size) {
                 0 -> {
                     //showSnackBar(R.string.nenhum_ponto_registrado)
@@ -223,8 +218,7 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun dialogListEmployee(businessEmployee: BusinessEmployee, binding: View,
-                                   viewModelProfile: ProfileViewModel, photo: ConverterPhoto) {
+    private fun dialogListEmployee() {
 
         val inflater = layoutInflater
         val inflateView = inflater.inflate(R.layout.dialog_list_employee, null)
@@ -271,7 +265,7 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(container_perfil,
+        Snackbar.make(binding.container_perfil,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

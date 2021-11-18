@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
-import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.interfaces.INotification
 import com.example.app_point.interfaces.ItemEmployee
@@ -28,7 +27,6 @@ import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.fragment_employee.*
 import kotlinx.android.synthetic.main.fragment_employee.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,22 +41,23 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val viewModelEmployee by viewModel<EmployeeViewModel>()
     private val securityPreferences: SecurityPreferences by inject()
+    private lateinit var binding: View
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
-        val binding = inflater.inflate(R.layout.fragment_employee, container, false)
+        binding = inflater.inflate(R.layout.fragment_employee, container, false)
 
-        recycler(binding)
-        listener(binding)
+        recycler()
+        listener()
         viewModel()
-        observer(binding)
-        touchHelper(binding)
-        searchEmployeeToolbar(binding)
+        observer()
+        touchHelper()
+        searchEmployeeToolbar()
 
         return binding
     }
 
-    private fun recycler(binding: View) {
+    private fun recycler() {
         val recycler = binding.recycler_employee
         recycler.layoutManager = LinearLayoutManager(context)
 
@@ -69,13 +68,13 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         recycler.adapter = employeeAdapter
     }
 
-    private fun listener(binding: View) {
+    private fun listener() {
         binding.image_back_tools.setOnClickListener { activity?.onBackPressed() }
     }
 
     private fun viewModel(){ viewModelEmployee.getFullEmployee() }
 
-    private fun observer(binding: View) {
+    private fun observer() {
         val date = captureDateCurrent.captureDateCurrent()
         viewModelEmployee.employeeFullList.observe(viewLifecycleOwner, {
             when (it.size) {
@@ -92,7 +91,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         })
     }
 
-    private fun searchEmployeeToolbar(binding: View) {
+    private fun searchEmployeeToolbar() {
 
         binding.toolbar_ferramentas.inflateMenu(R.menu.menu_search)
         val searchItem = binding.toolbar_ferramentas.menu.findItem(R.id.action_search)
@@ -157,13 +156,8 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         reactBackAndNext(name, date, position, -1)
     }
 
-    override fun clickHour(
-        name: String,
-        date: String,
-        positionHour: Int,
-        hour: String,
-        position: Int
-    ) {
+    override fun clickHour (name: String, date: String, positionHour: Int,
+                            hour: String, position: Int) {
 
         val inflate = layoutInflater.inflate(R.layout.dialog_add_hour_manual, null)
         val clock = inflate.findViewById<TextView>(R.id.textView_hour)
@@ -258,7 +252,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         }else { showSnackBar(R.string.nao_foi_possivel_remover) }
     }
 
-    private fun touchHelper(binding: View) {
+    private fun touchHelper() {
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.START or ItemTouchHelper.END) {
@@ -286,7 +280,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     override fun notification() { showSnackBar(R.string.nenhum_funcionario_encontrado) }
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(container_employee,
+        Snackbar.make(binding.container_employee,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

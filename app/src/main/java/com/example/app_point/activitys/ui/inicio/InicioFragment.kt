@@ -36,48 +36,53 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val businessPoints: BusinessPoints by inject()
     private val securityPreferences: SecurityPreferences by inject()
+    private lateinit var dataBase: DataBaseEmployee
+    private lateinit var repositoryPoint: RepositoryPoint
+    private lateinit var repositoryEmployee: RepositoryEmployee
+    private lateinit var homeViewModel: InicioViewModel
+    private lateinit var employeeAdapter: EmployeeAdapterHome
+    private lateinit var binding: View
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
-                               savedInstanceState: Bundle?): View? {
+                               savedInstanceState: Bundle?): View {
 
-        val binding = inflater.inflate(R.layout.fragment_inicio, container, false)
-        val dataBase = DataBaseEmployee(context)
-        val repositoryPoint = RepositoryPoint(dataBase)
-        val repositoryEmployee = RepositoryEmployee(dataBase)
-        val homeViewModel = InicioViewModel(repositoryPoint, repositoryEmployee)
-        val employeeAdapter = EmployeeAdapterHome(context, this)
+        binding = inflater.inflate(R.layout.fragment_inicio, container, false)
 
-        recyclerPoints(binding)
-        recyclerEmployee(binding, employeeAdapter)
-        searchPointsAndEmployee(binding, homeViewModel)
-        salutation(binding)
-        observe(homeViewModel, employeeAdapter)
-        listener(binding, homeViewModel)
+        dataBase = DataBaseEmployee(context)
+        repositoryPoint = RepositoryPoint(dataBase)
+        repositoryEmployee = RepositoryEmployee(dataBase)
+        homeViewModel = InicioViewModel(repositoryPoint, repositoryEmployee)
+        employeeAdapter = EmployeeAdapterHome(context, this)
+
+        recyclerPoints()
+        recyclerEmployee()
+        searchPointsAndEmployee()
+        salutation()
+        observe()
+        listener(binding)
 
         return binding
     }
 
-    private fun listener(binding: View, homeViewModel: InicioViewModel) {
+    private fun listener(binding: View) {
 
-        binding.image_add_ponto.setOnClickListener {
-            dialogPoint(captureDateCurrent, listEmployee, binding, homeViewModel)
-        }
+        binding.image_add_ponto.setOnClickListener { dialogPoint() }
         binding.option_menu.setOnClickListener { showMenuOption(binding, securityPreferences) }
     }
 
-    private fun recyclerPoints(binding: View) {
+    private fun recyclerPoints() {
         val recycler = binding.recycler_points
         recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.adapter = pointAdapter
     }
 
-    private fun recyclerEmployee(binding: View, employeeAdapter: EmployeeAdapterHome) {
+    private fun recyclerEmployee() {
         val recycler = binding.recycler_employee_home
         recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recycler.adapter = employeeAdapter
     }
 
-    private fun salutation (binding: View) {
+    private fun salutation() {
 
         val textName = binding.text_name_user
         val extras = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.NAME)
@@ -95,13 +100,13 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
         }
     }
 
-    private fun searchPointsAndEmployee (binding: View, homeViewModel: InicioViewModel) {
+    private fun searchPointsAndEmployee() {
         homeViewModel.getFullPoints("")
         homeViewModel.getFullEmployee()
         binding.progress.visibility = View.GONE
     }
 
-    private fun observe(homeViewModel: InicioViewModel, employeeAdapter: EmployeeAdapterHome) {
+    private fun observe() {
 
         homeViewModel.pointsList.observe(viewLifecycleOwner, {
             when (it.size) {
@@ -137,8 +142,7 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
         return builder
     }
 
-    private fun dialogPoint (captureDateCurrent: CaptureDateCurrent, listEmployee: BusinessEmployee,
-                             binding: View, homeViewModel: InicioViewModel) {
+    private fun dialogPoint () {
 
         val hourCurrent = captureDateCurrent.captureHoraCurrent()
         val dateCurrent = captureDateCurrent.captureDateCurrent()
@@ -160,19 +164,18 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
 
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> { showSnackBar(R.string.precisa_add_funcionarios)}
-                else -> savePoint(itemSpinner.toString(), dateCurrent, hourCurrent, binding, homeViewModel)
+                else -> savePoint(itemSpinner.toString(), dateCurrent, hourCurrent)
             }
         }
         alertDialog?.setNegativeButton(getString(R.string.cancelar)) { _, _ ->  }
         alertDialog?.create()?.show()
     }
 
-    private fun savePoint (itemSpinner: String, dateCurrent: String, horaCurrent: String,
-                           binding: View, homeViewModel: InicioViewModel){
+    private fun savePoint (itemSpinner: String, dateCurrent: String, horaCurrent: String){
 
         when{
             businessPoints.setPoints(itemSpinner, dateCurrent, horaCurrent) -> {
-                searchPointsAndEmployee(binding, homeViewModel)
+                searchPointsAndEmployee()
                 showSnackBar(R.string.ponto_adicionado_sucesso)
             }
             else -> {

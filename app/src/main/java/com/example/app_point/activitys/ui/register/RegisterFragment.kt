@@ -27,7 +27,6 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
-import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
@@ -42,24 +41,25 @@ class RegisterFragment : Fragment() {
     private val permissionCode = 1000
     private val imageCaptureCode = 1001
     private var imageUri: Uri? = null
+    private lateinit var binding: View
 
     companion object { fun newInstance() = RegisterFragment() }
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
 
+        binding = inflater.inflate(R.layout.fragment_register, container, false)
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
-        val binding = inflater.inflate(R.layout.fragment_register, container, false)
 
         val args = arguments?.let { it.getSerializable("id") as Int }
-        infoEmployee(args, binding)
-        initDate(binding)
-        listener(binding, args)
+        infoEmployee(args)
+        initDate()
+        listener(args)
 
         return binding
     }
 
-    private fun infoEmployee(args: Int?, binding: View) {
+    private fun infoEmployee(args: Int?) {
 
         if (args != null) {
             val infoEmployee: EmployeeEntity = mBusinessEmployee.consultEmployeeWithId(args)!!
@@ -82,10 +82,10 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun listener(binding: View, args: Int?) {
+    private fun listener(args: Int?) {
         binding.run {
-            photo_employee.setOnClickListener { openPopUp(binding) }
-            buttom_register_employee.setOnClickListener { extrasId (args, binding) }
+            photo_employee.setOnClickListener { openPopUp() }
+            buttom_register_employee.setOnClickListener { extrasId (args) }
             horario1.setOnClickListener { timePicker(1, binding) }
             horario2.setOnClickListener { timePicker(2, binding) }
             horario3.setOnClickListener { timePicker(3, binding) }
@@ -95,7 +95,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun initDate(binding: View) {
+    private fun initDate() {
         val dataCurrent = captureDateCurrent.captureDateCurrent()
         binding.text_admissao.text = dataCurrent
         binding.text_aniversario.text = dataCurrent
@@ -147,12 +147,12 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun extrasId (id: Int?, binding: View) {
-        if (id != null) saveEmployee(id, binding)
-        else saveEmployee(0, binding)
+    private fun extrasId (id: Int?) {
+        if (id != null) saveEmployee(id)
+        else saveEmployee(0)
     }
 
-    private fun openPopUp(binding: View) {
+    private fun openPopUp() {
         val popMenu = PopupMenu(context, binding.photo_employee)
         popMenu.menuInflater.inflate(R.menu.popup, popMenu.menu)
         popMenu.setOnMenuItemClickListener { item ->
@@ -219,7 +219,7 @@ class RegisterFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == imageCaptureCode && resultCode == AppCompatActivity.RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            photo_employee.setImageBitmap(imageBitmap)
+            binding.photo_employee.setImageBitmap(imageBitmap)
         }
     }
 
@@ -232,11 +232,11 @@ class RegisterFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                photo_employee.setImageURI(result.data?.data)
+                binding.photo_employee.setImageURI(result.data?.data)
             }
         }
 
-    private fun saveEmployee(id: Int, binding: View) {
+    private fun saveEmployee(id: Int) {
 
         val image = binding.photo_employee
         val photo = mToByteArray.converterToByteArray(image)
