@@ -1,4 +1,4 @@
-package com.example.app_point.activitys.ui.inicio
+package com.example.app_point.activitys.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +8,8 @@ import com.example.app_point.entity.PointsEntity
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 
-class InicioViewModel(private var repository: RepositoryPoint,
-                      private var repositoryEmployee: RepositoryEmployee) : ViewModel() {
+class HomeViewModel(private var repository: RepositoryPoint,
+                    private var repositoryEmployee: RepositoryEmployee) : ViewModel() {
 
     private val pointsFullList = MutableLiveData<ArrayList<PointsEntity?>>()
     val pointsList: LiveData<ArrayList<PointsEntity?>> = pointsFullList

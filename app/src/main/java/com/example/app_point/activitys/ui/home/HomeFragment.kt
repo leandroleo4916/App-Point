@@ -1,4 +1,4 @@
-package com.example.app_point.activitys.ui.inicio
+package com.example.app_point.activitys.ui.home
 
 import android.graphics.Color
 import android.os.Bundle
@@ -24,11 +24,10 @@ import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_inicio.*
-import kotlinx.android.synthetic.main.fragment_inicio.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.ext.android.inject
 
-class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEmployeeHome {
+class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEmployeeHome {
 
     private lateinit var listener: ItemEmployee
     private val pointAdapter: PointsAdapter by inject()
@@ -39,19 +38,19 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
     private lateinit var dataBase: DataBaseEmployee
     private lateinit var repositoryPoint: RepositoryPoint
     private lateinit var repositoryEmployee: RepositoryEmployee
-    private lateinit var homeViewModel: InicioViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var employeeAdapter: EmployeeAdapterHome
     private lateinit var binding: View
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
 
-        binding = inflater.inflate(R.layout.fragment_inicio, container, false)
+        binding = inflater.inflate(R.layout.fragment_home, container, false)
 
         dataBase = DataBaseEmployee(context)
         repositoryPoint = RepositoryPoint(dataBase)
         repositoryEmployee = RepositoryEmployee(dataBase)
-        homeViewModel = InicioViewModel(repositoryPoint, repositoryEmployee)
+        homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee)
         employeeAdapter = EmployeeAdapterHome(context, this)
 
         recyclerPoints()
@@ -65,7 +64,6 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
     }
 
     private fun listener(binding: View) {
-
         binding.image_add_ponto.setOnClickListener { dialogPoint() }
         binding.option_menu.setOnClickListener { showMenuOption(binding, securityPreferences) }
     }
@@ -211,7 +209,7 @@ class InicioFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClick
     }
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(container_home,
+        Snackbar.make(binding.container_home,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)
