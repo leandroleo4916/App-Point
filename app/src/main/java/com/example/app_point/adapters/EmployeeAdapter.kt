@@ -150,6 +150,12 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         }
     }
 
+    fun notifyRemoveEmployee(position: Int){
+        listEmployee.removeAt(position)
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     fun updateFullEmployee(list: ArrayList<Employee>, date: String){
 
         for (position in 0 until list.size){

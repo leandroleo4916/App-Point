@@ -13,8 +13,10 @@ import androidx.core.view.ViewCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app_point.R
+import com.example.app_point.activitys.ui.home.HomeFragment
 import com.example.app_point.activitys.ui.profile.ProfileFragment
 import com.example.app_point.activitys.ui.register.RegisterFragment
+import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.interfaces.ItemEmployee
 import com.google.android.material.appbar.AppBarLayout
@@ -25,21 +27,57 @@ import java.lang.Float.min
 
 class MainActivityController : AppCompatActivity(), ItemEmployee {
 
+    private lateinit var navView: BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_controller)
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
 
         showNavView()
+    }
 
+    override fun openFragmentProfile(employee: EmployeeEntity) {
+
+        navView.selectedItemId = R.id.navigation_profile
+        val args = Bundle()
+        args.putSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
+
+        val fragmentHome = HomeFragment.newInstance()
+        val fragment = ProfileFragment.newInstance()
+        fragment.arguments = args
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container_perfil, fragment, "profile")
+            .addToBackStack(null)
+            .detach(fragmentHome)
+            .commit()
+    }
+
+    override fun openFragmentRegister(id: Int) {
+
+        navView.selectedItemId = R.id.navigation_register
+        val args = Bundle()
+        args.putSerializable("id", id)
+
+        val fragmentHome = HomeFragment.newInstance()
+        val fragment = RegisterFragment.newInstance()
+        fragment.arguments = args
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container_register, fragment, "register")
+            .addToBackStack(null)
+            .detach(fragmentHome)
+            .commit()
     }
 
     private fun showNavView(){
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
         var isShow = true
         var scrollRange = -1
         val appBar = findViewById<AppBarLayout>(R.id.appbar)
@@ -55,39 +93,6 @@ class MainActivityController : AppCompatActivity(), ItemEmployee {
                 isShow = false
             }
         })
-    }
-
-    override fun openFragmentProfile(employee: EmployeeEntity) {
-
-        val navigationView = findViewById<View>(R.id.nav_view) as BottomNavigationView
-        navigationView.selectedItemId = R.id.navigation_profile
-
-        val args = Bundle()
-        args.putSerializable("employee", employee)
-
-        val fragment = ProfileFragment.newInstance()
-        fragment.arguments = args
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_perfil, fragment, "profile")
-            .commit()
-    }
-
-    override fun openFragmentRegister(id: Int) {
-        val navigationView = findViewById<View>(R.id.nav_view) as BottomNavigationView
-        navigationView.selectedItemId = R.id.navigation_register
-
-        val args = Bundle()
-        args.putSerializable("id", id)
-
-        val fragment = RegisterFragment.newInstance()
-        fragment.arguments = args
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_register, fragment, "register")
-            .commit()
     }
 
     private fun animateBarVisibility(child: View, isVisible: Boolean) {
@@ -173,9 +178,7 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
             offsetAnimator?.addUpdateListener {
                 child.translationY = it.animatedValue as Float
             }
-        } else {
-            offsetAnimator?.cancel()
-        }
+        } else { offsetAnimator?.cancel() }
 
         val targetTranslation = if (isVisible) 0f else child.height.toFloat()
         offsetAnimator?.setFloatValues(child.translationY, targetTranslation)

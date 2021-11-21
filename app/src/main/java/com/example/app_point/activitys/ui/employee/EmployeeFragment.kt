@@ -130,18 +130,17 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
 
         val dialog = createDialog("Deseja remover $name? Confirme a senha!")
         dialog?.setView(inflate)
-        dialog?.setPositiveButton("Confirmar") { _, _ ->
+        dialog?.setPositiveButton(R.string.hoje.toString()) { _, _ ->
             val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
             if (password == textPassword.text.toString()){
-                removeEmployee(id, name)
-                employeeAdapter.notifyItemRemoved(position)
+                removeEmployee(id, name, position)
             }
             else{
                 showSnackBar(R.string.erro_senha)
                 employeeAdapter.notifyDataSetChanged()
             }
         }
-        dialog?.setNegativeButton("Cancelar") { _, _ ->
+        dialog?.setNegativeButton(R.string.cancelar) { _, _ ->
             showSnackBar(R.string.cancelado)
             employeeAdapter.notifyDataSetChanged()
         }
@@ -165,17 +164,17 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         if (hour == "--:--"){ clock.text = captureDateCurrent.captureHoraCurrent() }
         else { clock.text = hour }
 
-        val dialog = createDialog("Clique na hora para editar!")
+        val dialog = createDialog(getString(R.string.clicque_hora_para_editar))
         dialog?.setView(inflate)
-        dialog?.setPositiveButton("Editar") { _, _ ->
+        dialog?.setPositiveButton(R.string.editar) { _, _ ->
 
-            if (date == "Hoje") {
+            if (date == R.string.hoje.toString()) {
                 val dateToday = captureDateCurrent.captureDateCurrent()
                 editPoint(name, dateToday, positionHour, clock.text.toString(), position)
             }
             else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
         }
-        dialog?.setNegativeButton("Cancelar") { _, _ ->
+        dialog?.setNegativeButton(R.string.cancelar) { _, _ ->
             showSnackBar(R.string.cancelado)
         }
         dialog?.create()?.show()
@@ -218,7 +217,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     private fun reactBackAndNext(name: String, dateCaptured: String, position: Int, pos: Int){
 
         val date =
-            if (dateCaptured == "Hoje") {
+            if (dateCaptured == R.string.hoje.toString()) {
                 val dateToday = captureDateCurrent.captureDateCurrent()
                 addOrRemoveDate(dateToday, pos)
             } else{ addOrRemoveDate(dateCaptured, pos) }
@@ -244,12 +243,14 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         return dateFormat.format(cal.time)
     }
 
-    private fun removeEmployee(id: Int, name: String){
+    private fun removeEmployee(id: Int, name: String, position: Int){
+
         if (viewModelEmployee.removeEmployee(id)){
             viewModelEmployee.removePoints(name)
             showSnackBar(R.string.removido_sucesso)
-            viewModel()
-        }else { showSnackBar(R.string.nao_foi_possivel_remover) }
+            employeeAdapter.notifyRemoveEmployee(position)
+        }
+        else { showSnackBar(R.string.nao_foi_possivel_remover) }
     }
 
     private fun touchHelper() {
@@ -259,13 +260,14 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
 
             override fun onMove(
                 recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder,
-            ): Boolean {
+                target: RecyclerView.ViewHolder): Boolean {
+
                 val source = viewHolder.bindingAdapterPosition
                 val destination = target.bindingAdapterPosition
                 employeeAdapter.swapPosition(source, destination)
                 return true
             }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
                 employeeAdapter.removeEmployee(position)

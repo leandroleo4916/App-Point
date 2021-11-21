@@ -42,6 +42,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
     private lateinit var employeeAdapter: EmployeeAdapterHome
     private lateinit var binding: View
 
+    companion object { fun newInstance() = HomeFragment()}
+
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
 
@@ -58,12 +60,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         searchPointsAndEmployee()
         salutation()
         observe()
-        listener(binding)
+        listener()
 
         return binding
     }
 
-    private fun listener(binding: View) {
+    private fun listener() {
         binding.image_add_ponto.setOnClickListener { dialogPoint() }
         binding.option_menu.setOnClickListener { showMenuOption(binding, securityPreferences) }
     }

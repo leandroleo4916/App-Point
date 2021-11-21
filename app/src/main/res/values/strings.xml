@@ -88,4 +88,5 @@
     <string name="title_home">Home</string>
     <string name="title_cadastro">Cadastro</string>
     <string name="permissao_negada">Permissão negada!</string>
+    <string name="clicque_hora_para_editar">Clique na hora para editar!</string>
 </resources>

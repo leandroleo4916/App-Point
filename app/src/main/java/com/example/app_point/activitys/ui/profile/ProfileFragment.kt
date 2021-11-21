@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
 import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
@@ -51,7 +52,8 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
             observer()
         }
         else {
-            val args = arguments?.let { it.getSerializable("employee") as EmployeeEntity }
+            val args = arguments?.let { it.getSerializable(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME) as EmployeeEntity }
             recycler()
             setInfoEmployee(args!!)
             searchPointsEmployee(args.nameEmployee)

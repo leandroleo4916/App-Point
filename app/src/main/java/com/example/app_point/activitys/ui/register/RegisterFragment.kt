@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.fragment_register.view.*
@@ -34,6 +35,7 @@ import java.util.*
 
 class RegisterFragment : Fragment() {
 
+    private lateinit var listener: ItemEmployee
     private lateinit var registerViewModel: RegisterViewModel
     private val mBusinessEmployee: BusinessEmployee by inject()
     private val mToByteArray: ConverterPhoto by inject()
@@ -165,7 +167,6 @@ class RegisterFragment : Fragment() {
         popMenu.show()
     }
 
-    // Management the permission of the camera and gallery
     private fun permissionCamera(): Boolean {
         if (context?.let {
                 ContextCompat.checkSelfPermission (
@@ -188,7 +189,6 @@ class RegisterFragment : Fragment() {
         return true
     }
 
-    // Result permission
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
     ) {
@@ -204,7 +204,6 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    // Open camera
     private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "Nova Foto")
@@ -272,18 +271,26 @@ class RegisterFragment : Fragment() {
         when(mBusinessEmployee.registerEmployee(employee)){
             "salvo" -> {
                 toast(R.string.adicionado_sucesso)
+                openFragmentProfile(employee)
             }
             "não salvo" -> {
                 toast(R.string.nao_foi_possivel_cadastrar)
             }
             "editado" -> {
                 toast(R.string.editado_sucesso)
+                openFragmentProfile(employee)
             }
             "não editado" -> {
                 toast(R.string.nao_foi_possivel_editar)
             }
             else -> toast(R.string.nao_foi_possivel_cadastrar)
         }
+    }
+
+    private fun openFragmentProfile(employee: EmployeeEntity) {
+
+        if (context is ItemEmployee) { listener = context as ItemEmployee }
+        listener.openFragmentProfile(employee)
     }
 
     private fun toast(message: Int){
