@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.PointsEntity
-import com.example.app_point.model.PointsViewHolder
+import com.example.app_point.viewholver.PointsViewHolder
 import com.example.app_point.utils.ConverterPhoto
 
 class PointsAdapter(private val application: Application, private val mBusiness: BusinessEmployee) :

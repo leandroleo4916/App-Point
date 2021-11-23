@@ -17,6 +17,7 @@ import com.example.app_point.business.BusinessPoints
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.interfaces.ILogoutApp
 import com.example.app_point.interfaces.ItemClickEmployeeHome
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryEmployee
@@ -30,6 +31,7 @@ import org.koin.android.ext.android.inject
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEmployeeHome {
 
     private lateinit var listener: ItemEmployee
+    private lateinit var logoutApp: ILogoutApp
     private val pointAdapter: PointsAdapter by inject()
     private val listEmployee: BusinessEmployee by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
@@ -67,7 +69,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
 
     private fun listener() {
         binding.image_add_ponto.setOnClickListener { dialogPoint() }
-        binding.option_menu.setOnClickListener { showMenuOption(binding, securityPreferences) }
+        binding.logout_app.setOnClickListener { dialogLogout() }
     }
 
     private fun recyclerPoints() {
@@ -123,15 +125,16 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         })
     }
 
-    private fun dialogLogout(securityPreferences: SecurityPreferences) {
-        val alertDialog = createDialog(R.string.deseja_sair.toString())
+    private fun dialogLogout() {
+        val alertDialog = createDialog("Deseja sair do App?")
+
         alertDialog?.setPositiveButton("Sim") { _, _ ->
             securityPreferences.removeString()
-            onDetach()
+
+            if (context is ILogoutApp) { logoutApp = context as ILogoutApp }
+            logoutApp.logoutApp()
         }
-        alertDialog?.setNegativeButton("Não") { _, _ ->
-            showSnackBar(R.string.cancelado)
-        }
+        alertDialog?.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
         alertDialog?.create()?.show()
     }
 
@@ -167,7 +170,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
                 else -> savePoint(itemSpinner.toString(), dateCurrent, hourCurrent)
             }
         }
-        alertDialog?.setNegativeButton(getString(R.string.cancelar)) { _, _ ->  }
+        alertDialog?.setNegativeButton(getString(R.string.cancelar)) { _, _ -> showSnackBar(R.string.cancelado) }
         alertDialog?.create()?.show()
     }
 
@@ -178,9 +181,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
                 searchPointsAndEmployee()
                 showSnackBar(R.string.ponto_adicionado_sucesso)
             }
-            else -> {
-                showSnackBar(R.string.nao_possivel_add_ponto)
-            }
+            else -> showSnackBar(R.string.nao_possivel_add_ponto)
         }
     }
 
@@ -192,21 +193,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-    private fun showMenuOption (binding: View, securityPreferences: SecurityPreferences) {
-
-        val menuOption = PopupMenu(context, binding.option_menu)
-        menuOption.menuInflater.inflate(R.menu.menu, menuOption.menu)
-        menuOption.setOnMenuItemClickListener { item ->
-            when (item!!.itemId) { R.id.logout_app_menu -> dialogLogout(securityPreferences) }
-            true
-        }
-        menuOption.show()
-    }
-
     override fun openFragmentProfile(employee: EmployeeEntity) {
 
-        if (context is ItemEmployee) { listener = context as ItemEmployee
-        } else { throw ClassCastException("$context must implemented") }
+        if (context is ItemEmployee) { listener = context as ItemEmployee }
         listener.openFragmentProfile(employee)
     }
 
@@ -219,5 +208,4 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
             .setAction("Ok") {}
             .show()
     }
-
 }

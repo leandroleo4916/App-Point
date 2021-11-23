@@ -1,16 +1,14 @@
 package com.example.app_point.di
 
 import com.example.app_point.activitys.ui.employee.EmployeeViewModel
-import com.example.app_point.activitys.ui.points.PointsViewModel
 import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
-import com.example.app_point.business.BusinessUser
+import com.example.app_point.activitys.ui.login.BusinessUser
 import com.example.app_point.business.CalculationHours
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.database.DataBaseUser
-import com.example.app_point.model.*
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryFirebase
 import com.example.app_point.repository.RepositoryPoint
@@ -53,10 +51,6 @@ val employeeViewModelModule = module {
     viewModel { EmployeeViewModel(get(), get()) }
 }
 
-val viewModelPoints = module {
-    viewModel { ViewModelPoints(get(), get()) }
-}
-
 val adapterModule = module {
     factory { AdapterPoints(get()) }
 }
@@ -91,7 +85,7 @@ val captureDateModule = module {
 
 val appModules = listOf(
     repositoryModule, employeeViewModelModule, businessModule,
-    pointsModule, userModule, adapterModule, viewModelPoints, repositoryPointModule,
+    pointsModule, userModule, adapterModule, repositoryPointModule,
     dataBaseEmployeeModule, securityPreferencesModule, pointsAdapterModule,
     converterPhotoModule, calculationHoursModule, repositoryUserModule,
     databaseUserModule, repositoryEmployeeModule, captureDateModule

@@ -20,7 +20,6 @@ import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
-import kotlinx.android.synthetic.main.activity_perfil.view.edit_employee
 import kotlinx.android.synthetic.main.recycler_employee_detail.view.*
 import java.util.*
 import kotlin.collections.ArrayList

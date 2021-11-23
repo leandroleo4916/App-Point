@@ -4,7 +4,6 @@ import android.app.TimePickerDialog
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +42,10 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     private val securityPreferences: SecurityPreferences by inject()
     private lateinit var binding: View
 
-    override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
-                               savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         binding = inflater.inflate(R.layout.fragment_employee, container, false)
 
         recycler()
@@ -96,10 +97,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         binding.toolbar_ferramentas.inflateMenu(R.menu.menu_search)
         val searchItem = binding.toolbar_ferramentas.menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
-        searchView.queryHint.run {
-            Html.fromHtml("<font color = #e6e1e4>" + resources.getString(R.string.pesquisar),
-                resources.getColor(R.color.letras))
-        }
+        searchView.queryHint.run { R.string.pesquisar }
 
         searchView.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -155,8 +153,10 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         reactBackAndNext(name, date, position, -1)
     }
 
-    override fun clickHour (name: String, date: String, positionHour: Int,
-                            hour: String, position: Int) {
+    override fun clickHour(
+        name: String, date: String, positionHour: Int,
+        hour: String, position: Int,
+    ) {
 
         val inflate = layoutInflater.inflate(R.layout.dialog_add_hour_manual, null)
         val clock = inflate.findViewById<TextView>(R.id.textView_hour)
@@ -203,7 +203,13 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         dialog?.create()?.show()
     }
 
-    private fun editPoint(name:String, date:String, positionHour:Int, hour:String, position:Int){
+    private fun editPoint(
+        name: String,
+        date: String,
+        positionHour: Int,
+        hour: String,
+        position: Int,
+    ){
 
         when (viewModelEmployee.editPoint(name, date, positionHour, hour)){
             true -> {
@@ -260,7 +266,8 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
 
             override fun onMove(
                 recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder): Boolean {
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
 
                 val source = viewHolder.bindingAdapterPosition
                 val destination = target.bindingAdapterPosition

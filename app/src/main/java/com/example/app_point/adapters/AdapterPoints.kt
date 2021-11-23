@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.PointsEntity
-import com.example.app_point.model.ViewHolderPoints
+import com.example.app_point.viewholver.ViewHolderPoints
 
 class AdapterPoints(private val application: Application) : RecyclerView.Adapter<ViewHolderPoints>() {
 

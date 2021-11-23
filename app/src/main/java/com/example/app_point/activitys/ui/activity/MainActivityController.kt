@@ -2,6 +2,7 @@ package com.example.app_point.activitys
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.Gravity
@@ -14,10 +15,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app_point.R
 import com.example.app_point.activitys.ui.home.HomeFragment
+import com.example.app_point.activitys.ui.login.LoginActivity
 import com.example.app_point.activitys.ui.profile.ProfileFragment
 import com.example.app_point.activitys.ui.register.RegisterFragment
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.interfaces.ILogoutApp
 import com.example.app_point.interfaces.ItemEmployee
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,7 +28,7 @@ import com.google.android.material.snackbar.Snackbar
 import java.lang.Float.max
 import java.lang.Float.min
 
-class MainActivityController : AppCompatActivity(), ItemEmployee {
+class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp {
 
     private lateinit var navView: BottomNavigationView
 
@@ -38,6 +41,11 @@ class MainActivityController : AppCompatActivity(), ItemEmployee {
         navView.setupWithNavController(navController)
 
         showNavView()
+    }
+
+    override fun logoutApp() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     override fun openFragmentProfile(employee: EmployeeEntity) {
@@ -130,9 +138,10 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
         return super.layoutDependsOn(parent, child, dependency)
     }
 
-    override fun onStartNestedScroll (coordinatorLayout: CoordinatorLayout, child: V,
-                                      directTargetChild: View, target: View,
-                                      axes: Int, type: Int, ): Boolean {
+    override fun onStartNestedScroll(
+        coordinatorLayout: CoordinatorLayout, child: V,
+        directTargetChild: View, target: View,
+        axes: Int, type: Int, ): Boolean {
 
         if (axes != ViewCompat.SCROLL_AXIS_VERTICAL) return false
 
@@ -142,16 +151,19 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
         return true
     }
 
-    override fun onNestedPreScroll (coordinatorLayout: CoordinatorLayout, child: V,
-                                    target: View, dx: Int, dy: Int, consumed: IntArray,
-                                    type: Int, ) {
+    override fun onNestedPreScroll(
+        coordinatorLayout: CoordinatorLayout, child: V,
+        target: View, dx: Int, dy: Int, consumed: IntArray,
+        type: Int) {
 
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
         child.translationY = max(0f, min(child.height.toFloat(), child.translationY + dy))
     }
 
-    override fun onStopNestedScroll (coordinatorLayout: CoordinatorLayout, child: V,
-                                     target: View, type: Int) {
+    override fun onStopNestedScroll(
+        coordinatorLayout: CoordinatorLayout, child: V,
+        target: View, type: Int) {
+
         if (!isSnappingEnabled) return
 
         if (lastStartedType == ViewCompat.TYPE_TOUCH || type == ViewCompat.TYPE_NON_TOUCH) {

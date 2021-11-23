@@ -1,4 +1,4 @@
-package com.example.app_point.model
+package com.example.app_point.viewholver
 
 import android.view.View
 import android.widget.TextView

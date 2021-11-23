@@ -74,11 +74,10 @@
                             app:layout_constraintTop_toTopOf="@+id/text_name_user" />
 
                         <ImageView
-                            android:id="@+id/option_menu"
+                            android:id="@+id/logout_app"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_option"
-                            android:textColor="@color/letras"
+                            android:src="@drawable/ic_logout"
                             android:textSize="22sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -91,16 +90,16 @@
                 </androidx.appcompat.widget.Toolbar>
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout"
+                    android:id="@+id/relative_layout_scroll"
                     android:layout_width="match_parent"
-                    android:layout_height="134dp"
+                    android:layout_height="140dp"
                     app:layout_scrollFlags="scroll|enterAlways"
                     tools:ignore="MissingConstraints,UselessParent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_employee_home"
                         android:layout_width="match_parent"
-                        android:layout_height="134dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
@@ -117,6 +116,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

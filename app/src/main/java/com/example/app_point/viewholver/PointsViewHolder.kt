@@ -1,4 +1,4 @@
-package com.example.app_point.model
+package com.example.app_point.viewholver
 
 import android.graphics.Bitmap
 import android.view.View
@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.PointsEntity
-import com.example.app_point.utils.ConverterHours
 
 class PointsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
