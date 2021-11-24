@@ -223,7 +223,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     private fun reactBackAndNext(name: String, dateCaptured: String, position: Int, pos: Int){
 
         val date =
-            if (dateCaptured == R.string.hoje.toString()) {
+            if (dateCaptured == "Hoje") {
                 val dateToday = captureDateCurrent.captureDateCurrent()
                 addOrRemoveDate(dateToday, pos)
             } else{ addOrRemoveDate(dateCaptured, pos) }
