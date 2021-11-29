@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app_point.R
-import com.example.app_point.activitys.MainActivityController
+import com.example.app_point.activitys.ui.activity.MainActivityController
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.databinding.ActivityLoginBinding
 import com.example.app_point.utils.SecurityPreferences

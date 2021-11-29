@@ -17,10 +17,6 @@ class BusinessEmployee(private val mRepositoryEmployee: RepositoryEmployee) {
         return mRepositoryEmployee.consultEmployee(nome)
     }
 
-    fun consultIdEmployee(nome: String): Int{
-        return mRepositoryEmployee.consultIdEmployee(nome)
-    }
-
     fun consultEmployeeWithId(id: Int): EmployeeEntity?{
         return mRepositoryEmployee.consultDadosEmployeeId(id)
     }
@@ -29,7 +25,4 @@ class BusinessEmployee(private val mRepositoryEmployee: RepositoryEmployee) {
         return mRepositoryEmployee.consultPhoto(nome)
     }
 
-    fun consultHours(nome: String): List<String>? {
-        return mRepositoryEmployee.consultHours(nome)
-    }
 }

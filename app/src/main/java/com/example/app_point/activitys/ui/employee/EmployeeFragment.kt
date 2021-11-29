@@ -42,10 +42,8 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     private val securityPreferences: SecurityPreferences by inject()
     private lateinit var binding: View
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+    override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
+                               savedInstanceState: Bundle?): View {
         binding = inflater.inflate(R.layout.fragment_employee, container, false)
 
         recycler()

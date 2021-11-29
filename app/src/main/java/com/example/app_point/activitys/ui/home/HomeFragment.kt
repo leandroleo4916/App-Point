@@ -17,20 +17,21 @@ import com.example.app_point.business.BusinessPoints
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.EmployeeEntity
-import com.example.app_point.interfaces.ILogoutApp
-import com.example.app_point.interfaces.ItemClickEmployeeHome
-import com.example.app_point.interfaces.ItemEmployee
+import com.example.app_point.interfaces.*
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.SecurityPreferences
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEmployeeHome {
 
     private lateinit var listener: ItemEmployee
+    private lateinit var hideNav: IHideNavView
     private lateinit var logoutApp: ILogoutApp
     private val pointAdapter: PointsAdapter by inject()
     private val listEmployee: BusinessEmployee by inject()
@@ -63,8 +64,30 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         salutation()
         observe()
         listener()
+        showNavView(binding)
 
         return binding
+    }
+
+    private fun showNavView(binding: View) {
+
+        var isShow = true
+        var scrollRange = -1
+        val appBar = binding.appbar
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { barLayout, verticalOffset ->
+            if (scrollRange == -1){
+                scrollRange = barLayout?.totalScrollRange!!
+            }
+            if (scrollRange + verticalOffset == 0){
+                if (context is ItemEmployee) { hideNav = context as IHideNavView }
+                hideNav.hideNavView(false)
+                isShow = true
+            } else if (isShow){
+                if (context is ItemEmployee) { hideNav = context as IHideNavView }
+                hideNav.hideNavView(true)
+                isShow = false
+            }
+        })
     }
 
     private fun listener() {
@@ -194,7 +217,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun openFragmentProfile(employee: EmployeeEntity) {
-
         if (context is ItemEmployee) { listener = context as ItemEmployee }
         listener.openFragmentProfile(employee)
     }

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.app_point.R
-import com.example.app_point.activitys.MainActivityController
+import com.example.app_point.activitys.ui.activity.MainActivityController
 import com.example.app_point.databinding.RegisterUserBinding
 import org.koin.android.ext.android.inject
 

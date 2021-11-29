@@ -1,4 +1,4 @@
-package com.example.app_point.activitys
+package com.example.app_point.activitys.ui.activity
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -20,6 +20,8 @@ import com.example.app_point.activitys.ui.profile.ProfileFragment
 import com.example.app_point.activitys.ui.register.RegisterFragment
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.interfaces.IBusinessUser
+import com.example.app_point.interfaces.IHideNavView
 import com.example.app_point.interfaces.ILogoutApp
 import com.example.app_point.interfaces.ItemEmployee
 import com.google.android.material.appbar.AppBarLayout
@@ -28,7 +30,7 @@ import com.google.android.material.snackbar.Snackbar
 import java.lang.Float.max
 import java.lang.Float.min
 
-class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp {
+class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IHideNavView {
 
     private lateinit var navView: BottomNavigationView
 
@@ -40,7 +42,10 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
 
-        showNavView()
+    }
+
+    override fun hideNavView(value: Boolean) {
+        animateBarVisibility(value)
     }
 
     override fun logoutApp() {
@@ -84,26 +89,7 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp {
             .commit()
     }
 
-    private fun showNavView(){
-
-        var isShow = true
-        var scrollRange = -1
-        val appBar = findViewById<AppBarLayout>(R.id.appbar)
-        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { barLayout, verticalOffset ->
-            if (scrollRange == -1){
-                scrollRange = barLayout?.totalScrollRange!!
-            }
-            if (scrollRange + verticalOffset == 0){
-                animateBarVisibility(navView, false)
-                isShow = true
-            } else if (isShow){
-                animateBarVisibility(navView, true)
-                isShow = false
-            }
-        })
-    }
-
-    private fun animateBarVisibility(child: View, isVisible: Boolean) {
+    private fun animateBarVisibility(isVisible: Boolean) {
 
         var offsetAnimator: ValueAnimator? = null
 
@@ -114,14 +100,14 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp {
             }
 
             offsetAnimator.addUpdateListener {
-                child.translationY = it.animatedValue as Float
+                navView.translationY = it.animatedValue as Float
             }
         } else {
             offsetAnimator.cancel()
         }
 
-        val targetTranslation = if (isVisible) 0f else child.height.toFloat()
-        offsetAnimator.setFloatValues(child.translationY, targetTranslation)
+        val targetTranslation = if (isVisible) 0f else navView.height.toFloat()
+        offsetAnimator.setFloatValues(navView.translationY, targetTranslation)
         offsetAnimator.start()
     }
 }
