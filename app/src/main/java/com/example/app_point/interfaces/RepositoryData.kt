@@ -9,8 +9,10 @@ interface RepositoryData {
     fun selectFullPoints(nome: String, date: String): PointsEntity?
     fun fullPoints(): ArrayList<PointsEntity?>
     fun fullPointsToName(nome: String, date: String): ArrayList<PointsEntity?>
+    fun fullPointsById(id: Int, date: String): ArrayList<PointsEntity?>
     fun fullPointsByName(nome: String): ArrayList<HoursEntity>
     fun removePoints(name: String): Boolean
     fun selectPoint(nome: String, date: String): PointsHours?
     fun setPointByDate(employee: String, date: String, positionHour: Int, hour: String): Boolean
+    fun fullPointsByDate(date: String): ArrayList<PointsEntity?>
 }

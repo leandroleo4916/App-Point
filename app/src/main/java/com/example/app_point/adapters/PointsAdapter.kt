@@ -12,7 +12,7 @@ import com.example.app_point.entity.PointsEntity
 import com.example.app_point.viewholver.PointsViewHolder
 import com.example.app_point.utils.ConverterPhoto
 
-class PointsAdapter(private val application: Application, private val mBusiness: BusinessEmployee) :
+class PointsAdapter (private val application: Application, private val mBusiness: BusinessEmployee) :
     RecyclerView.Adapter<PointsViewHolder>() {
 
     private var listFullEmployee: ArrayList<PointsEntity?> = arrayListOf()

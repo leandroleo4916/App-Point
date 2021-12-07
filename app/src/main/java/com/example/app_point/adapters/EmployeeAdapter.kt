@@ -207,7 +207,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
 
     private inner class ListItemFilter : Filter() {
 
-        override fun performFiltering(constraint: CharSequence?): Filter.FilterResults {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
 
             val filterResults = FilterResults()
             if (constraint != null) {

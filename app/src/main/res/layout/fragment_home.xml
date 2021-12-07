@@ -96,19 +96,66 @@
                     app:layout_scrollFlags="scroll|enterAlways"
                     tools:ignore="MissingConstraints,UselessParent">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_employee_home"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        tools:listitem="@layout/recycler_employee" />
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp">
+
+                        <ProgressBar
+                            android:id="@+id/progress_add_employee"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:indeterminateTint="@color/back"
+                            app:layout_constraintBottom_toBottomOf="@+id/recycler_employee_home"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageView_add_employee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/ic_add_employee"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/textView_add_employee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="30dp"
+                            android:text="Cadastre funcionário aqui!"
+                            android:textAlignment="center"
+                            android:textColor="@color/fundoBlue"
+                            android:textSize="22sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_employee_home"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            tools:listitem="@layout/recycler_employee" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -200,11 +247,24 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="80dp"
             android:indeterminateTint="@color/back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_tarefa" />
+
+        <TextView
+            android:id="@+id/textView_add_points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nenhum_ponto_registrado"
+            android:textAlignment="center"
+            android:textColor="@color/fundoBlue"
+            android:textSize="22sp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/recycler_points"
+            app:layout_constraintStart_toStartOf="@+id/recycler_points"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_tarefa" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

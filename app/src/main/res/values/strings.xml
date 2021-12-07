@@ -4,6 +4,7 @@
     <string name="title_activity_principal">MainActivity</string>
     <string name="title_pontos">Pontos</string>
     <string name="title_perfil">Perfil</string>
+    <string name="title_dashboard">Dashboard</string>
     <string name="preencha_campos">Preencha todos os campos!</string>
     <string name="erro_usuario">Erro de usuario e/ou senha!</string>
     <string name="erro_senha">Senha está errada!</string>

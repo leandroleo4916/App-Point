@@ -9,6 +9,7 @@ data class EmployeeEntity(
     val horario2: String,
     val horario3: String,
     val horario4: String,
+    val workload: String,
     val nameEmployee: String,
     val cargoEmployee: String,
     val emailEmployee: String,

@@ -9,7 +9,7 @@
     android:layout_marginTop="4dp"
     android:elevation="10dp"
     android:background="@drawable/back_toolbar"
-    android:id="@+id/toolbar_points"
+    android:id="@+id/toolbar_employee"
     android:layout_height="80dp">
 
     <de.hdodenhof.circleimageview.CircleImageView

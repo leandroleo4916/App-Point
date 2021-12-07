@@ -20,17 +20,17 @@ import com.example.app_point.activitys.ui.profile.ProfileFragment
 import com.example.app_point.activitys.ui.register.RegisterFragment
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
-import com.example.app_point.interfaces.IBusinessUser
 import com.example.app_point.interfaces.IHideNavView
 import com.example.app_point.interfaces.ILogoutApp
+import com.example.app_point.interfaces.ItemClickOpenRegister
 import com.example.app_point.interfaces.ItemEmployee
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import java.lang.Float.max
 import java.lang.Float.min
 
-class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IHideNavView {
+class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IHideNavView,
+    ItemClickOpenRegister {
 
     private lateinit var navView: BottomNavigationView
 
@@ -41,7 +41,6 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
         navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
-
     }
 
     override fun hideNavView(value: Boolean) {
@@ -55,7 +54,7 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
 
     override fun openFragmentProfile(employee: EmployeeEntity) {
 
-        navView.selectedItemId = R.id.navigation_profile
+        //navView.selectedItemId = R.id.navigation_profile
         val args = Bundle()
         args.putSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
 
@@ -80,6 +79,21 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
         val fragmentHome = HomeFragment.newInstance()
         val fragment = RegisterFragment.newInstance()
         fragment.arguments = args
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container_register, fragment, "register")
+            .addToBackStack(null)
+            .detach(fragmentHome)
+            .commit()
+    }
+
+
+    override fun openFragmentRegister() {
+        navView.selectedItemId = R.id.navigation_register
+
+        val fragmentHome = HomeFragment.newInstance()
+        val fragment = RegisterFragment.newInstance()
 
         supportFragmentManager
             .beginTransaction()

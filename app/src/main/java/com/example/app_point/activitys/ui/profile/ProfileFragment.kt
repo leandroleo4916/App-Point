@@ -86,9 +86,6 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.image_back_perfil.setOnClickListener {
             activity?.onBackPressed()
         }
-        binding.edit_employee.setOnClickListener{
-            editEmployee(binding.text_name_employee.text.toString())
-        }
         binding.search.setOnClickListener{
             dialogListEmployee()
         }

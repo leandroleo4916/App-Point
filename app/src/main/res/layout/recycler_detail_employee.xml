@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:elevation="10dp"
+    android:background="@drawable/back_toolbar"
+    android:id="@+id/toolbar_employee"
+    android:layout_height="100dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/icon_image_perfil"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/back_fundo_photo"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/image_toolbar_hrs_fix1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:indeterminate="false"
+        android:max="220"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_hrs_fix"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/icon_image_perfil"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ProgressBar
+        android:id="@+id/image_toolbar_hrs"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="false"
+        android:max="220"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_hrs"
+        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintVertical_bias="0.466"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_hours_extras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textStyle="bold"
+        android:textColor="@color/letras"
+        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs"
+        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_fix1" />
+
+    <ProgressBar
+        android:id="@+id/image_toolbar_hrs_extras"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="24dp"
+        android:indeterminate="false"
+        android:max="220"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_hrs_fix"
+        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintStart_toEndOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintVertical_bias="0.433"
+        tools:ignore="MissingConstraints" />
+
+    <ProgressBar
+        android:id="@+id/image_toolbar_hrs_value"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="false"
+        android:max="220"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_hrs"
+        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_extras"
+        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_extras"
+        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_extras"
+        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_extras"
+        app:layout_constraintVertical_bias="0.466"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_hours_feitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textStyle="bold"
+        android:textColor="@color/letras"
+        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_value"
+        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_value"
+        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_value"
+        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_value" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

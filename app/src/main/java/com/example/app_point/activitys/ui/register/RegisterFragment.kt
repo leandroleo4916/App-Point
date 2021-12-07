@@ -24,7 +24,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.business.CalculateHours
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.HoursEntity
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
@@ -40,6 +42,7 @@ class RegisterFragment : Fragment() {
     private val mBusinessEmployee: BusinessEmployee by inject()
     private val mToByteArray: ConverterPhoto by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
+    private val calculateHours: CalculateHours by inject()
     private val permissionCode = 1000
     private val imageCaptureCode = 1001
     private var imageUri: Uri? = null
@@ -243,6 +246,7 @@ class RegisterFragment : Fragment() {
         val hora2 = binding.horario2.text.toString()
         val hora3 = binding.horario3.text.toString()
         val hora4 = binding.horario4.text.toString()
+        val workload = calculateHours.calculateHoursExtras(HoursEntity(hora1, hora2, hora3, hora4))
         val name = binding.edittext_username.text.toString()
         val email = binding.edittext_email.text.toString()
         val cargo = binding.edittext_cargo.text.toString()
@@ -262,7 +266,7 @@ class RegisterFragment : Fragment() {
             admission.isEmpty() -> binding.text_admissao.error = getString(R.string.digite_admissao)
             birth.isEmpty() -> binding.text_aniversario.error = getString(R.string.digite_aniversario)
 
-            else -> setEmployee(EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, name, cargo,
+            else -> setEmployee(EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, workload, name, cargo,
                 email, phone, admission, birth))
         }
     }

@@ -21,11 +21,12 @@ import com.example.app_point.interfaces.*
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
+import com.example.app_point.utils.ConverterPhoto
+import com.example.app_point.utils.GetColor
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlinx.android.synthetic.main.fragment_profile.view.*
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEmployeeHome {
@@ -33,10 +34,13 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
     private lateinit var listener: ItemEmployee
     private lateinit var hideNav: IHideNavView
     private lateinit var logoutApp: ILogoutApp
+    private lateinit var itemClickOpenRegister: ItemClickOpenRegister
     private val pointAdapter: PointsAdapter by inject()
     private val listEmployee: BusinessEmployee by inject()
+    private val converterPhoto: ConverterPhoto by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val businessPoints: BusinessPoints by inject()
+    private val color: GetColor by inject()
     private val securityPreferences: SecurityPreferences by inject()
     private lateinit var dataBase: DataBaseEmployee
     private lateinit var repositoryPoint: RepositoryPoint
@@ -56,7 +60,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         repositoryPoint = RepositoryPoint(dataBase)
         repositoryEmployee = RepositoryEmployee(dataBase)
         homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee)
-        employeeAdapter = EmployeeAdapterHome(context, this)
+        employeeAdapter = EmployeeAdapterHome(this, color, converterPhoto)
 
         recyclerPoints()
         recyclerEmployee()
@@ -64,12 +68,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         salutation()
         observe()
         listener()
-        showNavView(binding)
+        showNavView()
 
         return binding
     }
 
-    private fun showNavView(binding: View) {
+    private fun showNavView() {
 
         var isShow = true
         var scrollRange = -1
@@ -93,6 +97,18 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
     private fun listener() {
         binding.image_add_ponto.setOnClickListener { dialogPoint() }
         binding.logout_app.setOnClickListener { dialogLogout() }
+        binding.textView_add_employee.setOnClickListener {
+            if (context is ItemClickOpenRegister) {
+                itemClickOpenRegister = context as ItemClickOpenRegister
+                itemClickOpenRegister.openFragmentRegister()
+            }
+        }
+        binding.imageView_add_employee.setOnClickListener {
+            if (context is ItemClickOpenRegister) {
+                itemClickOpenRegister = context as ItemClickOpenRegister
+                itemClickOpenRegister.openFragmentRegister()
+            }
+        }
     }
 
     private fun recyclerPoints() {
@@ -127,33 +143,48 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
 
     private fun searchPointsAndEmployee() {
         homeViewModel.getFullPoints("")
+        binding.progress.visibility = View.VISIBLE
+        binding.textView_add_points.visibility = View.GONE
+
         homeViewModel.getFullEmployee()
-        binding.progress.visibility = View.GONE
+        binding.imageView_add_employee.visibility = View.GONE
+        binding.textView_add_employee.visibility = View.GONE
+        binding.progress_add_employee.visibility = View.VISIBLE
     }
 
     private fun observe() {
-
         homeViewModel.pointsList.observe(viewLifecycleOwner, {
             when (it.size) {
-                0 -> showSnackBar(R.string.precisa_add_funcionarios)
-                else -> pointAdapter.updateFullPoints(it)
+                0 -> {
+                    binding.progress.visibility = View.GONE
+                    binding.textView_add_points.visibility = View.VISIBLE
+                }
+                else -> {
+                    pointAdapter.updateFullPoints(it)
+                    binding.progress.visibility = View.GONE
+                }
             }
         })
-
         homeViewModel.employeeList.observe(viewLifecycleOwner, {
             when (it.size) {
-                0 -> showSnackBar(R.string.precisa_add_funcionarios)
-                else -> employeeAdapter.updateEmployee(it)
+                0 -> {
+                    binding.progress_add_employee.visibility = View.GONE
+                    binding.imageView_add_employee.visibility = View.VISIBLE
+                    binding.textView_add_employee.visibility = View.VISIBLE
+                }
+                else -> {
+                    employeeAdapter.updateEmployee(it)
+                    binding.progress_add_employee.visibility = View.GONE
+                }
             }
         })
     }
 
     private fun dialogLogout() {
-        val alertDialog = createDialog("Deseja sair do App?")
 
+        val alertDialog = createDialog("Deseja sair do App?")
         alertDialog?.setPositiveButton("Sim") { _, _ ->
             securityPreferences.removeString()
-
             if (context is ILogoutApp) { logoutApp = context as ILogoutApp }
             logoutApp.logoutApp()
         }

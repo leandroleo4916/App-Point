@@ -60,10 +60,10 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         val recycler = binding.recycler_employee
         recycler.layoutManager = LinearLayoutManager(context)
 
-        if (context is ItemEmployee) { itemEmployee = context as ItemEmployee
-        } else { throw ClassCastException("$context must implemented") }
+        if (context is ItemEmployee) { itemEmployee = context as ItemEmployee }
 
-        employeeAdapter = EmployeeAdapter(repositoryPoint, this, itemEmployee, this, context)
+        employeeAdapter = EmployeeAdapter(repositoryPoint, this, itemEmployee,
+            this, context)
         recycler.adapter = employeeAdapter
     }
 

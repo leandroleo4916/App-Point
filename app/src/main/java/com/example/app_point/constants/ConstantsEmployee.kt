@@ -13,10 +13,11 @@ class ConstantsEmployee private constructor(){
             const val PHONE = "telefone"
             const val ADMISSION = "admission"
             const val ANIVERSARIO = "aniversario"
-            const val HOURARIO1 = "hourario1"
-            const val HOURARIO2 = "hourario2"
-            const val HOURARIO3 = "hourario3"
-            const val HOURARIO4 = "hourario4"
+            const val HORARIO1 = "hourario1"
+            const val HORARIO2 = "hourario2"
+            const val HORARIO3 = "hourario3"
+            const val HORARIO4 = "hourario4"
+            const val WORKLOAD = "workload"
         }
     }
 }

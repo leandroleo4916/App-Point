@@ -14,14 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
+import com.example.app_point.interfaces.IHideNavView
+import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_points.*
 import kotlinx.android.synthetic.main.fragment_points.view.*
 import org.koin.android.ext.android.inject
 
 class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
+    private lateinit var hideNav: IHideNavView
     private val mPointsAdapter: PointsAdapter by inject()
     private val mListEmployee: BusinessEmployee by inject()
     private val repository: RepositoryPoint by inject()
@@ -37,8 +40,30 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         searchPoints()
         listener()
         observe()
+        showNavView(binding)
 
         return binding
+    }
+
+    private fun showNavView(binding: View) {
+
+        var isShow = true
+        var scrollRange = -1
+        val appBar = binding.appbar
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { barLayout, verticalOffset ->
+            if (scrollRange == -1){
+                scrollRange = barLayout?.totalScrollRange!!
+            }
+            if (scrollRange + verticalOffset == 0){
+                if (context is ItemEmployee) { hideNav = context as IHideNavView }
+                hideNav.hideNavView(false)
+                isShow = true
+            } else if (isShow){
+                if (context is ItemEmployee) { hideNav = context as IHideNavView }
+                hideNav.hideNavView(true)
+                isShow = false
+            }
+        })
     }
 
     private fun recycler() {
