@@ -11,6 +11,7 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.repository.RepositoryPoint
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kotlinx.android.synthetic.main.fragment_detail.view.image_toolbar_hrs
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject

@@ -192,9 +192,8 @@ class RegisterFragment : Fragment() {
         return true
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray,
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             permissionCode -> {
@@ -246,7 +245,7 @@ class RegisterFragment : Fragment() {
         val hora2 = binding.horario2.text.toString()
         val hora3 = binding.horario3.text.toString()
         val hora4 = binding.horario4.text.toString()
-        val workload = calculateHours.calculateHoursExtras(HoursEntity(hora1, hora2, hora3, hora4))
+        val workload = calculateHours.calculateTime(HoursEntity(hora1, hora2, hora3, hora4))
         val name = binding.edittext_username.text.toString()
         val email = binding.edittext_email.text.toString()
         val cargo = binding.edittext_cargo.text.toString()
@@ -275,14 +274,14 @@ class RegisterFragment : Fragment() {
         when(mBusinessEmployee.registerEmployee(employee)){
             "salvo" -> {
                 toast(R.string.adicionado_sucesso)
-                openFragmentProfile(employee)
+                //openFragmentProfile(employee)
             }
             "não salvo" -> {
                 toast(R.string.nao_foi_possivel_cadastrar)
             }
             "editado" -> {
                 toast(R.string.editado_sucesso)
-                openFragmentProfile(employee)
+                //openFragmentProfile(employee)
             }
             "não editado" -> {
                 toast(R.string.nao_foi_possivel_editar)

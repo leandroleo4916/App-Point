@@ -6,6 +6,7 @@ class ConstantsEmployee private constructor(){
         const val TABLE_NAME = "employee"
         object COLUMNS {
             const val ID = "id"
+            const val ACTIVE = "active"
             const val PHOTO = "photo"
             const val NAME = "name"
             const val CARGO = "cargo"

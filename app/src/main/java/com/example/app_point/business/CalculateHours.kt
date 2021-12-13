@@ -1,9 +1,6 @@
 package com.example.app_point.business
 
-import com.example.app_point.entity.EntityExtra
-import com.example.app_point.entity.HoursEntity
-import com.example.app_point.entity.PointsEntity
-import com.example.app_point.entity.PointsHours
+import com.example.app_point.entity.*
 import kotlin.collections.ArrayList
 
 class CalculateHours {
@@ -50,20 +47,45 @@ class CalculateHours {
         }else {
             val ex = convertMinutesInHours(extra)
             val hr = convertMinutesInHours(horas)
-            EntityExtra(ex[0], ex[1], hr[0], hr[1])
+            EntityExtra(ex.hour, ex.minute, hr.hour, hr.minute)
         }
     }
 
-    fun calculateHoursExtras(points: HoursEntity): String {
+    fun calculateHoursExtras(time: String?, points: HoursEntity): String {
 
         val hour1 = points.hora1?.let { converterHoursInMinutes(it) }
-        val hour2 = points.hora1?.let { converterHoursInMinutes(it) }
-        val hour3 = points.hora1?.let { converterHoursInMinutes(it) }
-        val hour4 = points.hora1?.let { converterHoursInMinutes(it) }
-        val total = hour1!! + hour2!! + hour3!! + hour4!!
+        val hour2 = points.hora2?.let { converterHoursInMinutes(it) }
+        val hour3 = points.hora3?.let { converterHoursInMinutes(it) }
+        val hour4 = points.hora4?.let { converterHoursInMinutes(it) }
+        val workTime = time?.let { converterHoursInMinutes(it) }
+        val total = ((hour2!! - hour1!!) + (hour4!! - hour3!!)) - workTime!!
 
         val ret = convertMinutesInHours(total)
-        return "${ret[0]}:${ret[1]}"
+        return formatHour(ret)
+    }
+
+    fun calculateTime(points: HoursEntity): String {
+
+        val hour1 = points.hora1?.let { converterHoursInMinutes(it) }
+        val hour2 = points.hora2?.let { converterHoursInMinutes(it) }
+        val hour3 = points.hora3?.let { converterHoursInMinutes(it) }
+        val hour4 = points.hora4?.let { converterHoursInMinutes(it) }
+        val total = (hour2!! - hour1!!) + (hour4!! - hour3!!)
+
+        val ret = convertMinutesInHours(total)
+        return formatHour(ret)
+    }
+
+    private fun formatHour(ret: EntityHourAndMinute): String{
+        return if (ret.hour < 10 && ret.minute < 10){
+            "0${ret.hour}:0${ret.minute}"
+        }else if(ret.hour < 10 && ret.minute >= 10){
+            "0${ret.hour}:${ret.minute}"
+        }else if(ret.hour >= 10 && ret.minute < 10){
+            "${ret.hour}:0${ret.minute}"
+        }else{
+            "${ret.hour}:${ret.minute}"
+        }
     }
 
     private fun converterHoursInMinutes(hour: String): Int{
@@ -76,14 +98,14 @@ class CalculateHours {
         }
     }
 
-    private fun convertMinutesInHours(minutes: Int): ArrayList<Int>{
-        val array: ArrayList<Int> = arrayListOf()
+    private fun convertMinutesInHours(minutes: Int): EntityHourAndMinute{
+        var min = minutes
         var hour = 0
-        while (minutes >= 60){
-            minutes - 60
+
+        while (min >= 60){
+            min -= 60
             hour++
         }
-        array.add(hour, minutes)
-        return array
+        return EntityHourAndMinute(hour, min)
     }
 }

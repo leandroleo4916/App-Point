@@ -10,24 +10,24 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
 
     companion object {
         private const val DATA_NAME: String = "employee.db"
-        private const val DATA_VERSION: Int = 2
+        private const val DATA_VERSION: Int = 3
     }
 
     override fun onOpen(db: SQLiteDatabase) {
         super.onOpen(db)
-        if (!db.isReadOnly) {
-            db.execSQL("PRAGMA foreign_key=ON;")
-        }
+        if (!db.isReadOnly) { db.execSQL("PRAGMA foreign_key=ON;") }
     }
 
     private val createTableEmployee = """ CREATE TABLE 
             ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.ID} integer primary key autoincrement ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE} integer ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO} blob ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4} text ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL} text ,
@@ -43,6 +43,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsPoint.POINT.COLUMNS.HOUR2} text ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR3} text ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR4} text ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUREXTRA} text ,
             ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text not null ,
             FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.EMPLOYEE}) 
                 REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}

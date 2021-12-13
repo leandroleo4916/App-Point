@@ -6,4 +6,5 @@ interface OnItemClickRecycler {
     fun clickBack(name: String, date: String, position: Int)
     fun clickHour(name: String, date: String, positionHour: Int, hour: String, position: Int)
     fun clickImage(image: ByteArray, name: String)
+    fun employeeRemoved()
 }

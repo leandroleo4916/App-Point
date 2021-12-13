@@ -27,7 +27,7 @@ val repositoryModule = module { single { RepositoryFirebase(get()) } }
 val businessModule = module { factory { BusinessEmployee(get()) } }
 val pointsModule = module { factory { BusinessPoints(get()) } }
 val userModule = module { factory { BusinessUser(get(), get()) } }
-val employeeModule = module { viewModel { EmployeeViewModel(get(), get()) } }
+val employeeModule = module { viewModel { EmployeeViewModel(get(), get(), get()) } }
 val viewModelDashboardModule = module { viewModel {
     DashboardViewModel(get(), get(), get(), get(), get(), get()) } }
 val adapterModule = module { factory { AdapterPoints(get()) } }

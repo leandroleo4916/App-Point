@@ -6,7 +6,10 @@ import com.example.app_point.entity.PointsHours
 
 interface RepositoryData {
     fun setPoint(employee: String, date: String, hour: String): Boolean
+    fun setPointExtra(employee: String, date: String, hour: String): Boolean
+    fun setEditExtra(employee: String, date: String, hour: String): Boolean
     fun selectFullPoints(nome: String, date: String): PointsEntity?
+    fun selectHourExtra(nome: String, date: String): String?
     fun fullPoints(): ArrayList<PointsEntity?>
     fun fullPointsToName(nome: String, date: String): ArrayList<PointsEntity?>
     fun fullPointsById(id: Int, date: String): ArrayList<PointsEntity?>

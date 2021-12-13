@@ -126,7 +126,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
 
         val dialog = createDialog("Deseja remover $name? Confirme a senha!")
         dialog?.setView(inflate)
-        dialog?.setPositiveButton(R.string.hoje.toString()) { _, _ ->
+        dialog?.setPositiveButton(R.string.remover) { _, _ ->
             val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
             if (password == textPassword.text.toString()){
                 removeEmployee(id, name, position)
@@ -151,10 +151,8 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         reactBackAndNext(name, date, position, -1)
     }
 
-    override fun clickHour(
-        name: String, date: String, positionHour: Int,
-        hour: String, position: Int,
-    ) {
+    override fun clickHour (name: String, date: String, positionHour: Int, hour: String,
+                            position: Int) {
 
         val inflate = layoutInflater.inflate(R.layout.dialog_add_hour_manual, null)
         val clock = inflate.findViewById<TextView>(R.id.textView_hour)
@@ -166,15 +164,13 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         dialog?.setView(inflate)
         dialog?.setPositiveButton(R.string.editar) { _, _ ->
 
-            if (date == R.string.hoje.toString()) {
+            if (date == "Hoje") {
                 val dateToday = captureDateCurrent.captureDateCurrent()
                 editPoint(name, dateToday, positionHour, clock.text.toString(), position)
             }
             else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
         }
-        dialog?.setNegativeButton(R.string.cancelar) { _, _ ->
-            showSnackBar(R.string.cancelado)
-        }
+        dialog?.setNegativeButton(R.string.cancelar) { _, _ -> showSnackBar(R.string.cancelado) }
         dialog?.create()?.show()
 
         clock.setOnClickListener {
@@ -201,20 +197,20 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         dialog?.create()?.show()
     }
 
-    private fun editPoint(
-        name: String,
-        date: String,
-        positionHour: Int,
-        hour: String,
-        position: Int,
-    ){
+    override fun employeeRemoved() {
+        showSnackBar(R.string.precisa_add_funcionarios)
+    }
+
+    private fun editPoint (name: String, date: String, positionHour: Int, hour: String,
+                           position: Int){
 
         when (viewModelEmployee.editPoint(name, date, positionHour, hour)){
             true -> {
                 showSnackBar(R.string.pontos_editado)
                 employeeAdapter.updateHour(positionHour, hour, position)
+                viewModelEmployee.consultPointEdit(name, date)
             }
-            else -> showSnackBar(R.string.nao_foi_possivel_editar)
+            else -> showSnackBar(R.string.nao_possivel_add_ponto)
         }
     }
 

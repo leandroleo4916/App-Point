@@ -35,7 +35,7 @@ class DashboardViewModel (private var points: RepositoryPoint,
         for (i in employee){
             val points = consultPoint(i.nameEmployee, date)
             val hours = calculateHours.calculationHours(PointsHours(
-                date, i.horario1, i.horario2, i.horario3, i.horario4), points)
+                date, i.horario1, i.horario2, i.horario3, i.horario4, "0"), points)
             listEmployeeAndHours.add(EntityDashboard(i.photo, hours.extraHour, hours.horasHour))
         }
         adapterRanking(listEmployeeAndHours)

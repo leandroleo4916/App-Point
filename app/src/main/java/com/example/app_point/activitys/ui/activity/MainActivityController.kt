@@ -124,6 +124,18 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
         offsetAnimator.setFloatValues(navView.translationY, targetTranslation)
         offsetAnimator.start()
     }
+
+    override fun snackBar(child: View, snackBar: Snackbar.SnackbarLayout) {
+
+        if (snackBar.layoutParams is CoordinatorLayout.LayoutParams) {
+            val params = snackBar.layoutParams as CoordinatorLayout.LayoutParams
+
+            params.anchorId = child.id
+            params.anchorGravity = Gravity.TOP
+            params.gravity = Gravity.TOP
+            snackBar.layoutParams = params
+        }
+    }
 }
 
 class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) :

@@ -113,13 +113,15 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
 
     private fun recyclerPoints() {
         val recycler = binding.recycler_points
-        recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recycler.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.adapter = pointAdapter
     }
 
     private fun recyclerEmployee() {
         val recycler = binding.recycler_employee_home
-        recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recycler.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recycler.adapter = employeeAdapter
     }
 
@@ -143,13 +145,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
 
     private fun searchPointsAndEmployee() {
         homeViewModel.getFullPoints("")
-        binding.progress.visibility = View.VISIBLE
         binding.textView_add_points.visibility = View.GONE
 
         homeViewModel.getFullEmployee()
         binding.imageView_add_employee.visibility = View.GONE
         binding.textView_add_employee.visibility = View.GONE
-        binding.progress_add_employee.visibility = View.VISIBLE
     }
 
     private fun observe() {
@@ -162,6 +162,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
                 else -> {
                     pointAdapter.updateFullPoints(it)
                     binding.progress.visibility = View.GONE
+                    binding.textView_add_points.visibility = View.GONE
                 }
             }
         })
@@ -175,6 +176,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
                 else -> {
                     employeeAdapter.updateEmployee(it)
                     binding.progress_add_employee.visibility = View.GONE
+                    binding.imageView_add_employee.visibility = View.GONE
+                    binding.textView_add_employee.visibility = View.GONE
                 }
             }
         })
@@ -182,7 +185,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
 
     private fun dialogLogout() {
 
-        val alertDialog = createDialog("Deseja sair do App?")
+        val alertDialog = createDialog(getString(R.string.sair_app))
         alertDialog?.setPositiveButton("Sim") { _, _ ->
             securityPreferences.removeString()
             if (context is ILogoutApp) { logoutApp = context as ILogoutApp }

@@ -309,7 +309,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="Lista de horas"
+        android:text="Horas extras + Horas feitas"
         android:textColor="@color/letras"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
@@ -332,7 +332,7 @@
         tools:listitem="@layout/recycler_detail_employee" />
 
     <ProgressBar
-        android:id="@+id/progress_points"
+        android:id="@+id/progress_detail"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:indeterminateTint="@color/fundoBlue"

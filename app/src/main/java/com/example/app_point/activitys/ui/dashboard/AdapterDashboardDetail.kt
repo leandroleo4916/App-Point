@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.EntityDashboard
 import com.example.app_point.utils.ConverterPhoto
+import kotlinx.android.synthetic.main.fragment_detail.view.*
 
 class AdapterDashboardDetail (private val converterPhoto: ConverterPhoto) :
     RecyclerView.Adapter<AdapterDashboardDetail.ViewHolderDetail>() {
@@ -43,6 +45,7 @@ class AdapterDashboardDetail (private val converterPhoto: ConverterPhoto) :
             itemPhoto.setImageBitmap(photo)
             itemHoursExtras.text = employee.extraHour.toString()
             itemHoursDone.text = employee.hourDone.toString()
+            itemView.progress_detail.visibility = View.GONE
         }
 
         override fun onClick(view: View?) {
