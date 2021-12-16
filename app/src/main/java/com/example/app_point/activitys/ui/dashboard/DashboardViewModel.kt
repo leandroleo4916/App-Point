@@ -3,7 +3,7 @@ package com.example.app_point.activitys.ui.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.app_point.business.CalculateHours
+import com.example.app_point.utils.CalculateHours
 import com.example.app_point.entity.*
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
@@ -34,8 +34,7 @@ class DashboardViewModel (private var points: RepositoryPoint,
 
         for (i in employee){
             val points = consultPoint(i.nameEmployee, date)
-            val hours = calculateHours.calculationHours(PointsHours(
-                date, i.horario1, i.horario2, i.horario3, i.horario4, "0"), points)
+            val hours = calculateHours.calculationHours(i.workload, points)
             listEmployeeAndHours.add(EntityDashboard(i.photo, hours.extraHour, hours.horasHour))
         }
         adapterRanking(listEmployeeAndHours)

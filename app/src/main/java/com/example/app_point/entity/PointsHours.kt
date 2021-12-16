@@ -6,5 +6,5 @@ data class PointsHours(
     val horario2: String?,
     val horario3: String?,
     val horario4: String?,
-    val hourExtra: String?
+    val hourExtra: Int?
 )

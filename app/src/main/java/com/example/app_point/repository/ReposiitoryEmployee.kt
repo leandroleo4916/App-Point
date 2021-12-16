@@ -6,21 +6,24 @@ import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.Employee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeNameAndPhoto
 
 class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
-    fun conditionEmployee(employee: EmployeeEntity): String{
-        return if (employee.id == 0){ getEmployee(employee) }
-        else{ editEmployee(employee) }
+    fun conditionEmployee(employee: EmployeeEntity): String {
+        return if (employee.id == 0) { saveEmployee(employee) }
+        else { editEmployee(employee) }
     }
 
-    private fun getEmployee(employee: EmployeeEntity): String {
+    private fun saveEmployee(employee: EmployeeEntity): String {
 
-        return try{
+        return try {
             val db = mDataBaseEmployee.writableDatabase
             val insertValues = ContentValues()
             insertValues.run {
                 put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE, employee.active)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION, employee.vacation)
                 put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1, employee.horario1)
                 put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2, employee.horario2)
                 put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3, employee.horario3)
@@ -37,8 +40,41 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             db.insert(ConstantsEmployee.EMPLOYEE.TABLE_NAME, null, insertValues)
             "salvo"
 
-        } catch (e: Exception){
+        } catch (e: Exception) {
             "não salvo"
+        }
+    }
+
+    private fun editEmployee(employee: EmployeeEntity): String {
+
+        return try {
+            val db = mDataBaseEmployee.writableDatabase
+            val projection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
+            val args = arrayOf(employee.id.toString())
+
+            val contentValues = ContentValues()
+            contentValues.run {
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, employee.id)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE, employee.active)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION, employee.vacation)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1, employee.horario1)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2, employee.horario2)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3, employee.horario3)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4, employee.horario4)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
+                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
+            }
+
+            db.update(ConstantsEmployee.EMPLOYEE.TABLE_NAME, contentValues, projection, args)
+            "editado"
+
+        } catch (e: Exception) {
+            "não editado"
         }
     }
 
@@ -84,6 +120,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2,
@@ -111,17 +149,21 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 while (cursor.moveToNext()) {
                     val id = cursor.getInt(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                    val active = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE))
+                    val vacation = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION))
                     val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
-                    val hora1 = cursor.getString(cursor.getColumnIndex(
+                    val hora1 = cursor.getInt(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1))
-                    val hora2 = cursor.getString(cursor.getColumnIndex(
+                    val hora2 = cursor.getInt(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2))
-                    val hora3 = cursor.getString(cursor.getColumnIndex(
+                    val hora3 = cursor.getInt(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3))
-                    val hora4 = cursor.getString(cursor.getColumnIndex(
+                    val hora4 = cursor.getInt(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4))
-                    val work = cursor.getString(cursor.getColumnIndex(
+                    val work = cursor.getInt(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD))
                     val name = cursor.getString(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
@@ -136,9 +178,49 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                     val niver = cursor.getString(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                    listData.add(
-                        EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, work, name, email,
-                            cargo, phone, admissao, niver)
+                    listData.add(EmployeeEntity(id, active, vacation, photo, hora1, hora2, hora3,
+                        hora4, work, name, email, cargo, phone, admissao, niver)
+                    )
+                }
+            }
+            cursor?.close()
+            return listData
+
+        } catch (e: Exception) {
+            return listData
+        }
+    }
+
+    fun consultEmployeeNameAndPhoto(): ArrayList<EmployeeNameAndPhoto> {
+
+        val listData: ArrayList<EmployeeNameAndPhoto> = arrayListOf()
+        try {
+            val db = mDataBaseEmployee.readableDatabase
+            val projection = arrayOf(
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.NAME)
+
+            val cursor = db.query(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val id = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                    val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+                    val name = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
+
+                    listData.add(EmployeeNameAndPhoto(id, photo,  name)
                     )
                 }
             }
@@ -191,7 +273,9 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             cursor?.close()
             return listData
 
-        } catch (e: Exception) { return listData }
+        } catch (e: Exception) {
+            return listData
+        }
     }
 
     fun consultEmployee(nome: String): EmployeeEntity {
@@ -201,6 +285,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2,
@@ -228,35 +314,39 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
-                    val idEmployee = cursor.getInt(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
-                    val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
-                    val hora1 = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1))
-                    val hora2 = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2))
-                    val hora3 = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3))
-                    val hora4 = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4))
-                    val work = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD))
-                    val name = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
-                    val email = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
-                    val cargo = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
-                    val phone = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
-                    val admissao = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
-                    val niver = cursor.getString(cursor.getColumnIndex(
-                        ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
+                val id = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                val active = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE))
+                val vacation = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION))
+                val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
+                val hora1 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1))
+                val hora2 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2))
+                val hora3 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3))
+                val hora4 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4))
+                val work = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD))
+                val name = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
+                val email = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL))
+                val cargo = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO))
+                val phone = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE))
+                val admissao = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
+                val niver = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                    listData = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, work,
-                        name, email, cargo, phone, admissao, niver)
+                listData = EmployeeEntity(id, active, vacation, photo, hora1, hora2, hora3,
+                    hora4, work, name, email, cargo, phone, admissao, niver)
 
             }
             cursor?.close()
@@ -274,6 +364,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2,
@@ -290,30 +382,28 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             val args = arrayOf(id.toString())
 
             val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                selection,
-                args,
-                null,
-                null,
-                null
-            )
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME, projection,
+                selection, args, null, null, null)
 
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
                 val idEmployee = cursor.getInt(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+                val active = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE))
+                val vacation = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION))
                 val photo: ByteArray = cursor.getBlob(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO))
-                val hora1 = cursor.getString(cursor.getColumnIndex(
+                val hora1 = cursor.getInt(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1))
-                val hora2 = cursor.getString(cursor.getColumnIndex(
+                val hora2 = cursor.getInt(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2))
-                val hora3 = cursor.getString(cursor.getColumnIndex(
+                val hora3 = cursor.getInt(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3))
-                val hora4 = cursor.getString(cursor.getColumnIndex(
+                val hora4 = cursor.getInt(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4))
-                val work = cursor.getString(cursor.getColumnIndex(
+                val work = cursor.getInt(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD))
                 val name = cursor.getString(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
@@ -328,8 +418,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 val niver = cursor.getString(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                employee = EmployeeEntity(idEmployee, photo, hora1, hora2, hora3, hora4, work,
-                    name, cargo, email, phone, admissao, niver)
+                employee = EmployeeEntity(idEmployee, active, vacation, photo, hora1, hora2, hora3,
+                    hora4, work, name, email, cargo, phone, admissao, niver)
 
             }
             cursor?.close()
@@ -340,40 +430,9 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         }
     }
 
-    private fun editEmployee(employee: EmployeeEntity): String {
-
-        return try{
-            val db = mDataBaseEmployee.writableDatabase
-            val projection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
-            val args = arrayOf(employee.id.toString())
-
-            val contentValues = ContentValues()
-            contentValues.run {
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ID, employee.id)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1, employee.horario1)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2, employee.horario2)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3, employee.horario3)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4, employee.horario4)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME, employee.nameEmployee)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO, employee.cargoEmployee)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL, employee.emailEmployee)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE, employee.phoneEmployee)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION, employee.admissaoEmployee)
-                put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
-            }
-
-            db.update(ConstantsEmployee.EMPLOYEE.TABLE_NAME, contentValues, projection, args)
-            "editado"
-
-        } catch (e: Exception){
-            "não editado"
-        }
-    }
-
     fun removeEmployee(id: Int): Boolean {
 
-        return try{
+        return try {
             val db = mDataBaseEmployee.writableDatabase
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
@@ -381,9 +440,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             db.delete(ConstantsEmployee.EMPLOYEE.TABLE_NAME, selection, args)
             true
 
-        } catch (e: Exception){
-            false
-        }
+        } catch (e: Exception) { false }
     }
 
     fun consultPhoto(nome: String): ByteArray? {
@@ -418,9 +475,9 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         }
     }
 
-    fun consultTime(name: String): String? {
+    fun consultTime(name: String): Int? {
 
-        return try {
+        try {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD)
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
@@ -432,14 +489,14 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             )
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
-                cursor.getString(cursor.getColumnIndex(
-                    ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD))
-
+                return cursor.getInt(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD))
             }
             cursor?.close()
-            null
+            return null
 
-        } catch (e: Exception) { null }
+        } catch (e: Exception) {
+            return null
+        }
     }
 
 }

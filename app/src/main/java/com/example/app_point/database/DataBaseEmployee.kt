@@ -10,7 +10,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
 
     companion object {
         private const val DATA_NAME: String = "employee.db"
-        private const val DATA_VERSION: Int = 3
+        private const val DATA_VERSION: Int = 4
     }
 
     override fun onOpen(db: SQLiteDatabase) {
@@ -22,12 +22,13 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsEmployee.EMPLOYEE.TABLE_NAME} (
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.ID} integer primary key autoincrement ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE} integer ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION} integer ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO} blob ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4} text ,
-            ${ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD} text ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1} integer ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2} integer ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3} integer ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4} integer ,
+            ${ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD} integer ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.NAME} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO} text ,
             ${ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL} text ,
@@ -39,11 +40,15 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsPoint.POINT.TABLE_NAME}(
             ${ConstantsPoint.POINT.COLUMNS.ID} integer primary key autoincrement ,
             ${ConstantsPoint.POINT.COLUMNS.DATE} text ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR1INT} integer ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR2INT} integer ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR3INT} integer ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUR4INT} integer ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR1} text ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR2} text ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR3} text ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR4} text ,
-            ${ConstantsPoint.POINT.COLUMNS.HOUREXTRA} text ,
+            ${ConstantsPoint.POINT.COLUMNS.HOUREXTRA} integer ,
             ${ConstantsPoint.POINT.COLUMNS.EMPLOYEE} text not null ,
             FOREIGN KEY (${ConstantsPoint.POINT.COLUMNS.EMPLOYEE}) 
                 REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}

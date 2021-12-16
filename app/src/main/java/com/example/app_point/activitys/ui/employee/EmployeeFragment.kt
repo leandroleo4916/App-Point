@@ -168,6 +168,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
                 val dateToday = captureDateCurrent.captureDateCurrent()
                 editPoint(name, dateToday, positionHour, clock.text.toString(), position)
             }
+
             else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
         }
         dialog?.setNegativeButton(R.string.cancelar) { _, _ -> showSnackBar(R.string.cancelado) }

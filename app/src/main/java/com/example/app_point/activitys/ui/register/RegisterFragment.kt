@@ -24,9 +24,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.business.CalculateHours
+import com.example.app_point.utils.CalculateHours
 import com.example.app_point.entity.EmployeeEntity
-import com.example.app_point.entity.HoursEntity
+import com.example.app_point.entity.HourEntityInt
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
@@ -57,13 +57,13 @@ class RegisterFragment : Fragment() {
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         val args = arguments?.let { it.getSerializable("id") as Int }
-        infoEmployee(args)
+        //infoEmployee(args)
         initDate()
         listener(args)
 
         return binding
     }
-
+    /*
     private fun infoEmployee(args: Int?) {
 
         if (args != null) {
@@ -85,7 +85,7 @@ class RegisterFragment : Fragment() {
                 buttom_register_employee.text = getString(R.string.editar)
             }
         }
-    }
+    }*/
 
     private fun listener(args: Int?) {
         binding.run {
@@ -241,11 +241,11 @@ class RegisterFragment : Fragment() {
 
         val image = binding.photo_employee
         val photo = mToByteArray.converterToByteArray(image)
-        val hora1 = binding.horario1.text.toString()
-        val hora2 = binding.horario2.text.toString()
-        val hora3 = binding.horario3.text.toString()
-        val hora4 = binding.horario4.text.toString()
-        val workload = calculateHours.calculateTime(HoursEntity(hora1, hora2, hora3, hora4))
+        val hora1 = calculateHours.converterHoursInMinutes(binding.horario1.text.toString())
+        val hora2 = calculateHours.converterHoursInMinutes(binding.horario2.text.toString())
+        val hora3 = calculateHours.converterHoursInMinutes(binding.horario3.text.toString())
+        val hora4 = calculateHours.converterHoursInMinutes(binding.horario4.text.toString())
+        val workload = calculateHours.calculateTimeEmployee(HourEntityInt(hora1, hora2, hora3, hora4))
         val name = binding.edittext_username.text.toString()
         val email = binding.edittext_email.text.toString()
         val cargo = binding.edittext_cargo.text.toString()
@@ -254,10 +254,6 @@ class RegisterFragment : Fragment() {
         val birth = binding.text_aniversario.text.toString()
 
         when {
-            hora1.isEmpty() -> binding.horario1.error = getString(R.string.horario_obrigatorio)
-            hora2.isEmpty() -> binding.horario2.error = getString(R.string.horario_obrigatorio)
-            hora3.isEmpty() -> binding.horario3.error = getString(R.string.horario_obrigatorio)
-            hora4.isEmpty() -> binding.horario4.error = getString(R.string.horario_obrigatorio)
             name.isEmpty() -> binding.edittext_username.error = getString(R.string.digite_nome)
             email.isEmpty() -> binding.edittext_email.error = getString(R.string.digite_email)
             cargo.isEmpty() -> binding.edittext_cargo.error = getString(R.string.digite_cargo)
@@ -265,8 +261,8 @@ class RegisterFragment : Fragment() {
             admission.isEmpty() -> binding.text_admissao.error = getString(R.string.digite_admissao)
             birth.isEmpty() -> binding.text_aniversario.error = getString(R.string.digite_aniversario)
 
-            else -> setEmployee(EmployeeEntity(id, photo, hora1, hora2, hora3, hora4, workload, name, cargo,
-                email, phone, admission, birth))
+            else -> setEmployee(EmployeeEntity(id, 0, 0, photo, hora1, hora2, hora3,
+                hora4, workload, name, cargo, email, phone, admission, birth))
         }
     }
 

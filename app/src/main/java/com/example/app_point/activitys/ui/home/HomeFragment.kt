@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +16,7 @@ import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapterHome
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.business.BusinessPoints
+import com.example.app_point.utils.CalculateHours
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.EmployeeEntity
@@ -38,8 +41,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
     private val pointAdapter: PointsAdapter by inject()
     private val listEmployee: BusinessEmployee by inject()
     private val converterPhoto: ConverterPhoto by inject()
+    private val converterHours: CalculateHours by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
-    private val businessPoints: BusinessPoints by inject()
     private val color: GetColor by inject()
     private val securityPreferences: SecurityPreferences by inject()
     private lateinit var dataBase: DataBaseEmployee
@@ -59,7 +62,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         dataBase = DataBaseEmployee(context)
         repositoryPoint = RepositoryPoint(dataBase)
         repositoryEmployee = RepositoryEmployee(dataBase)
-        homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee)
+        homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee, repositoryPoint,
+            converterHours)
         employeeAdapter = EmployeeAdapterHome(this, color, converterPhoto)
 
         recyclerPoints()
@@ -95,7 +99,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
     }
 
     private fun listener() {
-        binding.image_add_ponto.setOnClickListener { dialogPoint() }
+        binding.image_add_ponto.setOnClickListener { dialogRegisterPoint() }
         binding.logout_app.setOnClickListener { dialogLogout() }
         binding.textView_add_employee.setOnClickListener {
             if (context is ItemClickOpenRegister) {
@@ -202,7 +206,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         return builder
     }
 
-    private fun dialogPoint () {
+    private fun dialogRegisterPoint () {
 
         val hourCurrent = captureDateCurrent.captureHoraCurrent()
         val dateCurrent = captureDateCurrent.captureDateCurrent()
@@ -232,9 +236,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
     }
 
     private fun savePoint (itemSpinner: String, dateCurrent: String, horaCurrent: String){
-
         when{
-            businessPoints.setPoints(itemSpinner, dateCurrent, horaCurrent) -> {
+            homeViewModel.setPoints(itemSpinner, dateCurrent, horaCurrent) -> {
                 searchPointsAndEmployee()
                 showSnackBar(R.string.ponto_adicionado_sucesso)
             }

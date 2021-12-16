@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.ItemClickEmployeeHome
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.GetColor
@@ -19,7 +19,7 @@ class EmployeeAdapterHome (private val listener: ItemClickEmployeeHome,
                            private val converterPhoto: ConverterPhoto):
     RecyclerView.Adapter<EmployeeAdapterHome.EmployeeViewHolderHome>() {
 
-    private var listFullEmployee: ArrayList<EmployeeEntity> = arrayListOf()
+    private var listFullEmployee: ArrayList<EmployeeNameAndPhoto> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolderHome {
         val item = LayoutInflater.from(parent.context).inflate(
@@ -32,7 +32,7 @@ class EmployeeAdapterHome (private val listener: ItemClickEmployeeHome,
 
         val fullEmployee = listFullEmployee[position]
         val photoConvert = converterPhoto.converterToBitmap(fullEmployee.photo)
-        holder.bindNameAndPhoto(fullEmployee.nameEmployee, photoConvert, position)
+        holder.bindNameAndPhoto(fullEmployee.name, photoConvert, position)
     }
 
     inner class EmployeeViewHolderHome(itemView: View) : RecyclerView.ViewHolder(itemView),
@@ -56,7 +56,7 @@ class EmployeeAdapterHome (private val listener: ItemClickEmployeeHome,
 
         override fun onClick(view: View?) {
             val position = bindingAdapterPosition
-            when(view){ itemPhoto -> listener.openFragmentProfile(listFullEmployee[position]) }
+            //when(view){ itemPhoto -> listener.openFragmentProfile(listFullEmployee[position]) }
         }
     }
 
@@ -64,7 +64,7 @@ class EmployeeAdapterHome (private val listener: ItemClickEmployeeHome,
         return listFullEmployee.count()
     }
 
-    fun updateEmployee(list: ArrayList<EmployeeEntity>) {
+    fun updateEmployee(list: ArrayList<EmployeeNameAndPhoto>) {
         listFullEmployee = list
         notifyDataSetChanged()
     }
