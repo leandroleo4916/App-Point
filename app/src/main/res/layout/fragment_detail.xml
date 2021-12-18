@@ -79,13 +79,13 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/image_toolbar_hrs"
+        android:id="@+id/progress_total_funcionarios"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
         android:indeterminate="false"
-        android:max="10"
+        android:max="20"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs"
         app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_fix1"
@@ -124,13 +124,13 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/progress_interno_ferias"
+        android:id="@+id/progress_funcionarios_ferias"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
         android:indeterminate="false"
-        android:max="100"
+        android:max="20"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs"
         app:layout_constraintBottom_toBottomOf="@+id/progress_ferias"
@@ -144,7 +144,7 @@
         android:id="@+id/text_ferias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Func. Férias"
+        android:text="Férias"
         android:textColor="@color/letras"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/progress_ferias"
@@ -153,18 +153,18 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_funcionario_ferias"
+        android:id="@+id/text_funcionarios_ferias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:elevation="10dp"
         android:textColor="@color/letras"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_interno_ferias"
-        app:layout_constraintEnd_toEndOf="@+id/progress_interno_ferias"
-        app:layout_constraintStart_toStartOf="@+id/progress_interno_ferias"
-        app:layout_constraintTop_toTopOf="@+id/progress_interno_ferias"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_funcionarios_ferias"
+        app:layout_constraintEnd_toEndOf="@+id/progress_funcionarios_ferias"
+        app:layout_constraintStart_toStartOf="@+id/progress_funcionarios_ferias"
+        app:layout_constraintTop_toTopOf="@+id/progress_funcionarios_ferias"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
@@ -184,13 +184,13 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/image_toolbar_"
+        android:id="@+id/progress_funcionarios_ativos"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_centerInParent="true"
         android:indeterminate="false"
-        android:max="220"
+        android:max="20"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs"
         app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_fix2"
@@ -206,19 +206,19 @@
         android:text="0"
         android:elevation="10dp"
         android:textColor="@color/letras"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs"
-        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_total_funcionarios"
+        app:layout_constraintEnd_toEndOf="@+id/progress_total_funcionarios"
+        app:layout_constraintStart_toStartOf="@+id/progress_total_funcionarios"
+        app:layout_constraintTop_toTopOf="@+id/progress_total_funcionarios"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/text_hrs_extras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Horas Extras"
+        android:text="Ativos"
         android:textColor="@color/letras"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_fix2"
@@ -227,24 +227,24 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/edit_hrs_extras"
+        android:id="@+id/text_funcionarios_ativos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:elevation="10dp"
         android:textColor="@color/letras"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_"
-        app:layout_constraintTop_toTopOf="@+id/image_toolbar_"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_funcionarios_ativos"
+        app:layout_constraintEnd_toEndOf="@+id/progress_funcionarios_ativos"
+        app:layout_constraintStart_toStartOf="@+id/progress_funcionarios_ativos"
+        app:layout_constraintTop_toTopOf="@+id/progress_funcionarios_ativos"
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_ranking"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="155dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
@@ -259,7 +259,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
         android:text="Mais pontuais este mês"
         android:textColor="@color/letras"
         android:textSize="18sp"
@@ -267,11 +267,24 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar_ranking"
         tools:ignore="MissingConstraints" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/letrashint"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_ranking"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_ranking"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_ranking"
+        tools:ignore="MissingConstraints" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_ranking"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="18dp"
         tools:listitem="@layout/recycler_ranking"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_ranking"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_ranking"
@@ -296,12 +309,23 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/back_toolbar"
+        android:background="@drawable/back_radius_inferior_retas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_ranking"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/letrashint"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -322,7 +346,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

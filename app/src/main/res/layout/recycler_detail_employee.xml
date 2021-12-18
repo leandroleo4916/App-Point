@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:elevation="10dp"
-    android:background="@drawable/back_toolbar"
-    android:id="@+id/toolbar_employee"
-    android:layout_height="100dp">
+    android:background="@color/backfrag"
+    android:id="@+id/constraint_employee_detail"
+    android:layout_height="80dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/icon_image_perfil"
+        android:id="@+id/image_perfil_detail_dash"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
@@ -27,18 +27,18 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="30dp"
         android:indeterminate="false"
+        android:layout_marginStart="30dp"
         android:max="220"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs_fix"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/icon_image_perfil"
+        app:layout_constraintStart_toEndOf="@+id/image_perfil_detail_dash"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/image_toolbar_hrs"
+        android:id="@+id/progress_total_funcionarios"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="65dp"
         android:layout_height="65dp"
@@ -55,14 +55,14 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_hours_extras"
+        android:id="@+id/text_hours_extras_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:textStyle="bold"
         android:textColor="@color/letras"
         app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_fix1"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs"
+        app:layout_constraintEnd_toEndOf="@+id/progress_total_funcionarios"
         app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_fix1"
         app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_fix1" />
 
@@ -101,7 +101,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_hours_feitas"
+        android:id="@+id/text_hours_feitas_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -111,5 +111,17 @@
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_value"
         app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_value"
         app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_value" />
+
+    <Toolbar
+        android:id="@+id/toolbar_line_recycler_detail"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

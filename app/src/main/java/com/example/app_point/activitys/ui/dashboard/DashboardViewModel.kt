@@ -16,37 +16,64 @@ class DashboardViewModel (private var points: RepositoryPoint,
                           private val adapterDashboardDetail: AdapterDashboardDetail,
                           private val adapterDashboardRanking: AdapterDashboardRanking): ViewModel() {
 
+
+
     private val totalEmployeeList = MutableLiveData<Int>()
     val employeeTotal: LiveData<Int> = totalEmployeeList
 
     private val totalEmployeeVacation = MutableLiveData<Int>()
     val employeeVacation: LiveData<Int> = totalEmployeeVacation
 
-    private val pointsFullList = MutableLiveData<Int>()
-    val pointsList: LiveData<Int> = pointsFullList
+    private val totalEmployeeActive = MutableLiveData<Int>()
+    val employeeActive: LiveData<Int> = totalEmployeeActive
+
+    private val totalDetailEmployee = MutableLiveData<ArrayList<EntityDashboard>>()
+    val employeeDetail: LiveData<ArrayList<EntityDashboard>> = totalDetailEmployee
+
+    private val totalBestEmployee = MutableLiveData<ArrayList<EntityDashboard>>()
+    val employeeBest: LiveData<ArrayList<EntityDashboard>> = totalBestEmployee
 
     fun consultEmployeeAndPoints(){
 
-        val date = captureDateCurrent.captureDate()
         val employee = employee.consultFullEmployee()
-        val listEmployeeAndHours: ArrayList<EntityDashboard> = arrayListOf()
+        var dateFirst = captureDateCurrent.captureDateFirst()
+        val dateCurrent = captureDateCurrent.captureDateCurrent()
+        val dateTomorrow = captureDateCurrent.captureNextDate(dateCurrent)
+        val listEmployeeHoursExtraAndDone: ArrayList<EntityDashboard> = arrayListOf()
         val bestEmployee: ArrayList<EntityDashboard> = arrayListOf()
+        var vacation = 0
+        var active = 0
+        var hExtra = 0
+        var hDone = 0
 
         for (i in employee){
-            val points = consultPoint(i.nameEmployee, date)
-            val hours = calculateHours.calculationHours(i.workload, points)
-            listEmployeeAndHours.add(EntityDashboard(i.photo, hours.extraHour, hours.horasHour))
+
+            while (dateFirst != dateTomorrow){
+                val point = consultPoint(i.nameEmployee, dateFirst)
+                val hourDone = calculateHours.calculateHoursDone(point)
+                hExtra += when (point) {
+                    null -> 0
+                    else -> when(point.extra){
+                        null -> 0
+                        else -> point.extra
+                    } }
+                hDone += hourDone
+                dateFirst = captureDateCurrent.captureNextDate(dateFirst)
+            }
+            listEmployeeHoursExtraAndDone.add(EntityDashboard(i.photo, hExtra, hDone))
+            bestEmployee.add(EntityDashboard(i.photo, hExtra, hDone))
+            if (i.vacation == 1) vacation++
+            if (i.active == 1) active++
         }
-        adapterRanking(listEmployeeAndHours)
-        adapterDashboardDetail.updateHour(listEmployeeAndHours)
+
         totalEmployeeList.value = employee.size
+        totalEmployeeVacation.value = vacation
+        totalEmployeeActive.value = active
+        totalDetailEmployee.value = listEmployeeHoursExtraAndDone
+        totalBestEmployee.value = listEmployeeHoursExtraAndDone
     }
 
-    private fun adapterRanking(listHours: ArrayList<EntityDashboard>) {
-        adapterDashboardRanking.updateHour(listHours)
-    }
-
-    private fun consultPoint(name: String, date: String): ArrayList<PointsEntity?>{
-        return points.fullPointsToName(name, date)
+    private fun consultPoint(name: String, date: String): HourEntityInt? {
+        return points.selectPointInt(name, date)
     }
 }

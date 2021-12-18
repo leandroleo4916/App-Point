@@ -156,7 +156,7 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
             withContext(Dispatchers.Default) {
                 while (pStatus1 <= hoursMake) {
                     withContext(Dispatchers.Main) {
-                        binding.image_toolbar_hrs.progress = pStatus1
+                        binding.progress_total_funcionarios.progress = pStatus1
                         binding.edit_hrs_feitas.text = pStatus1.toString()
                     }
                     delay(20)
@@ -169,8 +169,8 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
             withContext(Dispatchers.Default) {
                 while (pStatus2 <= hoursExtra) {
                     withContext(Dispatchers.Main) {
-                        binding.image_toolbar_.progress = pStatus2
-                        binding.edit_hrs_extras.text = pStatus2.toString()
+                        binding.progress_funcionarios_ativos.progress = pStatus2
+                        binding.text_funcionarios_ativos.text = pStatus2.toString()
                     }
                     delay(20)
                     pStatus2++

@@ -19,7 +19,7 @@ class CaptureDateCurrent {
         return hora.format(calendar)
     }
 
-    fun captureDate(): String {
+    fun captureDateFirst (): String {
         val calendar = Calendar.getInstance()
         val dateCurrent = captureDateCurrent()
         val dateDiv = dateCurrent.split("/")
@@ -31,9 +31,7 @@ class CaptureDateCurrent {
             "$day"+"/"+dateDiv[1]+"/"+dateDiv[2]
         }
 
-        if (dateFirst == "0"+day+"/"+dateDiv[1]+"/"+dateDiv[2]){
-            return dateFirst
-        }
+        if (dateFirst == "0"+day+"/"+dateDiv[1]+"/"+dateDiv[2]){ return dateFirst }
 
         var data = dateFormat.parse(dateFirst)
         while (dateFirst != dateCurrent){
@@ -45,5 +43,13 @@ class CaptureDateCurrent {
         }
 
         return data!!.toString()
+    }
+
+    fun captureNextDate(date: String): String{
+        val calendar = Calendar.getInstance()
+        val data = dateFormat.parse(date)
+        calendar.time = data
+        calendar.add(Calendar.DAY_OF_MONTH, +1)
+        return dateFormat.format(calendar.time)
     }
 }

@@ -6,5 +6,6 @@ data class HourEntityInt(
     val hora1: Int?,
     val hora2: Int?,
     val hora3: Int?,
-    val hora4: Int?
+    val hora4: Int?,
+    val extra: Int?
 ): Serializable

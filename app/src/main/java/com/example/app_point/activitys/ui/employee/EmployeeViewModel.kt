@@ -40,7 +40,9 @@ class EmployeeViewModel(private var employee: RepositoryEmployee,
         if (hour?.hora1 != null && hour.hora2 != null && hour.hora3 != null && hour.hora4 != null){
 
             val consultExtra = employee.consultTime(name)
-            val extra = consultExtra?.let { converterHours.calculateHoursExtras(it, HourEntityInt(hour.hora1, hour.hora2, hour.hora3, hour.hora4)) }
+            val extra = consultExtra?.let {
+                converterHours.calculateHoursExtra(it, HourEntityInt(
+                    hour.hora1, hour.hora2, hour.hora3, hour.hora4, hour.extra)) }
             points.setPointExtra(name, data, extra!!)
         }
     }

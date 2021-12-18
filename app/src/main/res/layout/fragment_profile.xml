@@ -122,7 +122,7 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/image_toolbar_hrs"
+        android:id="@+id/progress_total_funcionarios"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -157,7 +157,7 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/image_toolbar_"
+        android:id="@+id/progress_funcionarios_ativos"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -182,7 +182,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_fix1"
         app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_fix1"
-        app:layout_constraintTop_toBottomOf="@+id/image_toolbar_hrs"
+        app:layout_constraintTop_toBottomOf="@+id/progress_total_funcionarios"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -194,10 +194,10 @@
         android:textColor="@color/letras"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs"
-        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_total_funcionarios"
+        app:layout_constraintEnd_toEndOf="@+id/progress_total_funcionarios"
+        app:layout_constraintStart_toStartOf="@+id/progress_total_funcionarios"
+        app:layout_constraintTop_toTopOf="@+id/progress_total_funcionarios"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -209,11 +209,11 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_fix2"
         app:layout_constraintStart_toStartOf="@+id/image_toolbar_fix2"
-        app:layout_constraintTop_toBottomOf="@+id/image_toolbar_"
+        app:layout_constraintTop_toBottomOf="@+id/progress_funcionarios_ativos"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/edit_hrs_extras"
+        android:id="@+id/text_funcionarios_ativos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -221,10 +221,10 @@
         android:textColor="@color/letras"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_"
-        app:layout_constraintTop_toTopOf="@+id/image_toolbar_"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_funcionarios_ativos"
+        app:layout_constraintEnd_toEndOf="@+id/progress_funcionarios_ativos"
+        app:layout_constraintStart_toStartOf="@+id/progress_funcionarios_ativos"
+        app:layout_constraintTop_toTopOf="@+id/progress_funcionarios_ativos"
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.Toolbar

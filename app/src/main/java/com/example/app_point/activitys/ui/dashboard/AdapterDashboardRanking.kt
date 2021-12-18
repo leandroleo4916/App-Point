@@ -43,7 +43,7 @@ class AdapterDashboardRanking (private val converterPhoto: ConverterPhoto):
                 0 -> itemMedal.setImageResource(R.drawable.ic_medal_ouro)
                 1 -> itemMedal.setImageResource(R.drawable.ic_medal_prata)
                 2 -> itemMedal.setImageResource(R.drawable.ic_medal_bronze)
-                else -> itemMedal.isInvisible
+                else -> itemMedal.visibility = View.INVISIBLE
             }
         }
 
@@ -55,7 +55,7 @@ class AdapterDashboardRanking (private val converterPhoto: ConverterPhoto):
 
     override fun getItemCount(): Int = listEmployeeHourExtra.count()
 
-    fun updateHour(list: ArrayList<EntityDashboard>) {
+    fun updateRanking(list: ArrayList<EntityDashboard>) {
         listEmployeeHourExtra = list
         notifyDataSetChanged()
     }

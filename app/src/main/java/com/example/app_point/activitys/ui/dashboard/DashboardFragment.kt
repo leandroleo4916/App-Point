@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_point.R
-import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.repository.RepositoryPoint
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
@@ -18,8 +16,6 @@ class DashboardFragment : Fragment() {
 
     private lateinit var binding: View
     private val viewModelDash: DashboardViewModel by viewModel()
-    private val businessEmployee: BusinessEmployee by inject()
-    private val repositoryPoint: RepositoryPoint by inject()
     private val adapterRanking: AdapterDashboardRanking by inject()
     private val adapterDetail: AdapterDashboardDetail by inject()
 
@@ -41,7 +37,8 @@ class DashboardFragment : Fragment() {
 
     private fun recycler() {
         val recyclerRanking = binding.recycler_ranking
-        recyclerRanking.layoutManager = LinearLayoutManager(context)
+        recyclerRanking.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerRanking.adapter = adapterRanking
 
         val recyclerDetail = binding.recycler_detail
@@ -58,12 +55,66 @@ class DashboardFragment : Fragment() {
                 withContext(Dispatchers.Default) {
                     while (value <= it) {
                         withContext(Dispatchers.Main) {
-                            binding.image_toolbar_hrs.progress = value
-                            binding.text_total_funcionario.text = it.toString()
+                            binding.progress_total_funcionarios.progress = value
+                            binding.text_total_funcionario.text = value.toString()
                         }
-                        delay(20)
+                        delay(100)
                         value++
                     }
+                }
+            }
+        })
+
+        viewModelDash.employeeVacation.observe (viewLifecycleOwner, {
+
+            var value = 0
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.Default) {
+                    while (value <= it) {
+                        withContext(Dispatchers.Main) {
+                            binding.progress_funcionarios_ferias.progress = value
+                            binding.text_funcionarios_ferias.text = value.toString()
+                        }
+                        delay(100)
+                        value++
+                    }
+                }
+            }
+        })
+
+        viewModelDash.employeeActive.observe (viewLifecycleOwner, {
+
+            var value = 0
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.Default) {
+                    while (value <= it) {
+                        withContext(Dispatchers.Main) {
+                            binding.progress_funcionarios_ativos.progress = value
+                            binding.text_funcionarios_ativos.text = value.toString()
+                        }
+                        delay(100)
+                        value++
+                    }
+                }
+            }
+        })
+
+        viewModelDash.employeeDetail.observe(viewLifecycleOwner, {
+            when(it.size){
+                0 -> {}
+                else -> {
+                    adapterDetail.updateDetail(it)
+                    binding.progress_detail.visibility = View.INVISIBLE
+                }
+            }
+        })
+
+        viewModelDash.employeeBest.observe(viewLifecycleOwner, {
+            when(it.size){
+                0 -> {}
+                else -> {
+                    adapterRanking.updateRanking(it)
+                    binding.text_nenhum_funcionario.visibility = View.INVISIBLE
                 }
             }
         })

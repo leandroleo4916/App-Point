@@ -245,7 +245,7 @@ class RegisterFragment : Fragment() {
         val hora2 = calculateHours.converterHoursInMinutes(binding.horario2.text.toString())
         val hora3 = calculateHours.converterHoursInMinutes(binding.horario3.text.toString())
         val hora4 = calculateHours.converterHoursInMinutes(binding.horario4.text.toString())
-        val workload = calculateHours.calculateTimeEmployee(HourEntityInt(hora1, hora2, hora3, hora4))
+        val workload = calculateHours.calculateTimeEmployee(HourEntityInt(hora1, hora2, hora3, hora4, 0))
         val name = binding.edittext_username.text.toString()
         val email = binding.edittext_email.text.toString()
         val cargo = binding.edittext_cargo.text.toString()
