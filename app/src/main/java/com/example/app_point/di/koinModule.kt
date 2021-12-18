@@ -29,7 +29,7 @@ val pointsModule = module { factory { BusinessPoints(get(), get()) } }
 val userModule = module { factory { BusinessUser(get(), get()) } }
 val employeeModule = module { viewModel { EmployeeViewModel(get(), get(), get()) } }
 val viewModelDashboardModule = module { viewModel {
-    DashboardViewModel(get(), get(), get(), get(), get(), get()) } }
+    DashboardViewModel(get(), get(), get(), get()) } }
 val adapterModule = module { factory { AdapterPoints(get()) } }
 val pointsAdapterModule = module { factory { PointsAdapter(get(), get()) } }
 val dataBaseEmployeeModule = module { single { DataBaseEmployee(get()) } }

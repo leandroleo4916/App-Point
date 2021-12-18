@@ -9,7 +9,7 @@ class CalculateHours {
         return if (p != null) {
             if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
 
-                (p.hora2 - p.hora1) + (p.hora4 - p.hora3)
+                ((p.hora2 - p.hora1) + (p.hora4 - p.hora3)) - p.extra!!
             } else{ 0 }
 
         }else{ 0 }
@@ -34,12 +34,12 @@ class CalculateHours {
         return (hour2!! - hour1!!) + (hour4!! - hour3!!)
     }
 
-    private fun formatHourToString(ret: EntityHourAndMinute): String{
+    private fun formatHourToString(hour: Int, min: Int): String{
 
-        return if (ret.hour < 10 && ret.minute < 10){ "0${ret.hour}:0${ret.minute}" }
-        else if(ret.hour < 10 && ret.minute >= 10){ "0${ret.hour}:${ret.minute}" }
-        else if(ret.hour >= 10 && ret.minute < 10){ "${ret.hour}:0${ret.minute}" }
-        else{ "${ret.hour}:${ret.minute}" }
+        return if (hour < 10 && min < 10){ "0$hour:0$min" }
+        else if(hour < 10 && min >= 10){ "0$hour:$min" }
+        else if(hour >= 10 && min < 10){ "${hour}:0${min}" }
+        else{ "${hour}:${min}" }
     }
 
     fun converterHoursInMinutes(hour: String): Int{
@@ -53,7 +53,7 @@ class CalculateHours {
         }
     }
 
-    private fun convertMinutesInHours(minutes: Int): EntityHourAndMinute{
+    fun convertMinutesInHours(minutes: Int): String{
 
         var min = minutes
         var hour = 0
@@ -61,7 +61,7 @@ class CalculateHours {
             min -= 60
             hour++
         }
-        return EntityHourAndMinute(hour, min)
+        return formatHourToString(hour, min)
     }
 
     fun convertMinutesInHoursString(minutes: Int): String{
