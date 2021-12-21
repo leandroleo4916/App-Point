@@ -4,16 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.entity.EntityDashboard
+import com.example.app_point.entity.EntityBestEmployee
 import com.example.app_point.utils.ConverterPhoto
 
 class AdapterDashboardRanking (private val converterPhoto: ConverterPhoto):
     RecyclerView.Adapter<AdapterDashboardRanking.ViewHolderRanking>() {
 
-    private var listEmployeeHourExtra: ArrayList<EntityDashboard> = arrayListOf()
+    private var listEmployeeHourExtra: ArrayList<EntityBestEmployee> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderRanking {
         val item = LayoutInflater.from(parent.context).inflate(
@@ -35,7 +34,7 @@ class AdapterDashboardRanking (private val converterPhoto: ConverterPhoto):
 
         init { itemPhoto.setOnClickListener(this) }
 
-        fun bindPhotoAndHour(employee: EntityDashboard, position: Int){
+        fun bindPhotoAndHour(employee: EntityBestEmployee, position: Int){
 
             val photo = converterPhoto.converterToBitmap(employee.photo)
             itemPhoto.setImageBitmap(photo)
@@ -55,7 +54,8 @@ class AdapterDashboardRanking (private val converterPhoto: ConverterPhoto):
 
     override fun getItemCount(): Int = listEmployeeHourExtra.count()
 
-    fun updateRanking(list: ArrayList<EntityDashboard>) {
+    fun updateRanking(list: ArrayList<EntityBestEmployee>) {
+        list.sortByDescending { it.punctuation }
         listEmployeeHourExtra = list
         notifyDataSetChanged()
     }

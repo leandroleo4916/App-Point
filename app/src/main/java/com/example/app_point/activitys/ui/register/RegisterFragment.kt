@@ -22,12 +22,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.utils.CalculateHours
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.HourEntityInt
 import com.example.app_point.interfaces.ItemEmployee
+import com.example.app_point.utils.CalculateHours
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
 import kotlinx.android.synthetic.main.fragment_register.view.*
@@ -51,41 +52,44 @@ class RegisterFragment : Fragment() {
     companion object { fun newInstance() = RegisterFragment() }
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
-                               savedInstanceState: Bundle?): View {
+                               savedInstanceState: Bundle?, ): View {
 
         binding = inflater.inflate(R.layout.fragment_register, container, false)
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         val args = arguments?.let { it.getSerializable("id") as Int }
-        //infoEmployee(args)
+        infoEmployee(args)
         initDate()
         listener(args)
 
         return binding
     }
-    /*
+
     private fun infoEmployee(args: Int?) {
 
         if (args != null) {
-            val infoEmployee: EmployeeEntity = mBusinessEmployee.consultEmployeeWithId(args)!!
-            val photo = mToByteArray.converterToBitmap(infoEmployee.photo)
-            binding.run {
-                photo_employee.setImageBitmap(photo)
-                horario1.text = infoEmployee.horario1
-                horario2.text = infoEmployee.horario2
-                horario3.text = infoEmployee.horario3
-                horario4.text = infoEmployee.horario4
-                edittext_username.setText(infoEmployee.nameEmployee)
-                edittext_email.setText(infoEmployee.emailEmployee)
-                edittext_cargo.setText(infoEmployee.cargoEmployee)
-                edittext_phone.setText(infoEmployee.phoneEmployee)
-                text_admissao.text = infoEmployee.admissaoEmployee
-                text_aniversario.text = infoEmployee.aniversarioEmployee
-                textViewHome.text = getString(R.string.editar_funcionario)
-                buttom_register_employee.text = getString(R.string.editar)
+
+            val employee: EmployeeEntity? = mBusinessEmployee.consultEmployeeWithId(args)
+            if (employee != null) {
+                val photo = mToByteArray.converterToBitmap(employee.photo)
+                binding.run {
+                    photo_employee.setImageBitmap(photo)
+                    horario1.text = calculateHours.convertMinutesInHoursString(employee.horario1)
+                    horario2.text = calculateHours.convertMinutesInHoursString(employee.horario2)
+                    horario3.text = calculateHours.convertMinutesInHoursString(employee.horario3)
+                    horario4.text = calculateHours.convertMinutesInHoursString(employee.horario4)
+                    edittext_username.setText(employee.nameEmployee)
+                    edittext_email.setText(employee.emailEmployee)
+                    edittext_cargo.setText(employee.cargoEmployee)
+                    edittext_phone.setText(employee.phoneEmployee)
+                    text_admissao.text = employee.admissaoEmployee
+                    text_aniversario.text = employee.aniversarioEmployee
+                    textViewHome.text = getString(R.string.editar_funcionario)
+                    buttom_register_employee.text = getString(R.string.editar)
+                }
             }
         }
-    }*/
+    }
 
     private fun listener(args: Int?) {
         binding.run {
@@ -192,8 +196,10 @@ class RegisterFragment : Fragment() {
         return true
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             permissionCode -> {
@@ -230,8 +236,7 @@ class RegisterFragment : Fragment() {
     }
 
     private val startForResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                result: ActivityResult ->
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 binding.photo_employee.setImageURI(result.data?.data)
             }
@@ -245,7 +250,8 @@ class RegisterFragment : Fragment() {
         val hora2 = calculateHours.converterHoursInMinutes(binding.horario2.text.toString())
         val hora3 = calculateHours.converterHoursInMinutes(binding.horario3.text.toString())
         val hora4 = calculateHours.converterHoursInMinutes(binding.horario4.text.toString())
-        val workload = calculateHours.calculateTimeEmployee(HourEntityInt(hora1, hora2, hora3, hora4, 0))
+        val workload = calculateHours.calculateTimeEmployee(HourEntityInt(hora1,
+            hora2, hora3, hora4, 0, 0))
         val name = binding.edittext_username.text.toString()
         val email = binding.edittext_email.text.toString()
         val cargo = binding.edittext_cargo.text.toString()
@@ -269,20 +275,18 @@ class RegisterFragment : Fragment() {
     private fun setEmployee(employee: EmployeeEntity){
         when(mBusinessEmployee.registerEmployee(employee)){
             "salvo" -> {
-                toast(R.string.adicionado_sucesso)
-                //openFragmentProfile(employee)
+                dialogSaveOrEditEmployee("Adicionado")
             }
             "não salvo" -> {
-                toast(R.string.nao_foi_possivel_cadastrar)
+                dialogErrorSaveOrEditEmployee("Cadastrar")
             }
             "editado" -> {
-                toast(R.string.editado_sucesso)
-                //openFragmentProfile(employee)
+                dialogSaveOrEditEmployee("Editado")
             }
             "não editado" -> {
-                toast(R.string.nao_foi_possivel_editar)
+                dialogErrorSaveOrEditEmployee("Editar")
             }
-            else -> toast(R.string.nao_foi_possivel_cadastrar)
+            else -> dialogErrorSaveOrEditEmployee("Cadastrar")
         }
     }
 
@@ -290,6 +294,18 @@ class RegisterFragment : Fragment() {
 
         if (context is ItemEmployee) { listener = context as ItemEmployee }
         listener.openFragmentProfile(employee)
+    }
+
+    private fun dialogSaveOrEditEmployee(value: String){
+        SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+            .setTitleText("$value com sucesso!")
+            .show()
+    }
+
+    private fun dialogErrorSaveOrEditEmployee(value: String){
+        SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+            .setTitleText("Não foi possível $value!")
+            .show()
     }
 
     private fun toast(message: Int){

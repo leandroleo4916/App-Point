@@ -74,7 +74,6 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun searchPoints() {
         pointsViewModel.getFullEmployee("")
-        binding.progress_ponto.visibility = View.GONE
     }
 
     private fun observe() {
@@ -82,9 +81,14 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             when (it.size) {
                 0 -> {
                     mPointsAdapter.updateFullPoints(it)
-                    showSnackBar(R.string.nenhum_ponto_registrado)
+                    binding.progress_ponto.visibility = View.GONE
                 }
-                else -> { mPointsAdapter.updateFullPoints(it) }
+                else -> {
+                    mPointsAdapter.updateFullPoints(it)
+                    binding.progress_ponto.visibility = View.GONE
+                    binding.image_need_add_point.visibility = View.INVISIBLE
+                    binding.text_need_add_point.visibility = View.INVISIBLE
+                }
             }
         })
     }

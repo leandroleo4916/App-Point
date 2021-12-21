@@ -84,4 +84,7 @@ dependencies {
     implementation 'com.edmodo:cropper:1.0.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.sackcentury:shinebutton:0.2.0'
+
+    //sweet
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
 }

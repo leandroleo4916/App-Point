@@ -18,6 +18,7 @@ import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapter
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.interfaces.INotification
+import com.example.app_point.interfaces.ItemClickOpenRegister
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
@@ -27,6 +28,7 @@ import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_employee.view.*
+import kotlinx.android.synthetic.main.fragment_points.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -40,6 +42,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val viewModelEmployee by viewModel<EmployeeViewModel>()
     private val securityPreferences: SecurityPreferences by inject()
+    private lateinit var itemClickOpenRegister: ItemClickOpenRegister
     private lateinit var binding: View
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +72,18 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
 
     private fun listener() {
         binding.image_back_tools.setOnClickListener { activity?.onBackPressed() }
+        binding.image_add_employee.setOnClickListener {
+            if (context is ItemClickOpenRegister) {
+                itemClickOpenRegister = context as ItemClickOpenRegister
+                itemClickOpenRegister.openFragmentRegister()
+            }
+        }
+        binding.text_need_add_employee.setOnClickListener {
+            if (context is ItemClickOpenRegister) {
+                itemClickOpenRegister = context as ItemClickOpenRegister
+                itemClickOpenRegister.openFragmentRegister()
+            }
+        }
     }
 
     private fun viewModel(){ viewModelEmployee.getFullEmployee() }
@@ -78,13 +93,14 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         viewModelEmployee.employeeFullList.observe(viewLifecycleOwner, {
             when (it.size) {
                 0 -> {
-                    showSnackBar(R.string.precisa_add_funcionarios)
                     employeeAdapter.updateFullEmployee(it, date)
                     binding.progress_employee.visibility = View.GONE
                 }
                 else -> {
                     employeeAdapter.updateFullEmployee(it, date)
                     binding.progress_employee.visibility = View.GONE
+                    binding.image_add_employee.visibility = View.GONE
+                    binding.text_need_add_employee.visibility = View.GONE
                 }
             }
         })

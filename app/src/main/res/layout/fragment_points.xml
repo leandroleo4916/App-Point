@@ -115,6 +115,31 @@
             app:layout_constraintTop_toTopOf="@+id/recycler_activity_pontos"
             tools:ignore="MissingConstraints" />
 
+        <ImageView
+            android:id="@+id/image_need_add_point"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/ic_digital"
+            app:layout_constraintBottom_toTopOf="@+id/text_need_add_point"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/text_need_add_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="Adicione Ponto!"
+            android:textColor="#35B5AD"
+            android:textSize="22sp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/recycler_activity_pontos"
+            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -10,7 +10,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
 
     companion object {
         private const val DATA_NAME: String = "employee.db"
-        private const val DATA_VERSION: Int = 4
+        private const val DATA_VERSION: Int = 5
     }
 
     override fun onOpen(db: SQLiteDatabase) {
@@ -44,6 +44,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsPoint.POINT.COLUMNS.HOUR2INT} integer ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR3INT} integer ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR4INT} integer ,
+            ${ConstantsPoint.POINT.COLUMNS.PUNCTUATION} integer ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR1} text ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR2} text ,
             ${ConstantsPoint.POINT.COLUMNS.HOUR3} text ,

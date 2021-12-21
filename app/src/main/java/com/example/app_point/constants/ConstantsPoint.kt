@@ -12,6 +12,7 @@ class ConstantsPoint private constructor(){
             const val HOUR2INT = "hora2int"
             const val HOUR3INT = "hora3int"
             const val HOUR4INT = "hora4int"
+            const val PUNCTUATION = "punctuation"
             const val HOUR1 = "hora1"
             const val HOUR2 = "hora2"
             const val HOUR3 = "hora3"

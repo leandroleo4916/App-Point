@@ -46,8 +46,8 @@ class AdapterDashboardDetail (private val converterPhoto: ConverterPhoto) :
         fun bindPhotoAndHour(employee: EntityDashboard, position: Int){
             val photo = converterPhoto.converterToBitmap(employee.photo)
             itemPhoto.setImageBitmap(photo)
-            itemHoursExtras.text = employee.extraHour.toString()
-            itemHoursDone.text = employee.hourDone.toString()
+            itemHoursExtras.text = employee.extraHour
+            itemHoursDone.text = employee.hourDone
 
             if((listEmployeeHourExtra.size - 1) == position){
                 toolbarLine.visibility = View.INVISIBLE

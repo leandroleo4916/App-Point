@@ -7,6 +7,7 @@ import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.Employee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.EmployeeNameAndPhoto
+import com.example.app_point.entity.EmployeePointsTime
 
 class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
@@ -363,7 +364,6 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         try {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
-                ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.VACATION,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
@@ -371,6 +371,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.NAME,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO,
@@ -387,8 +388,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
-                val idEmployee = cursor.getInt(cursor.getColumnIndex(
-                    ConstantsEmployee.EMPLOYEE.COLUMNS.ID))
+
                 val active = cursor.getInt(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.ACTIVE))
                 val vacation = cursor.getInt(cursor.getColumnIndex(
@@ -418,7 +418,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 val niver = cursor.getString(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
 
-                employee = EmployeeEntity(idEmployee, active, vacation, photo, hora1, hora2, hora3,
+                employee = EmployeeEntity(id, active, vacation, photo, hora1, hora2, hora3,
                     hora4, work, name, email, cargo, phone, admissao, niver)
 
             }
@@ -496,6 +496,46 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
         } catch (e: Exception) {
             return null
+        }
+    }
+
+    fun consultTimeEmployee(name: String): EmployeePointsTime? {
+
+        var employee: EmployeePointsTime? = null
+        try {
+            val db = mDataBaseEmployee.readableDatabase
+            val projection = arrayOf(
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4)
+
+            val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
+            val args = arrayOf(name)
+
+            val cursor = db.query(
+                ConstantsEmployee.EMPLOYEE.TABLE_NAME, projection,
+                selection, args, null, null, null)
+
+            if (cursor != null && cursor.count > 0) {
+                cursor.moveToNext()
+                val hora1 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1))
+                val hora2 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2))
+                val hora3 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3))
+                val hora4 = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4))
+
+                employee = EmployeePointsTime(hora1, hora2, hora3, hora4)
+
+            }
+            cursor?.close()
+            return employee
+
+        } catch (e: Exception) {
+            return employee
         }
     }
 

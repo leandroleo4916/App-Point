@@ -99,22 +99,30 @@ class DashboardFragment : Fragment() {
             }
         })
 
-        viewModelDash.employeeDetail.observe(viewLifecycleOwner, {
+        viewModelDash.employeeBest.observe(viewLifecycleOwner, {
             when(it.size){
-                0 -> {}
+                0 -> {
+                    binding.progress_ranking.visibility = View.GONE
+                    binding.text_nenhum_funcionario.visibility = View.VISIBLE
+                }
                 else -> {
-                    adapterDetail.updateDetail(it)
-                    binding.progress_detail.visibility = View.INVISIBLE
+                    adapterRanking.updateRanking(it)
+                    binding.progress_ranking.visibility = View.GONE
+                    binding.text_nenhum_funcionario.visibility = View.INVISIBLE
                 }
             }
         })
 
-        viewModelDash.employeeBest.observe(viewLifecycleOwner, {
+        viewModelDash.employeeDetail.observe(viewLifecycleOwner, {
             when(it.size){
-                0 -> {}
+                0 -> {
+                    binding.progress_detail.visibility = View.GONE
+                    binding.text_nenhum_funcionario_recycler.visibility = View.VISIBLE
+                }
                 else -> {
-                    adapterRanking.updateRanking(it)
-                    binding.text_nenhum_funcionario.visibility = View.INVISIBLE
+                    adapterDetail.updateDetail(it)
+                    binding.progress_detail.visibility = View.GONE
+                    binding.text_nenhum_funcionario_recycler.visibility = View.INVISIBLE
                 }
             }
         })

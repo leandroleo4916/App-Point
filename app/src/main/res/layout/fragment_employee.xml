@@ -65,4 +65,29 @@
         tools:listitem="@layout/recycler_employee_detail"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_ferramentas" />
 
+    <ImageView
+        android:id="@+id/image_add_employee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_employee"
+        app:layout_constraintBottom_toTopOf="@+id/text_need_add_employee"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_employee"
+        app:layout_constraintStart_toStartOf="@+id/recycler_employee"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/text_need_add_employee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:text="Cadastre Funcionário!"
+        android:textColor="@color/fundoBlue"
+        android:layout_marginBottom="30dp"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_employee"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_employee"
+        app:layout_constraintStart_toStartOf="@+id/recycler_employee"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_ferramentas"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

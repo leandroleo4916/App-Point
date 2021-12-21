@@ -7,9 +7,9 @@ class CalculateHours {
     fun calculateHoursDone(p: HourEntityInt?): Int {
 
         return if (p != null) {
-            if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
-
-                ((p.hora2 - p.hora1) + (p.hora4 - p.hora3)) - p.extra!!
+            if (p.hora1 != null && p.hora2 != null && p.hora3 != null &&
+                p.hora4 != null && p.extra != null){
+                ((p.hora2 - p.hora1) + (p.hora4 - p.hora3)) - p.extra
             } else{ 0 }
 
         }else{ 0 }
@@ -18,7 +18,6 @@ class CalculateHours {
     fun calculateHoursExtra(time: Int, p: HourEntityInt): Int {
 
         return if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
-
                 ((p.hora2 - p.hora1) + (p.hora4 - p.hora3)) - time
             }
             else{ 0 }
@@ -77,4 +76,38 @@ class CalculateHours {
         else if(hour >= 10 && minute < 10){ "${hour}:0${minute}" }
         else{ "${hour}:${minute}" }
     }
+
+    fun punctuation(i: EmployeePointsTime, point: HourEntityInt?): Int {
+
+        var note = 0
+
+        if (point == null) note += 0
+        else {
+            note += if (point.hora1 == null) 0
+            else { contIn(point.hora1, i.horario1) }
+
+            note += if (point.hora2 == null) 0
+            else { contOut(point.hora2, i.horario2) }
+
+            note += if (point.hora3 == null) 0
+            else { contIn(point.hora3, i.horario3) }
+
+            note += if (point.hora4 == null) 0
+            else { contOut(point.hora4, i.horario4) }
+        }
+        return note
+    }
+
+    private fun contIn (p1: Int, p2: Int): Int{
+        return if (p1 <= p2) 2
+        else if (p1 > p2 && p1 <= (p2 + 15)) 1
+        else 0
+    }
+
+    private fun contOut (p1: Int, p2: Int): Int{
+        return if (p1 >= p2) 2
+        else if (p1 < p2 && p1 >= (p2 - 15)) 1
+        else 0
+    }
+
 }

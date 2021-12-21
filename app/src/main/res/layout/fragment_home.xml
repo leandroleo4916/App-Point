@@ -135,7 +135,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="30dp"
-                            android:text="Cadastre funcionário aqui!"
+                            android:text="Cadastre Funcionário!"
                             android:textAlignment="center"
                             android:textColor="@color/fundoBlue"
                             android:textSize="22sp"
