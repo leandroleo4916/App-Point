@@ -27,7 +27,7 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.HourEntityInt
-import com.example.app_point.interfaces.ItemEmployee
+import com.example.app_point.interfaces.ItemClickOpenRegister
 import com.example.app_point.utils.CalculateHours
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
@@ -38,7 +38,7 @@ import java.util.*
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var listener: ItemEmployee
+    private lateinit var itemClickOpenRegister: ItemClickOpenRegister
     private lateinit var registerViewModel: RegisterViewModel
     private val mBusinessEmployee: BusinessEmployee by inject()
     private val mToByteArray: ConverterPhoto by inject()
@@ -51,8 +51,10 @@ class RegisterFragment : Fragment() {
 
     companion object { fun newInstance() = RegisterFragment() }
 
-    override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
-                               savedInstanceState: Bundle?, ): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
 
         binding = inflater.inflate(R.layout.fragment_register, container, false)
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
@@ -94,7 +96,7 @@ class RegisterFragment : Fragment() {
     private fun listener(args: Int?) {
         binding.run {
             photo_employee.setOnClickListener { openPopUp() }
-            buttom_register_employee.setOnClickListener { extrasId (args) }
+            buttom_register_employee.setOnClickListener { extrasId(args) }
             horario1.setOnClickListener { timePicker(1, binding) }
             horario2.setOnClickListener { timePicker(2, binding) }
             horario3.setOnClickListener { timePicker(3, binding) }
@@ -143,10 +145,18 @@ class RegisterFragment : Fragment() {
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
             when (id) {
-                1 -> { binding.horario1.text = simple }
-                2 -> { binding.horario2.text = simple }
-                3 -> { binding.horario3.text = simple }
-                4 -> { binding.horario4.text = simple }
+                1 -> {
+                    binding.horario1.text = simple
+                }
+                2 -> {
+                    binding.horario2.text = simple
+                }
+                3 -> {
+                    binding.horario3.text = simple
+                }
+                4 -> {
+                    binding.horario4.text = simple
+                }
             }
         }
         TimePickerDialog(
@@ -156,7 +166,7 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun extrasId (id: Int?) {
+    private fun extrasId(id: Int?) {
         if (id != null) saveEmployee(id)
         else saveEmployee(0)
     }
@@ -176,7 +186,7 @@ class RegisterFragment : Fragment() {
 
     private fun permissionCamera(): Boolean {
         if (context?.let {
-                ContextCompat.checkSelfPermission (
+                ContextCompat.checkSelfPermission(
                     it, Manifest.permission.CAMERA) } == PackageManager.PERMISSION_DENIED ||
             context?.let {
                 ContextCompat.checkSelfPermission(
@@ -290,15 +300,26 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun openFragmentProfile(employee: EmployeeEntity) {
-
-        if (context is ItemEmployee) { listener = context as ItemEmployee }
-        listener.openFragmentProfile(employee)
+    private fun openFragmentProfile() {
+        if (context is ItemClickOpenRegister) {
+            itemClickOpenRegister = context as ItemClickOpenRegister }
+        itemClickOpenRegister.openFragmentRegister()
     }
 
     private fun dialogSaveOrEditEmployee(value: String){
         SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
             .setTitleText("$value com sucesso!")
+            .setContentText("Deseja registrar mais?")
+            .setCancelText("Não, voltar!")
+            .setConfirmText("Adicionar mais!")
+            .setConfirmClickListener {
+                    sDialog -> sDialog.cancel()
+                openFragmentProfile()
+            }
+            .setCancelClickListener {
+                    sDialog -> sDialog.cancel()
+                activity?.onBackPressed()
+            }
             .show()
     }
 

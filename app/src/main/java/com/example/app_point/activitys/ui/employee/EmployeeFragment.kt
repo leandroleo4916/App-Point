@@ -28,7 +28,6 @@ import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_employee.view.*
-import kotlinx.android.synthetic.main.fragment_points.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -95,6 +94,8 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
                 0 -> {
                     employeeAdapter.updateFullEmployee(it, date)
                     binding.progress_employee.visibility = View.GONE
+                    binding.image_add_employee.visibility = View.VISIBLE
+                    binding.text_need_add_employee.visibility = View.VISIBLE
                 }
                 else -> {
                     employeeAdapter.updateFullEmployee(it, date)
@@ -265,7 +266,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         if (viewModelEmployee.removeEmployee(id)){
             viewModelEmployee.removePoints(name)
             showSnackBar(R.string.removido_sucesso)
-            employeeAdapter.notifyRemoveEmployee(position)
+            viewModel()
         }
         else { showSnackBar(R.string.nao_foi_possivel_remover) }
     }

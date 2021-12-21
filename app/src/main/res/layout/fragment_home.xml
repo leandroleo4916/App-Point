@@ -199,8 +199,8 @@
 
                 <ImageView
                     android:id="@+id/image_add_ponto"
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_add"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -209,19 +209,9 @@
 
                 <ImageView
                     android:id="@+id/filter_tarefa"
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginEnd="14dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/ic_filter"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/option_tarefa"
-                    tools:ignore="ContentDescription,MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/option_tarefa"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:src="@drawable/ic_option"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="ContentDescription,MissingConstraints" />

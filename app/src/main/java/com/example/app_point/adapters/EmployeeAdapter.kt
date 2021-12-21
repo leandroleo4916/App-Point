@@ -149,12 +149,6 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         }
     }
 
-    fun notifyRemoveEmployee(position: Int){
-        listEmployee.removeAt(position)
-        data.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
     fun updateFullEmployee(list: ArrayList<Employee>, date: String){
 
         for (position in 0 until list.size){
@@ -165,8 +159,8 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             list[position].hour3 = points?.hora3 ?: "--:--"
             list[position].hour4 = points?.hora4 ?: "--:--"
         }
-        data.addAll(list)
-        listEmployee.addAll(list)
+        data = list
+        listEmployee = list
         getFilter()
         notifyDataSetChanged()
     }
