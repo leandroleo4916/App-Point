@@ -21,6 +21,7 @@ import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.coroutines.*

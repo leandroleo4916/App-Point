@@ -16,25 +16,20 @@ import com.example.app_point.R
 import com.example.app_point.adapters.EmployeeAdapterHome
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.utils.CalculateHours
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseEmployee
-import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.*
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
-import com.example.app_point.utils.CaptureDateCurrent
-import com.example.app_point.utils.ConverterPhoto
-import com.example.app_point.utils.GetColor
-import com.example.app_point.utils.SecurityPreferences
+import com.example.app_point.utils.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.ext.android.inject
 
-class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickOpenProfileById {
+class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var listener: ItemEmployee
+    private lateinit var listener: ItemClickOpenProfileById
     private lateinit var hideNav: IHideNavView
     private lateinit var logoutApp: ILogoutApp
     private lateinit var itemClickOpenRegister: ItemClickOpenRegister
@@ -64,7 +59,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickOp
         repositoryEmployee = RepositoryEmployee(dataBase)
         homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee, repositoryPoint,
             converterHours)
-        employeeAdapter = EmployeeAdapterHome(this, color, converterPhoto)
+
+        if (context is ItemClickOpenProfileById) { listener = context as ItemClickOpenProfileById }
+        employeeAdapter = EmployeeAdapterHome(listener, color, converterPhoto)
 
         recyclerPoints()
         recyclerEmployee()
@@ -104,13 +101,13 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickOp
         binding.textView_add_employee.setOnClickListener {
             if (context is ItemClickOpenRegister) {
                 itemClickOpenRegister = context as ItemClickOpenRegister
-                itemClickOpenRegister.openFragmentRegister()
+                //itemClickOpenRegister.openFragmentRegister()
             }
         }
         binding.imageView_add_employee.setOnClickListener {
             if (context is ItemClickOpenRegister) {
                 itemClickOpenRegister = context as ItemClickOpenRegister
-                itemClickOpenRegister.openFragmentRegister()
+                //itemClickOpenRegister.openFragmentRegister()
             }
         }
     }
@@ -261,10 +258,5 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickOp
             .setBackgroundTint(Color.BLACK)
             .setAction("Ok") {}
             .show()
-    }
-
-    override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
-        if (context is ItemEmployee) { listener = context as ItemEmployee }
-        listener.openFragmentProfile(employee)
     }
 }

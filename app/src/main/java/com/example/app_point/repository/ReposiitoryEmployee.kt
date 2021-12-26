@@ -293,6 +293,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO3,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO4,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.NAME,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.EMAIL,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO,

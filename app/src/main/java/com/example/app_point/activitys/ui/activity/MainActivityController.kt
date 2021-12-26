@@ -20,17 +20,14 @@ import com.example.app_point.activitys.ui.profile.ProfileFragment
 import com.example.app_point.activitys.ui.register.RegisterFragment
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeNameAndPhoto
-import com.example.app_point.interfaces.IHideNavView
-import com.example.app_point.interfaces.ILogoutApp
-import com.example.app_point.interfaces.ItemClickOpenRegister
-import com.example.app_point.interfaces.ItemEmployee
+import com.example.app_point.interfaces.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import java.lang.Float.max
 import java.lang.Float.min
 
 class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IHideNavView,
-    ItemClickOpenRegister {
+    ItemClickOpenRegister, ItemClickOpenProfileById {
 
     private lateinit var navView: BottomNavigationView
 
@@ -102,6 +99,22 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
             .addToBackStack(null)
             .detach(fragmentHome)
             .commit()
+    }
+
+    override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
+
+        val args = Bundle()
+        args.putSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
+
+        val fragment = ProfileFragment.newInstance()
+        fragment.arguments = args
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container_home, fragment, "profile")
+            .addToBackStack(null)
+            .commit()
+
     }
 
     private fun animateBarVisibility(isVisible: Boolean) {
