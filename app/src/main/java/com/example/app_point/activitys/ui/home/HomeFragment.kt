@@ -19,7 +19,7 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.utils.CalculateHours
 import com.example.app_point.constants.ConstantsUser
 import com.example.app_point.database.DataBaseEmployee
-import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.*
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
@@ -32,7 +32,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.koin.android.ext.android.inject
 
-class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEmployeeHome {
+class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickOpenProfileById {
 
     private lateinit var listener: ItemEmployee
     private lateinit var hideNav: IHideNavView
@@ -222,7 +222,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        val alertDialog = createDialog("Bater Ponto")
+        val alertDialog = createDialog("Registrar Ponto")
         alertDialog?.setView(inflate)
         alertDialog?.setPositiveButton("Registrar") { _, _ ->
 
@@ -253,11 +253,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-    override fun openFragmentProfile(employee: EmployeeEntity) {
-        if (context is ItemEmployee) { listener = context as ItemEmployee }
-        listener.openFragmentProfile(employee)
-    }
-
     private fun showSnackBar(message: Int) {
         Snackbar.make(binding.container_home,
             message, Snackbar.LENGTH_LONG)
@@ -266,5 +261,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener, ItemClickEm
             .setBackgroundTint(Color.BLACK)
             .setAction("Ok") {}
             .show()
+    }
+
+    override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
+        if (context is ItemEmployee) { listener = context as ItemEmployee }
+        listener.openFragmentProfile(employee)
     }
 }

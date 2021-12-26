@@ -17,6 +17,7 @@ import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.ConverterPhoto
@@ -27,7 +28,7 @@ import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
     private val adapterPoints: AdapterPoints by inject()
     private val businessEmployee: BusinessEmployee by inject()
@@ -52,11 +53,12 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
             observer()
         }
         else {
-            val args = arguments?.let { it.getSerializable(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME) as EmployeeEntity }
+            val args = arguments?.let {
+                it.getSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME) as EmployeeNameAndPhoto
+            }
             recycler()
-            setInfoEmployee(args!!)
-            searchPointsEmployee(args.nameEmployee)
+            if (args != null) { setInfoEmployee(args) }
+            if (args != null) { searchPointsEmployee(args.name) }
             listener()
             observer()
         }
@@ -120,13 +122,13 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun setInfoEmployee (args: EmployeeEntity){
+    private fun setInfoEmployee (args: EmployeeNameAndPhoto){
 
         val photoConverter = photo.converterToBitmap(args.photo)
 
         binding.run {
-            text_name_employee.text = args.nameEmployee
-            text_cargo_employee.text = args.cargoEmployee
+            text_name_employee.text = args.name
+            //text_cargo_employee.text = args.cargoEmployee
             image_photo_employee.setImageBitmap(photoConverter)
         }
         setProgressHours(binding)
@@ -251,9 +253,8 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun resumeFragment(employee: EmployeeEntity) {
-        if (context is ItemEmployee) { listener = context as ItemEmployee
-        } else { throw ClassCastException("$context must implemented") }
-        listener.openFragmentProfile(employee)
+        if (context is ItemEmployee) { listener = context as ItemEmployee }
+        //listener.openFragmentProfile(employee.id)
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -264,7 +265,7 @@ class ProfileFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun showSnackBar(message: Int) {
-        Snackbar.make(binding.container_perfil,
+        Snackbar.make(binding.container_profile,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)

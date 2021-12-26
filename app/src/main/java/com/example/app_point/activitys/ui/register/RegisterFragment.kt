@@ -53,8 +53,7 @@ class RegisterFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+        savedInstanceState: Bundle?): View {
 
         binding = inflater.inflate(R.layout.fragment_register, container, false)
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
@@ -285,13 +284,13 @@ class RegisterFragment : Fragment() {
     private fun setEmployee(employee: EmployeeEntity){
         when(mBusinessEmployee.registerEmployee(employee)){
             "salvo" -> {
-                dialogSaveOrEditEmployee("Adicionado")
+                dialogSaveEmployee()
             }
             "não salvo" -> {
                 dialogErrorSaveOrEditEmployee("Cadastrar")
             }
             "editado" -> {
-                dialogSaveOrEditEmployee("Editado")
+                dialogEditEmployee()
             }
             "não editado" -> {
                 dialogErrorSaveOrEditEmployee("Editar")
@@ -306,9 +305,9 @@ class RegisterFragment : Fragment() {
         itemClickOpenRegister.openFragmentRegister()
     }
 
-    private fun dialogSaveOrEditEmployee(value: String){
+    private fun dialogSaveEmployee(){
         SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-            .setTitleText("$value com sucesso!")
+            .setTitleText("Registrado com sucesso!")
             .setContentText("Deseja registrar mais?")
             .setCancelText("Não, voltar!")
             .setConfirmText("Adicionar mais!")
@@ -316,6 +315,19 @@ class RegisterFragment : Fragment() {
                     sDialog -> sDialog.cancel()
                 openFragmentProfile()
             }
+            .setCancelClickListener {
+                    sDialog -> sDialog.cancel()
+                activity?.onBackPressed()
+            }
+            .show()
+    }
+
+    private fun dialogEditEmployee(){
+        SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+            .setTitleText("Editado com sucesso!")
+            .setCancelText("Voltar!")
+            .setConfirmText("Editar novamente!")
+            .setConfirmClickListener { sDialog -> sDialog.cancel() }
             .setCancelClickListener {
                     sDialog -> sDialog.cancel()
                 activity?.onBackPressed()

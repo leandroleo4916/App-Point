@@ -10,11 +10,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.EmployeeNameAndPhoto
-import com.example.app_point.interfaces.ItemClickEmployeeHome
+import com.example.app_point.interfaces.ItemClickOpenProfileById
 import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.GetColor
 
-class EmployeeAdapterHome (private val listener: ItemClickEmployeeHome,
+class EmployeeAdapterHome (private val listener: ItemClickOpenProfileById,
                            private val color: GetColor,
                            private val converterPhoto: ConverterPhoto):
     RecyclerView.Adapter<EmployeeAdapterHome.EmployeeViewHolderHome>() {
@@ -48,7 +48,6 @@ class EmployeeAdapterHome (private val listener: ItemClickEmployeeHome,
         }
 
         fun bindNameAndPhoto(employee: String, photo: Bitmap, position: Int){
-
             itemName.text = employee
             itemPhoto.setImageBitmap(photo)
             itemBox.setBackgroundResource(color.retColor(position))
@@ -56,7 +55,9 @@ class EmployeeAdapterHome (private val listener: ItemClickEmployeeHome,
 
         override fun onClick(view: View?) {
             val position = bindingAdapterPosition
-            //when(view){ itemPhoto -> listener.openFragmentProfile(listFullEmployee[position]) }
+            when(view){
+                itemPhoto -> listener.openFragmentProfileById(listFullEmployee[position])
+            }
         }
     }
 

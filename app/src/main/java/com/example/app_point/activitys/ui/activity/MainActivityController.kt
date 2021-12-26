@@ -19,7 +19,7 @@ import com.example.app_point.activitys.ui.login.LoginActivity
 import com.example.app_point.activitys.ui.profile.ProfileFragment
 import com.example.app_point.activitys.ui.register.RegisterFragment
 import com.example.app_point.constants.ConstantsEmployee
-import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.IHideNavView
 import com.example.app_point.interfaces.ILogoutApp
 import com.example.app_point.interfaces.ItemClickOpenRegister
@@ -52,9 +52,9 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
         finish()
     }
 
-    override fun openFragmentProfile(employee: EmployeeEntity) {
+    override fun openFragmentProfile(employee: EmployeeNameAndPhoto) {
 
-        //navView.selectedItemId = R.id.navigation_profile
+        navView.visibility = View.INVISIBLE
         val args = Bundle()
         args.putSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
 
@@ -64,7 +64,7 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container_perfil, fragment, "profile")
+            .replace(R.id.container_profile, fragment, "profile")
             .addToBackStack(null)
             .detach(fragmentHome)
             .commit()
@@ -86,8 +86,9 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
             .addToBackStack(null)
             .detach(fragmentHome)
             .commit()
-    }
 
+        animateBarVisibility(true)
+    }
 
     override fun openFragmentRegister() {
         navView.selectedItemId = R.id.navigation_register
@@ -153,7 +154,8 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout, child: V,
         directTargetChild: View, target: View,
-        axes: Int, type: Int, ): Boolean {
+        axes: Int, type: Int,
+    ): Boolean {
 
         if (axes != ViewCompat.SCROLL_AXIS_VERTICAL) return false
 
@@ -166,7 +168,8 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
     override fun onNestedPreScroll(
         coordinatorLayout: CoordinatorLayout, child: V,
         target: View, dx: Int, dy: Int, consumed: IntArray,
-        type: Int) {
+        type: Int,
+    ) {
 
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
         child.translationY = max(0f, min(child.height.toFloat(), child.translationY + dy))
@@ -174,7 +177,8 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
 
     override fun onStopNestedScroll(
         coordinatorLayout: CoordinatorLayout, child: V,
-        target: View, type: Int) {
+        target: View, type: Int,
+    ) {
 
         if (!isSnappingEnabled) return
 
