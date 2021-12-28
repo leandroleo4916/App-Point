@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
@@ -59,21 +60,38 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding.search.setOnClickListener{ dialogListEmployee() }
         binding.search_date.setOnClickListener{ calendar() }
         binding.next.setOnClickListener{
-            if (binding.text_date_time.text != "Pontos de hoje"){
-                val nextDate = addOrRemoveDate(binding.text_date_time.text.toString(), 1)
-                viewModelSelected(employee.nameEmployee, nextDate)
-            }
+            setDate(binding.text_date_time.text.toString(), 1)
         }
         binding.back.setOnClickListener{
-            if (binding.text_date_time.text == "Pontos de hoje"){
-                val today = captureDateCurrent.captureDateCurrent()
-                val backDate = addOrRemoveDate(today, -1)
-                viewModelSelected(employee.nameEmployee, backDate)
+            setDate(binding.text_date_time.text.toString(), -1)
+        }
+    }
+
+    private fun setDate(value: String, position: Int){
+
+        val today = captureDateCurrent.captureDateCurrent()
+
+        if (value == "Pontos de hoje" && position == -1){
+            val date = addOrRemoveDate(today, position)
+            viewModelSelected(employee.nameEmployee, date)
+            binding.text_date_time.text = date
+            binding.next.setImageResource(R.drawable.ic_next_write)
+        }
+        else if(value == "Pontos de hoje" && position == 1){
+            Toast.makeText(this, "Não pode avançar", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            val date = addOrRemoveDate(binding.text_date_time.text.toString(), position)
+            viewModelSelected(employee.nameEmployee, date)
+            if (date == today){
+                binding.text_date_time.text = "Pontos de hoje"
+                binding.next.setImageResource(R.drawable.ic_next_gray)
             }
             else{
-                val backDate = addOrRemoveDate(binding.text_date_time.text.toString(), -1)
-                viewModelSelected(employee.nameEmployee, backDate)
+                binding.text_date_time.text = date
+                binding.next.setImageResource(R.drawable.ic_next_write)
             }
+
         }
     }
 

@@ -101,13 +101,13 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.textView_add_employee.setOnClickListener {
             if (context is ItemClickOpenRegister) {
                 itemClickOpenRegister = context as ItemClickOpenRegister
-                //itemClickOpenRegister.openFragmentRegister()
+                itemClickOpenRegister.openFragmentRegister()
             }
         }
         binding.imageView_add_employee.setOnClickListener {
             if (context is ItemClickOpenRegister) {
                 itemClickOpenRegister = context as ItemClickOpenRegister
-                //itemClickOpenRegister.openFragmentRegister()
+                itemClickOpenRegister.openFragmentRegister()
             }
         }
     }

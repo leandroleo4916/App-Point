@@ -95,6 +95,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun listener() {
         binding.image_filter.setOnClickListener { dialogPoint() }
+        binding.image_back_pontos.setOnClickListener { activity?.onBackPressed() }
     }
 
     private fun dialogPoint() {
