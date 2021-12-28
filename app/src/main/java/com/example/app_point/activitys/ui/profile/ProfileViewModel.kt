@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.app_point.entity.PointsEntity
+import com.example.app_point.entity.PointsFullEntity
 import com.example.app_point.interfaces.RepositoryData
 
 class ProfileViewModel(private val searchRecycler: RepositoryData) : ViewModel() {
 
-    private val pointsFullList = MutableLiveData<ArrayList<PointsEntity?>>()
-    val pointsList: LiveData<ArrayList<PointsEntity?>> = pointsFullList
+    private val pointsFullList = MutableLiveData<PointsFullEntity?>()
+    val pointsList: LiveData<PointsFullEntity?> = pointsFullList
 
     fun getFullPoints(employee: String, date: String){
-        if (employee == ""){ pointsFullList.value = searchRecycler.fullPoints() }
-        else { pointsFullList.value = searchRecycler.fullPointsToName(employee, date) }
+        pointsFullList.value = searchRecycler.fullPointsByNameAndDate(employee, date)
     }
 
 }

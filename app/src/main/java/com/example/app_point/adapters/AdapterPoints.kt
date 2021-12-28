@@ -7,12 +7,12 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
-import com.example.app_point.entity.PointsEntity
+import com.example.app_point.entity.PointsFullEntity
 import com.example.app_point.viewholver.ViewHolderPoints
 
 class AdapterPoints(private val application: Application) : RecyclerView.Adapter<ViewHolderPoints>() {
 
-    private var mListFullEmployee: ArrayList<PointsEntity?> = arrayListOf()
+    private var mListFullEmployee: ArrayList<PointsFullEntity?> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderPoints {
         val item = LayoutInflater.from(parent.context).inflate(
@@ -33,11 +33,8 @@ class AdapterPoints(private val application: Application) : RecyclerView.Adapter
 
     override fun getItemCount(): Int { return mListFullEmployee.count() }
 
-    fun updateFullEmployee(list: ArrayList<PointsEntity?>){
-        mListFullEmployee = when {
-            list.size > 1 -> { list.reversed() as ArrayList<PointsEntity?> }
-            else -> { list }
-        }
+    fun updateFullEmployee(list: ArrayList<PointsFullEntity?>){
+        mListFullEmployee = list
         notifyDataSetChanged()
     }
 }

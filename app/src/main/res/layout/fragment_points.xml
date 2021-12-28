@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             android:text="Adicione Ponto!"
-            android:textColor="#35B5AD"
+            android:textColor="@color/fundoBlue"
             android:textSize="22sp"
             android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent"

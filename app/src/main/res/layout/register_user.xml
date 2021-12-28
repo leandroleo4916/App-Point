@@ -26,7 +26,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@id/ready_account"
         android:text="@string/entre_aqui"
-        android:textColor="@color/fundo"
+        android:textColor="@color/fundoBlue"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

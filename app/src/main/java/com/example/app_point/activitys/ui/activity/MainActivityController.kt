@@ -51,20 +51,10 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
 
     override fun openFragmentProfile(employee: EmployeeNameAndPhoto) {
 
-        navView.visibility = View.INVISIBLE
-        val args = Bundle()
-        args.putSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
+        val intent = Intent(applicationContext, ProfileFragment::class.java)
+        intent.putExtra (ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
+        startActivity(intent)
 
-        val fragmentHome = HomeFragment.newInstance()
-        val fragment = ProfileFragment.newInstance()
-        fragment.arguments = args
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_profile, fragment, "profile")
-            .addToBackStack(null)
-            .detach(fragmentHome)
-            .commit()
     }
 
     override fun openFragmentRegister(id: Int) {
@@ -103,17 +93,9 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
 
     override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
 
-        val args = Bundle()
-        args.putSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
-
-        val fragment = ProfileFragment.newInstance()
-        fragment.arguments = args
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_home, fragment, "profile")
-            .addToBackStack(null)
-            .commit()
+        val intent = Intent(this, ProfileFragment::class.java)
+        intent.putExtra(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
+        startActivity(intent)
 
     }
 

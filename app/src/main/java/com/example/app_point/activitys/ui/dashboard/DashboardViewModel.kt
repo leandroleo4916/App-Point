@@ -78,8 +78,8 @@ class DashboardViewModel (private var points: RepositoryPoint,
             listEmployeeHoursExtraAndDone.add(EntityDashboard(i.photo, extraString, doneString))
             bestEmployee.add(EntityBestEmployee(i.photo, punctuation))
 
-            if (i.vacation == 1) vacation++
-            if (i.active == 1) active++
+            //if (i.vacation == 1) vacation++
+            //if (i.active == 1) active++
         }
 
         totalEmployeeList.value = employee.size

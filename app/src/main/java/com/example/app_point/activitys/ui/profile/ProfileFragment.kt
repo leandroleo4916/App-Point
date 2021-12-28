@@ -4,24 +4,19 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.app_point.R
-import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.EmployeeNameAndPhoto
-import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.coroutines.*
@@ -29,82 +24,71 @@ import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
+class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val adapterPoints: AdapterPoints by inject()
     private val businessEmployee: BusinessEmployee by inject()
+    private val captureDateCurrent: CaptureDateCurrent by inject()
     private val repositoryPoint: RepositoryPoint by inject()
     private val photo: ConverterPhoto by inject()
     private lateinit var profileViewModel: ProfileViewModel
-    private lateinit var listener: ItemEmployee
+    private lateinit var employee: EmployeeEntity
     private lateinit var binding: View
 
-    companion object { fun newInstance() = ProfileFragment() }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_profile)
 
-    override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
-                               savedInstanceState: Bundle?): View {
-
-        binding = inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = findViewById(R.id.container_profile)
         profileViewModel = ProfileViewModel(repositoryPoint)
+        val intent = intent
+        val args = intent.getSerializableExtra(
+            ConstantsEmployee.EMPLOYEE.TABLE_NAME) as EmployeeNameAndPhoto
 
-        if (arguments == null){
-            recycler()
-            searchEmployee()
-            listener()
-            observer()
-        }
-        else {
-            val args = arguments?.let {
-                it.getSerializable(ConstantsEmployee.EMPLOYEE.TABLE_NAME) as EmployeeNameAndPhoto
-            }
-            recycler()
-            if (args != null) { setInfoEmployee(args) }
-            if (args != null) { searchPointsEmployee(args.name) }
-            listener()
-            observer()
-        }
+        employee = businessEmployee.consultEmployeeWithId(args.id)!!
 
-        return binding
-    }
+        setInfoEmployee()
+        searchPointsEmployee()
+        listener()
+        observer()
 
-    private fun recycler() {
-        val recycler = binding.recyclerViewProfile
-        recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = adapterPoints
-    }
-
-    private fun searchEmployee() {
-
-        val listEmployee = businessEmployee.consultEmployee()
-
-        if (listEmployee.isNotEmpty()) {
-            searchByNameEmployee(listEmployee[0])
-            searchPointsEmployee(listEmployee[0])
-        }
-        else { binding.progress_points.visibility = View.GONE }
     }
 
     private fun listener() {
 
-        binding.image_back_perfil.setOnClickListener {
-            activity?.onBackPressed()
+        binding.image_back_perfil.setOnClickListener { this.onBackPressed() }
+        binding.search.setOnClickListener{ dialogListEmployee() }
+        binding.search_date.setOnClickListener{ calendar() }
+        binding.next.setOnClickListener{
+            if (binding.text_date_time.text != "Pontos de hoje"){
+                val nextDate = addOrRemoveDate(binding.text_date_time.text.toString(), 1)
+                viewModelSelected(employee.nameEmployee, nextDate)
+            }
         }
-        binding.search.setOnClickListener{
-            dialogListEmployee()
-        }
-        binding.text_name_employee.setOnClickListener{
-            editEmployee(binding.text_name_employee.text.toString())
-        }
-        binding.search_date.setOnClickListener{
-            calendar()
-        }
-        binding.image_photo_employee.setOnClickListener{
-            editEmployee(binding.text_name_employee.text.toString())
+        binding.back.setOnClickListener{
+            if (binding.text_date_time.text == "Pontos de hoje"){
+                val today = captureDateCurrent.captureDateCurrent()
+                val backDate = addOrRemoveDate(today, -1)
+                viewModelSelected(employee.nameEmployee, backDate)
+            }
+            else{
+                val backDate = addOrRemoveDate(binding.text_date_time.text.toString(), -1)
+                viewModelSelected(employee.nameEmployee, backDate)
+            }
         }
     }
 
+    private fun addOrRemoveDate(date: String, pos: Int): String{
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        val divDate = date.split("/")
+
+        val cal = android.icu.util.Calendar.getInstance()
+        cal.set(divDate[2].toInt(), divDate[1].toInt() - 1, divDate[0].toInt())
+        cal.add(android.icu.util.Calendar.DAY_OF_MONTH, pos)
+
+        return dateFormat.format(cal.time)
+    }
+
     private fun calendar() {
-        val nameEmployee = binding.text_name_employee.text.toString()
         val date = Calendar.getInstance()
         val local = Locale("pt", "BR")
 
@@ -113,43 +97,39 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
             date.set(Calendar.MONTH, month)
             date.set(Calendar.YEAR, year)
             val dateSelected = SimpleDateFormat("dd/MM/yyyy", local).format(date.time)
-            viewModelSelected(nameEmployee, dateSelected)
-            binding.text_date_selected.text = dateSelected
+            viewModelSelected("", dateSelected)
         }
-        context?.let {
+        let {
             DatePickerDialog(
                 it, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH),
                 date.get(Calendar.DAY_OF_MONTH)).show()
         }
     }
 
-    private fun setInfoEmployee (args: EmployeeNameAndPhoto){
+    private fun setInfoEmployee(){
 
-        val photoConverter = photo.converterToBitmap(args.photo)
-
-        binding.run {
-            text_name_employee.text = args.name
-            //text_cargo_employee.text = args.cargoEmployee
-            image_photo_employee.setImageBitmap(photoConverter)
-        }
-        setProgressHours(binding)
-    }
-
-    private fun searchByNameEmployee(name: String){
-
-        val dataEmployee = businessEmployee.consultEmployeeByName(name)
-        val image = dataEmployee.photo
-        val photoConverter = photo.converterToBitmap(image)
+        val photoConverter = photo.converterToBitmap(employee.photo)
 
         binding.run {
-            text_name_employee.text = dataEmployee.nameEmployee
-            text_cargo_employee.text = dataEmployee.cargoEmployee
             image_photo_employee.setImageBitmap(photoConverter)
+            text_cargo_description.text = employee.cargoEmployee
+            text_email_description.text = employee.emailEmployee
+            text_phone_description.text = employee.phoneEmployee
+            text_admission_description.text = employee.admissaoEmployee
+            text_birth_description.text = employee.aniversarioEmployee
+            if (employee.vacation == 1) {
+                text_vacation_description.text = "De ferias"
+                ic_vacation_description.setImageResource(R.drawable.ic_trip)
+            }
+            if (employee.active == 1) {
+                text_active_description.text = "Desativado"
+                ic_active_description.setImageResource(R.drawable.ic_disable)
+            }
         }
-        setProgressHours(binding)
+        setProgressHours()
     }
 
-    private fun setProgressHours(binding: View){
+    private fun setProgressHours(){
         val hoursMake = 120
         var pStatus1 = 0
         val hoursExtra = 22
@@ -188,36 +168,23 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
         profileViewModel.getFullPoints(name, date)
     }
 
-    private fun searchPointsEmployee (name: String?){
+    private fun searchPointsEmployee(){
 
-        if (name != null) {
-            profileViewModel.getFullPoints(name, "")
-        }
-        binding.text_date_selected.text = getString(R.string.todos)
+        profileViewModel.getFullPoints(employee.nameEmployee, captureDateCurrent.captureHoraCurrent())
         binding.progress_points.visibility = View.GONE
     }
 
     private fun observer() {
 
-        profileViewModel.pointsList.observe(viewLifecycleOwner, {
-            when (it.size) {
-                0 -> {
-                    //showSnackBar(R.string.nenhum_ponto_registrado)
-                    adapterPoints.updateFullEmployee(it)
-                    binding.progress_points.visibility = View.GONE
-                }
-                else -> {
-                    adapterPoints.updateFullEmployee(it)
-                    binding.progress_points.visibility = View.GONE
-                }
+        profileViewModel.pointsList.observe(this, {
+            binding.run {
+                text_hora1.text = it?.hora1 ?: "--:--"
+                text_hora2.text = it?.hora2 ?: "--:--"
+                text_hora3.text = it?.hora3 ?: "--:--"
+                text_hora4.text = it?.hora4 ?: "--:--"
             }
+            binding.progress_points.visibility = View.GONE
         })
-    }
-
-    private fun editEmployee(employee: String){
-        if (employee == "Fulano Beltrano") {
-            showSnackBar(R.string.precisa_add_funcionarios)
-        }
     }
 
     private fun dialogListEmployee() {
@@ -227,22 +194,21 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
         val list = businessEmployee.consultEmployee()
         val listSpinner= inflateView.findViewById(R.id.spinner_employee) as Spinner
-        val adapter =
-            context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, list) }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
         listSpinner.adapter = adapter
         listSpinner.onItemSelectedListener = this
 
-        val alertDialog = AlertDialog.Builder(context)
+        val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle(getString(R.string.selecione_funcionario))
         alertDialog.setView(inflateView)
         alertDialog.setCancelable(false)
         alertDialog.setPositiveButton("Ok") { _, _ ->
 
             when (val itemSpinner = listSpinner.selectedItem) {
-                null -> {}
+                null -> { }
                 else -> {
                     val employee = businessEmployee.consultEmployeeByName(itemSpinner.toString())
-                    resumeFragment(employee)
+                    //resumeFragment(employee)
                 }
             }
         }
@@ -253,14 +219,11 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
         dialog.show()
     }
 
-    private fun resumeFragment(employee: EmployeeEntity) {
-        if (context is ItemEmployee) { listener = context as ItemEmployee }
-        //listener.openFragmentProfile(employee.id)
-    }
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinner_employee -> { parent.getItemAtPosition(position).toString() }
+            R.id.spinner_employee -> {
+                parent.getItemAtPosition(position).toString()
+            }
         }
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {}

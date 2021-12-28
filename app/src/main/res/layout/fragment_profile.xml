@@ -26,17 +26,17 @@
 
             <ImageView
                 android:id="@+id/image_back_perfil"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/buttom_back"
-                android:src="@drawable/ic_back"
+                android:src="@drawable/ic_close"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/text_title_name_employee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/perfil_funcionario"
@@ -52,7 +52,7 @@
                 android:id="@+id/search"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
-                android:src="@drawable/ic_search"
+                android:src="@drawable/ic_option"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -61,34 +61,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-    <TextView
-        android:id="@+id/text_name_employee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Fulano Beltrano"
-        android:textColor="@color/fundoBlue"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/image_photo_employee"
-        app:layout_constraintStart_toStartOf="@+id/image_photo_employee"
-        app:layout_constraintTop_toBottomOf="@+id/image_photo_employee"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_cargo_employee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="Assistente Administrativo"
-        android:textColor="@color/letrashint"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@+id/text_name_employee"
-        app:layout_constraintStart_toStartOf="@+id/text_name_employee"
-        app:layout_constraintTop_toBottomOf="@+id/text_name_employee"
-        tools:ignore="MissingConstraints" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_photo_employee"
@@ -230,40 +202,39 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_profile"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="26dp"
         android:background="@drawable/back_toolbar_points"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_cargo_employee"
+        app:layout_constraintTop_toBottomOf="@+id/image_photo_employee"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/text_date_current"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:text="Pontos realizados"
-        android:textColor="@color/letras"
-        android:textSize="20sp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/letrashint"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_date_selected"
+        android:id="@+id/text_date_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="Todos"
+        android:layout_marginStart="22dp"
+        android:text="Pontos de hoje"
         android:textColor="@color/letras"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/search_date"
-        app:layout_constraintEnd_toStartOf="@+id/search_date"
-        app:layout_constraintTop_toTopOf="@+id/search_date"
-        app:layout_constraintVertical_bias="0.483"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -272,37 +243,462 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="22dp"
         android:src="@drawable/ic_calendar"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
         app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
-        app:layout_constraintVertical_bias="0.516"
         tools:ignore="ContentDescription,MissingConstraints" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewProfile"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
+        app:layout_constraintEnd_toStartOf="@+id/toolbar1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"
-        tools:listitem="@layout/recycler_time_line" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar1"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_next_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/toolbar4"
+        app:layout_constraintTop_toTopOf="@+id/toolbar4"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/toolbar1"
+        android:layout_width="60dp"
+        android:layout_height="26dp"
+        android:background="@drawable/back_fundo"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintEnd_toStartOf="@+id/toolbar2"
+        app:layout_constraintTop_toTopOf="@+id/toolbar2"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/toolbar2"
+        android:layout_width="60dp"
+        android:layout_height="26dp"
+        android:background="@drawable/back_fundo"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintEnd_toStartOf="@+id/guide_start"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_line"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/toolbar3"
+        android:layout_width="60dp"
+        android:layout_height="26dp"
+        android:background="@drawable/back_fundo"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintStart_toStartOf="@+id/guide_start"
+        app:layout_constraintTop_toTopOf="@+id/toolbar2"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/toolbar4"
+        android:layout_width="60dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="2dp"
+        android:background="@drawable/back_fundo"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
+        app:layout_constraintStart_toEndOf="@+id/toolbar3"
+        app:layout_constraintTop_toTopOf="@+id/toolbar3"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_hora1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_name_employee"
+        android:text="@string/_00_00"
+        android:textColor="@color/letras"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar1"
+        app:layout_constraintStart_toStartOf="@+id/toolbar1"
+        app:layout_constraintTop_toTopOf="@+id/toolbar1" />
+
+    <TextView
+        android:id="@+id/text_hora2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_name_employee"
+        android:text="@string/_00_00"
+        android:textColor="@color/letras"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+        app:layout_constraintStart_toStartOf="@+id/toolbar2"
+        app:layout_constraintTop_toTopOf="@+id/toolbar2"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_hora3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_00_00"
+        android:textColor="@color/letras"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar3"
+        app:layout_constraintStart_toStartOf="@+id/toolbar3"
+        app:layout_constraintTop_toTopOf="@+id/toolbar3"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_hora4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_00_00"
+        android:textColor="@color/letras"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar4"
+        app:layout_constraintStart_toStartOf="@+id/toolbar4"
+        app:layout_constraintTop_toTopOf="@+id/toolbar4"
+        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/progress_points"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/fundoBlue"
         style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:indeterminate="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateTint="@color/fundoBlue"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_description"
+        android:layout_width="match_parent"
+        android:layout_height="422dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/back_toolbar_points"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line_description"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_description"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line_description2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line_description3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description2"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line_description4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description3"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line_description5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description4"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line_description6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description5"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_line_description7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description6"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:text="Dados do Funcionário"
+        android:textColor="@color/letras"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_description"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_description"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_active_description"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_power_on"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description2"
+        app:layout_constraintStart_toStartOf="@+id/guide_start"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_vacation_description"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/ic_working"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_cargo_description"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/ic_work"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description2"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_email_description"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/ic_email_write"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description3"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_phone_description"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/ic_phone"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description4"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_admission_description"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/ic_admissao"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description5"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_birth_description"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/ic_niver"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description6"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ic_time_description"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="28dp"
+        android:src="@drawable/ic_time"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description7"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_active_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Em trabalho"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_vacation_description"
+        app:layout_constraintStart_toEndOf="@+id/ic_vacation_description"
+        app:layout_constraintTop_toTopOf="@+id/ic_vacation_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_cargo_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Cargo"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_cargo_description"
+        app:layout_constraintStart_toEndOf="@+id/ic_cargo_description"
+        app:layout_constraintTop_toTopOf="@+id/ic_cargo_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_email_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Email"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_email_description"
+        app:layout_constraintStart_toEndOf="@+id/ic_email_description"
+        app:layout_constraintTop_toTopOf="@+id/ic_email_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_phone_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Telefone"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description5"
+        app:layout_constraintStart_toEndOf="@+id/ic_phone_description"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description4"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_admission_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Admissão"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description6"
+        app:layout_constraintStart_toEndOf="@+id/ic_admission_description"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description5"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_birth_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Aniversário"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description7"
+        app:layout_constraintStart_toEndOf="@+id/ic_birth_description"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description6"
+        app:layout_constraintVertical_bias="0.481"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_time_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="08:00"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_description"
+        app:layout_constraintStart_toEndOf="@+id/ic_birth_description"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description7"
+        app:layout_constraintVertical_bias="0.481"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_vacation_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Ativo"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_active_description"
+        app:layout_constraintStart_toEndOf="@+id/ic_active_description"
+        app:layout_constraintTop_toTopOf="@+id/ic_active_description"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

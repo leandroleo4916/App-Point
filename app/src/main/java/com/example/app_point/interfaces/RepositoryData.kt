@@ -1,9 +1,6 @@
 package com.example.app_point.interfaces
 
-import com.example.app_point.entity.HoursEntity
-import com.example.app_point.entity.HourEntityInt
-import com.example.app_point.entity.PointsEntity
-import com.example.app_point.entity.PointsHours
+import com.example.app_point.entity.*
 
 interface RepositoryData {
     fun setPoint(employee: String, date: String, hour: String, hourInt: Int): Boolean
@@ -17,7 +14,7 @@ interface RepositoryData {
     fun fullPointsByName(nome: String): ArrayList<HoursEntity>
     fun removePoints(name: String): Boolean
     fun selectPoint(nome: String, date: String): PointsHours?
-    fun setPointByDate(employee: String, date: String, positionHour: Int,
-                       hour: String, hourInt: Int): Boolean
+    fun setPointByDate(employee: String, date: String, positionHour: Int, hour: String, hourInt: Int): Boolean
     fun fullPointsByDate(date: String): ArrayList<PointsEntity?>
+    fun fullPointsByNameAndDate(name: String, date: String): PointsFullEntity?
 }

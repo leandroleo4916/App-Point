@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
 import com.example.app_point.entity.PointsEntity
+import com.example.app_point.entity.PointsFullEntity
 
 class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -12,7 +13,7 @@ class ViewHolderPoints(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById<TextView>(R.id.text_date_time_line).text = data
     }
 
-    fun bindHora(fullEmployee: PointsEntity?) {
+    fun bindHora(fullEmployee: PointsFullEntity?) {
 
         val textHora1 = itemView.findViewById<TextView>(R.id.text_hour_time_line)
         val textHora2 = itemView.findViewById<TextView>(R.id.text_hour_time_line2)

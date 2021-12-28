@@ -5,10 +5,7 @@ import android.database.Cursor
 import com.example.app_point.utils.CalculateHours
 import com.example.app_point.constants.ConstantsPoint
 import com.example.app_point.database.DataBaseEmployee
-import com.example.app_point.entity.HoursEntity
-import com.example.app_point.entity.HourEntityInt
-import com.example.app_point.entity.PointsEntity
-import com.example.app_point.entity.PointsHours
+import com.example.app_point.entity.*
 import com.example.app_point.interfaces.RepositoryData
 
 class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryData {
@@ -716,5 +713,77 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
         } catch (e: Exception) {
             return list
         }
+    }
+
+    override fun fullPointsByNameAndDate(name: String, date: String): PointsFullEntity?{
+
+        var list: PointsFullEntity? = null
+
+        try {
+            val cursor: Cursor
+            val db = dataBasePoint.readableDatabase
+            val projection = arrayOf(
+                ConstantsPoint.POINT.COLUMNS.ID,
+                ConstantsPoint.POINT.COLUMNS.EMPLOYEE,
+                ConstantsPoint.POINT.COLUMNS.DATE,
+                ConstantsPoint.POINT.COLUMNS.HOUR1,
+                ConstantsPoint.POINT.COLUMNS.HOUR2,
+                ConstantsPoint.POINT.COLUMNS.HOUR3,
+                ConstantsPoint.POINT.COLUMNS.HOUR4,
+                ConstantsPoint.POINT.COLUMNS.HOUR1INT,
+                ConstantsPoint.POINT.COLUMNS.HOUR2INT,
+                ConstantsPoint.POINT.COLUMNS.HOUR3INT,
+                ConstantsPoint.POINT.COLUMNS.HOUR4INT,
+                ConstantsPoint.POINT.COLUMNS.PUNCTUATION,
+                ConstantsPoint.POINT.COLUMNS.HOUREXTRA
+            )
+            val selection = ConstantsPoint.POINT.COLUMNS.EMPLOYEE + " = ? "
+            val args = arrayOf(name)
+
+            cursor = db.query(
+                ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,
+                null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val id = cursor?.getInt(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.ID))
+                    val nome = cursor?.getString(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.EMPLOYEE))
+                    val data = cursor?.getString(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.DATE))
+                    val hour1 = cursor?.getString(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR1))
+                    val hour2 = cursor?.getString(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR2))
+                    val hour3 = cursor?.getString(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR3))
+                    val hour4 = cursor?.getString(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR4))
+                    val hour1Int = cursor?.getInt(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR1INT))
+                    val hour2Int = cursor?.getInt(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR2INT))
+                    val hour3Int = cursor?.getInt(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR3INT))
+                    val hour4Int = cursor?.getInt(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUR4INT))
+                    val punctuation = cursor?.getInt(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.PUNCTUATION))
+                    val hourExtra = cursor?.getInt(cursor.getColumnIndex(
+                        ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
+
+                    list = PointsFullEntity(id, nome, data, hour1, hour2, hour3, hour4,
+                        hour1Int, hour2Int, hour3Int, hour4Int, punctuation, hourExtra)
+                }
+            }
+            cursor?.close()
+            return list
+
+        } catch (e: Exception) {
+            return list
+        }
+
     }
 }

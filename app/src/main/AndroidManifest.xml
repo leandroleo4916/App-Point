@@ -18,6 +18,7 @@
         tools:replace="android:icon"
         tools:ignore="AllowBackup" >
         <activity android:name=".activitys.ui.activity.MainActivityController" />
+        <activity android:name=".activitys.ui.profile.ProfileFragment" />
         <activity android:name=".activitys.ui.login.RegisterUserActivity" />
         <activity android:name=".activitys.ui.login.LoginActivity" >
             <intent-filter>
