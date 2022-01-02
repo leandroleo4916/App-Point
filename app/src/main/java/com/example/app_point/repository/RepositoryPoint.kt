@@ -737,8 +737,9 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.PUNCTUATION,
                 ConstantsPoint.POINT.COLUMNS.HOUREXTRA
             )
-            val selection = ConstantsPoint.POINT.COLUMNS.EMPLOYEE + " = ? "
-            val args = arrayOf(name)
+            val selection = ConstantsPoint.POINT.COLUMNS.EMPLOYEE + " = ? AND " +
+                    ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
+            val args = arrayOf(name, date)
 
             cursor = db.query(
                 ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,

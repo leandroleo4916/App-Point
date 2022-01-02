@@ -49,9 +49,9 @@
                 tools:ignore="MissingConstraints" />
 
             <ImageView
-                android:id="@+id/search"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:id="@+id/option_profile"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_option"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +135,7 @@
         android:layout_height="75dp"
         android:layout_centerInParent="true"
         android:indeterminate="false"
-        android:max="220"
+        android:max="40"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs"
         android:secondaryProgress="0"
@@ -231,7 +231,7 @@
         android:layout_marginStart="22dp"
         android:text="Pontos de hoje"
         android:textColor="@color/letras"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/toolbar_line"
         app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
         app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
@@ -257,8 +257,8 @@
 
     <ImageView
         android:id="@+id/back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_marginStart="20dp"
         android:src="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar1"
@@ -269,8 +269,8 @@
 
     <ImageView
         android:id="@+id/next"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/ic_next_gray"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
@@ -642,9 +642,9 @@
         android:text="Telefone"
         android:textColor="@color/letras"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description5"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_phone_description"
         app:layout_constraintStart_toEndOf="@+id/ic_phone_description"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description4"
+        app:layout_constraintTop_toTopOf="@+id/ic_phone_description"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -655,9 +655,9 @@
         android:text="Admissão"
         android:textColor="@color/letras"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description6"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_admission_description"
         app:layout_constraintStart_toEndOf="@+id/ic_admission_description"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description5"
+        app:layout_constraintTop_toTopOf="@+id/ic_admission_description"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -668,24 +668,101 @@
         android:text="Aniversário"
         android:textColor="@color/letras"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description7"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_birth_description"
         app:layout_constraintStart_toEndOf="@+id/ic_birth_description"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description6"
+        app:layout_constraintTop_toTopOf="@+id/ic_birth_description"
         app:layout_constraintVertical_bias="0.481"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_time_description"
+        android:id="@+id/text_time1_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:text="08:00"
         android:textColor="@color/letras"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_description"
-        app:layout_constraintStart_toEndOf="@+id/ic_birth_description"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description7"
-        app:layout_constraintVertical_bias="0.481"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_time_description"
+        app:layout_constraintStart_toEndOf="@+id/ic_time_description"
+        app:layout_constraintTop_toTopOf="@+id/ic_time_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_as1_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="às"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_time1_description"
+        app:layout_constraintStart_toEndOf="@+id/text_time1_description"
+        app:layout_constraintTop_toTopOf="@+id/text_time1_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_time2_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="12:00"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_as1_description"
+        app:layout_constraintStart_toEndOf="@+id/text_as1_description"
+        app:layout_constraintTop_toTopOf="@+id/text_as1_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_e_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="/"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_time2_description"
+        app:layout_constraintStart_toEndOf="@+id/text_time2_description"
+        app:layout_constraintTop_toTopOf="@+id/text_time2_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_time3_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="14:00"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_e_description"
+        app:layout_constraintStart_toEndOf="@+id/text_e_description"
+        app:layout_constraintTop_toTopOf="@+id/text_e_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_as2_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="às"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_time3_description"
+        app:layout_constraintStart_toEndOf="@+id/text_time3_description"
+        app:layout_constraintTop_toTopOf="@+id/text_time3_description"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_time4_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="18:00"
+        android:textColor="@color/letras"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_as1_description"
+        app:layout_constraintStart_toEndOf="@+id/text_as2_description"
+        app:layout_constraintTop_toTopOf="@+id/text_as1_description"
         tools:ignore="MissingConstraints" />
 
     <TextView

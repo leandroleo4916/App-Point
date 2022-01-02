@@ -50,11 +50,9 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
     }
 
     override fun openFragmentProfile(employee: EmployeeNameAndPhoto) {
-
         val intent = Intent(applicationContext, ProfileFragment::class.java)
-        intent.putExtra (ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
+        intent.putExtra(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
         startActivity(intent)
-
     }
 
     override fun openFragmentRegister(id: Int) {
@@ -79,24 +77,12 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
 
     override fun openFragmentRegister() {
         navView.selectedItemId = R.id.navigation_register
-
-        val fragmentHome = HomeFragment.newInstance()
-        val fragment = RegisterFragment.newInstance()
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_register, fragment, "register")
-            .addToBackStack(null)
-            .detach(fragmentHome)
-            .commit()
     }
 
     override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
-
         val intent = Intent(this, ProfileFragment::class.java)
         intent.putExtra(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
         startActivity(intent)
-
     }
 
     private fun animateBarVisibility(isVisible: Boolean) {
@@ -108,7 +94,6 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
                 interpolator = DecelerateInterpolator()
                 duration = 150L
             }
-
             offsetAnimator.addUpdateListener {
                 navView.translationY = it.animatedValue as Float
             }

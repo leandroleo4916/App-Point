@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -23,7 +22,6 @@ import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.interfaces.OnItemClickRecycler
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CaptureDateCurrent
-import com.example.app_point.utils.ConverterPhoto
 import com.example.app_point.utils.SecurityPreferences
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -33,7 +31,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
+class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
 
     private lateinit var employeeAdapter: EmployeeAdapter
     private lateinit var itemEmployee: ItemEmployee
@@ -144,9 +142,10 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         val dialog = createDialog("Deseja remover $name? Confirme a senha!")
         dialog?.setView(inflate)
         dialog?.setPositiveButton(R.string.remover) { _, _ ->
+
             val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
             if (password == textPassword.text.toString()){
-                removeEmployee(id, name, position)
+                removeEmployee(id, name)
             }
             else{
                 showSnackBar(R.string.erro_senha)
@@ -204,20 +203,9 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         }
     }
 
-    override fun clickImage(image: ByteArray, name: String) {
-        val inflate = layoutInflater.inflate(R.layout.view_image_employee, null)
-        val photo = inflate.findViewById<ImageView>(R.id.image_click)
-        val photoConverter = ConverterPhoto().converterToBitmap(image)
-        photo.setImageBitmap(photoConverter)
-        val dialog = createDialog(name)
-        dialog?.setView(inflate)
-        dialog?.setPositiveButton(R.string.sair){ _, _ -> }
-        dialog?.create()?.show()
-    }
+    override fun clickImage(image: ByteArray, name: String) {}
 
-    override fun employeeRemoved() {
-        showSnackBar(R.string.precisa_add_funcionarios)
-    }
+    override fun employeeRemoved() { showSnackBar(R.string.precisa_add_funcionarios) }
 
     private fun editPoint (name: String, date: String, positionHour: Int, hour: String,
                            position: Int){
@@ -261,7 +249,7 @@ class EmployeeFragment : Fragment(), OnItemClickRecycler, INotification {
         return dateFormat.format(cal.time)
     }
 
-    private fun removeEmployee(id: Int, name: String, position: Int){
+    private fun removeEmployee(id: Int, name: String){
 
         if (viewModelEmployee.removeEmployee(id)){
             viewModelEmployee.removePoints(name)

@@ -1,21 +1,21 @@
 package com.example.app_point.activitys.ui.profile
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.utils.CalculateHours
 import com.example.app_point.utils.CaptureDateCurrent
 import com.example.app_point.utils.ConverterPhoto
 import com.google.android.material.snackbar.Snackbar
@@ -25,15 +25,17 @@ import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
 
     private val businessEmployee: BusinessEmployee by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
     private val repositoryPoint: RepositoryPoint by inject()
     private val photo: ConverterPhoto by inject()
+    private val hours: CalculateHours by inject()
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var employee: EmployeeEntity
     private lateinit var binding: View
+    private val today = captureDateCurrent.captureDateCurrent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +59,7 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun listener() {
 
         binding.image_back_perfil.setOnClickListener { this.onBackPressed() }
-        binding.search.setOnClickListener{ dialogListEmployee() }
+        binding.option_profile.setOnClickListener{ optionMenuProfile() }
         binding.search_date.setOnClickListener{ calendar() }
         binding.next.setOnClickListener{
             setDate(binding.text_date_time.text.toString(), 1)
@@ -69,20 +71,20 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun setDate(value: String, position: Int){
 
-        val today = captureDateCurrent.captureDateCurrent()
-
         if (value == "Pontos de hoje" && position == -1){
             val date = addOrRemoveDate(today, position)
             viewModelSelected(employee.nameEmployee, date)
             binding.text_date_time.text = date
             binding.next.setImageResource(R.drawable.ic_next_write)
         }
-        else if(value == "Pontos de hoje" && position == 1){
-            Toast.makeText(this, "Não pode avançar", Toast.LENGTH_SHORT).show()
+        else if (value == "Pontos de hoje" && position == 1){
+            Toast.makeText(this,
+                "Não pode selecionar datas futuras!", Toast.LENGTH_SHORT).show()
         }
         else{
             val date = addOrRemoveDate(binding.text_date_time.text.toString(), position)
             viewModelSelected(employee.nameEmployee, date)
+            
             if (date == today){
                 binding.text_date_time.text = "Pontos de hoje"
                 binding.next.setImageResource(R.drawable.ic_next_gray)
@@ -114,8 +116,24 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
             date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             date.set(Calendar.MONTH, month)
             date.set(Calendar.YEAR, year)
+
             val dateSelected = SimpleDateFormat("dd/MM/yyyy", local).format(date.time)
-            viewModelSelected("", dateSelected)
+
+            when {
+                dateSelected == today -> {
+                    binding.text_date_time.text = "Pontos de hoje"
+                    binding.next.setImageResource(R.drawable.ic_next_write)
+                }
+                compareDate(dateSelected, captureDateCurrent.captureDateCurrent()) -> {
+                    Toast.makeText(this,
+                        "Não pode selecionar datas futuras!", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    viewModelSelected(employee.nameEmployee, dateSelected)
+                    binding.text_date_time.text = dateSelected
+                    binding.next.setImageResource(R.drawable.ic_next_gray)
+                }
+            }
         }
         let {
             DatePickerDialog(
@@ -124,12 +142,25 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
+    private fun compareDate(dateSelected: String, dateString: String): Boolean{
+
+        val format = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        val dateCurrent = captureDateCurrent.captureDateCurrent()
+        val date1 = format.parse(dateSelected)
+
+        val date2 =
+            if (dateString == "Pontos de hoje") format.parse(dateCurrent)
+            else format.parse(dateCurrent)
+        return date1!!.after(date2)
+    }
+
     private fun setInfoEmployee(){
 
         val photoConverter = photo.converterToBitmap(employee.photo)
 
         binding.run {
             image_photo_employee.setImageBitmap(photoConverter)
+            text_title_name_employee.text = employee.nameEmployee
             text_cargo_description.text = employee.cargoEmployee
             text_email_description.text = employee.emailEmployee
             text_phone_description.text = employee.phoneEmployee
@@ -143,12 +174,16 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 text_active_description.text = "Desativado"
                 ic_active_description.setImageResource(R.drawable.ic_disable)
             }
+            text_time1_description.text = hours.convertMinutesInHoursString(employee.horario1)
+            text_time2_description.text = hours.convertMinutesInHoursString(employee.horario2)
+            text_time3_description.text = hours.convertMinutesInHoursString(employee.horario3)
+            text_time4_description.text = hours.convertMinutesInHoursString(employee.horario4)
         }
         setProgressHours()
     }
 
     private fun setProgressHours(){
-        val hoursMake = 120
+        val hoursMake = 20
         var pStatus1 = 0
         val hoursExtra = 22
         var pStatus2 = 0
@@ -180,15 +215,14 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun viewModelSelected (name: String, date: String){
-
+    private fun viewModelSelected(name: String, date: String){
         binding.progress_points.visibility = View.VISIBLE
         profileViewModel.getFullPoints(name, date)
     }
 
     private fun searchPointsEmployee(){
-
-        profileViewModel.getFullPoints(employee.nameEmployee, captureDateCurrent.captureHoraCurrent())
+        profileViewModel.getFullPoints(employee.nameEmployee,
+            captureDateCurrent.captureDateCurrent())
         binding.progress_points.visibility = View.GONE
     }
 
@@ -205,38 +239,6 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
         })
     }
 
-    private fun dialogListEmployee() {
-
-        val inflater = layoutInflater
-        val inflateView = inflater.inflate(R.layout.dialog_list_employee, null)
-
-        val list = businessEmployee.consultEmployee()
-        val listSpinner= inflateView.findViewById(R.id.spinner_employee) as Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
-        listSpinner.adapter = adapter
-        listSpinner.onItemSelectedListener = this
-
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle(getString(R.string.selecione_funcionario))
-        alertDialog.setView(inflateView)
-        alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("Ok") { _, _ ->
-
-            when (val itemSpinner = listSpinner.selectedItem) {
-                null -> { }
-                else -> {
-                    val employee = businessEmployee.consultEmployeeByName(itemSpinner.toString())
-                    //resumeFragment(employee)
-                }
-            }
-        }
-        alertDialog.setNegativeButton(R.string.cancelar) { _, _ ->
-            showSnackBar(R.string.cancelado)
-        }
-        val dialog = alertDialog.create()
-        dialog.show()
-    }
-
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
             R.id.spinner_employee -> {
@@ -245,6 +247,27 @@ class ProfileFragment: AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    private fun optionMenuProfile(){
+
+        val popMenu = PopupMenu(this, binding.option_profile)
+        popMenu.menuInflater.inflate(R.menu.menu_profile, popMenu.menu)
+        popMenu.setOnMenuItemClickListener { item ->
+            when (item!!.itemId) {
+                R.id.edit_profile -> {
+
+                }
+                R.id.ferias_profile -> {
+
+                }
+                R.id.desativar_profile -> {
+
+                }
+            }
+            true
+        }
+        popMenu.show()
+    }
 
     private fun showSnackBar(message: Int) {
         Snackbar.make(binding.container_profile,

@@ -139,23 +139,18 @@ class RegisterFragment : Fragment() {
 
         val cal = Calendar.getInstance()
         val local = Locale("pt", "BR")
-        val simple = SimpleDateFormat("HH:mm", local).format(cal.time)
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
             when (id) {
-                1 -> {
-                    binding.horario1.text = simple
-                }
-                2 -> {
-                    binding.horario2.text = simple
-                }
-                3 -> {
-                    binding.horario3.text = simple
-                }
-                4 -> {
-                    binding.horario4.text = simple
-                }
+                1 -> binding.horario1.text =
+                    SimpleDateFormat("HH:mm", local).format(cal.time)
+                2 -> binding.horario2.text =
+                    SimpleDateFormat("HH:mm", local).format(cal.time)
+                3 -> binding.horario3.text =
+                    SimpleDateFormat("HH:mm", local).format(cal.time)
+                4 -> binding.horario4.text =
+                    SimpleDateFormat("HH:mm", local).format(cal.time)
             }
         }
         TimePickerDialog(
@@ -282,7 +277,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setEmployee(employee: EmployeeEntity){
-        when(mBusinessEmployee.registerEmployee(employee)){
+        when (mBusinessEmployee.registerEmployee(employee)){
             "salvo" -> {
                 dialogSaveEmployee()
             }

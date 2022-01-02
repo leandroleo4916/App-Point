@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edit_profile"
+        android:icon="@drawable/ic_edit_24"
+        android:title="Editar" />
+
+    <item
+        android:id="@+id/ferias_profile"
+        android:icon="@drawable/ferias_24"
+        android:title="Ativar ferias" />
+
+    <item
+        android:id="@+id/desativar_profile"
+        android:icon="@drawable/ic_disable"
+        android:title="Desativar" />
+
+</menu>

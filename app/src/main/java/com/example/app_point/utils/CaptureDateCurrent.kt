@@ -11,13 +11,9 @@ class CaptureDateCurrent {
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", local)
     private val hora = SimpleDateFormat("HH:mm", local)
 
-    fun captureDateCurrent(): String{
-        return dateFormat.format(calendar)
-    }
+    fun captureDateCurrent(): String{ return dateFormat.format(calendar) }
 
-    fun captureHoraCurrent(): String{
-        return hora.format(calendar)
-    }
+    fun captureHoraCurrent(): String{ return hora.format(calendar) }
 
     fun captureDateFirst (): String {
         val calendar = Calendar.getInstance()
@@ -25,11 +21,8 @@ class CaptureDateCurrent {
         val dateDiv = dateCurrent.split("/")
 
         var day = 1
-        val dateFirst = if (day < 10){
-            "0"+day+"/"+dateDiv[1]+"/"+dateDiv[2]
-        } else {
-            "$day"+"/"+dateDiv[1]+"/"+dateDiv[2]
-        }
+        val dateFirst = if (day < 10) "0"+day+"/"+dateDiv[1]+"/"+dateDiv[2]
+        else "$day"+"/"+dateDiv[1]+"/"+dateDiv[2]
 
         if (dateFirst == "0"+day+"/"+dateDiv[1]+"/"+dateDiv[2]){ return dateFirst }
 

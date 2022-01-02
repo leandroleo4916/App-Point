@@ -3,7 +3,6 @@ package com.example.app_point.activitys.ui.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.app_point.entity.PointsEntity
 import com.example.app_point.entity.PointsFullEntity
 import com.example.app_point.interfaces.RepositoryData
 
