@@ -5,14 +5,12 @@ import com.example.app_point.activitys.ui.dashboard.AdapterDashboardRanking
 import com.example.app_point.activitys.ui.dashboard.DashboardViewModel
 import com.example.app_point.activitys.ui.employee.EmployeeViewModel
 import com.example.app_point.activitys.ui.login.BusinessUser
-import com.example.app_point.activitys.ui.profile.ProfileViewModel
 import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.business.BusinessPoints
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.database.DataBaseUser
-import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryFirebase
 import com.example.app_point.repository.RepositoryPoint
@@ -29,7 +27,6 @@ val businessModule = module { factory { BusinessEmployee(get()) } }
 val pointsModule = module { single { BusinessPoints(get(), get()) } }
 val userModule = module { factory { BusinessUser(get(), get()) } }
 val employeeModule = module { viewModel { EmployeeViewModel(get(), get(), get()) } }
-//val profileModule = module { viewModel { ProfileViewModel(get(), get()) } }
 val viewModelDashboardModule = module {viewModel{DashboardViewModel(get(),get(),get(),get())}}
 val adapterModule = module { factory { AdapterPoints(get()) } }
 val pointsAdapterModule = module { factory { PointsAdapter(get(), get()) } }
