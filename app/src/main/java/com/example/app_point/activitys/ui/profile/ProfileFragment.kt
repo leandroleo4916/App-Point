@@ -1,19 +1,18 @@
 package com.example.app_point.activitys.ui.profile
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeEntity
-import com.example.app_point.entity.EmployeeNameAndPhoto
+import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CalculateHours
 import com.example.app_point.utils.CaptureDateCurrent
@@ -25,7 +24,7 @@ import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
+class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
     private val businessEmployee: BusinessEmployee by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
@@ -35,30 +34,28 @@ class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var employee: EmployeeEntity
     private lateinit var binding: View
+    private lateinit var openRegister: ItemEmployee
     private val today = captureDateCurrent.captureDateCurrent()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_profile)
+    override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
+                               savedInstanceState: Bundle?): View {
 
-        binding = findViewById(R.id.container_profile)
+        binding = inflater.inflate(R.layout.fragment_profile, container, false)
         profileViewModel = ProfileViewModel(repositoryPoint)
-        val intent = intent
-        val args = intent.getSerializableExtra(
-            ConstantsEmployee.EMPLOYEE.TABLE_NAME) as EmployeeNameAndPhoto
-
-        employee = businessEmployee.consultEmployeeWithId(args.id)!!
+        val args = arguments?.let { it.getSerializable("id") as Int }
+        employee = businessEmployee.consultEmployeeWithId(args)!!
 
         setInfoEmployee()
         searchPointsEmployee()
         listener()
         observer()
 
+        return binding
     }
 
     private fun listener() {
 
-        binding.image_back_perfil.setOnClickListener { this.onBackPressed() }
+        binding.image_back_perfil.setOnClickListener { activity?.onBackPressed() }
         binding.option_profile.setOnClickListener{ optionMenuProfile() }
         binding.search_date.setOnClickListener{ calendar() }
         binding.next.setOnClickListener{
@@ -78,8 +75,7 @@ class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
             binding.next.setImageResource(R.drawable.ic_next_write)
         }
         else if (value == "Pontos de hoje" && position == 1){
-            Toast.makeText(this,
-                "Não pode selecionar datas futuras!", Toast.LENGTH_SHORT).show()
+            showSnackBar("Não pode selecionar datas futuras!")
         }
         else{
             val date = addOrRemoveDate(binding.text_date_time.text.toString(), position)
@@ -122,23 +118,24 @@ class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
             when {
                 dateSelected == today -> {
                     binding.text_date_time.text = "Pontos de hoje"
-                    binding.next.setImageResource(R.drawable.ic_next_write)
+                    binding.next.setImageResource(R.drawable.ic_next_gray)
                 }
                 compareDate(dateSelected, captureDateCurrent.captureDateCurrent()) -> {
-                    Toast.makeText(this,
-                        "Não pode selecionar datas futuras!", Toast.LENGTH_SHORT).show()
+                    showSnackBar("Não pode selecionar datas futuras!")
                 }
                 else -> {
                     viewModelSelected(employee.nameEmployee, dateSelected)
                     binding.text_date_time.text = dateSelected
-                    binding.next.setImageResource(R.drawable.ic_next_gray)
+                    binding.next.setImageResource(R.drawable.ic_next_write)
                 }
             }
         }
         let {
-            DatePickerDialog(
-                it, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH),
-                date.get(Calendar.DAY_OF_MONTH)).show()
+            context?.let { it1 ->
+                DatePickerDialog(
+                    it1, dateTime, date.get(Calendar.YEAR), date.get(Calendar.MONTH),
+                    date.get(Calendar.DAY_OF_MONTH)).show()
+            }
         }
     }
 
@@ -228,7 +225,7 @@ class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
 
     private fun observer() {
 
-        profileViewModel.pointsList.observe(this, {
+        profileViewModel.pointsList.observe(viewLifecycleOwner, {
             binding.run {
                 text_hora1.text = it?.hora1 ?: "--:--"
                 text_hora2.text = it?.hora2 ?: "--:--"
@@ -250,12 +247,15 @@ class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
 
     private fun optionMenuProfile(){
 
-        val popMenu = PopupMenu(this, binding.option_profile)
+        val popMenu = PopupMenu(context, binding.option_profile)
         popMenu.menuInflater.inflate(R.menu.menu_profile, popMenu.menu)
         popMenu.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {
                 R.id.edit_profile -> {
-
+                    if (context is ItemEmployee){
+                        openRegister = context as ItemEmployee
+                        openRegister.openFragmentRegister(employee.id)
+                    }
                 }
                 R.id.ferias_profile -> {
 
@@ -269,7 +269,7 @@ class ProfileFragment: FragmentActivity(), AdapterView.OnItemSelectedListener {
         popMenu.show()
     }
 
-    private fun showSnackBar(message: Int) {
+    private fun showSnackBar(message: String) {
         Snackbar.make(binding.container_profile,
             message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)

@@ -27,7 +27,7 @@ import java.lang.Float.max
 import java.lang.Float.min
 
 class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IHideNavView,
-    ItemClickOpenRegister, ItemClickOpenProfileById {
+    ItemClickOpenRegister, ItemClickOpenProfileById, IVisibilityNavView {
 
     private lateinit var navView: BottomNavigationView
 
@@ -38,6 +38,10 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
         navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
+    }
+
+    override fun visibilityNavView() {
+        navView.visibility = View.VISIBLE
     }
 
     override fun hideNavView(value: Boolean) {
@@ -61,7 +65,6 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
         val args = Bundle()
         args.putSerializable("id", id)
 
-        val fragmentHome = HomeFragment.newInstance()
         val fragment = RegisterFragment.newInstance()
         fragment.arguments = args
 
@@ -69,7 +72,7 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
             .beginTransaction()
             .replace(R.id.container_register, fragment, "register")
             .addToBackStack(null)
-            .detach(fragmentHome)
+            .detach(HomeFragment())
             .commit()
 
         animateBarVisibility(true)
@@ -80,9 +83,22 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
     }
 
     override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
-        val intent = Intent(this, ProfileFragment::class.java)
-        intent.putExtra(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
-        startActivity(intent)
+
+        val args = Bundle()
+        args.putSerializable("id", employee.id)
+
+        val fragment = ProfileFragment()
+        fragment.arguments = args
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.container_home, fragment, "register")
+            .addToBackStack(null)
+            .remove(HomeFragment())
+            .commit()
+
+        animateBarVisibility(false)
+
     }
 
     private fun animateBarVisibility(isVisible: Boolean) {

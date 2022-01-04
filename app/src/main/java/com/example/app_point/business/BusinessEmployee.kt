@@ -17,8 +17,8 @@ class BusinessEmployee(private val mRepositoryEmployee: RepositoryEmployee) {
         return mRepositoryEmployee.consultEmployee(nome)
     }
 
-    fun consultEmployeeWithId(id: Int): EmployeeEntity?{
-        return mRepositoryEmployee.consultDataEmployeeId(id)
+    fun consultEmployeeWithId(id: Int?): EmployeeEntity?{
+        return id?.let { mRepositoryEmployee.consultDataEmployeeId(it) }
     }
 
     fun consultPhoto(nome: String): ByteArray?{

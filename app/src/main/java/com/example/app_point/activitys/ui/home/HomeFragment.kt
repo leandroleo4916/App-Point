@@ -1,6 +1,5 @@
 package com.example.app_point.activitys.ui.home
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,6 +32,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var listener: ItemClickOpenProfileById
     private lateinit var hideNav: IHideNavView
     private lateinit var logoutApp: ILogoutApp
+    private lateinit var visibilityNavView: IVisibilityNavView
     private lateinit var itemClickOpenRegister: ItemClickOpenRegister
     private val pointAdapter: PointsAdapter by inject()
     private val listEmployee: BusinessEmployee by inject()
