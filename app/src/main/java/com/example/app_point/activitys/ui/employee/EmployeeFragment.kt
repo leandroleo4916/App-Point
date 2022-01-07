@@ -145,7 +145,7 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
 
             val password = securityPreferences.getStoredString(ConstantsUser.USER.COLUNAS.PASSWORD)
             if (password == textPassword.text.toString()){
-                removeEmployee(id, name)
+                removeEmployee(id)
             }
             else{
                 showSnackBar(R.string.erro_senha)
@@ -159,16 +159,15 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
         dialog?.create()?.show()
     }
 
-    override fun clickNext(name: String, date: String, position: Int) {
-        reactBackAndNext(name, date, position, 1)
+    override fun clickNext(id: Int, date: String, position: Int) {
+        reactBackAndNext(id, date, position, 1)
     }
 
-    override fun clickBack(name: String, date: String, position: Int) {
-        reactBackAndNext(name, date, position, -1)
+    override fun clickBack(id: Int, date: String, position: Int) {
+        reactBackAndNext(id, date, position, -1)
     }
 
-    override fun clickHour (name: String, date: String, positionHour: Int, hour: String,
-                            position: Int) {
+    override fun clickHour (id: Int, date: String, positionHour: Int, hour: String, position: Int) {
 
         val inflate = layoutInflater.inflate(R.layout.dialog_add_hour_manual, null)
         val clock = inflate.findViewById<TextView>(R.id.textView_hour)
@@ -182,10 +181,10 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
 
             if (date == "Hoje") {
                 val dateToday = captureDateCurrent.captureDateCurrent()
-                editPoint(name, dateToday, positionHour, clock.text.toString(), position)
+                editPoint(id, dateToday, positionHour, clock.text.toString(), position)
             }
 
-            else{ editPoint(name, date, positionHour, clock.text.toString(), position) }
+            else{ editPoint(id, date, positionHour, clock.text.toString(), position) }
         }
         dialog?.setNegativeButton(R.string.cancelar) { _, _ -> showSnackBar(R.string.cancelado) }
         dialog?.create()?.show()
@@ -203,24 +202,23 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
         }
     }
 
-    override fun clickImage(image: ByteArray, name: String) {}
+    override fun clickImage(image: ByteArray, id: Int) {}
 
     override fun employeeRemoved() { showSnackBar(R.string.precisa_add_funcionarios) }
 
-    private fun editPoint (name: String, date: String, positionHour: Int, hour: String,
-                           position: Int){
+    private fun editPoint (id: Int, date: String, positionHour: Int, hour: String, position: Int){
 
-        when (viewModelEmployee.editPoint(name, date, positionHour, hour)){
+        when (viewModelEmployee.editPoint(id, date, positionHour, hour)){
             true -> {
                 showSnackBar(R.string.pontos_editado)
                 employeeAdapter.updateHour(positionHour, hour, position)
-                viewModelEmployee.consultPointEdit(name, date)
+                viewModelEmployee.consultPointEdit(id, date)
             }
             else -> showSnackBar(R.string.nao_possivel_add_ponto)
         }
     }
 
-    private fun reactBackAndNext(name: String, dateCaptured: String, position: Int, pos: Int){
+    private fun reactBackAndNext(id: Int, dateCaptured: String, position: Int, pos: Int){
 
         val date =
             if (dateCaptured == "Hoje") {
@@ -228,11 +226,11 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
                 addOrRemoveDate(dateToday, pos)
             } else{ addOrRemoveDate(dateCaptured, pos) }
 
-        addItemToView(name, date, position)
+        addItemToView(id, date, position)
     }
 
-    private fun addItemToView(name: String, dateFinal: String, position: Int){
-        val point = viewModelEmployee.consultPoint(name, dateFinal)
+    private fun addItemToView(id: Int, dateFinal: String, position: Int){
+        val point = viewModelEmployee.consultPoint(id, dateFinal)
         val dateCurrent = captureDateCurrent.captureDateCurrent()
 
         employeeAdapter.updateDate(point, dateCurrent, dateFinal, position)
@@ -249,10 +247,10 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
         return dateFormat.format(cal.time)
     }
 
-    private fun removeEmployee(id: Int, name: String){
+    private fun removeEmployee(id: Int){
 
         if (viewModelEmployee.removeEmployee(id)){
-            viewModelEmployee.removePoints(name)
+            viewModelEmployee.removePoints(id)
             showSnackBar(R.string.removido_sucesso)
             viewModel()
         }

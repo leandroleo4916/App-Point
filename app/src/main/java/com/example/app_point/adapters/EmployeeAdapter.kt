@@ -95,13 +95,13 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
             when(view){
                 itemView.remove_employee -> listener.clickRemove(id, name, position)
                 itemView.edit_employee -> listenerFragment.openFragmentRegister(id)
-                itemView.back -> listener.clickBack(name, date, position)
-                itemView.next -> listener.clickNext(name, date, position)
-                itemView.toolbar1 -> listener.clickHour(name, date, 1, hour1, position)
-                itemView.toolbar2 -> listener.clickHour(name, date, 2, hour2, position)
-                itemView.toolbar3 -> listener.clickHour(name, date, 3, hour3, position)
-                itemView.toolbar4 -> listener.clickHour(name, date, 4, hour4, position)
-                itemView.icon_image_perfil -> listener.clickImage(image, name)
+                itemView.back -> listener.clickBack(id, date, position)
+                itemView.next -> listener.clickNext(id, date, position)
+                itemView.toolbar1 -> listener.clickHour(id, date, 1, hour1, position)
+                itemView.toolbar2 -> listener.clickHour(id, date, 2, hour2, position)
+                itemView.toolbar3 -> listener.clickHour(id, date, 3, hour3, position)
+                itemView.toolbar4 -> listener.clickHour(id, date, 4, hour4, position)
+                itemView.icon_image_perfil -> listener.clickImage(image, id)
             }
         }
 
@@ -152,7 +152,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
     fun updateFullEmployee(list: ArrayList<Employee>, date: String){
 
         for (position in 0 until list.size){
-            val points = searchPoints.selectFullPoints(list[position].name, date)
+            val points = searchPoints.selectFullPoints(list[position].id, date)
             list[position].date = "Hoje"
             list[position].hour1 = points?.hora1 ?: "--:--"
             list[position].hour2 = points?.hora2 ?: "--:--"

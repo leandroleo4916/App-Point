@@ -20,7 +20,7 @@ class CalculateHours {
         return if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
                 ((p.hora2 - p.hora1) + (p.hora4 - p.hora3)) - time
             }
-            else{ 0 }
+            else { 0 }
     }
 
     fun calculateTimeEmployee(points: HourEntityInt): Int {

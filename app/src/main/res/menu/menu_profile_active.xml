@@ -6,15 +6,11 @@
         android:title="Editar" />
 
     <item
-        android:id="@+id/ferias_profile"
-        android:title="Ativar férias" />
-
-    <item
         android:id="@+id/gerar_pdf"
         android:title="Gerar PDF" />
 
     <item
         android:id="@+id/desativar_profile"
-        android:title="Desativar" />
+        android:title="Ativar" />
 
 </menu>

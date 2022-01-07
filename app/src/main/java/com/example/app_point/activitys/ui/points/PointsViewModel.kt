@@ -11,8 +11,8 @@ class PointsViewModel (private var repository: RepositoryData) : ViewModel() {
     private val mEmployeeFullList = MutableLiveData<ArrayList<PointsEntity?>>()
     val employeeFullList: LiveData<ArrayList<PointsEntity?>> = mEmployeeFullList
 
-    fun getFullEmployee(employee: String){
-        if (employee.isEmpty()){ mEmployeeFullList.value = repository.fullPoints() }
-        else { mEmployeeFullList.value = repository.fullPointsToName(employee, "") }
+    fun getFullEmployee(id: Int){
+        if (id == 0){ mEmployeeFullList.value = repository.fullPoints() }
+        else { mEmployeeFullList.value = repository.fullPointsToName(id, "") }
     }
 }

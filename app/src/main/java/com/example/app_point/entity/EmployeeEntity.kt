@@ -4,8 +4,7 @@ import java.io.Serializable
 
 data class EmployeeEntity(
     val id: Int,
-    val active: Int,
-    val vacation: Int,
+    val status: String,
     val photo: ByteArray,
     val horario1: Int,
     val horario2: Int,

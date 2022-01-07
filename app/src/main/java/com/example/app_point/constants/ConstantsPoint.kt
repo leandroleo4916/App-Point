@@ -18,6 +18,7 @@ class ConstantsPoint private constructor(){
             const val HOUR3 = "hora3"
             const val HOUR4 = "hora4"
             const val HOUREXTRA = "horaextra"
+            const val IDEMPLOYEE = "idemployee"
         }
     }
 }

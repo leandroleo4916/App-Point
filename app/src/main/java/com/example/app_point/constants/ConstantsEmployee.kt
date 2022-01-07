@@ -6,8 +6,7 @@ class ConstantsEmployee private constructor(){
         const val TABLE_NAME = "employee"
         object COLUMNS {
             const val ID = "id"
-            const val ACTIVE = "active"
-            const val VACATION = "vacation"
+            const val STATUS = "status"
             const val PHOTO = "photo"
             const val NAME = "name"
             const val CARGO = "cargo"
@@ -20,6 +19,11 @@ class ConstantsEmployee private constructor(){
             const val HORARIO3 = "hourario3"
             const val HORARIO4 = "hourario4"
             const val WORKLOAD = "workload"
+            const val RG = "rg"
+            const val CPF = "cpf"
+            const val CTPS = "ctps"
+            const val SALARIO = "salario"
+            const val ESTADOCIVIL = "estadocivil"
         }
     }
 }

@@ -34,8 +34,8 @@ class DashboardViewModel (private var points: RepositoryPoint,
         val employee = employee.consultFullEmployee()
         val listEmployeeHoursExtraAndDone: ArrayList<EntityDashboard> = arrayListOf()
         val bestEmployee: ArrayList<EntityBestEmployee> = arrayListOf()
-        var vacation = 0
-        var active = 0
+        val vacation = 0
+        val active = 0
 
         for (i in employee){
 
@@ -48,7 +48,7 @@ class DashboardViewModel (private var points: RepositoryPoint,
 
             while (dateFirst != dateTomorrow){
 
-                val point = consultPoint(i.nameEmployee, dateFirst)
+                val point = consultPoint(i.id, dateFirst)
                 val hourDone = calculateHours.calculateHoursDone(point)
 
                 when {
@@ -89,7 +89,7 @@ class DashboardViewModel (private var points: RepositoryPoint,
         totalBestEmployee.value = bestEmployee
     }
 
-    private fun consultPoint(name: String, date: String): HourEntityInt? {
-        return points.selectPointInt(name, date)
+    private fun consultPoint(id: Int, date: String): HourEntityInt? {
+        return points.selectPointInt(id, date)
     }
 }

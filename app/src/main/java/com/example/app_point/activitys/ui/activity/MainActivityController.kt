@@ -8,9 +8,9 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app_point.R
@@ -18,7 +18,6 @@ import com.example.app_point.activitys.ui.home.HomeFragment
 import com.example.app_point.activitys.ui.login.LoginActivity
 import com.example.app_point.activitys.ui.profile.ProfileFragment
 import com.example.app_point.activitys.ui.register.RegisterFragment
-import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,8 +25,8 @@ import com.google.android.material.snackbar.Snackbar
 import java.lang.Float.max
 import java.lang.Float.min
 
-class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IHideNavView,
-    ItemClickOpenRegister, ItemClickOpenProfileById, IVisibilityNavView {
+class MainActivityController : FragmentActivity(), ItemEmployee, ILogoutApp, IHideNavView,
+    ItemClickOpenProfileById, IVisibilityNavView, ItemClickOpenRegister {
 
     private lateinit var navView: BottomNavigationView
 
@@ -41,7 +40,12 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
     }
 
     override fun visibilityNavView() {
-        navView.visibility = View.VISIBLE
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container_home, HomeFragment(), "home")
+            .commit()
+
+        animateBarVisibility(true)
     }
 
     override fun hideNavView(value: Boolean) {
@@ -51,12 +55,6 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
     override fun logoutApp() {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
-    }
-
-    override fun openFragmentProfile(employee: EmployeeNameAndPhoto) {
-        val intent = Intent(applicationContext, ProfileFragment::class.java)
-        intent.putExtra(ConstantsEmployee.EMPLOYEE.TABLE_NAME, employee)
-        startActivity(intent)
     }
 
     override fun openFragmentRegister(id: Int) {
@@ -71,8 +69,6 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container_register, fragment, "register")
-            .addToBackStack(null)
-            .detach(HomeFragment())
             .commit()
 
         animateBarVisibility(true)
@@ -92,9 +88,8 @@ class MainActivityController : AppCompatActivity(), ItemEmployee, ILogoutApp, IH
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.container_home, fragment, "register")
-            .addToBackStack(null)
-            .remove(HomeFragment())
+            .replace(R.id.container_home, fragment, "profile")
+            .addToBackStack("profile")
             .commit()
 
         animateBarVisibility(false)

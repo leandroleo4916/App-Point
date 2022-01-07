@@ -37,11 +37,13 @@
 
             <TextView
                 android:id="@+id/text_title_name_employee"
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="@string/perfil_funcionario"
                 android:textColor="@color/letras"
                 android:textSize="22sp"
+                android:singleLine="true"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -508,15 +510,6 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar_description"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/ic_active_description"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_power_on"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar_line_description2"
-        app:layout_constraintStart_toStartOf="@+id/guide_start"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_line_description"
-        tools:ignore="ContentDescription,MissingConstraints" />
 
     <ImageView
         android:id="@+id/ic_vacation_description"
@@ -596,7 +589,7 @@
         tools:ignore="ContentDescription,MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_active_description"
+        android:id="@+id/text_vacation_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -763,19 +756,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_as1_description"
         app:layout_constraintStart_toEndOf="@+id/text_as2_description"
         app:layout_constraintTop_toTopOf="@+id/text_as1_description"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_vacation_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Ativo"
-        android:textColor="@color/letras"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ic_active_description"
-        app:layout_constraintStart_toEndOf="@+id/ic_active_description"
-        app:layout_constraintTop_toTopOf="@+id/ic_active_description"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

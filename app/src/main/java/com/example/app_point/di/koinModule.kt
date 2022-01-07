@@ -8,7 +8,6 @@ import com.example.app_point.activitys.ui.login.BusinessUser
 import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.business.BusinessPoints
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.database.DataBaseUser
 import com.example.app_point.repository.RepositoryEmployee
@@ -24,7 +23,6 @@ val repositoryEmployeeModule = module { single { RepositoryEmployee(get()) } }
 val repositoryPointModule = module { single { RepositoryPoint(get()) } }
 val repositoryModule = module { single { RepositoryFirebase(get()) } }
 val businessModule = module { factory { BusinessEmployee(get()) } }
-val pointsModule = module { single { BusinessPoints(get(), get()) } }
 val userModule = module { factory { BusinessUser(get(), get()) } }
 val employeeModule = module { viewModel { EmployeeViewModel(get(), get(), get()) } }
 val viewModelDashboardModule = module {viewModel{DashboardViewModel(get(),get(),get(),get())}}
@@ -42,7 +40,7 @@ val colorModule = module { factory { GetColor() } }
 
 val appModules = listOf(
     repositoryModule, employeeModule, businessModule, colorModule, adapterRankingModule,
-    pointsModule, userModule, adapterModule, repositoryPointModule, captureDateModule,
+    userModule, adapterModule, repositoryPointModule, captureDateModule,
     dataBaseEmployeeModule, securityPreferencesModule, pointsAdapterModule, databaseUserModule,
     converterPhotoModule, calculationHoursModule, repositoryUserModule, repositoryEmployeeModule,
     adapterDetailModule, viewModelDashboardModule

@@ -27,8 +27,13 @@ class DashboardFragment : Fragment() {
         recycler()
         viewModelDash()
         observe()
+        listener()
 
         return binding
+    }
+
+    private fun listener(){
+        binding.image_back_perfil.setOnClickListener { activity?.onBackPressed() }
     }
 
     private fun viewModelDash(){

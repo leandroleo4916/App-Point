@@ -21,6 +21,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_points.view.*
 import org.koin.android.ext.android.inject
+import org.koin.ext.getScopeId
 
 class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -73,7 +74,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun searchPoints() {
-        pointsViewModel.getFullEmployee("")
+        pointsViewModel.getFullEmployee(0)
     }
 
     private fun observe() {
@@ -100,7 +101,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun dialogPoint() {
         val inflateView = layoutInflater.inflate(R.layout.dialog_list_employee, null)
-        val list = mListEmployee.consultEmployee()
+        val list = mListEmployee.consultEmployeeList()
         val listSpinner = inflateView.findViewById(R.id.spinner_employee) as Spinner
         val adapter =
             context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, list) }
@@ -116,7 +117,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
-                    pointsViewModel.getFullEmployee(itemSpinner.toString())
+                    pointsViewModel.getFullEmployee(listSpinner.selectedItemPosition)
                     binding.textView_toolbar.text = itemSpinner.toString()
                 }
             }
@@ -125,7 +126,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             when (listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
-                    pointsViewModel.getFullEmployee("")
+                    pointsViewModel.getFullEmployee(0)
                     binding.textView_toolbar.setText(R.string.pontos_registrados)
                 }
             }

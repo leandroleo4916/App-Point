@@ -8,5 +8,6 @@ data class PointsEntity(
     var hora2: String?,
     var hora3: String?,
     var hora4: String?,
-    var horaExtra: Int?
+    var horaExtra: Int?,
+    var idEmployee: Int?
 )

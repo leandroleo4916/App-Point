@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.interfaces.IVisibilityNavView
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CalculateHours
@@ -35,6 +36,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var employee: EmployeeEntity
     private lateinit var binding: View
     private lateinit var openRegister: ItemEmployee
+    private lateinit var closeFragment: IVisibilityNavView
     private val today = captureDateCurrent.captureDateCurrent()
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +57,12 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun listener() {
 
-        binding.image_back_perfil.setOnClickListener { activity?.onBackPressed() }
+        binding.image_back_perfil.setOnClickListener {
+            if (context is IVisibilityNavView){
+                closeFragment = context as IVisibilityNavView
+                closeFragment.visibilityNavView()
+            }
+        }
         binding.option_profile.setOnClickListener{ optionMenuProfile() }
         binding.search_date.setOnClickListener{ calendar() }
         binding.next.setOnClickListener{
@@ -70,7 +77,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
         if (value == "Pontos de hoje" && position == -1){
             val date = addOrRemoveDate(today, position)
-            viewModelSelected(employee.nameEmployee, date)
+            viewModelSelected(employee.id, date)
             binding.text_date_time.text = date
             binding.next.setImageResource(R.drawable.ic_next_write)
         }
@@ -79,7 +86,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
         }
         else{
             val date = addOrRemoveDate(binding.text_date_time.text.toString(), position)
-            viewModelSelected(employee.nameEmployee, date)
+            viewModelSelected(employee.id, date)
             
             if (date == today){
                 binding.text_date_time.text = "Pontos de hoje"
@@ -119,12 +126,13 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
                 dateSelected == today -> {
                     binding.text_date_time.text = "Pontos de hoje"
                     binding.next.setImageResource(R.drawable.ic_next_gray)
+                    viewModelSelected(employee.id, dateSelected)
                 }
                 compareDate(dateSelected, captureDateCurrent.captureDateCurrent()) -> {
                     showSnackBar("Não pode selecionar datas futuras!")
                 }
                 else -> {
-                    viewModelSelected(employee.nameEmployee, dateSelected)
+                    viewModelSelected(employee.id, dateSelected)
                     binding.text_date_time.text = dateSelected
                     binding.next.setImageResource(R.drawable.ic_next_write)
                 }
@@ -163,19 +171,26 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
             text_phone_description.text = employee.phoneEmployee
             text_admission_description.text = employee.admissaoEmployee
             text_birth_description.text = employee.aniversarioEmployee
-            if (employee.vacation == 1) {
-                text_vacation_description.text = "De ferias"
-                ic_vacation_description.setImageResource(R.drawable.ic_trip)
+
+            text_vacation_description.text = employee.status
+            when (employee.status) {
+                "Trabalhando" -> {
+                    ic_vacation_description.setImageResource(R.drawable.ic_working)
+                }
+                "De férias" -> {
+                    ic_vacation_description.setImageResource(R.drawable.ic_trip)
+                }
+                else -> {
+                    ic_vacation_description.setImageResource(R.drawable.ic_disable)
+                }
             }
-            if (employee.active == 1) {
-                text_active_description.text = "Desativado"
-                ic_active_description.setImageResource(R.drawable.ic_disable)
-            }
+
             text_time1_description.text = hours.convertMinutesInHoursString(employee.horario1)
             text_time2_description.text = hours.convertMinutesInHoursString(employee.horario2)
             text_time3_description.text = hours.convertMinutesInHoursString(employee.horario3)
             text_time4_description.text = hours.convertMinutesInHoursString(employee.horario4)
         }
+
         setProgressHours()
     }
 
@@ -212,13 +227,13 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun viewModelSelected(name: String, date: String){
+    private fun viewModelSelected(id: Int, date: String){
         binding.progress_points.visibility = View.VISIBLE
-        profileViewModel.getFullPoints(name, date)
+        profileViewModel.getFullPoints(id, date)
     }
 
     private fun searchPointsEmployee(){
-        profileViewModel.getFullPoints(employee.nameEmployee,
+        profileViewModel.getFullPoints(employee.id,
             captureDateCurrent.captureDateCurrent())
         binding.progress_points.visibility = View.GONE
     }
@@ -248,7 +263,28 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private fun optionMenuProfile(){
 
         val popMenu = PopupMenu(context, binding.option_profile)
-        popMenu.menuInflater.inflate(R.menu.menu_profile, popMenu.menu)
+
+        val value = when (employee.status) {
+            "Trabalhando" -> {
+                popMenu.menuInflater.inflate(R.menu.menu_profile, popMenu.menu)
+                "De férias"
+            }
+            "De férias" -> {
+                popMenu.menuInflater.inflate(R.menu.menu_profile_work, popMenu.menu)
+                "Trabalhando"
+            }
+            else -> {
+                popMenu.menuInflater.inflate(R.menu.menu_profile_active, popMenu.menu)
+                "Trabalhando"
+            }
+        }
+        val disable = if (employee.status == "Trabalhando"){
+            "Desativado"
+        }else if (employee.status == "De férias"){
+            "Desativado"
+        }else {
+            "Trabalhando"
+        }
         popMenu.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {
                 R.id.edit_profile -> {
@@ -258,10 +294,16 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
                     }
                 }
                 R.id.ferias_profile -> {
-
+                    val status = profileViewModel.modifyStatusEmployee(employee, value)
+                    showSnackBar(status)
+                    employee = businessEmployee.consultEmployeeWithId(employee.id)!!
+                    setInfoEmployee()
                 }
                 R.id.desativar_profile -> {
-
+                    val status = profileViewModel.modifyStatusEmployee(employee, disable)
+                    showSnackBar(status)
+                    employee = businessEmployee.consultEmployeeWithId(employee.id)!!
+                    setInfoEmployee()
                 }
             }
             true

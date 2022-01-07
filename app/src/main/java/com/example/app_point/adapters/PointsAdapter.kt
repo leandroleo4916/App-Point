@@ -32,11 +32,13 @@ class PointsAdapter (private val application: Application, private val mBusiness
     override fun onBindViewHolder(holder: PointsViewHolder, position: Int) {
 
         val fullEmployee = listFullEmployee[position]
-        val photo = mBusiness.consultPhoto(fullEmployee?.employee.toString())
+
+        val photo = fullEmployee?.id?.let { mBusiness.consultPhoto(it) }
+        val name = fullEmployee?.id?.let { mBusiness.consultNameEmployeeById(it) }
         val photoConvert = photo?.let { converterPhoto.converterToBitmap(it) }
         photoConvert?.let { holder.bindPhoto(it) }
 
-        holder.bind(fullEmployee?.employee.toString())
+        name?.let { holder.bind(it) }
         holder.bindData(fullEmployee?.data.toString())
         holder.bindHora(fullEmployee)
     }

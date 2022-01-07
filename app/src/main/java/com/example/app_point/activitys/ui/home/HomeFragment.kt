@@ -32,10 +32,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var listener: ItemClickOpenProfileById
     private lateinit var hideNav: IHideNavView
     private lateinit var logoutApp: ILogoutApp
-    private lateinit var visibilityNavView: IVisibilityNavView
     private lateinit var itemClickOpenRegister: ItemClickOpenRegister
     private val pointAdapter: PointsAdapter by inject()
-    private val listEmployee: BusinessEmployee by inject()
+    private val businessEmployee: BusinessEmployee by inject()
     private val converterPhoto: ConverterPhoto by inject()
     private val converterHours: CalculateHours by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
@@ -47,8 +46,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var employeeAdapter: EmployeeAdapterHome
     private lateinit var binding: View
-
-    companion object { fun newInstance() = HomeFragment()}
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
@@ -146,7 +143,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun searchPointsAndEmployee() {
-        homeViewModel.getFullPoints("")
+        homeViewModel.getFullPoints(0)
         binding.textView_add_points.visibility = View.GONE
 
         homeViewModel.getFullEmployee()
@@ -208,7 +205,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         val hourCurrent = captureDateCurrent.captureHoraCurrent()
         val dateCurrent = captureDateCurrent.captureDateCurrent()
-        val list = listEmployee.consultEmployee()
+        val list = businessEmployee.consultEmployeeList()
 
         val inflate = layoutInflater.inflate(R.layout.dialog_bater_ponto, null)
         val textData = inflate.findViewById(R.id.dataPonto) as TextView
@@ -226,16 +223,19 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> { showSnackBar(R.string.precisa_add_funcionarios)}
-                else -> savePoint(itemSpinner.toString(), dateCurrent, hourCurrent)
+                else -> {
+                    val id = businessEmployee.consultIdEmployeeByName(itemSpinner.toString())
+                    savePoint(id, itemSpinner.toString(), dateCurrent, hourCurrent)
+                }
             }
         }
-        alertDialog?.setNegativeButton(getString(R.string.cancelar)) { _, _ -> showSnackBar(R.string.cancelado) }
+        alertDialog?.setNegativeButton(getString(R.string.cancelar)) { _, _ -> }
         alertDialog?.create()?.show()
     }
 
-    private fun savePoint (itemSpinner: String, dateCurrent: String, horaCurrent: String){
+    private fun savePoint (id: Int, itemSpinner: String, dateCurrent: String, horaCurrent: String){
         when{
-            homeViewModel.setPoints(itemSpinner, dateCurrent, horaCurrent) -> {
+            homeViewModel.setPoints(id, itemSpinner, dateCurrent, horaCurrent) -> {
                 searchPointsAndEmployee()
                 showSnackBar(R.string.ponto_adicionado_sucesso)
             }

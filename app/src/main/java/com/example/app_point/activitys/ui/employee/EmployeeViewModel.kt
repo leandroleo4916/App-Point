@@ -25,30 +25,30 @@ class EmployeeViewModel(private var employee: RepositoryEmployee,
         return employee.removeEmployee(id)
     }
 
-    fun removePoints(name: String): Boolean{
-        return points.removePoints(name)
+    fun removePoints(id: Int): Boolean{
+        return points.removePoints(id)
     }
 
-    fun consultPoint(name: String, data: String): PointsHours?{
-        return points.selectPoint(name, data)
+    fun consultPoint(id: Int, data: String): PointsHours?{
+        return points.selectPoint(id, data)
     }
 
-    fun consultPointEdit(name: String, data: String) {
+    fun consultPointEdit(id: Int, data: String) {
 
-        val hour = points.selectPointInt(name, data)
+        val hour = points.selectPointInt(id, data)
 
         if (hour?.hora1 != null && hour.hora2 != null && hour.hora3 != null && hour.hora4 != null){
 
-            val consultExtra = employee.consultTime(name)
+            val consultExtra = employee.consultCargaHoraria(id)
             val extra = consultExtra?.let {
                 converterHours.calculateHoursExtra(it, HourEntityInt(
                     hour.hora1, hour.hora2, hour.hora3, hour.hora4, hour.punctuation, hour.extra)) }
-            points.setPointExtra(name, data, extra!!)
+            points.setPointExtra(id, data, extra!!)
         }
     }
 
-    fun editPoint(name: String, data: String, positionHour: Int, hour: String): Boolean{
+    fun editPoint(id: Int, data: String, positionHour: Int, hour: String): Boolean{
         val hourInt = converterHours.converterHoursInMinutes(hour)
-        return points.setPointByDate(name, data, positionHour, hour, hourInt)
+        return points.setPointByDate(id, data, positionHour, hour, hourInt)
     }
 }

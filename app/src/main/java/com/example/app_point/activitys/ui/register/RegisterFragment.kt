@@ -27,6 +27,8 @@ import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.HourEntityInt
+import com.example.app_point.interfaces.IOnBackPressed
+import com.example.app_point.interfaces.IOnBackPressedRegister
 import com.example.app_point.interfaces.ItemClickOpenRegister
 import com.example.app_point.utils.CalculateHours
 import com.example.app_point.utils.CaptureDateCurrent
@@ -102,6 +104,7 @@ class RegisterFragment : Fragment() {
             horario4.setOnClickListener { timePicker(4, binding) }
             text_admissao.setOnClickListener { calendar(1, binding) }
             text_aniversario.setOnClickListener { calendar(2, binding) }
+            image_back.setOnClickListener { activity?.onBackPressed() }
         }
     }
 
@@ -271,7 +274,7 @@ class RegisterFragment : Fragment() {
             admission.isEmpty() -> binding.text_admissao.error = getString(R.string.digite_admissao)
             birth.isEmpty() -> binding.text_aniversario.error = getString(R.string.digite_aniversario)
 
-            else -> setEmployee(EmployeeEntity(id, 0, 0, photo, hora1, hora2, hora3,
+            else -> setEmployee(EmployeeEntity(id, "Trabalhando", photo, hora1, hora2, hora3,
                 hora4, workload, name, cargo, email, phone, admission, birth))
         }
     }

@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/ferias_profile"
-        android:title="Ativar férias" />
+        android:title="Voltar ao trabalho" />
 
     <item
         android:id="@+id/gerar_pdf"

@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
 
+
 class ConverterPhoto {
 
     fun converterToByteArray(image: ImageView): ByteArray {
