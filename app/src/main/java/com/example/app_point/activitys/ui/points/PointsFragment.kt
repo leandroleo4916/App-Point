@@ -21,7 +21,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_points.view.*
 import org.koin.android.ext.android.inject
-import org.koin.ext.getScopeId
 
 class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -74,7 +73,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun searchPoints() {
-        pointsViewModel.getFullEmployee(0)
+        pointsViewModel.getFullPoints(0)
     }
 
     private fun observe() {
@@ -117,7 +116,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
-                    pointsViewModel.getFullEmployee(listSpinner.selectedItemPosition)
+                    pointsViewModel.getFullPoints(listSpinner.selectedItemPosition)
                     binding.textView_toolbar.text = itemSpinner.toString()
                 }
             }
@@ -126,7 +125,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             when (listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
-                    pointsViewModel.getFullEmployee(0)
+                    pointsViewModel.getFullPoints(0)
                     binding.textView_toolbar.setText(R.string.pontos_registrados)
                 }
             }

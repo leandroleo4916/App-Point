@@ -152,10 +152,7 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
                 employeeAdapter.notifyDataSetChanged()
             }
         }
-        dialog?.setNegativeButton(R.string.cancelar) { _, _ ->
-            showSnackBar(R.string.cancelado)
-            employeeAdapter.notifyDataSetChanged()
-        }
+        dialog?.setNegativeButton(R.string.cancelar) { _, _ -> employeeAdapter.notifyDataSetChanged() }
         dialog?.create()?.show()
     }
 
@@ -186,7 +183,7 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
 
             else{ editPoint(id, date, positionHour, clock.text.toString(), position) }
         }
-        dialog?.setNegativeButton(R.string.cancelar) { _, _ -> showSnackBar(R.string.cancelado) }
+        dialog?.setNegativeButton(R.string.cancelar) { _, _ -> }
         dialog?.create()?.show()
 
         clock.setOnClickListener {

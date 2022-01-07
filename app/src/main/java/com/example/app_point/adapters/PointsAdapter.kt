@@ -33,8 +33,8 @@ class PointsAdapter (private val application: Application, private val mBusiness
 
         val fullEmployee = listFullEmployee[position]
 
-        val photo = fullEmployee?.id?.let { mBusiness.consultPhoto(it) }
-        val name = fullEmployee?.id?.let { mBusiness.consultNameEmployeeById(it) }
+        val photo = fullEmployee?.idEmployee?.let { mBusiness.consultPhoto(it) }
+        val name = fullEmployee?.idEmployee?.let { mBusiness.consultNameEmployeeById(it) }
         val photoConvert = photo?.let { converterPhoto.converterToBitmap(it) }
         photoConvert?.let { holder.bindPhoto(it) }
 
