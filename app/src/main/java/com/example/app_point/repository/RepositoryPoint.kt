@@ -94,7 +94,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
 
     private fun saveTotalBankHoursByEmployee(id: Int, extra: Int){
 
-        val consultExtra = consultTotalExtraByEmployee(id)
+        val consultExtra = consultTotalExtraByIdEmployee(id)
 
         if (consultExtra == null){
             try {
@@ -113,7 +113,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
             val totalHour = consultExtra + extra
             try {
                 val db = dataBasePoint.writableDatabase
-                val projection = ConstantsExtras.EXTRA.COLUMNS.EXTRA + " = ?"
+                val projection = ConstantsExtras.EXTRA.COLUMNS.ID + " = ?"
                 val args = arrayOf(id.toString())
                 val insertValues = ContentValues()
 
@@ -125,7 +125,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
         }
     }
 
-    private fun consultTotalExtraByEmployee(id: Int): Int?{
+    fun consultTotalExtraByIdEmployee(id: Int): Int?{
 
         var value: Int? = null
         try {
@@ -136,14 +136,13 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
             val args = arrayOf(id.toString())
 
             cursor = db.query(
-                ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,
+                ConstantsExtras.EXTRA.TABLE_NAME, projection, selection, args,
                 null, null, null
             )
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    value = cursor?.getInt(
-                        cursor.getColumnIndex(ConstantsExtras.EXTRA.COLUMNS.EXTRA))
+                    value = cursor?.getInt(cursor.getColumnIndex(ConstantsExtras.EXTRA.COLUMNS.EXTRA))
                 }
             }
             cursor?.close()
@@ -240,8 +239,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                                     pointInt!!.hora1, pointInt.hora2, pointInt.hora3,
                                     pointInt.hora4, 0, pointInt.extra))
 
-                        val punctuation =
-                            timeEmployee?.let { calculateHourExtras.punctuation(it, pointInt) }
+                        val punctuation = calculateHourExtras.punctuation(timeEmployee!!, pointInt)
 
                         insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUREXTRA, extras)
                         insertValues.put(ConstantsPoint.POINT.COLUMNS.PUNCTUATION, punctuation)

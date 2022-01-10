@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeEntityFull
 import com.example.app_point.interfaces.IVisibilityNavView
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
@@ -33,7 +34,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private val photo: ConverterPhoto by inject()
     private val hours: CalculateHours by inject()
     private lateinit var profileViewModel: ProfileViewModel
-    private lateinit var employee: EmployeeEntity
+    private lateinit var employee: EmployeeEntityFull
     private lateinit var binding: View
     private lateinit var openRegister: ItemEmployee
     private lateinit var closeFragment: IVisibilityNavView
@@ -45,7 +46,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
         binding = inflater.inflate(R.layout.fragment_profile, container, false)
         profileViewModel = ProfileViewModel(repositoryPoint)
         val args = arguments?.let { it.getSerializable("id") as Int }
-        employee = businessEmployee.consultEmployeeWithId(args)!!
+        employee = args?.let { businessEmployee.consultEmployeeWithId(it) }!!
 
         setInfoEmployee()
         searchPointsEmployee()
@@ -217,8 +218,8 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
             withContext(Dispatchers.Default) {
                 while (pStatus2 <= hoursExtra) {
                     withContext(Dispatchers.Main) {
-                        binding.progress_funcionarios_ativos.progress = pStatus2
-                        binding.text_funcionarios_ativos.text = pStatus2.toString()
+                        binding.progress_funcionarios_desativados.progress = pStatus2
+                        binding.text_funcionarios_desativados.text = pStatus2.toString()
                     }
                     delay(20)
                     pStatus2++

@@ -39,7 +39,7 @@
                 android:id="@+id/text_title_name_employee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dashboard"
+                android:text="Informações Gerais"
                 android:textColor="@color/letras"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +53,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ProgressBar
-        android:id="@+id/image_toolbar_hrs_fix1"
+        android:id="@+id/progress_hrs_done"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -78,10 +78,10 @@
         android:max="20"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs"
-        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_fix1"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_fix1"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_fix1"
-        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_hrs_done"
+        app:layout_constraintEnd_toEndOf="@+id/progress_hrs_done"
+        app:layout_constraintStart_toStartOf="@+id/progress_hrs_done"
+        app:layout_constraintTop_toTopOf="@+id/progress_hrs_done"
         app:layout_constraintVertical_bias="0.466"
         tools:ignore="MissingConstraints" />
 
@@ -92,9 +92,9 @@
         android:text="Funcionários"
         android:textColor="@color/letras"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_fix1"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_fix1"
-        app:layout_constraintTop_toBottomOf="@+id/image_toolbar_hrs_fix1"
+        app:layout_constraintEnd_toEndOf="@+id/progress_hrs_done"
+        app:layout_constraintStart_toStartOf="@+id/progress_hrs_done"
+        app:layout_constraintTop_toBottomOf="@+id/progress_hrs_done"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
@@ -134,7 +134,7 @@
         android:id="@+id/text_ferias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Férias"
+        android:text="De férias"
         android:textColor="@color/letras"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/progress_ferias"
@@ -174,7 +174,7 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/progress_funcionarios_ativos"
+        android:id="@+id/progress_funcionarios_desativados"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -208,7 +208,7 @@
         android:id="@+id/text_hrs_extras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ativos"
+        android:text="Desativados"
         android:textColor="@color/letras"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_fix2"
@@ -217,7 +217,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_funcionarios_ativos"
+        android:id="@+id/text_funcionarios_desativados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -225,10 +225,10 @@
         android:textColor="@color/letras"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_funcionarios_ativos"
-        app:layout_constraintEnd_toEndOf="@+id/progress_funcionarios_ativos"
-        app:layout_constraintStart_toStartOf="@+id/progress_funcionarios_ativos"
-        app:layout_constraintTop_toTopOf="@+id/progress_funcionarios_ativos"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_funcionarios_desativados"
+        app:layout_constraintEnd_toEndOf="@+id/progress_funcionarios_desativados"
+        app:layout_constraintStart_toStartOf="@+id/progress_funcionarios_desativados"
+        app:layout_constraintTop_toTopOf="@+id/progress_funcionarios_desativados"
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.Toolbar
@@ -320,18 +320,6 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_ranking"
         tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar6"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@color/letrashint"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
-        tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/text_date_time"
         android:layout_width="wrap_content"
@@ -345,6 +333,66 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar_profile"
         tools:ignore="MissingConstraints" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/letrashint"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_profile"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_profile"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_info_"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/backfrag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView_extras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:text="Extras"
+        android:textColor="@color/letras"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_info_"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_info_"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_info_" />
+
+    <TextView
+        android:id="@+id/textView_feitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="53dp"
+        android:text="Feitas"
+        android:textColor="@color/letras"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_info_"
+        app:layout_constraintStart_toEndOf="@+id/textView_extras"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_info_" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:text="Cadastro"
+        android:textColor="@color/letras"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_info_"
+        app:layout_constraintStart_toEndOf="@+id/textView_feitas"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_info_" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_detail"
         android:layout_width="0dp"
@@ -353,16 +401,16 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_info_"
         tools:listitem="@layout/recycler_detail_employee" />
 
     <TextView
         android:id="@+id/text_nenhum_funcionario_recycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:text="Por enquanto, nenhum funcionário"
         android:textColor="@color/fundoBlue"
         android:textSize="18sp"

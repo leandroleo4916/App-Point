@@ -20,8 +20,11 @@ class DashboardViewModel (private var points: RepositoryPoint,
     private val totalEmployeeVacation = MutableLiveData<Int>()
     val employeeVacation: LiveData<Int> = totalEmployeeVacation
 
-    private val totalEmployeeActive = MutableLiveData<Int>()
-    val employeeActive: LiveData<Int> = totalEmployeeActive
+    private val totalEmployeeDisabled = MutableLiveData<Int>()
+    val employeeDisabled: LiveData<Int> = totalEmployeeDisabled
+
+    private val totalEmployeeWorking = MutableLiveData<Int>()
+    val employeeWorking: LiveData<Int> = totalEmployeeWorking
 
     private val totalDetailEmployee = MutableLiveData<ArrayList<EntityDashboard>>()
     val employeeDetail: LiveData<ArrayList<EntityDashboard>> = totalDetailEmployee
@@ -34,59 +37,67 @@ class DashboardViewModel (private var points: RepositoryPoint,
         val employee = employee.consultFullEmployee()
         val listEmployeeHoursExtraAndDone: ArrayList<EntityDashboard> = arrayListOf()
         val bestEmployee: ArrayList<EntityBestEmployee> = arrayListOf()
-        val vacation = 0
-        val active = 0
+        var vacation = 0
+        var disabled = 0
+        var working = 0
 
         for (i in employee){
 
-            var dateFirst = captureDateCurrent.captureDateFirst()
+            val totalHourExtra = points.consultTotalExtraByIdEmployee(i.id)
+            var dateFirst = captureDateCurrent.captureFirstDayOfMonth()
             val dateCurrent = captureDateCurrent.captureDateCurrent()
             val dateTomorrow = captureDateCurrent.captureNextDate(dateCurrent)
-            var hExtra = 0
             var hDone = 0
             var punctuation = 0
+            val cadastro: Float = consultNullOrNotNull(i)
 
             while (dateFirst != dateTomorrow){
 
                 val point = consultPoint(i.id, dateFirst)
                 val hourDone = calculateHours.calculateHoursDone(point)
 
-                when {
-                    point == null -> {
-                        hExtra += 0
-                        punctuation += 0
-                    }
-                    point.extra == null -> {
-                        punctuation += 0
-                    }
-                    point.punctuation == null -> {
-                        punctuation += 0
-                    }
-                    else -> {
-                        hExtra += point.extra
-                        punctuation += point.punctuation
-                    }
+                punctuation += when {
+                    point == null -> { 0 }
+                    point.punctuation == null -> { 0 }
+                    else -> { point.punctuation }
                 }
 
                 hDone += hourDone
                 dateFirst = captureDateCurrent.captureNextDate(dateFirst)
             }
 
-            val extraString = calculateHours.convertMinutesInHours(hExtra)
-            val doneString = calculateHours.convertMinutesInHours(hDone)
+            when (i.status) {
+                "Trabalhando" -> { working += 1 }
+                "De férias" -> { vacation += 1 }
+                else -> { disabled += 1 }
+            }
 
-            listEmployeeHoursExtraAndDone.add(EntityDashboard(i.photo, extraString, doneString))
+            val extra = totalHourExtra ?: 0
+            listEmployeeHoursExtraAndDone.add(EntityDashboard(i.photo, extra, hDone, cadastro))
             bestEmployee.add(EntityBestEmployee(i.photo, punctuation))
 
-            //if (i.vacation == 1) vacation++
-            //if (i.active == 1) active++
         }
 
         totalEmployeeList.value = employee.size
         totalEmployeeVacation.value = vacation
-        totalEmployeeActive.value = active
+        totalEmployeeDisabled.value = disabled
+        totalEmployeeWorking.value = working
         totalDetailEmployee.value = listEmployeeHoursExtraAndDone
         totalBestEmployee.value = bestEmployee
+
+    }
+
+    private fun consultNullOrNotNull(i: EmployeeEntityFull): Float{
+
+        var value = 0F
+
+        if (i.rg == 0) value += 1
+        if (i.cpf == 0) value += 1
+        if (i.ctps == 0) value += 1
+        if (i.salario == 0) value += 1
+        if (i.estadocivil == null) value += 1
+
+        return (((19.00 - value) / 19.00) * 100.00).toFloat()
     }
 
     private fun consultPoint(id: Int, date: String): HourEntityInt? {

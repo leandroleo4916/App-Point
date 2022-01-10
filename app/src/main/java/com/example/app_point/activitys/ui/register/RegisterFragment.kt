@@ -26,6 +26,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeEntityFull
 import com.example.app_point.entity.HourEntityInt
 import com.example.app_point.interfaces.IOnBackPressed
 import com.example.app_point.interfaces.IOnBackPressedRegister
@@ -72,7 +73,7 @@ class RegisterFragment : Fragment() {
 
         if (args != null) {
 
-            val employee: EmployeeEntity? = mBusinessEmployee.consultEmployeeWithId(args)
+            val employee: EmployeeEntityFull? = mBusinessEmployee.consultEmployeeWithId(args)
             if (employee != null) {
                 val photo = mToByteArray.converterToBitmap(employee.photo)
                 binding.run {

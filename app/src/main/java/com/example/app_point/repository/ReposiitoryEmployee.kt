@@ -109,9 +109,9 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         }
     }
 
-    fun consultFullEmployee(): ArrayList<EmployeeEntity> {
+    fun consultFullEmployee(): ArrayList<EmployeeEntityFull> {
 
-        val listData: ArrayList<EmployeeEntity> = arrayListOf()
+        val listData: ArrayList<EmployeeEntityFull> = arrayListOf()
         try {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
@@ -128,7 +128,12 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION,
-                ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO)
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.RG,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.CPF,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.CTPS,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.SALARIO,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ESTADOCIVIL)
 
             val cursor = db.query(
                 ConstantsEmployee.EMPLOYEE.TABLE_NAME,
@@ -170,9 +175,20 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                         ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
                     val niver = cursor.getString(cursor.getColumnIndex(
                         ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
+                    val rg = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.RG))
+                    val cpf = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.CPF))
+                    val ctps = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.CTPS))
+                    val salario = cursor.getInt(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.SALARIO))
+                    val estadocivil = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.ESTADOCIVIL))
 
-                    listData.add(EmployeeEntity(id, status, photo, hora1, hora2, hora3,
-                        hora4, work, name, email, cargo, phone, admissao, niver)
+                    listData.add(EmployeeEntityFull(id, status, photo, hora1, hora2, hora3,
+                        hora4, work, name, email, cargo, phone, admissao, niver, rg, cpf,
+                        ctps, salario, estadocivil)
                     )
                 }
             }
@@ -271,9 +287,9 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         }
     }
 
-    fun consultDataEmployeeId(id: Int): EmployeeEntity? {
+    fun consultDataEmployeeId(id: Int): EmployeeEntityFull? {
 
-        var employee: EmployeeEntity? = null
+        var employee: EmployeeEntityFull? = null
         try {
             val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
@@ -289,7 +305,12 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHONE,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION,
-                ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO)
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.RG,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.CPF,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.CTPS,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.SALARIO,
+                ConstantsEmployee.EMPLOYEE.COLUMNS.ESTADOCIVIL)
 
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
@@ -327,9 +348,20 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                     ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION))
                 val niver = cursor.getString(cursor.getColumnIndex(
                     ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO))
+                val rg = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.RG))
+                val cpf = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.CPF))
+                val ctps = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.CTPS))
+                val salario = cursor.getInt(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.SALARIO))
+                val estadocivil = cursor.getString(cursor.getColumnIndex(
+                    ConstantsEmployee.EMPLOYEE.COLUMNS.ESTADOCIVIL))
 
-                employee = EmployeeEntity(id, active, photo, hora1, hora2, hora3,
-                    hora4, work, name, email, cargo, phone, admissao, niver)
+                employee = EmployeeEntityFull(id, active, photo, hora1, hora2, hora3,
+                    hora4, work, name, email, cargo, phone, admissao, niver, rg, cpf,
+                    ctps, salario, estadocivil)
 
             }
             cursor?.close()

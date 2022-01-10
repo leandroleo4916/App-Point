@@ -55,15 +55,4 @@ class PointsAdapter (private val application: Application, private val mBusiness
         }
         notifyDataSetChanged()
     }
-
-    fun updateNameEmployee(name: String) {
-
-        for (employee in listFullEmployee) {
-            if (employee!!.employee!!.contains(name)) {
-                listNameEmployee.add(employee)
-                listFullEmployee = listNameEmployee
-            }
-        }
-        notifyDataSetChanged()
-    }
 }

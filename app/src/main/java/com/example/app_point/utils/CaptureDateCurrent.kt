@@ -15,7 +15,7 @@ class CaptureDateCurrent {
 
     fun captureHoraCurrent(): String{ return hora.format(calendar) }
 
-    fun captureDateFirst (): String {
+    fun captureFirstDayOfMonth (): String {
         val calendar = Calendar.getInstance()
         val dateCurrent = captureDateCurrent()
         val dateDiv = dateCurrent.split("/")

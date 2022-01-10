@@ -87,15 +87,15 @@ class DashboardFragment : Fragment() {
             }
         })
 
-        viewModelDash.employeeActive.observe (viewLifecycleOwner, {
+        viewModelDash.employeeDisabled.observe (viewLifecycleOwner, {
 
             var value = 0
             CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.Default) {
                     while (value <= it) {
                         withContext(Dispatchers.Main) {
-                            binding.progress_funcionarios_ativos.progress = value
-                            binding.text_funcionarios_ativos.text = value.toString()
+                            binding.progress_funcionarios_desativados.progress = value
+                            binding.text_funcionarios_desativados.text = value.toString()
                         }
                         delay(100)
                         value++

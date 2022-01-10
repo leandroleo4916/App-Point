@@ -2,6 +2,7 @@ package com.example.app_point.business
 
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.entity.EmployeeEntity
+import com.example.app_point.entity.EmployeeEntityFull
 import com.example.app_point.entity.EmployeeIdAndName
 
 class BusinessEmployee(private val repositoryEmployee: RepositoryEmployee) {
@@ -14,8 +15,8 @@ class BusinessEmployee(private val repositoryEmployee: RepositoryEmployee) {
         return repositoryEmployee.employeeList()
     }
 
-    fun consultEmployeeWithId(id: Int?): EmployeeEntity?{
-        return id?.let { repositoryEmployee.consultDataEmployeeId(it) }
+    fun consultEmployeeWithId(id: Int): EmployeeEntityFull?{
+        return repositoryEmployee.consultDataEmployeeId(id)
     }
 
     fun consultPhoto(id: Int): ByteArray?{
