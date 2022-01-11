@@ -96,7 +96,7 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/progress_total_funcionarios"
+        android:id="@+id/progress_hours_done_cyrcle"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -156,7 +156,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/progress_hrs_done"
         app:layout_constraintStart_toStartOf="@+id/progress_hrs_done"
-        app:layout_constraintTop_toBottomOf="@+id/progress_total_funcionarios"
+        app:layout_constraintTop_toBottomOf="@+id/progress_hours_done_cyrcle"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -168,10 +168,10 @@
         android:textColor="@color/letras"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_total_funcionarios"
-        app:layout_constraintEnd_toEndOf="@+id/progress_total_funcionarios"
-        app:layout_constraintStart_toStartOf="@+id/progress_total_funcionarios"
-        app:layout_constraintTop_toTopOf="@+id/progress_total_funcionarios"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_hours_done_cyrcle"
+        app:layout_constraintEnd_toEndOf="@+id/progress_hours_done_cyrcle"
+        app:layout_constraintStart_toStartOf="@+id/progress_hours_done_cyrcle"
+        app:layout_constraintTop_toTopOf="@+id/progress_hours_done_cyrcle"
         tools:ignore="MissingConstraints" />
 
     <TextView

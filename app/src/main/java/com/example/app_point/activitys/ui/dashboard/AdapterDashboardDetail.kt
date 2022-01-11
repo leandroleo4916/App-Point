@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_point.R
@@ -36,17 +35,16 @@ class AdapterDashboardDetail (private val converterPhoto: ConverterPhoto) :
     inner class ViewHolderDetail(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-        private val itemHoursExtras: TextView = itemView.findViewById(R.id.text_hours_extras_detail)
-        private val progressHoursExtra: ProgressBar = itemView.findViewById(R.id.progress_hrs_extras)
+        private val itemHoursExtras: TextView = itemView.findViewById(R.id.text_hours_extra_detail)
+        private val progressHoursExtra: ProgressBar = itemView.findViewById(R.id.progress_hours_extras_cyrcle)
 
         private val itemHoursDone: TextView = itemView.findViewById(R.id.text_hours_done_detail)
-        private val progressHoursDone: ProgressBar = itemView.findViewById(R.id.progress_hrs_done)
+        private val progressHoursDone: ProgressBar = itemView.findViewById(R.id.progress_hours_done_cyrcle)
 
         private val itemCadastro: TextView = itemView.findViewById(R.id.text_hours_cadastro_detail)
-        private val progressCadastro: ProgressBar = itemView.findViewById(R.id.progress_cadastro)
+        private val progressCadastro: ProgressBar = itemView.findViewById(R.id.progress_cadastro_cyrcle)
 
         private val itemPhoto: ImageView = itemView.findViewById(R.id.image_perfil_detail_dash)
-        private val toolbarLine: Toolbar = itemView.findViewById(R.id.toolbar_line_recycler_detail)
         private val constraint: ConstraintLayout = itemView.findViewById(R.id.constraint_employee_detail)
 
         init { itemPhoto.setOnClickListener(this) }
@@ -63,10 +61,10 @@ class AdapterDashboardDetail (private val converterPhoto: ConverterPhoto) :
                         withContext(Dispatchers.Main) {
                             progressHoursExtra.progress = extra
                             if (extra <= 1){ itemHoursExtras.text = "$extra"+"h" }
-                            else{ itemHoursExtras.text = "$extra"+"h" }
+                            else{ itemHoursExtras.text = "$extra"+"hs" }
 
                         }
-                        delay(50)
+                        delay(30)
                         extra++
                     }
                 }
@@ -79,10 +77,10 @@ class AdapterDashboardDetail (private val converterPhoto: ConverterPhoto) :
                     while (done <= doneCurrent) {
                         withContext(Dispatchers.Main) {
                             progressHoursDone.progress = done
-                            if (done <= 1){ itemHoursDone.text = "$done"+"hs" }
+                            if (done <= 1){ itemHoursDone.text = "$done"+"h" }
                             else{ itemHoursDone.text = "$done"+"hs" }
                         }
-                        delay(50)
+                        delay(30)
                         done++
                     }
                 }
@@ -96,19 +94,13 @@ class AdapterDashboardDetail (private val converterPhoto: ConverterPhoto) :
                             progressCadastro.progress = cadastro
                             itemCadastro.text = "$cadastro"+"%"
                         }
-                        delay(50)
+                        delay(30)
                         cadastro++
                     }
                 }
             }
 
-            //itemHoursExtras.text = employee.extraHour
-            //itemHoursDone.text = employee.hourDone
-            //itemCadastro.text = employee.cadastro
-
-
             if((listEmployeeHourExtra.size - 1) == position){
-                toolbarLine.visibility = View.INVISIBLE
                 constraint.setBackgroundResource(R.drawable.back_radius_superior_retas)
             }
         }

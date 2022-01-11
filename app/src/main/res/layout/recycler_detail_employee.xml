@@ -28,7 +28,7 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="15dp"
         android:indeterminate="false"
-        android:max="40"
+        android:max="220"
         android:progress="0"
         android:progressDrawable="@drawable/progress_hrs_fix"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/progress_total_funcionarios"
+        android:id="@+id/progress_hours_done_cyrcle"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -50,18 +50,17 @@
         app:layout_constraintEnd_toEndOf="@+id/progress_hrs_done"
         app:layout_constraintStart_toStartOf="@+id/progress_hrs_done"
         app:layout_constraintTop_toTopOf="@+id/progress_hrs_done"
-        app:layout_constraintVertical_bias="0.466"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_hours_extras_detail"
+        android:id="@+id/text_hours_done_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="@color/letras"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/progress_hrs_done"
-        app:layout_constraintEnd_toEndOf="@+id/progress_total_funcionarios"
+        app:layout_constraintEnd_toEndOf="@+id/progress_hours_done_cyrcle"
         app:layout_constraintStart_toStartOf="@+id/progress_hrs_done"
         app:layout_constraintTop_toTopOf="@+id/progress_hrs_done" />
 
@@ -73,9 +72,9 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
         android:indeterminate="false"
-        android:max="220"
+        android:max="40"
         android:progress="0"
-        android:progressDrawable="@drawable/progress_extra"
+        android:progressDrawable="@drawable/progress_hrs_fix"
         app:layout_constraintBottom_toBottomOf="@+id/progress_hrs_done"
         app:layout_constraintStart_toEndOf="@+id/progress_hrs_done"
         app:layout_constraintTop_toTopOf="@+id/progress_hrs_done"
@@ -83,33 +82,32 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/image_toolbar_hrs_value"
+        android:id="@+id/progress_hours_extras_cyrcle"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerInParent="true"
         android:indeterminate="false"
-        android:max="220"
+        android:max="40"
         android:progress="0"
-        android:progressDrawable="@drawable/progress_hrs_fix"
+        android:progressDrawable="@drawable/progress_extra"
         app:layout_constraintBottom_toBottomOf="@+id/progress_hrs_extras"
         app:layout_constraintEnd_toEndOf="@+id/progress_hrs_extras"
         app:layout_constraintStart_toStartOf="@+id/progress_hrs_extras"
         app:layout_constraintTop_toTopOf="@+id/progress_hrs_extras"
-        app:layout_constraintVertical_bias="0.466"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/text_hours_done_detail"
+        android:id="@+id/text_hours_extra_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:textColor="@color/letras"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_hrs_value"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_hrs_value"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_hrs_value"
-        app:layout_constraintTop_toTopOf="@+id/image_toolbar_hrs_value" />
+        app:layout_constraintBottom_toBottomOf="@+id/progress_hours_extras_cyrcle"
+        app:layout_constraintEnd_toEndOf="@+id/progress_hours_extras_cyrcle"
+        app:layout_constraintStart_toStartOf="@+id/progress_hours_extras_cyrcle"
+        app:layout_constraintTop_toTopOf="@+id/progress_hours_extras_cyrcle" />
 
     <ProgressBar
         android:id="@+id/progress_cadastro"
@@ -121,7 +119,7 @@
         android:indeterminate="false"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/progress_cadastro"
+        android:progressDrawable="@drawable/progress_hrs_fix"
         app:layout_constraintBottom_toBottomOf="@+id/progress_hrs_extras"
         app:layout_constraintStart_toEndOf="@+id/progress_hrs_extras"
         app:layout_constraintTop_toTopOf="@+id/progress_hrs_extras"
@@ -129,20 +127,19 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/image_toolbar_cadastro_value"
+        android:id="@+id/progress_cadastro_cyrcle"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerInParent="true"
         android:indeterminate="false"
-        android:max="220"
+        android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/progress_hrs_fix"
+        android:progressDrawable="@drawable/progress_cadastro"
         app:layout_constraintBottom_toBottomOf="@+id/progress_cadastro"
         app:layout_constraintEnd_toEndOf="@+id/progress_cadastro"
         app:layout_constraintStart_toStartOf="@+id/progress_cadastro"
         app:layout_constraintTop_toTopOf="@+id/progress_cadastro"
-        app:layout_constraintVertical_bias="0.466"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -152,10 +149,10 @@
         android:text="0"
         android:textColor="@color/letras"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_cadastro_value"
-        app:layout_constraintEnd_toEndOf="@+id/image_toolbar_cadastro_value"
-        app:layout_constraintStart_toStartOf="@+id/image_toolbar_cadastro_value"
-        app:layout_constraintTop_toTopOf="@+id/image_toolbar_cadastro_value" />
+        app:layout_constraintBottom_toBottomOf="@+id/progress_cadastro_cyrcle"
+        app:layout_constraintEnd_toEndOf="@+id/progress_cadastro_cyrcle"
+        app:layout_constraintStart_toStartOf="@+id/progress_cadastro_cyrcle"
+        app:layout_constraintTop_toTopOf="@+id/progress_cadastro_cyrcle" />
 
     <Toolbar
         android:id="@+id/toolbar_line_recycler_detail"
@@ -164,9 +161,9 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="30dp"
         android:background="@color/letrashint"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -60,7 +60,7 @@ class DashboardFragment : Fragment() {
                 withContext(Dispatchers.Default) {
                     while (value <= it) {
                         withContext(Dispatchers.Main) {
-                            binding.progress_total_funcionarios.progress = value
+                            binding.progress_hours_done_cyrcle.progress = value
                             binding.text_total_funcionario.text = value.toString()
                         }
                         delay(100)

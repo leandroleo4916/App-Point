@@ -69,7 +69,7 @@
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
-        android:id="@+id/progress_total_funcionarios"
+        android:id="@+id/progress_hours_done_cyrcle"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -122,7 +122,7 @@
         android:indeterminate="false"
         android:max="20"
         android:progress="0"
-        android:progressDrawable="@drawable/progress_hrs"
+        android:progressDrawable="@drawable/progress_extra"
         app:layout_constraintBottom_toBottomOf="@+id/progress_ferias"
         app:layout_constraintEnd_toEndOf="@+id/progress_ferias"
         app:layout_constraintStart_toStartOf="@+id/progress_ferias"
@@ -182,7 +182,7 @@
         android:indeterminate="false"
         android:max="20"
         android:progress="0"
-        android:progressDrawable="@drawable/progress_hrs"
+        android:progressDrawable="@drawable/progress_cadastro"
         app:layout_constraintBottom_toBottomOf="@+id/image_toolbar_fix2"
         app:layout_constraintEnd_toEndOf="@+id/image_toolbar_fix2"
         app:layout_constraintStart_toStartOf="@+id/image_toolbar_fix2"
@@ -198,10 +198,10 @@
         android:textColor="@color/letras"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_total_funcionarios"
-        app:layout_constraintEnd_toEndOf="@+id/progress_total_funcionarios"
-        app:layout_constraintStart_toStartOf="@+id/progress_total_funcionarios"
-        app:layout_constraintTop_toTopOf="@+id/progress_total_funcionarios"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_hours_done_cyrcle"
+        app:layout_constraintEnd_toEndOf="@+id/progress_hours_done_cyrcle"
+        app:layout_constraintStart_toStartOf="@+id/progress_hours_done_cyrcle"
+        app:layout_constraintTop_toTopOf="@+id/progress_hours_done_cyrcle"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -348,7 +348,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_info_"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@color/backfrag"
@@ -362,7 +362,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
-        android:text="Extras"
+        android:text="Feitas"
         android:textColor="@color/letras"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_info_"
@@ -374,7 +374,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="53dp"
-        android:text="Feitas"
+        android:text="Extras"
         android:textColor="@color/letras"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_info_"

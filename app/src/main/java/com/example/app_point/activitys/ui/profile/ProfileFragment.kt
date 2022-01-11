@@ -11,7 +11,6 @@ import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
-import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.EmployeeEntityFull
 import com.example.app_point.interfaces.IVisibilityNavView
 import com.example.app_point.interfaces.ItemEmployee
@@ -205,7 +204,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
             withContext(Dispatchers.Default) {
                 while (pStatus1 <= hoursMake) {
                     withContext(Dispatchers.Main) {
-                        binding.progress_total_funcionarios.progress = pStatus1
+                        binding.progress_hours_done_cyrcle.progress = pStatus1
                         binding.edit_hrs_feitas.text = pStatus1.toString()
                     }
                     delay(20)
@@ -234,8 +233,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun searchPointsEmployee(){
-        profileViewModel.getFullPoints(employee.id,
-            captureDateCurrent.captureDateCurrent())
+        profileViewModel.getFullPoints(employee.id, captureDateCurrent.captureDateCurrent())
         binding.progress_points.visibility = View.GONE
     }
 
@@ -243,10 +241,10 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
         profileViewModel.pointsList.observe(viewLifecycleOwner, {
             binding.run {
-                text_hora1.text = it?.hora1 ?: "--:--"
-                text_hora2.text = it?.hora2 ?: "--:--"
-                text_hora3.text = it?.hora3 ?: "--:--"
-                text_hora4.text = it?.hora4 ?: "--:--"
+                text_hora1.text = it?.horario1 ?: "--:--"
+                text_hora2.text = it?.horario2 ?: "--:--"
+                text_hora3.text = it?.horario3 ?: "--:--"
+                text_hora4.text = it?.horario4 ?: "--:--"
             }
             binding.progress_points.visibility = View.GONE
         })
