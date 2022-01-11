@@ -11,6 +11,7 @@ import android.view.animation.DecelerateInterpolator
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app_point.R
@@ -29,13 +30,14 @@ class MainActivityController : FragmentActivity(), ItemEmployee, ILogoutApp, IHi
     ItemClickOpenProfileById, IVisibilityNavView, ItemClickOpenRegister {
 
     private lateinit var navView: BottomNavigationView
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_controller)
 
         navView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
     }
 
@@ -80,17 +82,9 @@ class MainActivityController : FragmentActivity(), ItemEmployee, ILogoutApp, IHi
 
     override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
 
-        val args = Bundle()
-        args.putSerializable("id", employee.id)
-
-        val fragment = ProfileFragment()
-        fragment.arguments = args
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_home, fragment, "profile")
-            .addToBackStack("profile")
-            .commit()
+        val arg = Bundle()
+        arg.putInt("id", employee.id)
+        navController.navigate(R.id.navigation_profile, arg)
 
         animateBarVisibility(false)
 

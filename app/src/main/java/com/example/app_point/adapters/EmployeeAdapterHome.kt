@@ -55,9 +55,7 @@ class EmployeeAdapterHome (private val listener: ItemClickOpenProfileById,
 
         override fun onClick(view: View?) {
             val position = bindingAdapterPosition
-            when(view){
-                itemPhoto -> listener.openFragmentProfileById(listFullEmployee[position])
-            }
+            when(view){ itemPhoto -> listener.openFragmentProfileById(listFullEmployee[position]) }
         }
     }
 

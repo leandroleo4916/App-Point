@@ -4,13 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginRight="4dp"
-    android:layout_marginLeft="4dp"
-    android:layout_marginTop="4dp"
     android:elevation="10dp"
-    android:background="@drawable/back_toolbar"
+    android:background="@color/backfrag"
     android:id="@+id/toolbar_employee"
     android:layout_height="80dp">
+
+    <Toolbar
+        android:id="@+id/toolbar_line_recycler_detail"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="92dp"
+        android:background="@color/letrashint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_image_perfil"

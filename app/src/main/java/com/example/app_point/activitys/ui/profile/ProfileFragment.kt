@@ -57,12 +57,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun listener() {
 
-        binding.image_back_perfil.setOnClickListener {
-            if (context is IVisibilityNavView){
-                closeFragment = context as IVisibilityNavView
-                closeFragment.visibilityNavView()
-            }
-        }
+        binding.image_back_perfil.setOnClickListener { activity?.onBackPressed() }
         binding.option_profile.setOnClickListener{ optionMenuProfile() }
         binding.search_date.setOnClickListener{ calendar() }
         binding.next.setOnClickListener{

@@ -92,7 +92,7 @@
                 <RelativeLayout
                     android:id="@+id/relative_layout_scroll"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="130dp"
                     app:layout_scrollFlags="scroll|enterAlways"
                     tools:ignore="MissingConstraints,UselessParent">
 
@@ -147,6 +147,7 @@
                             android:id="@+id/recycler_employee_home"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -163,16 +164,71 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/back_fundo_blue2"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_add"
+            android:elevation="30dp"
+            app:maxImageSize="30dp"
+            app:fabCustomSize="60dp"
+            app:backgroundTint="@color/backfrag"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription,MissingConstraints" />
+
+        <TextView
+            android:id="@+id/textView_hour_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:text="18:30"
+            android:textColor="@color/back"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/textView_date_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="12/01/2022"
+            android:textColor="@color/back"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hour_current"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="130dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_tarefa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/back_toolbar_points"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/back_radius_inferior_retas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -224,6 +280,8 @@
             android:id="@+id/recycler_points"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

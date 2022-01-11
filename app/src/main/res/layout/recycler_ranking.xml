@@ -5,8 +5,7 @@
     android:id="@+id/toolbar_employee"
     android:layout_width="95dp"
     android:layout_height="95dp"
-    app:layout_constraintCircleRadius="8dp"
-    android:background="@drawable/back_toolbar">
+    app:layout_constraintCircleRadius="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_image_ranking"

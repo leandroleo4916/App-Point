@@ -24,7 +24,7 @@
         android:layout_gravity="bottom"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@drawable/back_fundo"
+        android:background="@drawable/back_fundo_blue3"
         app:layout_behavior="com.example.app_point.activitys.ui.activity.BottomNavigationBehavior"
         app:menu="@menu/bottom_nav" />
 
