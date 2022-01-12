@@ -1,5 +1,8 @@
 package com.example.app_point.activitys.ui.home
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +27,10 @@ import com.example.app_point.utils.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
+import java.util.*
+
 
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -48,19 +53,19 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: View
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
-                               savedInstanceState: Bundle?): View {
+        savedInstanceState: Bundle?, ): View {
 
         binding = inflater.inflate(R.layout.fragment_home, container, false)
 
         dataBase = DataBaseEmployee(context)
         repositoryPoint = RepositoryPoint(dataBase)
         repositoryEmployee = RepositoryEmployee(dataBase)
-        homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee, repositoryPoint,
-            converterHours)
+        homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee, repositoryPoint, converterHours)
 
         if (context is ItemClickOpenProfileById) { listener = context as ItemClickOpenProfileById }
         employeeAdapter = EmployeeAdapterHome(listener, color, converterPhoto)
 
+        updateHourAndDate()
         recyclerPoints()
         recyclerEmployee()
         searchPointsAndEmployee()
@@ -72,20 +77,57 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return binding
     }
 
+    private fun updateHourAndDate() {
+
+        val delay: Long = 0
+        val interval: Long = 5000
+        val timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                CoroutineScope(Dispatchers.Main).launch {
+                    binding.textView_date_current.text = captureDateCurrent.captureDateCurrent()
+                    animationFab()
+
+                }
+            }
+        }, delay, interval)
+
+        val intervalSecond: Long = 1000
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                CoroutineScope(Dispatchers.Main).launch {
+                    binding.textView_hour_current.text = captureDateCurrent.captureHoraCurrentSecond()
+                }
+            }
+        }, delay, intervalSecond)
+    }
+
+    private fun animationFab() {
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 800
+        val animatorList = ArrayList<Animator>()
+        val scaleXAnimator = ObjectAnimator.ofFloat(binding.fab_add_point, "ScaleX", 1f, 1.2f, 1f)
+        animatorList.add(scaleXAnimator)
+        val scaleYAnimator = ObjectAnimator.ofFloat(binding.fab_add_point, "ScaleY", 1f, 1.2f, 1f)
+        animatorList.add(scaleYAnimator)
+        animatorSet.playTogether(animatorList)
+        animatorSet.start()
+    }
+
     private fun showNavView() {
 
         var isShow = true
         var scrollRange = -1
         val appBar = binding.appbar
         appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { barLayout, verticalOffset ->
-            if (scrollRange == -1){
-                scrollRange = barLayout?.totalScrollRange!!
-            }
-            if (scrollRange + verticalOffset == 0){
+            if (scrollRange == -1) { scrollRange = barLayout?.totalScrollRange!! }
+            if (scrollRange + verticalOffset == 0) {
+
                 if (context is ItemEmployee) { hideNav = context as IHideNavView }
                 hideNav.hideNavView(false)
                 isShow = true
-            } else if (isShow){
+            } else if (isShow) {
+
                 if (context is ItemEmployee) { hideNav = context as IHideNavView }
                 hideNav.hideNavView(true)
                 isShow = false
@@ -94,7 +136,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun listener() {
-        binding.image_add_ponto.setOnClickListener { dialogRegisterPoint() }
+        binding.fab_add_point.setOnClickListener { dialogRegisterPoint() }
         binding.logout_app.setOnClickListener { dialogLogout() }
         binding.textView_add_employee.setOnClickListener {
             if (context is ItemClickOpenRegister) {
@@ -190,7 +232,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
             if (context is ILogoutApp) { logoutApp = context as ILogoutApp }
             logoutApp.logoutApp()
         }
-        alertDialog?.setNegativeButton("Não") { _, _ -> showSnackBar(R.string.cancelado) }
+        alertDialog?.setNegativeButton("Não") { _, _ -> }
         alertDialog?.create()?.show()
     }
 
@@ -208,9 +250,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val list = businessEmployee.consultEmployeeList()
 
         val inflate = layoutInflater.inflate(R.layout.dialog_bater_ponto, null)
-        val textData = inflate.findViewById(R.id.dataPonto) as TextView
-        textData.text = dateCurrent
-
         val listSpinner = inflate.findViewById(R.id.spinnerGetEmployee) as Spinner
         val adapter =
             context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, list) }
@@ -222,7 +261,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         alertDialog?.setPositiveButton("Registrar") { _, _ ->
 
             when (val itemSpinner = listSpinner.selectedItem) {
-                null -> { showSnackBar(R.string.precisa_add_funcionarios)}
+                null -> {
+                    showSnackBar(R.string.precisa_add_funcionarios)
+                }
                 else -> {
                     val id = businessEmployee.consultIdEmployeeByName(itemSpinner.toString())
                     savePoint(id, itemSpinner.toString(), dateCurrent, hourCurrent)
@@ -233,7 +274,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         alertDialog?.create()?.show()
     }
 
-    private fun savePoint (id: Int, itemSpinner: String, dateCurrent: String, horaCurrent: String){
+    private fun savePoint(id: Int, itemSpinner: String, dateCurrent: String, horaCurrent: String){
         when{
             homeViewModel.setPoints(id, itemSpinner, dateCurrent, horaCurrent) -> {
                 searchPointsAndEmployee()
@@ -245,7 +286,9 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinnerGetEmployee -> { parent.getItemAtPosition(position).toString() }
+            R.id.spinnerGetEmployee -> {
+                parent.getItemAtPosition(position).toString()
+            }
         }
     }
 

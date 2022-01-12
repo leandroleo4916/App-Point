@@ -6,14 +6,25 @@ import java.util.*
 
 class CaptureDateCurrent {
 
-    private val calendar = Calendar.getInstance().time
     private val local = Locale("pt", "BR")
-    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", local)
+    private val date = SimpleDateFormat("dd/MM/yyyy", local)
     private val hora = SimpleDateFormat("HH:mm", local)
+    private val horaSecond = SimpleDateFormat("HH:mm:ss", local)
 
-    fun captureDateCurrent(): String{ return dateFormat.format(calendar) }
+    fun captureDateCurrent(): String{
+        val calendar = Calendar.getInstance().time
+        return date.format(calendar)
+    }
 
-    fun captureHoraCurrent(): String{ return hora.format(calendar) }
+    fun captureHoraCurrent(): String{
+        val calendar = Calendar.getInstance().time
+        return hora.format(calendar)
+    }
+
+    fun captureHoraCurrentSecond(): String{
+        val calendar = Calendar.getInstance().time
+        return horaSecond.format(calendar)
+    }
 
     fun captureFirstDayOfMonth (): String {
         val calendar = Calendar.getInstance()
@@ -26,7 +37,7 @@ class CaptureDateCurrent {
 
         if (dateFirst == "0"+day+"/"+dateDiv[1]+"/"+dateDiv[2]){ return dateFirst }
 
-        var data = dateFormat.parse(dateFirst)
+        var data = date.parse(dateFirst)
         while (dateFirst != dateCurrent){
 
             calendar.time = data
@@ -40,9 +51,9 @@ class CaptureDateCurrent {
 
     fun captureNextDate(date: String): String{
         val calendar = Calendar.getInstance()
-        val data = dateFormat.parse(date)
+        val data = this.date.parse(date)
         calendar.time = data
         calendar.add(Calendar.DAY_OF_MONTH, +1)
-        return dateFormat.format(calendar.time)
+        return this.date.format(calendar.time)
     }
 }

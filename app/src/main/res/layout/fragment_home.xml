@@ -165,7 +165,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="110dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="5dp"
@@ -173,6 +173,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_point"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginEnd="30dp"
@@ -191,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="15dp"
             android:text="18:30"
             android:textColor="@color/back"
             android:textSize="30sp"
@@ -205,12 +206,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginBottom="15dp"
             android:text="12/01/2022"
             android:textColor="@color/back"
             android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_hour_current"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -219,7 +221,7 @@
         android:id="@+id/constraint_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="122dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.Toolbar
@@ -254,16 +256,6 @@
                     tools:ignore="MissingConstraints" />
 
                 <ImageView
-                    android:id="@+id/image_add_ponto"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/filter_tarefa"
-                    tools:ignore="ContentDescription,MissingConstraints" />
-
-                <ImageView
                     android:id="@+id/filter_tarefa"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -275,6 +267,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.Toolbar>
+
+        <Toolbar
+            android:id="@+id/toolbar_line_recycler_detail"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/letrashint"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_tarefa"
+            app:layout_constraintStart_toStartOf="@+id/toolbar_tarefa"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_tarefa"
+            tools:ignore="MissingConstraints" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_points"

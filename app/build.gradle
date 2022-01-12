@@ -89,4 +89,7 @@ dependencies {
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
 
+    //animator
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+
 }

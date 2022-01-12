@@ -97,7 +97,7 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/back_fundo"
+                    android:background="@drawable/back_fundo_blue2"
                     android:elevation="8dp"
                     android:text="Cadastrar"
                     android:textColor="@color/colorPrimary"
