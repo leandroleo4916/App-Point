@@ -10,9 +10,9 @@ UI Telas Desenvolvidas
 <a href="https://imgur.com/h8p5MHQ"><img src="https://i.imgur.com/h8p5MHQ.jpg" title="source: imgur.com" /></a>
 
 <h3 align="center"> Cadastro Funcionário | Perfil Funcionário | Pontos Registrados </h3>
-<a href="https://imgur.com/yW06mUN"><img src="https://i.imgur.com/yW06mUN.jpg" title="source: imgur.com" /></a>
-<a href="https://imgur.com/zNXAtrO"><img src="https://i.imgur.com/zNXAtrO.jpg" title="source: imgur.com" /></a>
-<a href="https://imgur.com/1LMlSy2"><img src="https://i.imgur.com/1LMlSy2.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/ihb7K0w"><img src="https://i.imgur.com/ihb7K0w.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/df1KADt"><img src="https://i.imgur.com/df1KADt.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/PlTBms6"><img src="https://i.imgur.com/PlTBms6.jpg" title="source: imgur.com" /></a>
 
 
 Tecnológias Usadas
