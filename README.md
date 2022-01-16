@@ -22,10 +22,10 @@ Tecnológias Usadas
    * Fragment + Custom Views
    * Injeção de Dependência - Koin
    * API Firebase
-   * Retrofit
    * Coroutines
    * Firebase Realtime
    * Recycler View
+   * Animator
 
 Tabela de Conteúdo e Progresso do App
 =================
@@ -54,21 +54,21 @@ Tabela de Conteúdo e Progresso do App
       
    * Registro de Funcionários
       - [x] Buscar foto Galeria ou Câmera
-      - [x] Registro de Funcionário no Firebase
+      - [ ] Registro de Funcionário no Firebase
       
    * Tela de Perfil
       - [x] Buscar Funcionário por nome
       - [x] Busca de Pontos do funcionário selecionado local
-      - [ ] Horas fesitas e Horas extras
+      - [x] Horas feitas e Horas extras
       - [ ] Busca de Pontos do funcionário selecionado no Firebase
 
    * Tela de Pontos Registrados
-      - [x] Busca de todos pontos registrados local
+      - [x] Busca de todos pontos do mês registrados local
       - [x] Filtro de pontos por funcionário
       - [ ] Busca de todos pontos registrados no Firebase
       
    * Tela de Opções
-      - [ ] Adicionar, Editar, Excluir e Ver dados de funcionários
+      - [x] Adicionar, Editar, Excluir e Ver dados de funcionários
       - [ ] Configurações do App
      
 
