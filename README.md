@@ -7,7 +7,7 @@ UI Telas Desenvolvidas
 <h3 align="center"> Login User | Cadastro Admin | Home Principal</h3>
 <a href="https://imgur.com/1tPKgFP"><img src="https://i.imgur.com/1tPKgFP.jpg" title="source: imgur.com" /></a>
 <a href="https://imgur.com/0cy7sKF"><img src="https://i.imgur.com/0cy7sKF.jpg" title="source: imgur.com" /></a>
-<a href="https://imgur.com/1tPKgFP"><img src="https://i.imgur.com/sQaNCb4.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/sQaNCb4"><img src="https://i.imgur.com/sQaNCb4.jpg" title="source: imgur.com" /></a>
 
 <h3 align="center"> Cadastro Funcionário | Perfil Funcionário | Pontos Registrados </h3>
 <a href="https://imgur.com/yW06mUN"><img src="https://i.imgur.com/yW06mUN.jpg" title="source: imgur.com" /></a>
