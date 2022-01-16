@@ -4,15 +4,14 @@
 
 UI Telas Desenvolvidas
 =================
-<h3 align="center"> Login User | Cadastro Admin | Home Principal</h3>
+
 <a href="https://imgur.com/1tPKgFP"><img src="https://i.imgur.com/1tPKgFP.jpg" title="source: imgur.com" /></a>
 <a href="https://imgur.com/0cy7sKF"><img src="https://i.imgur.com/0cy7sKF.jpg" title="source: imgur.com" /></a>
 <a href="https://imgur.com/h8p5MHQ"><img src="https://i.imgur.com/h8p5MHQ.jpg" title="source: imgur.com" /></a>
-
-<h3 align="center"> Cadastro Funcionário | Perfil Funcionário | Pontos Registrados </h3>
 <a href="https://imgur.com/ihb7K0w"><img src="https://i.imgur.com/ihb7K0w.jpg" title="source: imgur.com" /></a>
 <a href="https://imgur.com/df1KADt"><img src="https://i.imgur.com/df1KADt.jpg" title="source: imgur.com" /></a>
 <a href="https://imgur.com/PlTBms6"><img src="https://i.imgur.com/PlTBms6.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/t4X7jMc"><img src="https://i.imgur.com/t4X7jMc.jpg" title="source: imgur.com" /></a>
 
 
 Tecnológias Usadas
