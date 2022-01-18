@@ -19,18 +19,15 @@ import com.example.app_point.adapters.EmployeeAdapterHome
 import com.example.app_point.adapters.PointsAdapter
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.constants.ConstantsUser
-import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.interfaces.*
-import com.example.app_point.repository.RepositoryEmployee
-import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
-
 
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -41,26 +38,19 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val pointAdapter: PointsAdapter by inject()
     private val businessEmployee: BusinessEmployee by inject()
     private val converterPhoto: ConverterPhoto by inject()
-    private val converterHours: CalculateHours by inject()
     private val captureDateCurrent: CaptureDateCurrent by inject()
-    private val color: GetColor by inject()
     private val securityPreferences: SecurityPreferences by inject()
-    private lateinit var dataBase: DataBaseEmployee
-    private lateinit var repositoryPoint: RepositoryPoint
-    private lateinit var repositoryEmployee: RepositoryEmployee
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModel()
+    private val color: GetColor by inject()
     private lateinit var employeeAdapter: EmployeeAdapterHome
     private lateinit var binding: View
+    private val delay: Long = 0
+    private val timer = Timer()
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?, ): View {
 
         binding = inflater.inflate(R.layout.fragment_home, container, false)
-
-        dataBase = DataBaseEmployee(context)
-        repositoryPoint = RepositoryPoint(dataBase)
-        repositoryEmployee = RepositoryEmployee(dataBase)
-        homeViewModel = HomeViewModel(repositoryPoint, repositoryEmployee, repositoryPoint, converterHours)
 
         if (context is ItemClickOpenProfileById) { listener = context as ItemClickOpenProfileById }
         employeeAdapter = EmployeeAdapterHome(listener, color, converterPhoto)
@@ -79,15 +69,13 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun updateHourAndDate() {
 
-        val delay: Long = 0
+        binding.textView_date_current.text = captureDateCurrent.captureDateCurrent()
+
         val interval: Long = 5000
-        val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 CoroutineScope(Dispatchers.Main).launch {
-                    binding.textView_date_current.text = captureDateCurrent.captureDateCurrent()
                     animationFab()
-
                 }
             }
         }, delay, interval)
@@ -106,9 +94,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val animatorSet = AnimatorSet()
         animatorSet.duration = 800
         val animatorList = ArrayList<Animator>()
-        val scaleXAnimator = ObjectAnimator.ofFloat(binding.fab_add_point, "ScaleX", 1f, 1.2f, 1f)
+        val scaleXAnimator = ObjectAnimator.ofFloat(
+            binding.fab_add_point, "ScaleX", 1f, 1.2f, 1f)
         animatorList.add(scaleXAnimator)
-        val scaleYAnimator = ObjectAnimator.ofFloat(binding.fab_add_point, "ScaleY", 1f, 1.2f, 1f)
+        val scaleYAnimator = ObjectAnimator.ofFloat(
+            binding.fab_add_point, "ScaleY", 1f, 1.2f, 1f)
         animatorList.add(scaleYAnimator)
         animatorSet.playTogether(animatorList)
         animatorSet.start()

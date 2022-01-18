@@ -4,6 +4,7 @@ import com.example.app_point.activitys.ui.dashboard.AdapterDashboardDetail
 import com.example.app_point.activitys.ui.dashboard.AdapterDashboardRanking
 import com.example.app_point.activitys.ui.dashboard.DashboardViewModel
 import com.example.app_point.activitys.ui.employee.EmployeeViewModel
+import com.example.app_point.activitys.ui.home.HomeViewModel
 import com.example.app_point.activitys.ui.login.BusinessUser
 import com.example.app_point.adapters.AdapterPoints
 import com.example.app_point.adapters.PointsAdapter
@@ -26,6 +27,7 @@ val businessModule = module { factory { BusinessEmployee(get()) } }
 val userModule = module { factory { BusinessUser(get(), get()) } }
 val employeeModule = module { viewModel { EmployeeViewModel(get(), get(), get()) } }
 val viewModelDashboardModule = module {viewModel{DashboardViewModel(get(),get(),get(),get())}}
+val homeViewModelModule = module {viewModel{ HomeViewModel(get(),get(),get(),get()) }}
 val adapterModule = module { factory { AdapterPoints(get()) } }
 val pointsAdapterModule = module { factory { PointsAdapter(get(), get()) } }
 val dataBaseEmployeeModule = module { single { DataBaseEmployee(get()) } }
@@ -43,5 +45,5 @@ val appModules = listOf(
     userModule, adapterModule, repositoryPointModule, captureDateModule,
     dataBaseEmployeeModule, securityPreferencesModule, pointsAdapterModule, databaseUserModule,
     converterPhotoModule, calculationHoursModule, repositoryUserModule, repositoryEmployeeModule,
-    adapterDetailModule, viewModelDashboardModule
+    adapterDetailModule, viewModelDashboardModule, homeViewModelModule
 )

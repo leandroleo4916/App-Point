@@ -8,6 +8,8 @@ import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.entity.PointsEntity
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.repository.Resultado
+import java.net.ConnectException
 
 class HomeViewModel(private var repository: RepositoryPoint,
                     private var repositoryEmployee: RepositoryEmployee,

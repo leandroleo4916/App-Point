@@ -15,10 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.app_point.R
-import com.example.app_point.activitys.ui.home.HomeFragment
 import com.example.app_point.activitys.ui.login.LoginActivity
-import com.example.app_point.activitys.ui.profile.ProfileFragment
-import com.example.app_point.activitys.ui.register.RegisterFragment
 import com.example.app_point.entity.EmployeeNameAndPhoto
 import com.example.app_point.interfaces.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -42,11 +39,7 @@ class MainActivityController : FragmentActivity(), ItemEmployee, ILogoutApp, IHi
     }
 
     override fun visibilityNavView() {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_home, HomeFragment(), "home")
-            .commit()
-
+        navController.navigate(R.id.navigation_home)
         animateBarVisibility(true)
     }
 
@@ -61,33 +54,20 @@ class MainActivityController : FragmentActivity(), ItemEmployee, ILogoutApp, IHi
 
     override fun openFragmentRegister(id: Int) {
 
-        navView.selectedItemId = R.id.navigation_register
-        val args = Bundle()
-        args.putSerializable("id", id)
-
-        val fragment = RegisterFragment.newInstance()
-        fragment.arguments = args
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container_register, fragment, "register")
-            .commit()
-
+        val arg = Bundle()
+        arg.putInt("id", id)
+        navController.navigate(R.id.navigation_register, arg)
         animateBarVisibility(true)
     }
 
-    override fun openFragmentRegister() {
-        navView.selectedItemId = R.id.navigation_register
-    }
+    override fun openFragmentRegister() { navView.selectedItemId = R.id.navigation_register }
 
     override fun openFragmentProfileById(employee: EmployeeNameAndPhoto) {
 
         val arg = Bundle()
         arg.putInt("id", employee.id)
         navController.navigate(R.id.navigation_profile, arg)
-
         animateBarVisibility(false)
-
     }
 
     private fun animateBarVisibility(isVisible: Boolean) {
@@ -102,9 +82,7 @@ class MainActivityController : FragmentActivity(), ItemEmployee, ILogoutApp, IHi
             offsetAnimator.addUpdateListener {
                 navView.translationY = it.animatedValue as Float
             }
-        } else {
-            offsetAnimator.cancel()
-        }
+        } else { offsetAnimator.cancel() }
 
         val targetTranslation = if (isVisible) 0f else navView.height.toFloat()
         offsetAnimator.setFloatValues(navView.translationY, targetTranslation)
@@ -136,11 +114,8 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
         return super.layoutDependsOn(parent, child, dependency)
     }
 
-    override fun onStartNestedScroll(
-        coordinatorLayout: CoordinatorLayout, child: V,
-        directTargetChild: View, target: View,
-        axes: Int, type: Int,
-    ): Boolean {
+    override fun onStartNestedScroll (coordinatorLayout: CoordinatorLayout, child: V,
+        directTargetChild: View, target: View, axes: Int, type: Int): Boolean {
 
         if (axes != ViewCompat.SCROLL_AXIS_VERTICAL) return false
 
@@ -150,20 +125,16 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
         return true
     }
 
-    override fun onNestedPreScroll(
-        coordinatorLayout: CoordinatorLayout, child: V,
-        target: View, dx: Int, dy: Int, consumed: IntArray,
-        type: Int,
-    ) {
+    override fun onNestedPreScroll (coordinatorLayout: CoordinatorLayout, child: V,
+        target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
 
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
         child.translationY = max(0f, min(child.height.toFloat(), child.translationY + dy))
     }
 
-    override fun onStopNestedScroll(
+    override fun onStopNestedScroll (
         coordinatorLayout: CoordinatorLayout, child: V,
-        target: View, type: Int,
-    ) {
+        target: View, type: Int) {
 
         if (!isSnappingEnabled) return
 
@@ -188,9 +159,7 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
                 duration = 150L
             }
 
-            offsetAnimator?.addUpdateListener {
-                child.translationY = it.animatedValue as Float
-            }
+            offsetAnimator?.addUpdateListener { child.translationY = it.animatedValue as Float }
         } else { offsetAnimator?.cancel() }
 
         val targetTranslation = if (isVisible) 0f else child.height.toFloat()

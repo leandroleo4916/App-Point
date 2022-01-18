@@ -28,8 +28,6 @@ import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.EmployeeEntityFull
 import com.example.app_point.entity.HourEntityInt
-import com.example.app_point.interfaces.IOnBackPressed
-import com.example.app_point.interfaces.IOnBackPressedRegister
 import com.example.app_point.interfaces.ItemClickOpenRegister
 import com.example.app_point.utils.CalculateHours
 import com.example.app_point.utils.CaptureDateCurrent
@@ -51,8 +49,7 @@ class RegisterFragment : Fragment() {
     private val imageCaptureCode = 1001
     private var imageUri: Uri? = null
     private lateinit var binding: View
-
-    companion object { fun newInstance() = RegisterFragment() }
+    var employee: EmployeeEntityFull? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,37 +59,38 @@ class RegisterFragment : Fragment() {
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         val args = arguments?.let { it.getSerializable("id") as Int }
-        infoEmployee(args)
+        if (args != null){
+            employee = mBusinessEmployee.consultEmployeeWithId(args)!!
+        }
+
+        infoEmployee()
         initDate()
         listener(args)
 
         return binding
     }
 
-    private fun infoEmployee(args: Int?) {
+    private fun infoEmployee() {
 
-        if (args != null) {
-
-            val employee: EmployeeEntityFull? = mBusinessEmployee.consultEmployeeWithId(args)
-            if (employee != null) {
-                val photo = mToByteArray.converterToBitmap(employee.photo)
-                binding.run {
-                    photo_employee.setImageBitmap(photo)
-                    horario1.text = calculateHours.convertMinutesInHoursString(employee.horario1)
-                    horario2.text = calculateHours.convertMinutesInHoursString(employee.horario2)
-                    horario3.text = calculateHours.convertMinutesInHoursString(employee.horario3)
-                    horario4.text = calculateHours.convertMinutesInHoursString(employee.horario4)
-                    edittext_username.setText(employee.nameEmployee)
-                    edittext_email.setText(employee.emailEmployee)
-                    edittext_cargo.setText(employee.cargoEmployee)
-                    edittext_phone.setText(employee.phoneEmployee)
-                    text_admissao.text = employee.admissaoEmployee
-                    text_aniversario.text = employee.aniversarioEmployee
-                    textViewHome.text = getString(R.string.editar_funcionario)
-                    buttom_register_employee.text = getString(R.string.editar)
-                }
+        if (employee != null){
+            val photo = mToByteArray.converterToBitmap(employee!!.photo)
+            binding.run {
+                photo_employee.setImageBitmap(photo)
+                horario1.text = calculateHours.convertMinutesInHoursString(employee!!.horario1)
+                horario2.text = calculateHours.convertMinutesInHoursString(employee!!.horario2)
+                horario3.text = calculateHours.convertMinutesInHoursString(employee!!.horario3)
+                horario4.text = calculateHours.convertMinutesInHoursString(employee!!.horario4)
+                edittext_username.setText(employee!!.nameEmployee)
+                edittext_email.setText(employee!!.emailEmployee)
+                edittext_cargo.setText(employee!!.cargoEmployee)
+                edittext_phone.setText(employee!!.phoneEmployee)
+                text_admissao.text = employee!!.admissaoEmployee
+                text_aniversario.text = employee!!.aniversarioEmployee
+                textViewHome.text = getString(R.string.editar_funcionario)
+                buttom_register_employee.text = getString(R.string.editar)
             }
         }
+
     }
 
     private fun listener(args: Int?) {
@@ -213,9 +211,7 @@ class RegisterFragment : Fragment() {
             permissionCode -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera()
-                } else {
-                    toast(R.string.permissao_negada)
-                }
+                } else { toast(R.string.permissao_negada) }
             }
         }
     }
@@ -267,6 +263,11 @@ class RegisterFragment : Fragment() {
         val admission = binding.text_admissao.text.toString()
         val birth = binding.text_aniversario.text.toString()
 
+        val status = when (employee){
+            null -> "Trabalhando"
+            else -> employee!!.status
+        }
+
         when {
             name.isEmpty() -> binding.edittext_username.error = getString(R.string.digite_nome)
             email.isEmpty() -> binding.edittext_email.error = getString(R.string.digite_email)
@@ -275,7 +276,7 @@ class RegisterFragment : Fragment() {
             admission.isEmpty() -> binding.text_admissao.error = getString(R.string.digite_admissao)
             birth.isEmpty() -> binding.text_aniversario.error = getString(R.string.digite_aniversario)
 
-            else -> setEmployee(EmployeeEntity(id, "Trabalhando", photo, hora1, hora2, hora3,
+            else -> setEmployee(EmployeeEntity(id, status, photo, hora1, hora2, hora3,
                 hora4, workload, name, cargo, email, phone, admission, birth))
         }
     }

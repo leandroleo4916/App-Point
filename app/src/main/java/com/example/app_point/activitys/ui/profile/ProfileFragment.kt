@@ -1,5 +1,8 @@
 package com.example.app_point.activitys.ui.profile
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -12,7 +15,6 @@ import androidx.fragment.app.Fragment
 import com.example.app_point.R
 import com.example.app_point.business.BusinessEmployee
 import com.example.app_point.entity.EmployeeEntityFull
-import com.example.app_point.interfaces.IVisibilityNavView
 import com.example.app_point.interfaces.ItemEmployee
 import com.example.app_point.repository.RepositoryPoint
 import com.example.app_point.utils.CalculateHours
@@ -36,7 +38,6 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var employee: EmployeeEntityFull
     private lateinit var binding: View
     private lateinit var openRegister: ItemEmployee
-    private lateinit var closeFragment: IVisibilityNavView
     private val today = captureDateCurrent.captureDateCurrent()
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +85,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
             viewModelSelected(employee.id, date)
             
             if (date == today){
-                binding.text_date_time.text = "Pontos de hoje"
+                binding.text_date_time.text = getString(R.string.pontos_hoje)
                 binding.next.setImageResource(R.drawable.ic_next_gray)
             }
             else{
@@ -119,7 +120,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
             when {
                 dateSelected == today -> {
-                    binding.text_date_time.text = "Pontos de hoje"
+                    binding.text_date_time.text = getString(R.string.pontos_hoje)
                     binding.next.setImageResource(R.drawable.ic_next_gray)
                     viewModelSelected(employee.id, dateSelected)
                 }
@@ -237,19 +238,39 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
         profileViewModel.pointsList.observe(viewLifecycleOwner, {
             binding.run {
                 text_hora1.text = it?.horario1 ?: "--:--"
+                animationPoints(text_hora1)
                 text_hora2.text = it?.horario2 ?: "--:--"
+                animationPoints(text_hora2)
                 text_hora3.text = it?.horario3 ?: "--:--"
+                animationPoints(text_hora3)
                 text_hora4.text = it?.horario4 ?: "--:--"
+                animationPoints(text_hora4)
             }
             binding.progress_points.visibility = View.GONE
         })
+
+        profileViewModel.statusCurrent.observe(viewLifecycleOwner, {
+            showSnackBar(it)
+            employee = businessEmployee.consultEmployeeWithId(employee.id)!!
+            setInfoEmployee()
+        })
+    }
+
+    private fun animationPoints(view: View) {
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 300
+        val animatorList = ArrayList<Animator>()
+        val scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 1f, 1.2f, 1f)
+        animatorList.add(scaleXAnimator)
+        val scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY", 1f, 1.2f, 1f)
+        animatorList.add(scaleYAnimator)
+        animatorSet.playTogether(animatorList)
+        animatorSet.start()
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent?.id) {
-            R.id.spinner_employee -> {
-                parent.getItemAtPosition(position).toString()
-            }
+            R.id.spinner_employee -> { parent.getItemAtPosition(position).toString() }
         }
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -272,13 +293,12 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
                 "Trabalhando"
             }
         }
-        val disable = if (employee.status == "Trabalhando"){
-            "Desativado"
-        }else if (employee.status == "De férias"){
-            "Desativado"
-        }else {
-            "Trabalhando"
+        val disable = when (employee.status) {
+            "Trabalhando" -> { "Desativado" }
+            "De férias" -> { "Desativado" }
+            else -> { "Trabalhando" }
         }
+
         popMenu.setOnMenuItemClickListener { item ->
             when (item!!.itemId) {
                 R.id.edit_profile -> {
@@ -288,16 +308,10 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
                     }
                 }
                 R.id.ferias_profile -> {
-                    val status = profileViewModel.modifyStatusEmployee(employee, value)
-                    showSnackBar(status)
-                    employee = businessEmployee.consultEmployeeWithId(employee.id)!!
-                    setInfoEmployee()
+                    profileViewModel.modifyStatusEmployee(employee, value)
                 }
                 R.id.desativar_profile -> {
-                    val status = profileViewModel.modifyStatusEmployee(employee, disable)
-                    showSnackBar(status)
-                    employee = businessEmployee.consultEmployeeWithId(employee.id)!!
-                    setInfoEmployee()
+                    profileViewModel.modifyStatusEmployee(employee, disable)
                 }
             }
             true

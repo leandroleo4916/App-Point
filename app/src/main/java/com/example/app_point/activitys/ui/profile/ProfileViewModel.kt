@@ -14,13 +14,16 @@ class ProfileViewModel(private val searchRecycler: RepositoryData) : ViewModel()
     private val pointsFullList = MutableLiveData<PointsHours?>()
     val pointsList: LiveData<PointsHours?> = pointsFullList
 
+    private val statusEmployee = MutableLiveData<String>()
+    val statusCurrent: LiveData<String> = statusEmployee
+
     fun getFullPoints(id: Int, date: String){
         pointsFullList.value = searchRecycler.selectPoint(id, date)
     }
 
-    fun modifyStatusEmployee(employee: EmployeeEntityFull, status: String): String{
+    fun modifyStatusEmployee(employee: EmployeeEntityFull, status: String){
 
-        return when {
+        statusEmployee.value = when {
             searchRecycler.modifyStatusEmployee(employee.id, status) -> {
                 "${employee.nameEmployee} agora está $status!"
             }

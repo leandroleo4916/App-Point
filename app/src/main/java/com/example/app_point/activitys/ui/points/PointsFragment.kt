@@ -25,8 +25,8 @@ import org.koin.android.ext.android.inject
 class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var hideNav: IHideNavView
-    private val mPointsAdapter: PointsAdapter by inject()
-    private val mListEmployee: BusinessEmployee by inject()
+    private val pointsAdapter: PointsAdapter by inject()
+    private val listEmployee: BusinessEmployee by inject()
     private val repository: RepositoryPoint by inject()
     private lateinit var pointsViewModel: PointsViewModel
     private lateinit var binding: View
@@ -69,7 +69,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun recycler() {
         val recycler = binding.recycler_activity_pontos
         recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = mPointsAdapter
+        recycler.adapter = pointsAdapter
     }
 
     private fun searchPoints() {
@@ -80,11 +80,11 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         pointsViewModel.employeeFullList.observe (viewLifecycleOwner, {
             when (it.size) {
                 0 -> {
-                    mPointsAdapter.updateFullPoints(it)
+                    pointsAdapter.updateFullPoints(it)
                     binding.progress_ponto.visibility = View.GONE
                 }
                 else -> {
-                    mPointsAdapter.updateFullPoints(it)
+                    pointsAdapter.updateFullPoints(it)
                     binding.progress_ponto.visibility = View.GONE
                     binding.image_need_add_point.visibility = View.INVISIBLE
                     binding.text_need_add_point.visibility = View.INVISIBLE
@@ -100,7 +100,7 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun dialogPoint() {
         val inflateView = layoutInflater.inflate(R.layout.dialog_list_employee, null)
-        val list = mListEmployee.consultEmployeeList()
+        val list = listEmployee.consultEmployeeList()
         val listSpinner = inflateView.findViewById(R.id.spinner_employee) as Spinner
         val adapter =
             context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, list) }
@@ -116,7 +116,8 @@ class PointsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             when (val itemSpinner = listSpinner.selectedItem) {
                 null -> showSnackBar(R.string.precisa_add_funcionarios)
                 else -> {
-                    pointsViewModel.getFullPoints(listSpinner.selectedItemPosition)
+                    val id = listEmployee.consultIdEmployeeByName(itemSpinner.toString())
+                    pointsViewModel.getFullPoints(id)
                     binding.textView_toolbar.text = itemSpinner.toString()
                 }
             }
