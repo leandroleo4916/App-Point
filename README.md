@@ -4,15 +4,16 @@
 
 UI Telas Desenvolvidas
 =================
-<h3 align="center"> Login User | Cadastro Admin | Home Principal</h3>
+
 <a href="https://imgur.com/1tPKgFP"><img src="https://i.imgur.com/1tPKgFP.jpg" title="source: imgur.com" /></a>
 <a href="https://imgur.com/0cy7sKF"><img src="https://i.imgur.com/0cy7sKF.jpg" title="source: imgur.com" /></a>
-<a href="https://imgur.com/z6KiNck"><img src="https://i.imgur.com/z6KiNck.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/h8p5MHQ"><img src="https://i.imgur.com/h8p5MHQ.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/ihb7K0w"><img src="https://i.imgur.com/ihb7K0w.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/df1KADt"><img src="https://i.imgur.com/df1KADt.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/PlTBms6"><img src="https://i.imgur.com/PlTBms6.jpg" title="source: imgur.com" /></a>
+<a href="https://imgur.com/t4X7jMc"><img src="https://i.imgur.com/t4X7jMc.jpg" title="source: imgur.com" /></a>
 
-<h3 align="center"> Cadastro Funcionário | Perfil Funcionário | Pontos Registrados </h3>
-<a href="https://imgur.com/yW06mUN"><img src="https://i.imgur.com/yW06mUN.jpg" title="source: imgur.com" /></a>
-<a href="https://imgur.com/zNXAtrO"><img src="https://i.imgur.com/zNXAtrO.jpg" title="source: imgur.com" /></a>
-<a href="https://imgur.com/1LMlSy2"><img src="https://i.imgur.com/1LMlSy2.jpg" title="source: imgur.com" /></a>
+<img src="https://gifs.com/gif/appvi-lRXg56" width="50%">
 
 
 Tecnológias Usadas
@@ -22,10 +23,10 @@ Tecnológias Usadas
    * Fragment + Custom Views
    * Injeção de Dependência - Koin
    * API Firebase
-   * Retrofit
    * Coroutines
    * Firebase Realtime
    * Recycler View
+   * Animator
 
 Tabela de Conteúdo e Progresso do App
 =================
@@ -54,21 +55,21 @@ Tabela de Conteúdo e Progresso do App
       
    * Registro de Funcionários
       - [x] Buscar foto Galeria ou Câmera
-      - [x] Registro de Funcionário no Firebase
+      - [ ] Registro de Funcionário no Firebase
       
    * Tela de Perfil
       - [x] Buscar Funcionário por nome
       - [x] Busca de Pontos do funcionário selecionado local
-      - [ ] Horas fesitas e Horas extras
+      - [x] Horas feitas e Horas extras
       - [ ] Busca de Pontos do funcionário selecionado no Firebase
 
    * Tela de Pontos Registrados
-      - [x] Busca de todos pontos registrados local
+      - [x] Busca de todos pontos do mês registrados local
       - [x] Filtro de pontos por funcionário
       - [ ] Busca de todos pontos registrados no Firebase
       
    * Tela de Opções
-      - [ ] Adicionar, Editar, Excluir e Ver dados de funcionários
+      - [x] Adicionar, Editar, Excluir e Ver dados de funcionários
       - [ ] Configurações do App
      
 
