@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.util.*
 import kotlin.math.roundToInt
 
 
@@ -29,6 +30,12 @@ class ConverterPhoto {
         val width = (ratio * realImage.width).roundToInt()
         val height = (ratio * realImage.height).roundToInt()
         return Bitmap.createScaledBitmap(realImage, width, height, true)
+    }
+
+    fun converterStringByBitmap(image: String): Bitmap {
+        val base = Base64.getDecoder()
+        val byte = base.decode(image)
+        return converterToBitmap(byte)
     }
 
 }

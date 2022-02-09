@@ -196,9 +196,7 @@ class RegisterFragment : Fragment() {
             )
             requestPermissions(permission, permissionCode)
 
-        } else {
-            openCamera()
-        }
+        } else { openCamera() }
         return true
     }
 
@@ -311,12 +309,10 @@ class RegisterFragment : Fragment() {
             .setContentText("Deseja registrar mais?")
             .setCancelText("Não, voltar!")
             .setConfirmText("Adicionar mais!")
-            .setConfirmClickListener {
-                    sDialog -> sDialog.cancel()
+            .setConfirmClickListener { sDialog -> sDialog.cancel()
                 openFragmentProfile()
             }
-            .setCancelClickListener {
-                    sDialog -> sDialog.cancel()
+            .setCancelClickListener { sDialog -> sDialog.cancel()
                 activity?.onBackPressed()
             }
             .show()
@@ -328,8 +324,7 @@ class RegisterFragment : Fragment() {
             .setCancelText("Voltar!")
             .setConfirmText("Editar novamente!")
             .setConfirmClickListener { sDialog -> sDialog.cancel() }
-            .setCancelClickListener {
-                    sDialog -> sDialog.cancel()
+            .setCancelClickListener { sDialog -> sDialog.cancel()
                 activity?.onBackPressed()
             }
             .show()

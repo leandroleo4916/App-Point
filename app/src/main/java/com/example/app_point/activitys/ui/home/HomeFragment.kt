@@ -48,7 +48,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val timer = Timer()
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?, ): View {
+        savedInstanceState: Bundle?): View {
 
         binding = inflater.inflate(R.layout.fragment_home, container, false)
 

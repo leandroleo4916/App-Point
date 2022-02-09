@@ -83,9 +83,14 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
             pointInt!!.hora1, pointInt.hora2, pointInt.hora3,
             pointInt.hora4, 0, pointInt.extra))
 
+        val feitas = calculateHourExtras.calculateHoursDone(HourEntityInt(
+            pointInt.hora1, pointInt.hora2, pointInt.hora3,
+            pointInt.hora4, 0, pointInt.extra))
+
         val punctuation = calculateHourExtras.punctuation(timeEmployee!!, pointInt)
 
         insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUREXTRA, extras)
+        insertValues.put(ConstantsPoint.POINT.COLUMNS.HOURDONE, extras)
         insertValues.put(ConstantsPoint.POINT.COLUMNS.PUNCTUATION, punctuation)
         db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
 
@@ -122,6 +127,34 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 db.update(ConstantsExtras.EXTRA.TABLE_NAME, insertValues, projection, args)
             }
             catch (e: Exception){ }
+        }
+    }
+
+    fun consultTotalDoneByIdEmployee(id: Int): Int?{
+
+        var value: Int? = null
+        try {
+            val cursor: Cursor
+            val db = dataBasePoint.readableDatabase
+            val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.HOURDONE)
+            val selection = ConstantsPoint.POINT.COLUMNS.ID + " = ? "
+            val args = arrayOf(id.toString())
+
+            cursor = db.query(
+                ConstantsExtras.EXTRA.TABLE_NAME, projection, selection, args,
+                null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    value = cursor?.getInt(cursor.getColumnIndex(ConstantsExtras.EXTRA.COLUMNS.EXTRA))
+                }
+            }
+            cursor?.close()
+            return value
+
+        } catch (e: Exception) {
+            return value
         }
     }
 

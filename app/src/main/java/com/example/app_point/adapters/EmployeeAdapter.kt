@@ -62,9 +62,7 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
 
     override fun getItemCount(): Int { return listEmployee.size }
 
-    override fun getFilter(): Filter {
-        return filter
-    }
+    override fun getFilter(): Filter { return filter }
 
     inner class EmployeeViewHolder (itemView: View): RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -225,8 +223,8 @@ class EmployeeAdapter(private var searchPoints: RepositoryPoint,
         }
 
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
-            if (results.values is ArrayList<*>) {
 
+            if (results.values is ArrayList<*>) {
                 listEmployee = results.values as MutableList<Employee>
                 when {listEmployee.isEmpty() -> notification.notification() }
             }
