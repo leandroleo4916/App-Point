@@ -15,12 +15,17 @@ class CalculateHours {
         }else{ 0 }
     }
 
-    fun calculateHoursExtra(time: Int, p: HourEntityInt): Int {
+    fun calculateHoursExtra(time: Int, p: HourEntityInt): ArrayList<Int> {
 
-        return if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
-                ((p.hora2 - p.hora1) + (p.hora4 - p.hora3)) - time
-            }
-            else { 0 }
+        val value: ArrayList<Int> = arrayListOf()
+        if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
+            val hours = (p.hora2 - p.hora1) + (p.hora4 - p.hora3)
+            val extra = hours - time
+            val feitas = hours - extra
+            value.add(extra, feitas)
+        }
+        else { return value }
+        return value
     }
 
     fun calculateTimeEmployee(points: HourEntityInt): Int {

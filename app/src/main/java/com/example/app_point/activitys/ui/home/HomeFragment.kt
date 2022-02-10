@@ -84,7 +84,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 CoroutineScope(Dispatchers.Main).launch {
-                    binding.textView_hour_current.text = captureDateCurrent.captureHoraCurrentSecond()
+                    binding.textView_hour_current.text =
+                        captureDateCurrent.captureHoraCurrentSecond()
                 }
             }
         }, delay, intervalSecond)

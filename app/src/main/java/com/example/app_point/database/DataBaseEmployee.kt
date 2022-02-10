@@ -3,7 +3,6 @@ package com.example.app_point.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.app_point.constants.ConstantsDone
 import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.constants.ConstantsExtras
 import com.example.app_point.constants.ConstantsPoint
@@ -12,7 +11,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
 
     companion object {
         private const val DATA_NAME: String = "employee.db"
-        private const val DATA_VERSION: Int = 10
+        private const val DATA_VERSION: Int = 11
     }
 
     override fun onOpen(db: SQLiteDatabase) {
@@ -65,14 +64,7 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
             ${ConstantsExtras.EXTRA.TABLE_NAME}(
             ${ConstantsExtras.EXTRA.COLUMNS.ID} integer ,
             ${ConstantsExtras.EXTRA.COLUMNS.EXTRA} integer ,
-            FOREIGN KEY (${ConstantsExtras.EXTRA.COLUMNS.ID}) 
-                REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}
-                (${ConstantsEmployee.EMPLOYEE.COLUMNS.ID}) ON DELETE CASCADE ON UPDATE CASCADE
-    );"""
-    private val createTableDone = """ CREATE TABLE 
-            ${ConstantsDone.DONE.TABLE_NAME}(
-            ${ConstantsDone.DONE.COLUMNS.ID} integer ,
-            ${ConstantsDone.DONE.COLUMNS.DONE} integer ,
+            ${ConstantsExtras.EXTRA.COLUMNS.FEITAS} integer ,
             FOREIGN KEY (${ConstantsExtras.EXTRA.COLUMNS.ID}) 
                 REFERENCES ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}
                 (${ConstantsEmployee.EMPLOYEE.COLUMNS.ID}) ON DELETE CASCADE ON UPDATE CASCADE
@@ -81,23 +73,19 @@ class DataBaseEmployee(context: Context?) : SQLiteOpenHelper(context, DATA_NAME,
     private val removeTableEmployee = "drop table if exists ${ConstantsEmployee.EMPLOYEE.TABLE_NAME}"
     private val removeTablePoint = "drop table if exists ${ConstantsPoint.POINT.TABLE_NAME}"
     private val removeTableExtra = "drop table if exists ${ConstantsExtras.EXTRA.TABLE_NAME}"
-    private val removeTableDone = "drop table if exists ${ConstantsDone.DONE.TABLE_NAME}"
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(createTableEmployee)
         db.execSQL(createTablePoint)
         db.execSQL(createTableExtra)
-        db.execSQL(createTableDone)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(removeTableEmployee)
         db.execSQL(removeTablePoint)
         db.execSQL(removeTableExtra)
-        db.execSQL(removeTableDone)
         db.execSQL(createTableEmployee)
         db.execSQL(createTablePoint)
         db.execSQL(createTableExtra)
-        db.execSQL(createTableDone)
     }
 }

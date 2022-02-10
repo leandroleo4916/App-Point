@@ -43,26 +43,22 @@ class DashboardViewModel (private var points: RepositoryPoint,
 
         for (i in employee){
 
-            val totalHourExtra = points.consultTotalExtraByIdEmployee(i.id)
+            val totalHour = points.consultTotalExtraByIdEmployee(i.id)
             var dateFirst = captureDateCurrent.captureFirstDayOfMonth()
             val dateCurrent = captureDateCurrent.captureDateCurrent()
             val dateTomorrow = captureDateCurrent.captureNextDate(dateCurrent)
-            var hDone = 0
             var punctuation = 0
             val cadastro: Float = consultNullOrNotNull(i)
 
             while (dateFirst != dateTomorrow){
 
                 val point = consultPoint(i.id, dateFirst)
-                val hourDone = calculateHours.calculateHoursDone(point)
-
                 punctuation += when {
                     point == null -> { 0 }
                     point.punctuation == null -> { 0 }
                     else -> { point.punctuation }
                 }
 
-                hDone += hourDone
                 dateFirst = captureDateCurrent.captureNextDate(dateFirst)
             }
 
@@ -72,8 +68,7 @@ class DashboardViewModel (private var points: RepositoryPoint,
                 else -> { disabled += 1 }
             }
 
-            val extra = totalHourExtra ?: 0
-            listEmployeeHoursExtraAndDone.add(EntityDashboard(i.photo, extra, hDone, cadastro))
+            listEmployeeHoursExtraAndDone.add(EntityDashboard(i.photo, totalHour[0], totalHour[1], cadastro))
             bestEmployee.add(EntityBestEmployee(i.photo, punctuation))
 
         }

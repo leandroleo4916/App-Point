@@ -7,6 +7,7 @@ class ConstantsExtras private constructor(){
         object COLUMNS {
             const val ID = "id"
             const val EXTRA = "extra"
+            const val FEITAS = "feita"
         }
     }
 }

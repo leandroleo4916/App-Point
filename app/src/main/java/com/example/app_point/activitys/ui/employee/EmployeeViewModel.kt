@@ -43,7 +43,7 @@ class EmployeeViewModel(private var employee: RepositoryEmployee,
             val extra = consultExtra.let {
                 converterHours.calculateHoursExtra(it, HourEntityInt(
                     hour.hora1, hour.hora2, hour.hora3, hour.hora4, hour.punctuation, hour.extra)) }
-            points.setPointExtra(id, data, extra)
+            points.setPointExtra(id, data, extra[0])
         }
     }
 
