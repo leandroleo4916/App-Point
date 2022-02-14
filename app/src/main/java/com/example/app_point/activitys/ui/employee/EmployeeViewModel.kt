@@ -37,13 +37,13 @@ class EmployeeViewModel(private var employee: RepositoryEmployee,
 
         val hour = points.selectPointInt(id, data)
 
-        if (hour?.hora1 != null && hour.hora2 != null && hour.hora3 != null && hour.hora4 != null){
+        if (hour?.hora1 != 0 && hour?.hora2 != 0 && hour?.hora3 != 0 && hour?.hora4 != 0){
 
             val consultExtra = employee.consultCargaHoraria(id)
-            val extra = consultExtra.let {
-                converterHours.calculateHoursExtra(it, HourEntityInt(
-                    hour.hora1, hour.hora2, hour.hora3, hour.hora4, hour.punctuation, hour.extra)) }
-            points.setPointExtra(id, data, extra[0])
+            val extra = consultExtra.let { converterHours.calculateHoursExtra(it, HourEntityInt(
+                hour?.hora1, hour?.hora2, hour?.hora3, hour?.hora4,
+                hour?.punctuation, hour?.extra)) }
+            points.setPointExtra(id, extra[0], extra[1])
         }
     }
 

@@ -21,7 +21,6 @@ class PointsAdapter (private val application: Application, private val mBusiness
     RecyclerView.Adapter<PointsAdapter.PointsViewHolder>() {
 
     private var listFullEmployee: ArrayList<PointsEntity?> = arrayListOf()
-    private var listNameEmployee: ArrayList<PointsEntity?> = arrayListOf()
     private val converterPhoto: ConverterPhoto = ConverterPhoto()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointsViewHolder {

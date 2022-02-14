@@ -4,7 +4,7 @@ import com.example.app_point.entity.*
 
 interface RepositoryData {
     fun setPoint(id: Int, employee: String, date: String, hour: String, hourInt: Int): Boolean
-    fun setPointExtra(idEmployee: Int, date: String, hour: Int): Boolean
+    fun setPointExtra(idEmployee: Int, extra: Int, feitas: Int): Boolean
     fun selectFullPoints(idEmployee: Int, date: String): PointsEntity?
     fun selectFullPointsInt(idEmployee: Int, date: String): HourEntityInt?
     fun selectHourExtra(id: Int, date: String): String?

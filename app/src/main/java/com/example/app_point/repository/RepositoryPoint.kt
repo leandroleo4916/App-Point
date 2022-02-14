@@ -78,18 +78,15 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
 
         val pointInt = selectFullPointsInt(id, date)
         val timeEmployee = repositoryEmployee.consultHorarioInAndOut(id)
-        val time = repositoryEmployee.consultCargaHoraria(id)
-        val hours = calculateHourExtras.calculateHoursExtra(time, HourEntityInt(
-            pointInt!!.hora1, pointInt.hora2, pointInt.hora3,
-            pointInt.hora4, 0, pointInt.extra))
-
         val punctuation = calculateHourExtras.punctuation(timeEmployee!!, pointInt)
 
-        insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUREXTRA, hours[0])
-        insertValues.put(ConstantsPoint.POINT.COLUMNS.HOURDONE, hours[1])
         insertValues.put(ConstantsPoint.POINT.COLUMNS.PUNCTUATION, punctuation)
         db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
 
+        val time = repositoryEmployee.consultCargaHoraria(id)
+        val hours = calculateHourExtras.calculateHoursExtra(time, HourEntityInt(
+            pointInt!!.hora1, pointInt.hora2, pointInt.hora3,
+            pointInt.hora4, 0, 0))
         saveTotalBankHoursByEmployee(id, hours[0], hours[1])
     }
 
@@ -130,36 +127,12 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
     }
 
     fun consultTotalDoneByIdEmployee(id: Int): Int?{
-
-        var value: Int? = null
-        try {
-            val cursor: Cursor
-            val db = dataBasePoint.readableDatabase
-            val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.HOURDONE)
-            val selection = ConstantsPoint.POINT.COLUMNS.ID + " = ? "
-            val args = arrayOf(id.toString())
-
-            cursor = db.query(
-                ConstantsExtras.EXTRA.TABLE_NAME, projection, selection, args,
-                null, null, null
-            )
-
-            if (cursor != null && cursor.count > 0) {
-                while (cursor.moveToNext()) {
-                    value = cursor?.getInt(cursor.getColumnIndex(ConstantsExtras.EXTRA.COLUMNS.EXTRA))
-                }
-            }
-            cursor?.close()
-            return value
-
-        } catch (e: Exception) {
-            return value
-        }
+        return null
     }
 
-    fun consultTotalExtraByIdEmployee(id: Int): ArrayList<Int>{
+    fun consultTotalExtraByIdEmployee(id: Int): ArrayList<Int>? {
 
-        val value: ArrayList<Int> = arrayListOf()
+        val value: ArrayList<Int>? = null
         try {
             val cursor: Cursor
             val db = dataBasePoint.readableDatabase
@@ -180,7 +153,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                     val feita = cursor?.getInt(
                         cursor.getColumnIndex(ConstantsExtras.EXTRA.COLUMNS.FEITAS))
 
-                    value.add(extra!!, feita!!)
+                    value?.add(extra!!, feita!!)
                 }
             }
             cursor?.close()
@@ -191,17 +164,17 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
         }
     }
 
-    override fun setPointExtra(idEmployee: Int, date: String, hour: Int): Boolean {
+    override fun setPointExtra(idEmployee: Int, extra: Int, feitas: Int): Boolean {
 
         return try {
             val db = dataBasePoint.writableDatabase
-            val projection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
-                    ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
-            val args = arrayOf(idEmployee.toString(), date)
+            val projection = ConstantsExtras.EXTRA.COLUMNS.ID + " = ? "
+            val args = arrayOf(idEmployee.toString())
             val insertValues = ContentValues()
 
-            insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUREXTRA, hour)
-            db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
+            insertValues.put(ConstantsExtras.EXTRA.COLUMNS.EXTRA, extra)
+            insertValues.put(ConstantsExtras.EXTRA.COLUMNS.FEITAS, feitas)
+            db.update(ConstantsExtras.EXTRA.TABLE_NAME, insertValues, projection, args)
 
             true
 
@@ -222,8 +195,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
 
             when (searchPoint?.idEmployee) {
                 null -> {
-                    insertValues.put(ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE, idEmployee)
-                    insertValues.put(ConstantsPoint.POINT.COLUMNS.DATE, date)
 
                     val valueString = when (positionHour) {
                         1 -> ConstantsPoint.POINT.COLUMNS.HOUR1
@@ -239,6 +210,8 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         else -> ConstantsPoint.POINT.COLUMNS.HOUR4INT
                     }
 
+                    insertValues.put(ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE, idEmployee)
+                    insertValues.put(ConstantsPoint.POINT.COLUMNS.DATE, date)
                     insertValues.put(valueInt, hourInt)
                     insertValues.put(valueString, hour)
 
@@ -279,7 +252,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
 
                         val punctuation = calculateHourExtras.punctuation(timeEmployee!!, pointInt)
 
-                        insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUREXTRA, extras[0])
                         insertValues.put(ConstantsPoint.POINT.COLUMNS.PUNCTUATION, punctuation)
                         db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
 
@@ -308,7 +280,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR2,
                 ConstantsPoint.POINT.COLUMNS.HOUR3,
                 ConstantsPoint.POINT.COLUMNS.HOUR4,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA,
                 ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE
             )
             val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
@@ -336,12 +307,10 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         ConstantsPoint.POINT.COLUMNS.HOUR3))
                     val hour4 = cursor?.getString(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.HOUR4))
-                    val hourExtra = cursor?.getInt(cursor.getColumnIndex(
-                        ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
                     val idPoint = cursor?.getInt(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE))
 
-                    list = PointsEntity(id, name, data, hour1, hour2, hour3, hour4, hourExtra, idPoint)
+                    list = PointsEntity(id, name, data, hour1, hour2, hour3, hour4, 0, idPoint)
                 }
             }
             cursor?.close()
@@ -363,8 +332,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR2INT,
                 ConstantsPoint.POINT.COLUMNS.HOUR3INT,
                 ConstantsPoint.POINT.COLUMNS.HOUR4INT,
-                ConstantsPoint.POINT.COLUMNS.PUNCTUATION,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA
+                ConstantsPoint.POINT.COLUMNS.PUNCTUATION
             )
             val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
                     ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
@@ -387,9 +355,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         ConstantsPoint.POINT.COLUMNS.HOUR4INT))
                     val punctuation = cursor?.getInt(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.PUNCTUATION))
-                    val extra = cursor?.getInt(cursor.getColumnIndex(
-                        ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
-                    list = HourEntityInt(hour1, hour2, hour3, hour4, punctuation, extra)
+                    list = HourEntityInt(hour1, hour2, hour3, hour4, punctuation, 0)
                 }
             }
             cursor?.close()
@@ -411,8 +377,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR1,
                 ConstantsPoint.POINT.COLUMNS.HOUR2,
                 ConstantsPoint.POINT.COLUMNS.HOUR3,
-                ConstantsPoint.POINT.COLUMNS.HOUR4,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA
+                ConstantsPoint.POINT.COLUMNS.HOUR4
             )
             val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
                     ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
@@ -435,9 +400,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         cursor?.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR3))
                     val hour4 =
                         cursor?.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR4))
-                    val hourExtra =
-                        cursor?.getInt(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
-                    list = PointsHours(data, hour1, hour2, hour3, hour4, hourExtra)
+                    list = PointsHours(data, hour1, hour2, hour3, hour4, 0)
                 }
             }
             cursor?.close()
@@ -458,9 +421,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR1INT,
                 ConstantsPoint.POINT.COLUMNS.HOUR2INT,
                 ConstantsPoint.POINT.COLUMNS.HOUR3INT,
-                ConstantsPoint.POINT.COLUMNS.HOUR4INT,
-                ConstantsPoint.POINT.COLUMNS.PUNCTUATION,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA
+                ConstantsPoint.POINT.COLUMNS.HOUR4INT
             )
             val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
                     ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
@@ -481,11 +442,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         cursor?.getInt(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR3INT))
                     val hour4 =
                         cursor?.getInt(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUR4INT))
-                    val punctuation =
-                        cursor?.getInt(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.PUNCTUATION))
-                    val extra =
-                        cursor?.getInt(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
-                    list = HourEntityInt(hour1, hour2, hour3, hour4, punctuation, extra)
+                    list = HourEntityInt(hour1, hour2, hour3, hour4, 0, 0)
                 }
             }
             cursor?.close()
@@ -497,31 +454,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
     }
 
     override fun selectHourExtra(id: Int, date: String): String? {
-
-        return try {
-            val cursor: Cursor
-            val db = dataBasePoint.readableDatabase
-            val projection = arrayOf(ConstantsPoint.POINT.COLUMNS.HOUREXTRA)
-            val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
-                    ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
-            val args = arrayOf(id.toString(), date)
-
-            cursor = db.query(
-                ConstantsPoint.POINT.TABLE_NAME, projection, selection, args,
-                null, null, null
-            )
-
-            if (cursor != null && cursor.count > 0) {
-                while (cursor.moveToNext()) {
-                    cursor?.getString(cursor.getColumnIndex(ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
-                }
-            }
-            cursor?.close()
-            null
-
-        } catch (e: Exception) {
-            return null
-        }
+        return null
     }
 
     override fun fullPoints(): ArrayList<PointsEntity?> {
@@ -538,7 +471,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR2,
                 ConstantsPoint.POINT.COLUMNS.HOUR3,
                 ConstantsPoint.POINT.COLUMNS.HOUR4,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA,
                 ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE
             )
 
@@ -563,12 +495,10 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         ConstantsPoint.POINT.COLUMNS.HOUR3))
                     val hour4 = cursor?.getString(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.HOUR4))
-                    val hourExtra = cursor?.getInt(cursor.getColumnIndex(
-                        ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
                     val idPoint = cursor?.getInt(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE))
 
-                    list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, hourExtra, idPoint))
+                    list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, 0, idPoint))
                 }
             }
             cursor?.close()
@@ -595,7 +525,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                     ConstantsPoint.POINT.COLUMNS.HOUR2,
                     ConstantsPoint.POINT.COLUMNS.HOUR3,
                     ConstantsPoint.POINT.COLUMNS.HOUR4,
-                    ConstantsPoint.POINT.COLUMNS.HOUREXTRA,
                     ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE
                 )
                 val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? "
@@ -622,12 +551,10 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                             ConstantsPoint.POINT.COLUMNS.HOUR3))
                         val hour4 = cursor?.getString(cursor.getColumnIndex(
                             ConstantsPoint.POINT.COLUMNS.HOUR4))
-                        val hourExtra = cursor?.getInt(cursor.getColumnIndex(
-                            ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
                         val idPoint = cursor?.getInt(cursor.getColumnIndex(
                             ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE))
 
-                        list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, hourExtra, idPoint))
+                        list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, 0, idPoint))
                     }
                 }
                 cursor?.close()
@@ -648,7 +575,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                     ConstantsPoint.POINT.COLUMNS.HOUR2,
                     ConstantsPoint.POINT.COLUMNS.HOUR3,
                     ConstantsPoint.POINT.COLUMNS.HOUR4,
-                    ConstantsPoint.POINT.COLUMNS.HOUREXTRA,
                     ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE
                 )
                 val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
@@ -676,12 +602,10 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                             ConstantsPoint.POINT.COLUMNS.HOUR3))
                         val hour4 = cursor?.getString(cursor.getColumnIndex(
                             ConstantsPoint.POINT.COLUMNS.HOUR4))
-                        val hourExtra = cursor?.getInt(cursor.getColumnIndex(
-                            ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
                         val idPoint = cursor?.getInt(cursor.getColumnIndex(
                             ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE))
 
-                        list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, hourExtra, idPoint))
+                        list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, 0, idPoint))
                     }
                 }
                 cursor?.close()
@@ -707,7 +631,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR2,
                 ConstantsPoint.POINT.COLUMNS.HOUR3,
                 ConstantsPoint.POINT.COLUMNS.HOUR4,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA,
                 ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE
             )
             val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
@@ -735,12 +658,10 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         ConstantsPoint.POINT.COLUMNS.HOUR3))
                     val hour4 = cursor?.getString(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.HOUR4))
-                    val hourExtra = cursor?.getInt(cursor.getColumnIndex(
-                        ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
                     val idPoint = cursor?.getInt(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE))
 
-                    list.add(PointsEntity(idEmployee, name, data, hour1, hour2, hour3, hour4, hourExtra, idPoint))
+                    list.add(PointsEntity(idEmployee, name, data, hour1, hour2, hour3, hour4, 0, idPoint))
                 }
             }
             cursor?.close()
@@ -822,7 +743,6 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR2,
                 ConstantsPoint.POINT.COLUMNS.HOUR3,
                 ConstantsPoint.POINT.COLUMNS.HOUR4,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA,
                 ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE
             )
 
@@ -847,12 +767,10 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         ConstantsPoint.POINT.COLUMNS.HOUR3))
                     val hour4 = cursor?.getString(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.HOUR4))
-                    val hourExtra = cursor?.getInt(cursor.getColumnIndex(
-                        ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
                     val idPoint = cursor?.getInt(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE))
 
-                    list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, hourExtra, idPoint))
+                    list.add(PointsEntity(id, name, data, hour1, hour2, hour3, hour4, 0, idPoint))
                 }
             }
             cursor?.close()
@@ -881,8 +799,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                 ConstantsPoint.POINT.COLUMNS.HOUR2INT,
                 ConstantsPoint.POINT.COLUMNS.HOUR3INT,
                 ConstantsPoint.POINT.COLUMNS.HOUR4INT,
-                ConstantsPoint.POINT.COLUMNS.PUNCTUATION,
-                ConstantsPoint.POINT.COLUMNS.HOUREXTRA
+                ConstantsPoint.POINT.COLUMNS.PUNCTUATION
             )
             val selection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
                     ConstantsPoint.POINT.COLUMNS.DATE + " = ?"
@@ -919,11 +836,9 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                         ConstantsPoint.POINT.COLUMNS.HOUR4INT))
                     val punctuation = cursor?.getInt(cursor.getColumnIndex(
                         ConstantsPoint.POINT.COLUMNS.PUNCTUATION))
-                    val hourExtra = cursor?.getInt(cursor.getColumnIndex(
-                        ConstantsPoint.POINT.COLUMNS.HOUREXTRA))
 
                     list = PointsFullEntity(id, nome, data, hour1, hour2, hour3, hour4,
-                        hour1Int, hour2Int, hour3Int, hour4Int, punctuation, hourExtra)
+                        hour1Int, hour2Int, hour3Int, hour4Int, punctuation, 0)
                 }
             }
             cursor?.close()
