@@ -58,7 +58,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                     insertValues.put(ConstantsPoint.POINT.COLUMNS.HOUR4INT, hourInt)
                     db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
 
-                    saveHoursExtrasAndPunctuation(id, date)
+                    saveHoursPunctuation(id, date)
 
                 }
                 searchPoint.hora4 != null -> return false
@@ -68,7 +68,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
         } catch (e: Exception) { false }
     }
 
-    private fun saveHoursExtrasAndPunctuation(id: Int, date: String){
+    private fun saveHoursPunctuation(id: Int, date: String){
 
         val db = dataBasePoint.writableDatabase
         val projection = ConstantsPoint.POINT.COLUMNS.IDEMPLOYEE + " = ? AND " +
@@ -83,25 +83,25 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
         insertValues.put(ConstantsPoint.POINT.COLUMNS.PUNCTUATION, punctuation)
         db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
 
-        val time = repositoryEmployee.consultCargaHoraria(id)
-        val hours = calculateHourExtras.calculateHoursExtra(time, HourEntityInt(
-            pointInt!!.hora1, pointInt.hora2, pointInt.hora3,
-            pointInt.hora4, 0, 0))
-        saveTotalBankHoursByEmployee(id, hours[0], hours[1])
+        saveTotalBankHoursExtraAndDone(id, pointInt!!)
     }
 
-    private fun saveTotalBankHoursByEmployee(id: Int, extra: Int, feita: Int){
+    private fun saveTotalBankHoursExtraAndDone(id: Int, pointInt: HourEntityInt){
+
+        val time = repositoryEmployee.consultCargaHoraria(id)
+        val hours = calculateHourExtras.calculateHoursExtra(time, HourEntityInt(
+            pointInt.hora1, pointInt.hora2, pointInt.hora3, pointInt.hora4, 0, 0))
 
         val consult = consultTotalExtraByIdEmployee(id)
+        val db = dataBasePoint.writableDatabase
+        val insertValues = ContentValues()
 
         if (consult == null){
             try {
-                val db = dataBasePoint.writableDatabase
-                val insertValues = ContentValues()
 
                 insertValues.put(ConstantsExtras.EXTRA.COLUMNS.ID, id)
-                insertValues.put(ConstantsExtras.EXTRA.COLUMNS.EXTRA, extra)
-                insertValues.put(ConstantsExtras.EXTRA.COLUMNS.FEITAS, feita)
+                insertValues.put(ConstantsExtras.EXTRA.COLUMNS.EXTRA, hours!!.extra)
+                insertValues.put(ConstantsExtras.EXTRA.COLUMNS.FEITAS, hours.feita)
 
                 db.insert(ConstantsExtras.EXTRA.TABLE_NAME, null, insertValues)
             }
@@ -109,13 +109,12 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
         }
         else {
 
-            val totalExtra = consult[0] + extra
-            val totalFeita = consult[1] + feita
+            val totalExtra = consult.extra + hours!!.extra
+            val totalFeita = consult.feita + hours.feita
+
             try {
-                val db = dataBasePoint.writableDatabase
                 val projection = ConstantsExtras.EXTRA.COLUMNS.ID + " = ?"
                 val args = arrayOf(id.toString())
-                val insertValues = ContentValues()
 
                 insertValues.put(ConstantsExtras.EXTRA.COLUMNS.EXTRA, totalExtra)
                 insertValues.put(ConstantsExtras.EXTRA.COLUMNS.FEITAS, totalFeita)
@@ -130,14 +129,15 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
         return null
     }
 
-    fun consultTotalExtraByIdEmployee(id: Int): ArrayList<Int>? {
+    fun consultTotalExtraByIdEmployee(id: Int): ExtraDoneEntity? {
 
-        val value: ArrayList<Int>? = null
+        var value: ExtraDoneEntity? = null
         try {
             val cursor: Cursor
             val db = dataBasePoint.readableDatabase
-            val projection = arrayOf(ConstantsExtras.EXTRA.COLUMNS.EXTRA,
-                                     ConstantsExtras.EXTRA.COLUMNS.FEITAS)
+            val projection = arrayOf(
+                ConstantsExtras.EXTRA.COLUMNS.EXTRA,
+                ConstantsExtras.EXTRA.COLUMNS.FEITAS)
             val selection = ConstantsExtras.EXTRA.COLUMNS.ID + " = ? "
             val args = arrayOf(id.toString())
 
@@ -153,7 +153,7 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                     val feita = cursor?.getInt(
                         cursor.getColumnIndex(ConstantsExtras.EXTRA.COLUMNS.FEITAS))
 
-                    value?.add(extra!!, feita!!)
+                    value = ExtraDoneEntity(extra!!, feita!!)
                 }
             }
             cursor?.close()
@@ -238,24 +238,15 @@ class RepositoryPoint(private val dataBasePoint: DataBaseEmployee): RepositoryDa
                     insertValues.put(valueString, hour)
                     db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
 
-                    val searchNewPoint = selectFullPoints(idEmployee, date)
-
-                    if (searchNewPoint!!.hora1 != null && searchPoint.hora2 != null &&
-                        searchNewPoint.hora3 != null && searchPoint.hora4 != null ){
+                    if (searchPoint.hora1 != null && searchPoint.hora2 != null &&
+                        searchPoint.hora3 != null && searchPoint.hora4 != null ){
 
                         val pointInt = selectFullPointsInt(idEmployee, date)
                         val timeEmployee = repositoryEmployee.consultHorarioInAndOut(idEmployee)
-                        val time = repositoryEmployee.consultCargaHoraria(idEmployee)
-                        val extras = calculateHourExtras.calculateHoursExtra(time, HourEntityInt(
-                                    pointInt!!.hora1, pointInt.hora2, pointInt.hora3,
-                                    pointInt.hora4, 0, pointInt.extra))
-
                         val punctuation = calculateHourExtras.punctuation(timeEmployee!!, pointInt)
 
                         insertValues.put(ConstantsPoint.POINT.COLUMNS.PUNCTUATION, punctuation)
                         db.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
-
-                        saveTotalBankHoursByEmployee(idEmployee, extras[0], extras[1])
 
                         return true
                     }

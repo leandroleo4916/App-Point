@@ -43,9 +43,9 @@ class DashboardViewModel (private var points: RepositoryPoint,
 
         for (i in employee){
 
-            val totalHour = points.consultTotalExtraByIdEmployee(i.id)
-            val extra = totalHour?.get(0) ?: 0
-            val feita = totalHour?.get(0) ?: 0
+            val totalHour: ExtraDoneEntity? = points.consultTotalExtraByIdEmployee(i.id)
+            val extra = totalHour?.extra ?: 0
+            val feita = totalHour?.feita ?: 0
 
             var dateFirst = captureDateCurrent.captureFirstDayOfMonth()
             val dateCurrent = captureDateCurrent.captureDateCurrent()

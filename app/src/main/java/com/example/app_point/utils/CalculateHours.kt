@@ -15,14 +15,19 @@ class CalculateHours {
         }else{ 0 }
     }
 
-    fun calculateHoursExtra(time: Int, p: HourEntityInt): ArrayList<Int> {
+    fun calculateHoursExtra(time: Int, p: HourEntityInt): ExtraDoneEntity? {
 
-        val value: ArrayList<Int> = arrayListOf()
+        var value: ExtraDoneEntity? = null
+
         if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
             val hours = (p.hora2 - p.hora1) + (p.hora4 - p.hora3)
-            val extra = hours - time
-            val feitas = hours - extra
-            value.add(extra, feitas)
+            if (hours >= time){
+                val extra = hours - time
+                value = ExtraDoneEntity(extra, time)
+            }
+            else{
+                value = ExtraDoneEntity(0, hours)
+            }
         }
         else { return value }
         return value
