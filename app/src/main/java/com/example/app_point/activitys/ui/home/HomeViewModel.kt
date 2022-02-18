@@ -11,7 +11,6 @@ import com.example.app_point.repository.RepositoryPoint
 
 class HomeViewModel(private var repository: RepositoryPoint,
                     private var repositoryEmployee: RepositoryEmployee,
-                    private val mRepositoryPoint: RepositoryPoint,
                     private val converterHours: CalculateHours) : ViewModel() {
 
     private val pointsFullList = MutableLiveData<ArrayList<PointsEntity?>>()
@@ -27,7 +26,7 @@ class HomeViewModel(private var repository: RepositoryPoint,
 
     fun setPoints(id: Int, name: String, date: String, hour: String): Boolean{
         val hourInt = converterHours.converterHoursInMinutes(hour)
-        return mRepositoryPoint.setPoint(id, name, date, hour, hourInt)
+        return repository.setPoint(id, name, date, hour, hourInt)
     }
 
     fun getFullEmployee(){

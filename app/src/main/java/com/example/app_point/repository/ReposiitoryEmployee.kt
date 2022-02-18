@@ -6,7 +6,11 @@ import com.example.app_point.constants.ConstantsEmployee
 import com.example.app_point.database.DataBaseEmployee
 import com.example.app_point.entity.*
 
-class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
+class RepositoryEmployee(dataBaseEmployee: DataBaseEmployee) {
+
+    private val dbWrite = dataBaseEmployee.writableDatabase
+    private val dbRead = dataBaseEmployee.writableDatabase
+    private val tableName = ConstantsEmployee.EMPLOYEE.TABLE_NAME
 
     fun conditionEmployee(employee: EmployeeEntity): String {
         return if (employee.id == 0) { saveEmployee(employee) }
@@ -16,7 +20,6 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
     private fun saveEmployee(employee: EmployeeEntity): String {
 
         return try {
-            val db = mDataBaseEmployee.writableDatabase
             val insertValues = ContentValues()
             insertValues.run {
                 put(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO, employee.photo)
@@ -34,7 +37,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
             }
 
-            db.insert(ConstantsEmployee.EMPLOYEE.TABLE_NAME, null, insertValues)
+            dbWrite.insert(tableName, null, insertValues)
             "salvo"
 
         } catch (e: Exception) {
@@ -45,7 +48,6 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
     private fun editEmployee(employee: EmployeeEntity): String {
 
         return try {
-            val db = mDataBaseEmployee.writableDatabase
             val projection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(employee.id.toString())
 
@@ -66,7 +68,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 put(ConstantsEmployee.EMPLOYEE.COLUMNS.ANIVERSARIO, employee.aniversarioEmployee)
             }
 
-            db.update(ConstantsEmployee.EMPLOYEE.TABLE_NAME, contentValues, projection, args)
+            dbWrite.update(tableName, contentValues, projection, args)
             "editado"
 
         } catch (e: Exception) {
@@ -79,24 +81,16 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
         val list: ArrayList<String> = ArrayList()
         try {
             val cursor: Cursor
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME)
             val orderBy = ConstantsEmployee.EMPLOYEE.COLUMNS.ID
 
-            cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                orderBy
-            )
+            cursor = dbRead.query (tableName, projection,
+                null, null, null, null, orderBy)
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val nomeEmployee =
-                        cursor.getString(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
+                    val nomeEmployee = cursor.getString(cursor.getColumnIndex(
+                        ConstantsEmployee.EMPLOYEE.COLUMNS.NAME))
 
                     list.add(nomeEmployee)
                 }
@@ -113,7 +107,6 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
         val listData: ArrayList<EmployeeEntityFull> = arrayListOf()
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.STATUS,
@@ -135,15 +128,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 ConstantsEmployee.EMPLOYEE.COLUMNS.SALARIO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ESTADOCIVIL)
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-            )
+            val cursor = dbRead.query (tableName, projection,
+                null, null, null, null, null)
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
@@ -204,21 +190,13 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
         val listData: ArrayList<EmployeeNameAndPhoto> = arrayListOf()
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.NAME)
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-            )
+            val cursor = dbRead.query (tableName, projection,
+                null, null, null, null, null)
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
@@ -245,7 +223,6 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
         val listData: ArrayList<Employee> = arrayListOf()
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ID,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
@@ -253,15 +230,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
                 ConstantsEmployee.EMPLOYEE.COLUMNS.CARGO,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.ADMISSION)
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-            )
+            val cursor = dbRead.query (tableName, projection,
+                null, null, null, null, null)
 
             if (cursor != null && cursor.count > 0) {
                 while (cursor.moveToNext()) {
@@ -291,7 +261,6 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
         var employee: EmployeeEntityFull? = null
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.STATUS,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO,
@@ -315,9 +284,8 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME, projection,
-                selection, args, null, null, null)
+            val cursor = dbRead.query (tableName, projection, selection, args,
+                null, null, null)
 
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
@@ -375,11 +343,10 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
     fun removeEmployee(id: Int): Boolean {
 
         return try {
-            val db = mDataBaseEmployee.writableDatabase
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            db.delete(ConstantsEmployee.EMPLOYEE.TABLE_NAME, selection, args)
+            dbWrite.delete(tableName, selection, args)
             true
 
         } catch (e: Exception) { false }
@@ -388,20 +355,13 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
     fun consultPhoto(id: Int): ByteArray? {
 
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.PHOTO)
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                selection,
-                args,
-                null,
-                null,
-                null
-            )
+            val cursor = dbRead.query (tableName, projection, selection, args,
+                null, null, null)
+
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
 
@@ -420,20 +380,13 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
     fun consultIdEmployeeByName(name: String): Int? {
 
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.ID)
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.NAME + " = ?"
             val args = arrayOf(name)
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                selection,
-                args,
-                null,
-                null,
-                null
-            )
+            val cursor = dbRead.query (tableName, projection, selection, args,
+                null, null, null)
+
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
 
@@ -452,20 +405,13 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
     fun consultNameEmployeeById(id: Int): String? {
 
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.NAME)
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME,
-                projection,
-                selection,
-                args,
-                null,
-                null,
-                null
-            )
+            val cursor = dbRead.query (tableName, projection, selection, args,
+                null, null, null)
+
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
 
@@ -484,15 +430,13 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
     fun consultCargaHoraria(id: Int): Int {
 
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD)
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME, projection, selection, args, null,
-                null, null
-            )
+            val cursor = dbRead.query (tableName, projection, selection, args,
+                null, null, null)
+
             if (cursor != null && cursor.count > 0) {
                 cursor.moveToNext()
                 return cursor.getInt(cursor.getColumnIndex(ConstantsEmployee.EMPLOYEE.COLUMNS.WORKLOAD))
@@ -509,7 +453,6 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
 
         var employee: EmployeePointsTime? = null
         try {
-            val db = mDataBaseEmployee.readableDatabase
             val projection = arrayOf(
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO1,
                 ConstantsEmployee.EMPLOYEE.COLUMNS.HORARIO2,
@@ -519,8 +462,7 @@ class RepositoryEmployee(private val mDataBaseEmployee: DataBaseEmployee) {
             val selection = ConstantsEmployee.EMPLOYEE.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            val cursor = db.query(
-                ConstantsEmployee.EMPLOYEE.TABLE_NAME, projection,
+            val cursor = dbRead.query (tableName, projection,
                 selection, args, null, null, null)
 
             if (cursor != null && cursor.count > 0) {
