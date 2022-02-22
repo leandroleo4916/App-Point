@@ -209,7 +209,6 @@ class EmployeeFragment: Fragment(), OnItemClickRecycler, INotification {
             true -> {
                 showSnackBar(R.string.pontos_editado)
                 employeeAdapter.updateHour(positionHour, hour, position)
-                viewModelEmployee.consultPointEdit(id, date)
             }
             else -> showSnackBar(R.string.nao_possivel_add_ponto)
         }

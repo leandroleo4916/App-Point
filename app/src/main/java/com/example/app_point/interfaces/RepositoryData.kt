@@ -18,4 +18,5 @@ interface RepositoryData {
     fun fullPointsByDate(date: String): ArrayList<PointsEntity?>
     fun fullPointsByIdAndDate(idEmployee: Int, date: String): PointsFullEntity?
     fun modifyStatusEmployee(id: Int, status: String): Boolean
+    fun consultTotalExtraByIdEmployee(id: Int): ExtraDoneEntity?
 }

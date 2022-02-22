@@ -15,11 +15,11 @@ class CalculateHours {
         }else{ 0 }
     }
 
-    fun calculateHoursExtra(workload: Int, p: HourEntityInt): ExtraDoneEntity? {
+    fun calculateHoursExtra(workload: Int, p: HourEntityInt): ExtraDoneEntity {
 
-        var value: ExtraDoneEntity? = null
+        val value = ExtraDoneEntity(0, 0)
 
-        value = if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
+        return if (p.hora1 != null && p.hora2 != null && p.hora3 != null && p.hora4 != null){
             val hours = (p.hora2 - p.hora1) + (p.hora4 - p.hora3)
             if (hours >= workload){
                 ExtraDoneEntity(hours - workload, workload)
@@ -27,7 +27,7 @@ class CalculateHours {
                 ExtraDoneEntity(workload - hours, hours)
             }
         } else { return value }
-        return value
+
     }
 
     fun calculateTimeEmployee(points: HourEntityInt): Int {

@@ -1,9 +1,8 @@
 package com.example.app_point.business
 
-import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.entity.EmployeeEntity
 import com.example.app_point.entity.EmployeeEntityFull
-import com.example.app_point.entity.EmployeeIdAndName
+import com.example.app_point.repository.RepositoryEmployee
 
 class BusinessEmployee(private val repositoryEmployee: RepositoryEmployee) {
 

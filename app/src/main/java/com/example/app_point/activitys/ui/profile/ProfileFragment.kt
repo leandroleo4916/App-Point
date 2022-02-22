@@ -26,6 +26,7 @@ import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -39,6 +40,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: View
     private lateinit var openRegister: ItemEmployee
     private val today = captureDateCurrent.captureDateCurrent()
+    private var idEmployee by Delegates.notNull<Int>()
 
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?): View {
@@ -47,6 +49,7 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
         profileViewModel = ProfileViewModel(repositoryPoint)
         val args = arguments?.let { it.getSerializable("id") as Int }
         employee = args?.let { businessEmployee.consultEmployeeWithId(it) }!!
+        idEmployee = args
 
         setInfoEmployee()
         searchPointsEmployee()
@@ -191,36 +194,48 @@ class ProfileFragment: Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setProgressHours(){
-        val hoursMake = 20
+
+        profileViewModel.consultExtrasAndDone(idEmployee)
+
+        var hoursMake = 0
         var pStatus1 = 0
-        val hoursExtra = 22
+        var hoursExtra = 0
         var pStatus2 = 0
 
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.Default) {
-                while (pStatus1 <= hoursMake) {
-                    withContext(Dispatchers.Main) {
-                        binding.progress_hours_done_cyrcle.progress = pStatus1
-                        binding.edit_hrs_feitas.text = pStatus1.toString()
-                    }
-                    delay(20)
-                    pStatus1++
-                }
-            }
-        }
+        profileViewModel.hoursExtras.observe(viewLifecycleOwner, {
 
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.Default) {
-                while (pStatus2 <= hoursExtra) {
-                    withContext(Dispatchers.Main) {
-                        binding.progress_funcionarios_desativados.progress = pStatus2
-                        binding.text_funcionarios_desativados.text = pStatus2.toString()
+            if (it != null){
+                hoursMake = it.feita.div(60)
+                hoursExtra = it.extra.div(60)
+            }
+
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.Default) {
+                    while (pStatus1 <= hoursMake) {
+                        withContext(Dispatchers.Main) {
+                            binding.progress_hours_done_cyrcle.progress = pStatus1
+                            binding.edit_hrs_feitas.text = pStatus1.toString()
+                        }
+                        delay(20)
+                        pStatus1++
                     }
-                    delay(20)
-                    pStatus2++
                 }
             }
-        }
+
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.Default) {
+                    while (pStatus2 <= hoursExtra) {
+                        withContext(Dispatchers.Main) {
+                            binding.progress_funcionarios_desativados.progress = pStatus2
+                            binding.text_funcionarios_desativados.text = pStatus2.toString()
+                        }
+                        delay(20)
+                        pStatus2++
+                    }
+                }
+            }
+        })
+
     }
 
     private fun viewModelSelected(id: Int, date: String){

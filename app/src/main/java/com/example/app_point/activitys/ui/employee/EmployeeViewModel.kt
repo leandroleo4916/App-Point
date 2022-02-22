@@ -3,12 +3,11 @@ package com.example.app_point.activitys.ui.employee
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.app_point.utils.CalculateHours
 import com.example.app_point.entity.Employee
-import com.example.app_point.entity.HourEntityInt
 import com.example.app_point.entity.PointsHours
 import com.example.app_point.repository.RepositoryEmployee
 import com.example.app_point.repository.RepositoryPoint
+import com.example.app_point.utils.CalculateHours
 
 class EmployeeViewModel(private var employee: RepositoryEmployee,
                         private var points: RepositoryPoint,
@@ -31,19 +30,6 @@ class EmployeeViewModel(private var employee: RepositoryEmployee,
 
     fun consultPoint(id: Int, data: String): PointsHours?{
         return points.selectPoint(id, data)
-    }
-
-    fun consultPointEdit(id: Int, data: String) {
-
-        val hour = points.selectPointInt(id, data)
-
-        if (hour?.hora1 != 0 && hour?.hora2 != 0 && hour?.hora3 != 0 && hour?.hora4 != 0){
-
-            val consultExtra = employee.consultCargaHoraria(id)
-            val extra = converterHours.calculateHoursExtra(consultExtra, HourEntityInt(
-                hour?.hora1, hour?.hora2, hour?.hora3, hour?.hora4, 0, 0))
-            points.setPointExtra(id, extra!!.extra, extra.feita)
-        }
     }
 
     fun editPoint(id: Int, data: String, positionHour: Int, hour: String): Boolean{

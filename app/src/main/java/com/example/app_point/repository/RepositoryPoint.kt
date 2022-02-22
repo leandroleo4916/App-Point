@@ -108,7 +108,7 @@ class RepositoryPoint(dataBasePoint: DataBaseEmployee): RepositoryData {
             try {
 
                 insertValues.put(ConstantsExtras.EXTRA.COLUMNS.ID, id)
-                insertValues.put(ConstantsExtras.EXTRA.COLUMNS.EXTRA, hours!!.extra)
+                insertValues.put(ConstantsExtras.EXTRA.COLUMNS.EXTRA, hours.extra)
                 insertValues.put(ConstantsExtras.EXTRA.COLUMNS.FEITAS, hours.feita)
 
                 dbWrite.insert(ConstantsExtras.EXTRA.TABLE_NAME, null, insertValues)
@@ -135,7 +135,7 @@ class RepositoryPoint(dataBasePoint: DataBaseEmployee): RepositoryData {
         }
     }
 
-    fun consultTotalExtraByIdEmployee(id: Int): ExtraDoneEntity? {
+    override fun consultTotalExtraByIdEmployee(id: Int): ExtraDoneEntity? {
 
         var value: ExtraDoneEntity? = null
         try {
@@ -241,11 +241,12 @@ class RepositoryPoint(dataBasePoint: DataBaseEmployee): RepositoryData {
                     insertValues.put(valueString, hour)
                     dbWrite.update(ConstantsPoint.POINT.TABLE_NAME, insertValues, projection, args)
 
-                    if (searchPoint.hora1 != null && searchPoint.hora2 != null &&
-                        searchPoint.hora3 != null && searchPoint.hora4 != null ){
+                    val pointNewConsult = selectFullPoints(idEmployee, date)
+                    if (pointNewConsult!!.hora1 != null && pointNewConsult.hora2 != null &&
+                        pointNewConsult.hora3 != null && pointNewConsult.hora4 != null ){
 
                             saveHoursPunctuation(idEmployee, date)
-                            return true
+
                     }
                 }
             }
